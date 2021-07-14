@@ -1,0 +1,19 @@
+{
+  "name": "octokit-next",
+  "version": "0.0.0-development",
+  "description": "Experimental Octokit SDK for exploration only - DO NOT USE 🚫⚠️",
+  "type": "module",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "repository": "github:octokit/octokit-next.js",
+  "renovate": {
+    "extends": [
+      "github>gr2m/.github"
+    ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  }
+}
