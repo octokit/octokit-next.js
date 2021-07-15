@@ -10,5 +10,6 @@ export async function test() {
   expectType<number>(response.status);
   expectType<string>(response.url);
   expectType<string | undefined>(response.headers["x-ratelimit-limit"]);
-  expectType<string>(response.data.emojis_url);
+  expectType<string>(response.data.always_present);
+  expectType<string>(response.data.dotcom_only);
 }

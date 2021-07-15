@@ -8,7 +8,7 @@ declare module "javascript-plugin-architecture-with-typescript-definitions" {
       /**
        * GitHub Enterprise Server version
        */
-      version?: "api.github.com" | "ghes-3.1";
+      version?: "api.github.com" | "ghes-3.1" | "ghes-3.0";
     }
   }
 }

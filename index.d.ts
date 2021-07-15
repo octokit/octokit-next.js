@@ -72,7 +72,8 @@ export namespace Octokit {
     "GET /": {
       parameters: {};
       response: Octokit.Response<{
-        emojis_url: string;
+        always_present: string;
+        dotcom_only: string;
       }>;
     };
   }
