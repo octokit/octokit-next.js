@@ -1,6 +1,12 @@
 import { expectType } from "tsd";
 import { Octokit } from "./index.js";
 
-const octokit = new Octokit();
+export async function test() {
+  const octokit = new Octokit();
+  const response = await octokit.request("GET /");
 
-expectType<() => void>(octokit.request);
+  expectType<number>(response.status);
+  expectType<string>(response.url);
+  expectType<string | undefined>(response.headers["x-ratelimit-limit"]);
+  expectType<string>(response.data.emojis_url);
+}

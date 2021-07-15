@@ -7,7 +7,8 @@
   "license": "MIT",
   "repository": "github:octokit/octokit-next.js",
   "dependencies": {
-    "javascript-plugin-architecture-with-typescript-definitions": "3.2.0"
+    "javascript-plugin-architecture-with-typescript-definitions": "3.2.0",
+    "node-fetch": "^3.0.0-beta.9"
   },
   "types": "./index.d.ts",
   "exports": "./index.js",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "c8": "^7.7.3",
+    "fetch-mock": "^9.11.0",
     "tsd": "^0.17.0",
     "uvu": "^0.5.1"
   }
