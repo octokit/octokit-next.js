@@ -21,6 +21,7 @@ async function request(
   const [method, pathOrUrl] = route.split(" ");
   const url = new URL(pathOrUrl, baseUrl).href;
 
+  /* c8 ignore next */
   const fetch = octokitFetch || nodeFetch;
 
   const response = await fetch(url, { method, headers: parameters.headers });
