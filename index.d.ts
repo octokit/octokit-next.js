@@ -69,12 +69,14 @@ export namespace Octokit {
   }
 
   interface Endpoints {
-    "GET /": {
-      parameters: {};
-      response: Octokit.Response<{
-        always_present: string;
-        dotcom_only: string;
-      }>;
+    "api.github.com": {
+      "GET /": {
+        parameters: {};
+        response: Octokit.Response<{
+          always_present: string;
+          dotcom_only: string;
+        }>;
+      };
     };
   }
 }

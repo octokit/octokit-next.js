@@ -18,6 +18,19 @@ declare module "../.." {
     interface ResponseHeaders {
       "x-github-enterprise-version"?: string;
     }
+
+    interface Endpoints {
+      "ghes-3.1": Octokit.Endpoints["api.github.com"] & {
+        "GET /": {
+          parameters: {};
+          response: Octokit.Response<{
+            always_present: string;
+            /** this property is not set on GHES 3.1 **/
+            dotcom_only: never;
+          }>;
+        };
+      };
+    }
   }
 }
 
@@ -29,3 +42,6 @@ export const Octokit: (new (...args: any[]) => {
   };
 }) &
   typeof OctokitCore;
+
+type Funk =
+  OctokitCore.Endpoints["ghes-3.1"]["GET /"]["response"]["data"]["always_present"];

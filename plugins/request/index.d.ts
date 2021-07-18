@@ -17,11 +17,12 @@ export interface RequestInterface {
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
   <Route extends string>(
-    route: keyof Octokit.Endpoints | Route,
-    options?: Route extends keyof Octokit.Endpoints
-      ? Octokit.Endpoints[Route]["parameters"] & RequestParameters
+    route: keyof Octokit.Endpoints["api.github.com"] | Route,
+    options?: Route extends keyof Octokit.Endpoints["api.github.com"]
+      ? Octokit.Endpoints["api.github.com"][Route]["parameters"] &
+          RequestParameters
       : RequestParameters
-  ): Route extends keyof Octokit.Endpoints
-    ? Promise<Octokit.Endpoints[Route]["response"]>
+  ): Route extends keyof Octokit.Endpoints["api.github.com"]
+    ? Promise<Octokit.Endpoints["api.github.com"][Route]["response"]>
     : Promise<Octokit.Response<unknown>>;
 }
