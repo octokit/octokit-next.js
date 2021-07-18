@@ -2,7 +2,9 @@ import { expectType } from "tsd";
 import { Octokit } from "./index.js";
 
 export async function test() {
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    version: "",
+  });
   const response = await octokit.request("GET /");
 
   expectType<number>(response.status);
