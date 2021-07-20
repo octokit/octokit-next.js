@@ -1,5 +1,8 @@
 import nodeFetch from "node-fetch";
 
+/**
+ * @param {import("../..").Octokit} octokit
+ */
 export function requestPlugin(octokit, options) {
   return {
     request: request.bind(null, options),

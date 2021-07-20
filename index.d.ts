@@ -3,38 +3,29 @@ import fetch from "node-fetch";
 
 import { requestPlugin } from "./plugins/request/index.js";
 
-// export base so it can be imported for JSDoc comments and include
-// the merged Base.Options interface
-export { Base } from "javascript-plugin-architecture-with-typescript-definitions";
-
-declare module "javascript-plugin-architecture-with-typescript-definitions" {
-  namespace Base {
-    interface Options {
-      /**
-       * GitHub's REST API base URL. Defaults to https://api.github.com
-       */
-      baseUrl?: string;
-
-      /**
-       * Custom User Agent String. Defaults to "octokit-next/[version]"
-       *
-       * @example "my-app/1.2.3"
-       */
-      userAgent?: string;
-
-      request?: {
-        /**
-         * override the built-in fetch method, e.g. for testing
-         */
-        fetch?: fetch;
-      };
-    }
-  }
-}
-
 type Constructor<T> = new (...args: any[]) => T;
 
 export namespace Octokit {
+  interface Options extends Base.Options {
+    /**
+     * GitHub's REST API base URL. Defaults to https://api.github.com
+     */
+    baseUrl?: string;
+
+    /**
+     * Custom User Agent String. Defaults to "octokit-next/[version]"
+     *
+     * @example "my-app/1.2.3"
+     */
+    userAgent?: string;
+
+    request?: {
+      /**
+       * override the built-in fetch method, e.g. for testing
+       */
+      fetch?: typeof fetch;
+    };
+  }
   interface ResponseHeaders {
     "cache-control"?: string;
     "content-length"?: number;
@@ -81,6 +72,8 @@ export namespace Octokit {
     };
   }
 }
+export declare class Octokit {
+  constructor(options: Octokit.Options);
 
-export const Octokit: typeof Base &
-  Constructor<ReturnType<typeof requestPlugin>>;
+  request: ReturnType<typeof requestPlugin>["request"];
+}

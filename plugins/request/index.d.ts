@@ -1,9 +1,8 @@
-import { Base } from "javascript-plugin-architecture-with-typescript-definitions";
 import { Octokit } from "../../index.js";
 
 export function requestPlugin(
-  octokit: Base,
-  options: Base.Options
+  octokit: Octokit,
+  options: Octokit.Options
 ): {
   request: RequestInterface;
 };
