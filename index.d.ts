@@ -8,6 +8,11 @@ type Constructor<T> = new (...args: any[]) => T;
 export namespace Octokit {
   interface Options extends Base.Options {
     /**
+     * GitHub API Version. Defaults to "api.github.com"
+     */
+    version?: string;
+
+    /**
      * GitHub's REST API base URL. Defaults to https://api.github.com
      */
     baseUrl?: string;
