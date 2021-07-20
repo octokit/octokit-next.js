@@ -9,7 +9,7 @@ test("octokit.request is a function", () => {
 });
 
 test("myOctokit.request is a function", () => {
-  const MyOctokit = Octokit.defaults({});
+  const MyOctokit = Octokit.withDefaults({});
   const myOctokit = new MyOctokit();
   assert.equal(typeof myOctokit.request, "function");
 });
