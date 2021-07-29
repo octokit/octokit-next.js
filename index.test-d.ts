@@ -3,13 +3,20 @@ import { Octokit } from "./index.js";
 
 export async function test() {
   const octokit = new Octokit({
-    version: "",
+    version: "github.com",
   });
-  const response = await octokit.request("GET /");
 
-  expectType<number>(response.status);
-  expectType<string>(response.url);
-  expectType<string | undefined>(response.headers["x-ratelimit-limit"]);
-  expectType<string>(response.data.always_present);
-  expectType<string>(response.data.dotcom_only);
+  const rootEndpointResponse = await octokit.request("GET /");
+  expectType<number>(rootEndpointResponse.status);
+  expectType<string>(rootEndpointResponse.url);
+  expectType<string>(rootEndpointResponse.headers["x-ratelimit-limit"]);
+  expectType<string>(rootEndpointResponse.data.emojis_url);
+
+  const emojisResponse = await octokit.request("GET /emojis");
+  expectType<string>(emojisResponse.data["+1"]);
+  expectType<string>(emojisResponse.data["-1"]);
+  expectType<string>(emojisResponse.data["dotcom-only"]);
+
+  // @ts-expect-error - ghes-only does not exist
+  expectType<string>(emojisResponse.data["ghes-only"]);
 }
