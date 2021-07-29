@@ -12,11 +12,11 @@ export async function test() {
   expectType<string>(rootEndpointResponse.headers["x-ratelimit-limit"]);
   expectType<string>(rootEndpointResponse.data.emojis_url);
 
-  const emojisResponse = await octokit.request("GET /emojis");
-  expectType<string>(emojisResponse.data["+1"]);
-  expectType<string>(emojisResponse.data["-1"]);
-  expectType<string>(emojisResponse.data["dotcom-only"]);
+  const emojisResponseDotcom = await octokit.request("GET /emojis");
+  expectType<string>(emojisResponseDotcom.data["+1"]);
+  expectType<string>(emojisResponseDotcom.data["-1"]);
+  expectType<string>(emojisResponseDotcom.data["dotcom-only"]);
 
   // @ts-expect-error - ghes-only does not exist
-  expectType<string>(emojisResponse.data["ghes-only"]);
+  expectType<string>(emojisResponseDotcom.data["ghes-only"]);
 }

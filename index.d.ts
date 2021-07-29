@@ -1,16 +1,17 @@
 import { Base } from "javascript-plugin-architecture-with-typescript-definitions";
 import fetch from "node-fetch";
 
-import { requestPlugin } from "./plugins/request/index.js";
+import { RequestInterface } from "./plugins/request/index.js";
 
-import "./endpoints-types/github.com-endpoints.js";
+import "./api-versions-types/github.com";
 
 export namespace Octokit {
-  interface Options extends Base.Options {
+  interface Options<TVersion extends keyof Octokit.ApiVersions = "github.com">
+    extends Base.Options {
     /**
      * GitHub API Version. Defaults to "api.github.com"
      */
-    version?: keyof Octokit.Endpoints;
+    version?: TVersion;
 
     /**
      * GitHub's REST API base URL. Defaults to https://api.github.com
@@ -31,6 +32,7 @@ export namespace Octokit {
       fetch?: typeof fetch;
     };
   }
+
   interface ResponseHeaders {
     "cache-control": string;
     "content-length": number;
@@ -52,8 +54,8 @@ export namespace Octokit {
     [header: string]: string | number | undefined;
   }
 
-  interface Response<T> {
-    headers: Octokit.ResponseHeaders;
+  interface Response<TData, TResponseHeaders> {
+    headers: TResponseHeaders;
     /**
      * http response code
      */
@@ -65,13 +67,15 @@ export namespace Octokit {
     /**
      * Response data as documented in the REST API reference documentation at https://docs.github.com/rest/reference
      */
-    data: T;
+    data: TData;
   }
 
-  interface Endpoints {}
+  interface ApiVersions {}
 }
-export declare class Octokit {
+export declare class Octokit<
+  TVersion extends keyof Octokit.ApiVersions = "github.com"
+> {
   constructor(options: Octokit.Options);
 
-  request: ReturnType<typeof requestPlugin>["request"];
+  request: RequestInterface<TVersion>;
 }

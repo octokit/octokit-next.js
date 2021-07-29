@@ -1,15 +1,15 @@
 import { Octokit } from "../../index.js";
 
-export function requestPlugin(
+export function requestPlugin<TVersion extends keyof Octokit.ApiVersions>(
   octokit: Octokit,
   options: Octokit.Options
 ): {
-  request: RequestInterface;
+  request: RequestInterface<TVersion>;
 };
 
 type RequestParameters = Record<string, unknown>;
 
-export interface RequestInterface {
+export interface RequestInterface<TVersion extends keyof Octokit.ApiVersions> {
   /**
    * Sends a request based on endpoint options
    *
@@ -17,11 +17,21 @@ export interface RequestInterface {
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
   <Route extends string>(
-    route: keyof Octokit.Endpoints["github.com"] | Route,
-    options?: Route extends keyof Octokit.Endpoints["github.com"]
-      ? Octokit.Endpoints["github.com"][Route]["parameters"] & RequestParameters
+    route: keyof Octokit.ApiVersions[TVersion]["Endpoints"] | Route,
+    options?: Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
+      ? "parameters" extends keyof Octokit.ApiVersions[TVersion]["Endpoints"][Route]
+        ? Octokit.ApiVersions[TVersion]["Endpoints"][Route]["parameters"] &
+            RequestParameters
+        : never
       : RequestParameters
-  ): Route extends keyof Octokit.Endpoints["github.com"]
-    ? Promise<Octokit.Endpoints["github.com"][Route]["response"]>
-    : Promise<Octokit.Response<unknown>>;
+  ): Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
+    ? "response" extends keyof Octokit.ApiVersions[TVersion]["Endpoints"][Route]
+      ? Promise<Octokit.ApiVersions[TVersion]["Endpoints"][Route]["response"]>
+      : never
+    : Promise<
+        Octokit.Response<
+          unknown,
+          Octokit.ApiVersions[TVersion]["ResponseHeaders"]
+        >
+      >;
 }
