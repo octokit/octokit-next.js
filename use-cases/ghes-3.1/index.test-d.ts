@@ -3,7 +3,6 @@ import { OctokitGhes31 } from "./index.js";
 
 export async function test() {
   const octokit = new OctokitGhes31({
-    version: "ghes-3.1",
     baseUrl: "https://github.acme-inc.com/api/v3",
   });
 
