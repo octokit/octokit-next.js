@@ -1,22 +1,13 @@
 import nodeFetch from "node-fetch";
 
 /**
- * @param {import("../..").Octokit} octokit
- */
-export function requestPlugin(octokit, options) {
-  return {
-    request: request.bind(null, options),
-  };
-}
-
-/**
  * Naive implementation of [`@octokit/request`](https://github.com/octokit/request.js/) for testing purposes
  *
- * @param {import("../..").Base.Options} ConsructorOptions
+ * @param {import("../..").Base.Options} ConstructorOptions
  * @param {string} route
  * @param {object} [parameters] route parameters
  */
-async function request(
+export async function request(
   { baseUrl, request: { fetch: octokitFetch } },
   route,
   parameters = {}

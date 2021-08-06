@@ -1,8 +1,8 @@
-import { ExtendBaseWith, Octokit } from "../../index.js";
+import { ExtendOctokitWith, Octokit } from "../../index.js";
 
 import "../../api-versions-types/ghes-3.0";
 
-export const OctokitGhes30: ExtendBaseWith<
+export const OctokitGhes30: ExtendOctokitWith<
   Octokit<"ghes-3.0">,
   {
     defaults: {

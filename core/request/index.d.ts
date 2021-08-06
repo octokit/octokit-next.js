@@ -1,15 +1,8 @@
 import { Octokit } from "../../index.js";
 
-export function requestPlugin<TVersion extends keyof Octokit.ApiVersions>(
-  octokit: Octokit,
-  options: Octokit.Options
-): {
-  request: RequestInterface<TVersion>;
-};
-
 type RequestParameters = Record<string, unknown>;
 
-export interface RequestInterface<TVersion extends keyof Octokit.ApiVersions> {
+export interface request<TVersion extends keyof Octokit.ApiVersions> {
   /**
    * Sends a request based on endpoint options
    *

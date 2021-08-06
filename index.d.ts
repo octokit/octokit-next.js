@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import { RequestInterface } from "./plugins/request/index.js";
+import { request as coreRequest } from "./core/request/index.js";
 
 import "./api-versions-types/github.com";
 
@@ -72,7 +72,8 @@ export namespace Octokit {
 }
 
 export declare class Octokit<
-  TVersion extends keyof Octokit.ApiVersions = "github.com"
+  TVersion extends keyof Octokit.ApiVersions = "github.com",
+  TOptions extends Octokit.Options<TVersion> = Octokit.Options<TVersion>
 > {
   /**
    * Pass one or multiple plugin functions to extend the `Octokit` class.
@@ -88,8 +89,8 @@ export declare class Octokit<
    *   };
    * }
    *
-   * const MyBase = Base.withPlugins([helloWorld]);
-   * const base = new MyBase();
+   * const MyOctokit = Octokit.withPlugins([helloWorld]);
+   * const base = new MyOctokit();
    * base.helloWorld(); // `base.helloWorld` is typed as function
    * ```
    */
@@ -107,8 +108,8 @@ export declare class Octokit<
    * Set defaults for the constructor
    *
    * ```js
-   * const MyBase = Base.withDefaults({ version: '1.0.0', otherDefault: 'value' });
-   * const base = new MyBase({ option: 'value' }); // `version` option is not required
+   * const MyOctokit = Octokit.withDefaults({ version: '1.0.0', otherDefault: 'value' });
+   * const base = new MyOctokit({ option: 'value' }); // `version` option is not required
    * base.options // typed as `{ version: string, otherDefault: string, option: string }`
    * ```
    * @remarks
@@ -121,8 +122,11 @@ export declare class Octokit<
    */
   static withDefaults<
     PredefinedOptionsOne,
-    ClassOne extends Constructor<Base<Octokit.Options & PredefinedOptionsOne>> &
-      ClassWithPlugins
+    ClassOne extends Constructor<
+      Octokit<TVersion, Octokit.Options<TVersion> & PredefinedOptionsOne>
+    > &
+      ClassWithPlugins,
+    TVersion extends keyof Octokit.ApiVersions = "github.com"
   >(
     this: ClassOne,
     defaults: PredefinedOptionsOne
@@ -161,11 +165,11 @@ export declare class Octokit<
   /**
    * options passed to the constructor as constructor defaults
    */
-  options: Octokit.Options<TVersion>;
+  options: TOptions;
 
-  constructor(options: Octokit.Options<TVersion>);
+  constructor(options: TOptions);
 
-  request: RequestInterface<TVersion>;
+  request: coreRequest<TVersion>;
 }
 
 export type ExtendOctokitWith<
