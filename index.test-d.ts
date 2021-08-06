@@ -1,5 +1,5 @@
 import { expectType } from "tsd";
-import { Octokit } from "./index.js";
+import { Octokit, Plugin } from "./index.js";
 
 export async function test() {
   // TODO:
@@ -15,6 +15,10 @@ export async function test() {
   const OctokitWithEmptyDefaults = Octokit.withDefaults({
     // there should be no required options
   });
+
+  new OctokitWithEmptyDefaults();
+
+  expectType<Plugin[]>(Octokit.plugins);
 
   const rootEndpointResponse = await octokit.request("GET /");
   expectType<number>(rootEndpointResponse.status);

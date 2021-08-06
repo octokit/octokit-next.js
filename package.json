@@ -15,7 +15,7 @@
     "test": "npm run -s test:code && npm run -s test:typescript && npm run -s test:coverage",
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
-    "test:typescript": "tsd && for d in use-cases/* ; do tsd $d; done"
+    "test:typescript": "tsd && for d in tests/* ; do tsd $d; done"
   },
   "renovate": {
     "extends": [
