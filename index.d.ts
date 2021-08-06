@@ -75,7 +75,94 @@ export namespace Octokit {
 export declare class Octokit<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
 > {
-  constructor(options: Octokit.Options);
+  constructor(options: Octokit.Options<TVersion>);
+
+  options: Octokit.Options<TVersion>;
 
   request: RequestInterface<TVersion>;
 }
+
+/**
+ * @author https://stackoverflow.com/users/2887218/jcalz
+ * @see https://stackoverflow.com/a/50375286/10325032
+ */
+declare type UnionToIntersection<Union> = (
+  Union extends any ? (argument: Union) => void : never
+) extends (argument: infer Intersection) => void
+  ? Intersection
+  : never;
+declare type AnyFunction = (...args: any) => any;
+declare type ReturnTypeOf<T extends AnyFunction | AnyFunction[]> =
+  T extends AnyFunction
+    ? ReturnType<T>
+    : T extends AnyFunction[]
+    ? UnionToIntersection<Exclude<ReturnType<T[number]>, void>>
+    : never;
+
+type Extensions = {
+  defaults?: {};
+  plugins?: Plugin[];
+};
+
+type OrObject<T, Extender> = T extends Extender ? {} : T;
+
+type ApplyPlugins<Plugins extends Plugin[] | undefined> =
+  Plugins extends Plugin[]
+    ? UnionToIntersection<ReturnType<Plugins[number]>>
+    : {};
+
+type RemainingRequirements<PredefinedOptions> =
+  keyof PredefinedOptions extends never
+    ? Base.Options
+    : Omit<Base.Options, keyof PredefinedOptions>;
+
+type NonOptionalKeys<Obj> = {
+  [K in keyof Obj]: {} extends Pick<Obj, K> ? undefined : K;
+}[keyof Obj];
+
+type RequiredIfRemaining<PredefinedOptions, NowProvided> = NonOptionalKeys<
+  RemainingRequirements<PredefinedOptions>
+> extends undefined
+  ? [(Partial<Base.Options> & NowProvided)?]
+  : [
+      Partial<Base.Options> &
+        RemainingRequirements<PredefinedOptions> &
+        NowProvided
+    ];
+
+type ConstructorRequiringOptionsIfNeeded<Class, PredefinedOptions> = {
+  defaults: PredefinedOptions;
+} & {
+  new <NowProvided>(
+    ...options: RequiredIfRemaining<PredefinedOptions, NowProvided>
+  ): Class & {
+    options: NowProvided & PredefinedOptions;
+  };
+};
+
+declare type ApiExtension = {
+  [key: string]: unknown;
+};
+
+export declare type Plugin = (
+  instance: Base,
+  options: Base.Options
+) => ApiExtension | void;
+
+declare class AbstractOctokit {
+  constructor(options: any);
+
+  options: any;
+}
+
+export type ExtendBaseWith<
+  OctokitClass extends AbstractOctokit,
+  BaseExtensions extends Extensions
+> = OctokitClass &
+  ConstructorRequiringOptionsIfNeeded<
+    OctokitClass & ApplyPlugins<BaseExtensions["plugins"]>,
+    OrObject<OctokitClass["options"], unknown>
+  > &
+  ApplyPlugins<BaseExtensions["plugins"]> & {
+    defaults: OrObject<BaseExtensions["defaults"], undefined>;
+  };

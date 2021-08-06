@@ -1,10 +1,13 @@
-import "../../endpoints-types/ghes-3.1-endpoints.js";
+import { ExtendBaseWith, Octokit } from "../../index.js";
 
-import { Octokit as OctokitCore } from "../../index.js";
+export const OctokitGhes31: ExtendBaseWith<
+  Octokit<"ghes-3.1">,
+  {
+    defaults: {
+      baseUrl: string;
+    };
+  }
+>;
 
-export const Octokit: (new (...args: any[]) => {
-  options: {
-    baseUrl: string;
-  };
-}) &
-  typeof OctokitCore;
+// support import to be used as a class instance type
+export type OctokitGhes31 = typeof OctokitGhes31;

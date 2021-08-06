@@ -18,5 +18,5 @@ export async function test() {
   expectType<string>(emojisResponseDotcom.data["dotcom-only"]);
 
   // @ts-expect-error - ghes-only does not exist
-  expectType<string>(emojisResponseDotcom.data["ghes-only"]);
+  emojisResponseDotcom.data["ghes-only"];
 }

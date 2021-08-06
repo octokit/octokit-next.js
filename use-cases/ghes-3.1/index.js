@@ -1,5 +1,5 @@
-import { Octokit as OctokitCore } from "../../index.js";
+import { Octokit } from "../../index.js";
 
-export const Octokit = OctokitCore.defaults({
+export const OctokitGhes31 = Octokit.defaults({
   version: "ghes-3.1",
 });

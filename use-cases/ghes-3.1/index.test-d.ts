@@ -1,10 +1,13 @@
 import { expectType } from "tsd";
-import { Octokit } from "./index.js";
+import { OctokitGhes31 } from "./index.js";
+import { Octokit } from "../../index.js";
 
 import "../../api-versions-types/ghes-3.1";
 
+type Funk = Octokit.ApiVersions["ghes-3.1"];
+
 export async function test() {
-  const octokit = new Octokit({
+  const octokit = new OctokitGhes31({
     version: "ghes-3.1",
     baseUrl: "https://github.acme-inc.com/api/v3",
   });
@@ -14,6 +17,7 @@ export async function test() {
   expectType<string>(emojisResponseGhes31.data["-1"]);
   expectType<string>(emojisResponseGhes31.data["ghes-only"]);
 
-  // @ts-expect-error - ghes-only does not exist
-  expectType<string>(emojisResponseGhes31.data["dotcom-only"]);
+  expectType<never>(emojisResponseGhes31.data["dotcom-only"]);
+
+  await octokit.request("GET /dotcom-only");
 }
