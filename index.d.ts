@@ -10,7 +10,7 @@ import "./api-versions-types/github.com";
 export namespace Octokit {
   interface Options<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
     /**
-     * GitHub API Version. Defaults to "api.github.com"
+     * GitHub API Version. Defaults to "github.com"
      */
     version?: TVersion;
 
@@ -236,6 +236,7 @@ declare type ApiExtension = {
 };
 
 // helpers
+
 declare type Constructor<T> = new (...args: any[]) => T;
 
 /**
@@ -278,13 +279,20 @@ type RequiredIfRemaining<PredefinedOptions, NowProvided> = NonOptionalKeys<
         NowProvided
     ];
 
-type ConstructorRequiringOptionsIfNeeded<Class, PredefinedOptions> = {
+type ConstructorRequiringOptionsIfNeeded<
+  Class,
+  PredefinedOptions extends { version?: keyof Octokit.ApiVersions },
+  TVersion extends keyof Octokit.ApiVersions = PredefinedOptions["version"] extends keyof Octokit.ApiVersions
+    ? PredefinedOptions["version"]
+    : "github.com"
+> = {
   defaults: PredefinedOptions;
 } & {
   new <NowProvided>(
     ...options: RequiredIfRemaining<PredefinedOptions, NowProvided>
   ): Class & {
     options: NowProvided & PredefinedOptions;
+    request: coreRequest<TVersion>;
   };
 };
 

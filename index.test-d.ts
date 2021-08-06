@@ -12,12 +12,6 @@ export async function test() {
   // @ts-expect-error - unknown properties cannot be used
   octokit.unknown;
 
-  const OctokitWithEmptyDefaults = Octokit.withDefaults({
-    // there should be no required options
-  });
-
-  new OctokitWithEmptyDefaults();
-
   expectType<Plugin[]>(Octokit.plugins);
 
   const rootEndpointResponse = await octokit.request("GET /");
@@ -33,4 +27,16 @@ export async function test() {
 
   // @ts-expect-error - ghes-only does not exist
   emojisResponseDotcom.data["ghes-only"];
+
+  const OctokitWithEmptyDefaults = Octokit.withDefaults({
+    // there should be no required options
+  });
+
+  // instances of subclasses retain Octokit's methods
+  const OctokitWithDefaultsAndPlugins = OctokitWithEmptyDefaults.withPlugins([
+    () => {},
+  ]);
+  const octokitWithDefaultsAndPlugins = new OctokitWithDefaultsAndPlugins();
+
+  octokitWithDefaultsAndPlugins.request("GET /emojis");
 }
