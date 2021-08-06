@@ -2,8 +2,18 @@ import { expectType } from "tsd";
 import { Octokit } from "./index.js";
 
 export async function test() {
+  // TODO:
+  // new Octokit();
+
   const octokit = new Octokit({
     version: "github.com",
+  });
+
+  // @ts-expect-error - unknown properties cannot be used
+  octokit.unknown;
+
+  const OctokitWithEmptyDefaults = Octokit.withDefaults({
+    // there should be no required options
   });
 
   const rootEndpointResponse = await octokit.request("GET /");

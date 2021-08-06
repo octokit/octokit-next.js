@@ -172,6 +172,26 @@ export declare class Octokit<
   request: coreRequest<TVersion>;
 }
 
+/**
+ * Extend `Octokit` or a derived class with custom defaults and plugins
+ *
+ * @example
+ *
+ * ```ts
+ * export const MyBase: ExtendOctokitWith<
+ *   Octokit,
+ *   {
+ *     defaults: {
+ *       myPluginOption: string;
+ *     };
+ *     plugins: [typeof myPlugin];
+ *   }
+ * >;
+ *
+ * // support import to be used as a class instance type
+ * export type MyBase = typeof MyBase;
+ * ```
+ */
 export type ExtendOctokitWith<
   OctokitClass extends AbstractOctokit,
   OctokitExtensions extends Extensions

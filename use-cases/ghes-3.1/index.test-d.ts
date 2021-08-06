@@ -2,6 +2,8 @@ import { expectType, expectNotType } from "tsd";
 import { OctokitGhes31 } from "./index.js";
 
 export async function test() {
+  new OctokitGhes31({});
+
   const octokit = new OctokitGhes31({
     baseUrl: "https://github.acme-inc.com/api/v3",
   });
