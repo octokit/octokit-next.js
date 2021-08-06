@@ -43,10 +43,13 @@ export async function test() {
   new OctokitLevelOne();
   new OctokitLevelOne({});
 
-  expectType<{
-    defaultOne: string;
-    required: string;
-  }>(OctokitLevelOne.defaults);
+  expectType<
+    // no idea why `tsd` requires us to split this object up into two ¯\_(ツ)_/¯
+    {
+      defaultOne: string;
+      required: string;
+    } & { baseUrl: string }
+  >(OctokitLevelOne.defaults);
 
   const octokitLevelOne = new OctokitLevelOne({
     optionOne: "value",
@@ -63,6 +66,7 @@ export async function test() {
   });
 
   expectType<{
+    baseUrl: string;
     defaultOne: string;
     defaultTwo: number;
     required: string;
@@ -93,6 +97,7 @@ export async function test() {
   });
 
   expectType<{
+    baseUrl: string;
     defaultOne: string;
     defaultTwo: number;
     defaultThree: string[];
@@ -172,6 +177,7 @@ export async function test() {
   const OctokitLevelFour = OctokitLevelThree.withDefaults({ defaultFour: 4 });
 
   expectType<{
+    baseUrl: string;
     required: string;
     defaultOne: string;
     defaultTwo: number;
@@ -227,6 +233,7 @@ export async function test() {
     });
 
   expectType<{
+    baseUrl: string;
     defaultOne: string;
     defaultTwo: number;
     defaultThree: string[];

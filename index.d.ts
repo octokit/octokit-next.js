@@ -4,6 +4,9 @@ import { request as coreRequest } from "./core/request/index.js";
 
 import "./api-versions-types/github.com";
 
+/**
+ * Global Octokit interfaces that can be extended as needed.
+ */
 export namespace Octokit {
   interface Options<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
     /**
@@ -13,6 +16,8 @@ export namespace Octokit {
 
     /**
      * GitHub's REST API base URL. Defaults to https://api.github.com
+     *
+     * TODO: make it a required option if TVersion != "github.com"
      */
     baseUrl?: string;
 
@@ -68,6 +73,21 @@ export namespace Octokit {
     data: TData;
   }
 
+  /**
+   * The API Versions interface is meant with types for the target platform.
+   * Each key must export an object with `ResponseHeaders` and `Endpoints`.
+   * GitHub Enterprise Server (GHES) versions may build upon each other.
+   *
+   * For example, if the latest GHES version is 3.1, then it should define
+   * all resopnse headers and endpoints that are only available to GHES and
+   * set all endpoints and response keys that don't exist on GHES to never
+   * with an explanatory comment.
+   *
+   * GHES 3.0 can then inherit the types from GHES 3.1 and implement the changes, etc.
+   *
+   * The types for the target platform-specific APIs can become quite big and will
+   * most likely live in their own packages.
+   */
   interface ApiVersions {}
 }
 
@@ -153,17 +173,19 @@ export declare class Octokit<
   } & ClassOne;
 
   /**
-   * list of plugins that will be applied to all instances
+   * List of plugins that will be applied to all instances
    */
   static plugins: Plugin[];
 
   /**
-   * list of default options that will be applied to all instances
+   * Default options that will be applied to all instances
    */
-  static defaults: {};
+  static defaults: {
+    baseUrl: string;
+  };
 
   /**
-   * options passed to the constructor as constructor defaults
+   * Options passed to the constructor combined with the constructor defaults
    */
   options: TOptions;
 
