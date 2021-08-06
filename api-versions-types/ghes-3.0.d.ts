@@ -24,5 +24,3 @@ declare module ".." {
     }
   }
 }
-
-type Funk = Octokit.ApiVersions["ghes-3.1"]["Endpoints"] & GHES30EndpointsDiff;
