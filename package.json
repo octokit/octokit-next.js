@@ -31,5 +31,10 @@
     "c8": "^7.7.3",
     "tsd": "^0.17.0",
     "uvu": "^0.5.1"
-  }
+  },
+  "workspaces": [
+    "packages/types-rest-api-github.com",
+    "packages/types-rest-api-3.1",
+    "packages/types-rest-api-3.0"
+  ]
 }

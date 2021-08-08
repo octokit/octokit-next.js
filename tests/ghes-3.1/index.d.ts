@@ -1,6 +1,6 @@
 import { ExtendOctokitWith, Octokit } from "../../index.js";
 
-import "../../api-versions-types/ghes-3.1";
+import "@octokit-next/types-rest-api-ghes-3.1";
 
 export const OctokitGhes31: ExtendOctokitWith<
   Octokit<"ghes-3.1">,

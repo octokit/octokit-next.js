@@ -2,7 +2,7 @@ import fetch from "node-fetch";
 
 import { request as coreRequest } from "./core/request/index.js";
 
-import "./api-versions-types/github.com";
+import "@octokit-next/types-rest-api-github.com";
 
 /**
  * Global Octokit interfaces that can be extended as needed.

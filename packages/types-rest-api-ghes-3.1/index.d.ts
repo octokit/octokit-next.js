@@ -1,6 +1,6 @@
-import { Octokit } from "../index.js";
+import { Octokit } from "../../index.js";
 
-import "./github.com";
+import "@octokit-next/types-rest-api-github.com";
 
 type GHES31ResponseHeaders =
   Octokit.ApiVersions["github.com"]["ResponseHeaders"] & {

@@ -1,4 +1,4 @@
-import { Octokit } from "../index.js";
+import { Octokit } from "../../index.js";
 
 type DotcomResponseHeaders = Octokit.ResponseHeaders & {
   "x-dotcom-only": string;

@@ -1,6 +1,6 @@
-import { Octokit } from "../index.js";
+import { Octokit } from "../../index.js";
 
-import "./ghes-3.1";
+import "@octokit-next/types-rest-api-3.1";
 
 type GHES30ResponseHeaders = Octokit.ApiVersions["ghes-3.1"]["ResponseHeaders"];
 
