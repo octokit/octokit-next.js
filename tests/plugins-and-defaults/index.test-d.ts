@@ -1,7 +1,7 @@
 import { expectType } from "tsd";
-import { OctokitWithDefaultsAndPlugins } from "./index.js";
-import { Octokit } from "../../index.js";
+import { Octokit } from "@octokit-next/core";
 
+import { OctokitWithDefaultsAndPlugins } from "./index.js";
 import { fooPlugin } from "./plugins/foo/index.js";
 import { barPlugin } from "./plugins/bar/index.js";
 import { voidPlugin } from "./plugins/void/index.js";

@@ -1,0 +1,21 @@
+{
+  "name": "@octokit-next/core",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "version": "0.0.0-development",
+  "description": "Core SDK module for upcoming Octokit",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "scripts": {
+    "test": "tsd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/core"
+  },
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT"
+}

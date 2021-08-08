@@ -1,7 +1,7 @@
 import { test } from "uvu";
 import * as assert from "uvu/assert";
 
-import { Octokit } from "./index.js";
+import { Octokit } from "@octokit-next/core";
 
 test("octokit.request is a function", () => {
   const octokit = new Octokit();

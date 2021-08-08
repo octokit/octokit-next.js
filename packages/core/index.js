@@ -1,4 +1,4 @@
-import { request as coreRequest } from "./core/request/index.js";
+import { request as coreRequest } from "./request/index.js";
 
 export class Octokit {
   static withPlugins(newPlugins) {

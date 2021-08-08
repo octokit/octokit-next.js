@@ -1,4 +1,5 @@
 import { expectType, expectNotType } from "tsd";
+
 import { OctokitGhes30 } from "./index.js";
 
 export async function test() {
@@ -7,6 +8,7 @@ export async function test() {
   });
 
   const emojisResponseGhes30 = await octokit.request("GET /emojis");
+
   expectType<string>(emojisResponseGhes30.data["+1"]);
   expectType<string>(emojisResponseGhes30.data["-1"]);
   expectType<string>(emojisResponseGhes30.data["ghes-only"]);

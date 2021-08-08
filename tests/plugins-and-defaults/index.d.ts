@@ -1,4 +1,4 @@
-import { ExtendOctokitWith, Octokit } from "../../index.js";
+import { ExtendOctokitWith, Octokit } from "@octokit-next/core";
 
 import { fooPlugin } from "./plugins/foo/index.js";
 import { barPlugin } from "./plugins/bar/index.js";

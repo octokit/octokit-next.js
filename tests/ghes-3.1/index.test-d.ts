@@ -1,4 +1,5 @@
 import { expectType, expectNotType } from "tsd";
+
 import { OctokitGhes31 } from "./index.js";
 
 export async function test() {

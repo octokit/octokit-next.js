@@ -1,4 +1,4 @@
-import { ExtendOctokitWith, Octokit } from "../../index.js";
+import { ExtendOctokitWith, Octokit } from "@octokit-next/core";
 
 import "@octokit-next/types-rest-api-ghes-3.0";
 

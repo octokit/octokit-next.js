@@ -1,4 +1,4 @@
-import { Octokit } from "../../index.js";
+import { Octokit } from "@octokit-next/types";
 
 type RequestParameters = Record<string, unknown>;
 

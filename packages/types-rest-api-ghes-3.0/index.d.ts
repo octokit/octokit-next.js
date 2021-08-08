@@ -1,4 +1,4 @@
-import { Octokit } from "../../index.js";
+import { Octokit } from "@octokit-next/types";
 
 import "@octokit-next/types-rest-api-3.1";
 
@@ -12,7 +12,7 @@ type GHES30EndpointsDiff = {
   "GET /new-ghes-only": never;
 };
 
-declare module ".." {
+declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.0": {
