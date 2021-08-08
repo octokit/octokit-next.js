@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 import { RequestInterface } from "./request";
 
 /**
@@ -30,7 +28,7 @@ export namespace Octokit {
       /**
        * override the built-in fetch method, e.g. for testing
        */
-      fetch?: typeof fetch;
+      fetch?: (resource: any, init?: any) => Promise<{}>;
     };
   }
 

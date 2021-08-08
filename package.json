@@ -12,10 +12,11 @@
   "types": "./index.d.ts",
   "exports": "./index.js",
   "scripts": {
-    "test": "npm run -s test:code && npm run -s test:typescript && npm run -s test:coverage",
+    "test": "npm run -s test:code && npm run -s test:dts && npm run -s test:coverage",
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
-    "test:typescript": "for d in tests/js/* ; do tsd $d; done"
+    "test:dts": "for d in tests/js/* ; do tsd $d; done",
+    "test:ts": "npx tsc --noEmit --declaration --noUnusedLocals tests/ts/*.ts"
   },
   "renovate": {
     "extends": [
@@ -30,6 +31,7 @@
   "devDependencies": {
     "c8": "^7.7.3",
     "tsd": "^0.17.0",
+    "typescript": "^4.3.5",
     "uvu": "^0.5.1"
   },
   "workspaces": [
@@ -38,5 +40,9 @@
     "packages/types-rest-api-github.com",
     "packages/types-rest-api-ghes-3.1",
     "packages/types-rest-api-ghes-3.0"
-  ]
+  ],
+  "engines": {
+    "node": ">=16.5.0",
+    "npm": ">=7.17.0"
+  }
 }
