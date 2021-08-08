@@ -1,7 +1,5 @@
 import fetch from "node-fetch";
 
-import "@octokit-next/types-rest-api-github.com";
-
 import { RequestInterface } from "./request";
 
 /**

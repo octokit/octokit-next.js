@@ -19,13 +19,8 @@ export async function test() {
     required: "bar",
   });
 
-  const emojisResponse = await octokit.request("GET /emojis");
-  expectType<string>(emojisResponse.data["+1"]);
-  expectType<string>(emojisResponse.data["-1"]);
-  expectType<string>(emojisResponse.data["dotcom-only"]);
-
-  // @ts-expect-error
-  emojisResponse.data["ghes-only"];
+  const emojisResponse = await octokit.request("GET /");
+  expectType<string>(emojisResponse.data["emojis_url"]);
 
   expectType<string>(octokit.foo);
   expectType<string>(octokit.bar);
