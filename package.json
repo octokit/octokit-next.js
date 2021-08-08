@@ -12,7 +12,7 @@
   "types": "./index.d.ts",
   "exports": "./index.js",
   "scripts": {
-    "test": "npm run -s test:code && npm run -s test:dts && npm run -s test:coverage",
+    "test": "npm run test:code && npm run test:dts && npm run test:coverage",
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
     "test:dts": "for d in tests/js/* ; do tsd $d; done",
