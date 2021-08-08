@@ -1,8 +1,8 @@
 /// <reference path="./index.d.ts" />
 
 /**
- * @param {import('../../../..').Octokit} octokit
- * @param {import('../../../..').Octokit.Options} options
+ * @param {import('@octokit-next/types').Octokit} octokit
+ * @param {import('@octokit-next/types').Octokit.Options} options
  */
 export function withOptionsPlugin(octokit, options) {
   return {

@@ -1,6 +1,6 @@
-import { Octokit } from "../../../../index.js";
+import { Octokit } from "@octokit-next/types";
 
-declare module "../../../.." {
+declare module "@octokit-next/types" {
   namespace Octokit {
     interface Options {
       optional?: string;

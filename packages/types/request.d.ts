@@ -1,8 +1,8 @@
-import { Octokit } from "@octokit-next/types";
+import { Octokit } from "./index.js";
 
 type RequestParameters = Record<string, unknown>;
 
-export interface request<TVersion extends keyof Octokit.ApiVersions> {
+export interface RequestInterface<TVersion extends keyof Octokit.ApiVersions> {
   /**
    * Sends a request based on endpoint options
    *

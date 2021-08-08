@@ -1,4 +1,4 @@
-import { Octokit } from "../../index";
+import { Octokit } from "@octokit-next/core";
 
 import "@octokit-next/types-rest-api-ghes-3.1";
 

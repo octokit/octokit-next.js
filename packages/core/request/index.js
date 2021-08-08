@@ -3,7 +3,7 @@ import nodeFetch from "node-fetch";
 /**
  * Naive implementation of [`@octokit/request`](https://github.com/octokit/request.js/) for testing purposes
  *
- * @param {import("../..").Base.Options} ConstructorOptions
+ * @param {import("@octokit-next/types").Octokit.Options} ConstructorOptions
  * @param {string} route
  * @param {object} [parameters] route parameters
  */
