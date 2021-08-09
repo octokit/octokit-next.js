@@ -4,12 +4,7 @@ import { RequestInterface } from "./request";
  * Global Octokit interfaces that can be extended as needed.
  */
 export namespace Octokit {
-  interface Options<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
-    /**
-     * GitHub API Version. Defaults to "github.com"
-     */
-    version?: TVersion;
-
+  interface Options {
     /**
      * GitHub's REST API base URL. Defaults to https://api.github.com
      *
@@ -115,7 +110,7 @@ export namespace Octokit {
 
 export declare class Octokit<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TOptions extends Octokit.Options<TVersion> = Octokit.Options<TVersion>
+  TOptions extends Octokit.Options = Octokit.Options
 > {
   /**
    * Pass one or multiple plugin functions to extend the `Octokit` class.
@@ -165,7 +160,7 @@ export declare class Octokit<
   static withDefaults<
     PredefinedOptionsOne,
     ClassOne extends Constructor<
-      Octokit<TVersion, Octokit.Options<TVersion> & PredefinedOptionsOne>
+      Octokit<TVersion, Octokit.Options & PredefinedOptionsOne>
     > &
       ClassWithPlugins,
     TVersion extends keyof Octokit.ApiVersions = "github.com"
@@ -209,9 +204,9 @@ export declare class Octokit<
   /**
    * Options passed to the constructor combined with the constructor defaults
    */
-  options: TOptions;
+  options: { version: TVersion } & TOptions;
 
-  constructor(options: TOptions);
+  constructor(options: { version?: TVersion } & TOptions);
 
   request: RequestInterface<TVersion>;
 }
