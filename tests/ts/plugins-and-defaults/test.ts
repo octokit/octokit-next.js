@@ -1,23 +1,24 @@
-import { expectType } from "tsd";
 import { Octokit } from "@octokit-next/core";
 
-import { OctokitWithDefaultsAndPlugins } from "./index.js";
-import { fooPlugin } from "./plugins/foo/index.js";
-import { barPlugin } from "./plugins/bar/index.js";
-import { voidPlugin } from "./plugins/void/index.js";
-import { withOptionsPlugin } from "./plugins/with-options/index.js";
+import { OctokitWithDefaultsAndPlugins } from "./";
+
+import { fooPlugin } from "./plugins/foo";
+import { barPlugin } from "./plugins/bar";
+import { voidPlugin } from "./plugins/void";
+import { withOptionsPlugin } from "./plugins/with-options";
+
+function expectType<T>(value: T): void {}
 
 export async function test() {
+  const octokit = new OctokitWithDefaultsAndPlugins({
+    required: "value",
+  });
+
   // @ts-expect-error - options are required
   new OctokitWithDefaultsAndPlugins();
 
   // @ts-expect-error - bar option is required
   new OctokitWithDefaultsAndPlugins({});
-
-  const octokit = new OctokitWithDefaultsAndPlugins({
-    optional: "foo",
-    required: "bar",
-  });
 
   const emojisResponse = await octokit.request("GET /");
   expectType<string>(emojisResponse.data["emojis_url"]);

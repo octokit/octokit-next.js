@@ -14,5 +14,5 @@ export function withOptionsPlugin(
   options: Octokit.Options
 ): {
   getOptionalOption: () => Required<Octokit.Options>["optional"];
-  getRequiredOption: () => Octokit.Options["required"];
+  getRequriedOption: () => Octokit.Options["required"];
 };
