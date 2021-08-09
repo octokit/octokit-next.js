@@ -16,7 +16,7 @@
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
     "test:dts": "for d in tests/js/* ; do tsd $d; done",
-    "test:ts": "npx tsc --noEmit --declaration --noUnusedLocals tests/ts/*.ts"
+    "test:ts": "for d in tests/ts/*/tsconfig.json ; do tsc -p $d; done"
   },
   "renovate": {
     "extends": [
