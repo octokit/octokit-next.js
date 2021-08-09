@@ -12,11 +12,11 @@
   "types": "./index.d.ts",
   "exports": "./index.js",
   "scripts": {
-    "test": "npm run test:code && npm run test:dts && npm run test:coverage",
+    "test": "npm run test:code && npm run test:dts && npm run test:ts && npm run test:coverage",
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
-    "test:dts": "for d in tests/js/* ; do tsd $d; done",
-    "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo $d; tsc -p $d; done"
+    "test:dts": "for d in tests/js/* ; do echo $d; tsd $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
+    "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo $d; tsc -p $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done"
   },
   "renovate": {
     "extends": [

@@ -1,27 +1,18 @@
 import { expectType, expectNotType } from "tsd";
 
-import { OctokitGhes31 } from "./index.js";
+import { Octokit } from "@octokit-next/core";
+
+import "@octokit-next/types-rest-api-ghes-3.1";
 
 export async function test() {
-  new OctokitGhes31({});
-
-  const octokit = new OctokitGhes31({
-    baseUrl: "https://github.acme-inc.com/api/v3",
+  const octokit = new Octokit({
+    version: "ghes-3.1",
   });
 
-  const emojisResponseGhes31 = await octokit.request("GET /emojis");
-  expectType<string>(emojisResponseGhes31.data["+1"]);
-  expectType<string>(emojisResponseGhes31.data["-1"]);
-  expectType<string>(emojisResponseGhes31.data["ghes-only"]);
-  expectType<never>(emojisResponseGhes31.data["dotcom-only"]);
+  const dotcomOnlyResponse = await octokit.request("GET /dotcom-only");
+  expectType<never>(dotcomOnlyResponse);
 
-  expectType<never>(await octokit.request("GET /dotcom-only"));
-  expectNotType<never>(await octokit.request("GET /new-endpoint"));
-
-  const { headers } = await octokit.request("GET /emojis");
-  expectType<string>(headers["x-github-enterprise-version"]);
-  expectType<never>(headers["x-dotcom-only"]);
-
-  expectNotType<never>(await octokit.request("GET /ghes-only"));
-  expectNotType<never>(await octokit.request("GET /new-ghes-only"));
+  const ghesOnlyResponse = await octokit.request("GET /ghes-only");
+  expectType<boolean>(ghesOnlyResponse.data.ok);
+  expectType<never>(ghesOnlyResponse.headers["x-dotcom-only"]);
 }
