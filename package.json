@@ -7,16 +7,16 @@
   "license": "MIT",
   "repository": "github:octokit/octokit-next.js",
   "dependencies": {
-    "javascript-plugin-architecture-with-typescript-definitions": "4.0.0",
     "node-fetch": "3.0.0-beta.10"
   },
   "types": "./index.d.ts",
   "exports": "./index.js",
   "scripts": {
-    "test": "npm run -s test:code && npm run -s test:typescript && npm run -s test:coverage",
+    "test": "npm run test:code && npm run test:dts && npm run test:coverage",
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
-    "test:typescript": "tsd"
+    "test:dts": "for d in tests/js/* ; do tsd $d; done",
+    "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo $d; tsc -p $d; done"
   },
   "renovate": {
     "extends": [
@@ -26,11 +26,66 @@
   "release": {
     "branches": [
       "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      [
+        "semantic-release-plugin-update-version-in-files",
+        {
+          "files": [
+            "packages/*/package.json"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/core"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.0"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.1"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-github.com"
+        }
+      ]
     ]
   },
   "devDependencies": {
     "c8": "^7.7.3",
     "tsd": "^0.17.0",
+    "typescript": "^4.3.5",
     "uvu": "^0.5.1"
+  },
+  "workspaces": [
+    "packages/types",
+    "packages/core",
+    "packages/types-rest-api-github.com",
+    "packages/types-rest-api-ghes-3.1",
+    "packages/types-rest-api-ghes-3.0"
+  ],
+  "engines": {
+    "node": ">=16.5.0",
+    "npm": ">=7.17.0"
   }
 }

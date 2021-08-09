@@ -1,7 +1,7 @@
 import { test } from "uvu";
 import * as assert from "uvu/assert";
 
-import { Octokit } from "./index.js";
+import { Octokit } from "@octokit-next/core";
 
 test("octokit.request is a function", () => {
   const octokit = new Octokit();
@@ -9,7 +9,7 @@ test("octokit.request is a function", () => {
 });
 
 test("myOctokit.request is a function", () => {
-  const MyOctokit = Octokit.withDefaults({});
+  const MyOctokit = Octokit.withDefaults({}).withPlugins([() => {}]);
   const myOctokit = new MyOctokit();
   assert.equal(typeof myOctokit.request, "function");
 });
