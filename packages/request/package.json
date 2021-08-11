@@ -1,11 +1,11 @@
 {
-  "name": "@octokit-next/core",
+  "name": "@octokit-next/request",
+  "version": "0.0.0-development",
+  "description": "Simplified version of `@octokit/request` to experiment with ESM and types",
   "publishConfig": {
     "access": "public"
   },
   "type": "module",
-  "version": "0.0.0-development",
-  "description": "Core SDK module for upcoming Octokit",
   "exports": "./index.js",
   "types": "./index.d.ts",
   "repository": {
@@ -17,6 +17,6 @@
   "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/request": "0.0.0-development"
+    "node-fetch": "3.0.0-beta.10"
   }
 }

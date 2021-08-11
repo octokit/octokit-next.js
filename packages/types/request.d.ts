@@ -1,8 +1,13 @@
 import { Octokit } from "./index.js";
 
-type RequestParameters = Record<string, unknown>;
+type EndpointParameters = { request: Octokit.RequestOptions } & Record<
+  string,
+  unknown
+>;
 
-export interface RequestInterface<TVersion extends keyof Octokit.ApiVersions> {
+export interface RequestInterface<
+  TVersion extends keyof Octokit.ApiVersions = "github.com"
+> {
   /**
    * Sends a request based on endpoint options
    *
@@ -14,9 +19,9 @@ export interface RequestInterface<TVersion extends keyof Octokit.ApiVersions> {
     options?: Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
       ? "parameters" extends keyof Octokit.ApiVersions[TVersion]["Endpoints"][Route]
         ? Octokit.ApiVersions[TVersion]["Endpoints"][Route]["parameters"] &
-            RequestParameters
+            EndpointParameters
         : never
-      : RequestParameters
+      : EndpointParameters
   ): Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
     ? "response" extends keyof Octokit.ApiVersions[TVersion]["Endpoints"][Route]
       ? Promise<Octokit.ApiVersions[TVersion]["Endpoints"][Route]["response"]>

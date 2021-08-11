@@ -1,6 +1,8 @@
 import { expectType } from "tsd";
 import { Octokit, Plugin } from "./index.js";
 
+import "@octokit-next/types-rest-api-github.com";
+
 export async function test() {
   // TODO:
   // new Octokit();
@@ -26,7 +28,7 @@ export async function test() {
   expectType<string>(emojisResponseDotcom.data["dotcom-only"]);
 
   // @ts-expect-error - ghes-only does not exist
-  emojisResponseDotcom.data["ghes-only"];
+  type test = typeof emojisResponseDotcom["data"]["ghes-only"];
 
   const OctokitWithEmptyDefaults = Octokit.withDefaults({
     // there should be no required options
