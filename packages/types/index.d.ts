@@ -1,10 +1,13 @@
 import { RequestInterface } from "./request";
+export { RequestInterface } from "./request";
 
 /**
  * Global Octokit interfaces that can be extended as needed.
  */
 export namespace Octokit {
   interface Options {
+    version?: keyof Octokit.ApiVersions;
+
     /**
      * GitHub's REST API base URL. Defaults to https://api.github.com
      *
@@ -19,12 +22,19 @@ export namespace Octokit {
      */
     userAgent?: string;
 
-    request?: {
-      /**
-       * override the built-in fetch method, e.g. for testing
-       */
-      fetch?: (resource: any, init?: any) => Promise<{}>;
-    };
+    request?: RequestOptions;
+  }
+
+  interface RequestOptions {
+    /**
+     * Override API version on a per-request basis.
+     */
+    version?: keyof Octokit.ApiVersions;
+
+    /**
+     * override the built-in fetch method, e.g. for testing
+     */
+    fetch?: (resource: any, init?: any) => Promise<any>;
   }
 
   interface ResponseHeaders {

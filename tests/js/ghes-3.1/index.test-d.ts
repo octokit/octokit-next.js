@@ -15,4 +15,11 @@ export async function test() {
   const ghesOnlyResponse = await octokit.request("GET /ghes-only");
   expectType<boolean>(ghesOnlyResponse.data.ok);
   expectType<never>(ghesOnlyResponse.headers["x-dotcom-only"]);
+
+  const dotcomOnlyResponse2 = await octokit.request("GET /dotcom-only", {
+    request: {
+      version: "github.com",
+    },
+  });
+  expectType<boolean>(dotcomOnlyResponse2.data.ok);
 }

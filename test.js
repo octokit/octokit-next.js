@@ -1,6 +1,7 @@
 import { test } from "uvu";
 import * as assert from "uvu/assert";
 
+import { request } from "@octokit-next/request";
 import { Octokit } from "@octokit-next/core";
 
 test("octokit.request is a function", () => {
@@ -18,7 +19,6 @@ test("octokit.request('GET /')", async () => {
   const fetchMock = async function (url, options) {
     assert.equal(url, "https://api.github.com/");
     assert.equal(options.method, "GET");
-
     return {
       status: 200,
       ok: true,
@@ -29,13 +29,11 @@ test("octokit.request('GET /')", async () => {
       },
     };
   };
-
   const octokit = new Octokit({
     request: {
       fetch: fetchMock,
     },
   });
-
   const response = await octokit.request("GET /");
   assert.equal(response, {
     status: 200,
@@ -75,6 +73,35 @@ test("octokit.request('GET /unknown')", async () => {
 
     assert.equal(error.response.status, 404);
   }
+});
+
+test("request('GET /')", async () => {
+  const fetchMock = async function (url, options) {
+    assert.equal(url, "https://api.github.com/");
+    assert.equal(options.method, "GET");
+
+    return {
+      status: 200,
+      ok: true,
+      headers: new Map(),
+      url: "https://api.github.com",
+      async json() {
+        return { ok: true };
+      },
+    };
+  };
+
+  const response = await request("GET /", {
+    request: {
+      fetch: fetchMock,
+    },
+  });
+  assert.equal(response, {
+    status: 200,
+    url: "https://api.github.com",
+    headers: {},
+    data: { ok: true },
+  });
 });
 
 test.run();

@@ -1,4 +1,4 @@
-import { request as coreRequest } from "./request/index.js";
+import { request as coreRequest } from "@octokit-next/request";
 
 export class Octokit {
   static withPlugins(newPlugins) {
@@ -35,7 +35,15 @@ export class Octokit {
     });
   }
 
-  request(route, parameters) {
-    return coreRequest(this.options, route, parameters);
+  request(route, parameters = {}) {
+    const requestOptions = {
+      ...this.options.request,
+      ...parameters.request,
+    };
+    return coreRequest(route, {
+      ...{ baseUrl: this.options.baseUrl },
+      ...parameters,
+      request: requestOptions,
+    });
   }
 }
