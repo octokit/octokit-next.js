@@ -6,6 +6,13 @@ export { RequestInterface } from "./request";
  */
 export namespace Octokit {
   interface Options {
+    /**
+     * API version. Defaults to `"github.com"`.
+     *
+     * In order to set it a GitHub Enterprise Version such as "ghes-3.1",
+     * install the according `@octokit-next/types-rest-api-ghes-*` package,
+     * such as `@octokit-next/types-rest-api-ghes-3.1`.
+     */
     version?: keyof Octokit.ApiVersions;
 
     /**
