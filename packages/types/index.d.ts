@@ -29,6 +29,9 @@ export namespace Octokit {
      */
     userAgent?: string;
 
+    /**
+     * Request options passed as default `{ request }` options to every request.
+     */
     request?: RequestOptions;
   }
 
