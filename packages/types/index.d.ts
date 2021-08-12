@@ -1,6 +1,10 @@
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
 
+interface AuthInterface {
+  async(options: Record<string, unknown>): Promise<unknown>;
+}
+
 /**
  * Global Octokit interfaces that can be extended as needed.
  */
@@ -28,6 +32,19 @@ export namespace Octokit {
      * @example "my-app/1.2.3"
      */
     userAgent?: string;
+
+    /**
+     * Auth strategy function
+     *
+     * @see https://github.com/octokit/auth.js
+     */
+    authStrategy?: (options?: Record<string, unknown>) => AuthInterface;
+
+    /**
+     * Auth strategy options. Can be set to an access token. If `authStrategy`
+     * option is set, the auth option must be set to the authentication strategy options.
+     */
+    auth?: String | Record<string, unknown>;
 
     /**
      * Request options passed as default `{ request }` options to every request.
