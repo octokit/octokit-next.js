@@ -1,11 +1,30 @@
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
 
+interface AuthStrategyInterface {
+  (options?: any): AuthInterface;
+}
+interface AuthInterface {
+  (options?: any): Promise<unknown>;
+}
+
+type AuthStrategyAndOptions<AuthStrategy extends AuthStrategyInterface> = {
+  authStrategy: AuthStrategy;
+  auth: Parameters<AuthStrategy>[0];
+};
+
 /**
  * Global Octokit interfaces that can be extended as needed.
  */
 export namespace Octokit {
   interface Options {
+    /**
+     * API version. Defaults to `"github.com"`.
+     *
+     * In order to set it a GitHub Enterprise Version such as "ghes-3.1",
+     * install the according `@octokit-next/types-rest-api-ghes-*` package,
+     * such as `@octokit-next/types-rest-api-ghes-3.1`.
+     */
     version?: keyof Octokit.ApiVersions;
 
     /**
@@ -22,6 +41,22 @@ export namespace Octokit {
      */
     userAgent?: string;
 
+    // /**
+    //  * Auth strategy function
+    //  *
+    //  * @see https://github.com/octokit/auth.js
+    //  */
+    // authStrategy?: AuthStrategyInterface;
+
+    // /**
+    //  * Auth strategy options. Can be set to an access token. If `authStrategy`
+    //  * option is set, the auth option must be set to the authentication strategy options.
+    //  */
+    // auth?: String | Record<string, unknown>;
+
+    /**
+     * Request options passed as default `{ request }` options to every request.
+     */
     request?: RequestOptions;
   }
 
@@ -120,7 +155,8 @@ export namespace Octokit {
 
 export declare class Octokit<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TOptions extends Octokit.Options = Octokit.Options
+  TOptions extends Octokit.Options = Octokit.Options,
+  TAuthStrategy extends AuthStrategyInterface | never = never
 > {
   /**
    * Pass one or multiple plugin functions to extend the `Octokit` class.
@@ -216,7 +252,23 @@ export declare class Octokit<
    */
   options: { version: TVersion } & TOptions;
 
-  constructor(options: { version?: TVersion } & TOptions);
+  /**
+   * Constructor without setting `authStrategy`
+   *
+   * You can optionally set the `auth` option to an access token string in order
+   * to authenticate requests.
+   */
+  constructor(options: { version?: TVersion } & { auth?: string } & TOptions);
+
+  /**
+   * Constructor with setting `authStrategy`
+   *
+   * The `auth` option must be set to whatever the function passed as `authStrategy` accepts
+   */
+  constructor(
+    options: { version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
+      TOptions
+  );
 
   request: RequestInterface<TVersion>;
 }
