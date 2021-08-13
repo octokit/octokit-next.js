@@ -10,6 +10,12 @@ function createCallbackAuth(options: CallbackStrategyOptions) {
   };
 }
 
+const OctokitWithCallbackAuth = Octokit.withDefaults({
+  authStrategy: createCallbackAuth,
+});
+
+new OctokitWithCallbackAuth();
+
 export async function test() {
   // set auth to access token
   new Octokit({
@@ -33,4 +39,11 @@ export async function test() {
       callback: () => "token",
     },
   });
+
+  const OctokitWithCallbackAuth = Octokit.withDefaults({
+    authStrategy: createCallbackAuth,
+  });
+
+  // @ts-expect-error - auth is required to be set to `{ callback }`
+  new OctokitWithCallbackAuth();
 }
