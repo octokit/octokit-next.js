@@ -1,11 +1,9 @@
 import { expectType } from "tsd";
 
-import { OctokitCore } from "./index.js";
+import { Octokit } from "./index.js";
 
 export async function test() {
-  new OctokitCore({});
-
-  const octokit = new OctokitCore();
+  const octokit = new Octokit();
 
   const rootResponse = await octokit.request("GET /");
   expectType<string>(rootResponse.data.emojis_url);
