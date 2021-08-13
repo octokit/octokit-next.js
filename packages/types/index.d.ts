@@ -258,7 +258,11 @@ export declare class Octokit<
    * You can optionally set the `auth` option to an access token string in order
    * to authenticate requests.
    */
-  constructor(options: { version?: TVersion } & { auth?: string } & TOptions);
+  constructor(
+    ...options: NonOptionalKeys<TOptions> extends undefined
+      ? [({ version?: TVersion } & { auth?: string } & TOptions)?]
+      : [{ version?: TVersion } & { auth?: string } & TOptions]
+  );
 
   /**
    * Constructor with setting `authStrategy`
@@ -266,6 +270,8 @@ export declare class Octokit<
    * The `auth` option must be set to whatever the function passed as `authStrategy` accepts
    */
   constructor(
+    // we assume that if `authStrategy` is set, the `auth` option is always required,
+    // hence the constructor options are always required
     options: { version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
       TOptions
   );
