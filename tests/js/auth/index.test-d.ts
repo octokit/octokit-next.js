@@ -6,15 +6,6 @@ type CallbackStrategyOptions = {
   callback: () => string | Promise<string>;
 };
 
-type AuthUnauthenticated = {
-  type: "unauthenticated";
-};
-
-type AuthToken = {
-  type: "token";
-  token: string;
-};
-
 interface CallbackAuth {
   (options?: Record<string, unknown>): Promise<unknown>;
 }
