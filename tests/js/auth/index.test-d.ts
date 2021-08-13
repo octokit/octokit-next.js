@@ -3,7 +3,7 @@ import { expectType } from "tsd";
 import { Octokit } from "./index.js";
 
 type CallbackStrategyOptions = {
-  callback(): Promise<string>;
+  callback: () => string | Promise<string>;
 };
 
 type AuthUnauthenticated = {
@@ -16,7 +16,7 @@ type AuthToken = {
 };
 
 interface CallbackAuth {
-  (): Promise<AuthUnauthenticated | AuthToken>;
+  (options?: Record<string, unknown>): Promise<unknown>;
 }
 
 declare function createCallbackAuth(
@@ -32,6 +32,15 @@ export async function test() {
   // @ts-expect-error - auth is required to be set to `{ callback }`
   new Octokit({
     authStrategy: createCallbackAuth,
+  });
+
+  new Octokit({
+    authStrategy: createCallbackAuth,
+    auth: {
+      callback() {
+        return "";
+      },
+    },
   });
 
   // @ts-expect-error - invalid auth options
