@@ -2,4 +2,6 @@
 
 > Types for GHES 3.0 REST API requests and responses
 
-See https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.0
+🚫⚠️ This package is part of an experimental Octokit SDK for testing purpose only - DO NOT USE
+
+[learn more](https://github.com/octokit/octokit-next.js)

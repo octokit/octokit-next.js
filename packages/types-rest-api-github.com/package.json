@@ -12,6 +12,7 @@
     "url": "https://github.com/octokit/octokit-next.js.git",
     "directory": "packages/types-rest-api-github.com"
   },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-github.com#readme",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {

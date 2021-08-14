@@ -2,4 +2,6 @@
 
 > Types for github.com REST API requests and responses
 
-See https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-github.com
+🚫⚠️ This package is part of an experimental Octokit SDK for testing purpose only - DO NOT USE
+
+[learn more](https://github.com/octokit/octokit-next.js)

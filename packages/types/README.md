@@ -2,4 +2,6 @@
 
 > Shared TypeScript definitions for upcoming Octokit SDK
 
-See https://github.com/octokit/octokit-next.js/tree/main/packages/types
+🚫⚠️ This package is part of an experimental Octokit SDK for testing purpose only - DO NOT USE
+
+[learn more](https://github.com/octokit/octokit-next.js)
