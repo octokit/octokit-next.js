@@ -18,7 +18,10 @@ declare module "@octokit-next/types" {
       "ghes-3.0": {
         ResponseHeaders: GHES30ResponseHeaders;
 
-        Endpoints: Octokit.ApiVersions["ghes-3.1"]["Endpoints"] &
+        Endpoints: Omit<
+          Octokit.ApiVersions["ghes-3.1"]["Endpoints"],
+          keyof GHES30EndpointsDiff
+        > &
           GHES30EndpointsDiff;
       };
     }

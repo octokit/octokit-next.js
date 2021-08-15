@@ -1,6 +1,8 @@
 import { expectType } from "tsd";
 import { Octokit } from "@octokit-next/core";
 
+import "@octokit-next/types-rest-api-ghes-3.0";
+
 import { OctokitWithDefaultsAndPlugins } from "./index.js";
 import { fooPlugin } from "./plugins/foo/index.js";
 import { barPlugin } from "./plugins/bar/index.js";
@@ -245,4 +247,59 @@ export async function test() {
   expectType<string>(
     octokitWithManyChainedDefaultsAndPlugins.getOptionalOption()
   );
+
+  // versions
+
+  const octokitCoreWithGhes31Version = new Octokit({
+    version: "ghes-3.1",
+    required: "",
+  });
+
+  const response = await octokitCoreWithGhes31Version.request("GET /ghes-only");
+
+  expectType<boolean>(response.data.ok);
+
+  const OctokitGHES31 = Octokit.withDefaults({
+    version: "ghes-3.1",
+  });
+  const octokitGhes31 = new OctokitGHES31({
+    required: "",
+  });
+  expectType<never>(await octokitGhes31.request("GET /dotcom-only"));
+  expectType<{
+    "+1": string;
+    "-1": string;
+    "ghes-only": string;
+    "dotcom-only": never;
+  }>((await octokitGhes31.request("GET /emojis")).data);
+
+  const octokitGhes30ViaConstructorOptions = new OctokitGHES31({
+    version: "ghes-3.0",
+    required: "",
+  });
+  expectType<never>(
+    await octokitGhes30ViaConstructorOptions.request("GET /new-ghes-only")
+  );
+  expectType<{
+    "+1": string;
+    "-1": string;
+    "ghes-only": string;
+    "dotcom-only": never;
+  }>((await octokitGhes30ViaConstructorOptions.request("GET /emojis")).data);
+
+  const OctokitGHES30 = OctokitGHES31.withDefaults({
+    version: "ghes-3.0",
+  });
+  const octokitGhes30ViaChainedDefaults = new OctokitGHES30({
+    required: "",
+  });
+  expectType<never>(
+    await octokitGhes30ViaChainedDefaults.request("GET /new-ghes-only")
+  );
+  expectType<{
+    "+1": string;
+    "-1": string;
+    "ghes-only": string;
+    "dotcom-only": never;
+  }>((await octokitGhes30ViaChainedDefaults.request("GET /emojis")).data);
 }
