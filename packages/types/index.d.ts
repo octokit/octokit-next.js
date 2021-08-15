@@ -17,7 +17,7 @@ type AuthStrategyAndOptions<AuthStrategy extends AuthStrategyInterface> = {
  * Global Octokit interfaces that can be extended as needed.
  */
 export namespace Octokit {
-  interface Options {
+  interface Options<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
     /**
      * API version. Defaults to `"github.com"`.
      *
@@ -25,7 +25,7 @@ export namespace Octokit {
      * install the according `@octokit-next/types-rest-api-ghes-*` package,
      * such as `@octokit-next/types-rest-api-ghes-3.1`.
      */
-    version?: keyof Octokit.ApiVersions;
+    version?: TVersion;
 
     /**
      * GitHub's REST API base URL. Defaults to https://api.github.com
@@ -60,11 +60,11 @@ export namespace Octokit {
     request?: RequestOptions;
   }
 
-  interface RequestOptions {
+  interface RequestOptions<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
     /**
      * Override API version on a per-request basis.
      */
-    version?: keyof Octokit.ApiVersions;
+    version?: TVersion;
 
     /**
      * override the built-in fetch method, e.g. for testing
@@ -155,7 +155,7 @@ export namespace Octokit {
 
 export declare class Octokit<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TOptions extends Octokit.Options = Octokit.Options,
+  TOptions extends Octokit.Options<TVersion> = Octokit.Options<TVersion>,
   TAuthStrategy extends AuthStrategyInterface | never = never
 > {
   /**
@@ -206,24 +206,24 @@ export declare class Octokit<
   static withDefaults<
     PredefinedOptionsOne,
     ClassOne extends Constructor<
-      Octokit<TVersion, Octokit.Options & PredefinedOptionsOne>
+      Octokit<TVersion, Octokit.Options<TVersion> & PredefinedOptionsOne>
     > &
       ClassWithPlugins,
     TVersion extends keyof Octokit.ApiVersions = "github.com"
   >(
     this: ClassOne,
-    defaults: PredefinedOptionsOne
+    defaults: PredefinedOptionsOne & { version?: TVersion }
   ): ConstructorRequiringOptionsIfNeeded<ClassOne, PredefinedOptionsOne> & {
     withDefaults<ClassTwo, PredefinedOptionsTwo>(
       this: ClassTwo,
-      defaults: PredefinedOptionsTwo
+      defaults: PredefinedOptionsTwo & { version?: TVersion }
     ): ConstructorRequiringOptionsIfNeeded<
       ClassOne & ClassTwo,
       PredefinedOptionsOne & PredefinedOptionsTwo
     > & {
       withDefaults<ClassThree, PredefinedOptionsThree>(
         this: ClassThree,
-        defaults: PredefinedOptionsThree
+        defaults: PredefinedOptionsThree & { version?: TVersion }
       ): ConstructorRequiringOptionsIfNeeded<
         ClassOne & ClassTwo & ClassThree,
         PredefinedOptionsOne & PredefinedOptionsTwo & PredefinedOptionsThree
