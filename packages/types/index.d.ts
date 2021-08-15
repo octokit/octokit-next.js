@@ -60,7 +60,9 @@ export namespace Octokit {
     request?: RequestOptions;
   }
 
-  interface RequestOptions<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
+  interface RequestOptions<
+    TVersion extends keyof Octokit.ApiVersions = "github.com"
+  > {
     /**
      * Override API version on a per-request basis.
      */
@@ -250,7 +252,7 @@ export declare class Octokit<
   /**
    * Options passed to the constructor combined with the constructor defaults
    */
-  options: { version: TVersion } & TOptions;
+  options: TOptions;
 
   /**
    * Constructor without setting `authStrategy`

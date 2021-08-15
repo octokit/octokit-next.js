@@ -4,18 +4,21 @@ import { Octokit } from "@octokit-next/core";
 import "@octokit-next/types-rest-api-ghes-3.0";
 
 export async function test() {
-  const octokitCoreWithGhes31Version = new Octokit({
+  const octokit = new Octokit({
     version: "ghes-3.1",
   });
+  expectType<"ghes-3.1">(octokit.options.version);
 
-  const response = await octokitCoreWithGhes31Version.request("GET /ghes-only");
+  const response = await octokit.request("GET /ghes-only");
 
   expectType<boolean>(response.data.ok);
 
   const OctokitGHES31 = Octokit.withDefaults({
     version: "ghes-3.1",
   });
+  expectType<"ghes-3.1">(OctokitGHES31.defaults.version);
   const octokitGhes31 = new OctokitGHES31();
+  expectType<"ghes-3.1">(octokitGhes31.options.version);
   expectType<never>(await octokitGhes31.request("GET /dotcom-only"));
 
   expectType<{
@@ -28,6 +31,8 @@ export async function test() {
   const octokitGhes30ViaConstructorOptions = new OctokitGHES31({
     version: "ghes-3.0",
   });
+  expectType<"ghes-3.0">(octokitGhes30ViaConstructorOptions.options.version);
+
   expectType<never>(
     await octokitGhes30ViaConstructorOptions.request("GET /new-ghes-only")
   );
