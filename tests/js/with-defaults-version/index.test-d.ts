@@ -17,9 +17,13 @@ export async function test() {
   });
   const octokitGhes31 = new OctokitGHES31();
   expectType<never>(await octokitGhes31.request("GET /dotcom-only"));
-  expectType<Octokit.Response<any, any>>(
-    await octokitGhes31.request("GET /emojis")
-  );
+
+  expectType<{
+    "+1": string;
+    "-1": string;
+    "ghes-only": string;
+    "dotcom-only": never;
+  }>((await octokitGhes31.request("GET /emojis")).data);
 
   const octokitGhes30ViaConstructorOptions = new OctokitGHES31({
     version: "ghes-3.0",
@@ -27,9 +31,12 @@ export async function test() {
   expectType<never>(
     await octokitGhes30ViaConstructorOptions.request("GET /new-ghes-only")
   );
-  expectType<Octokit.Response<any, any>>(
-    await octokitGhes30ViaConstructorOptions.request("GET /emojis")
-  );
+  expectType<{
+    "+1": string;
+    "-1": string;
+    "ghes-only": string;
+    "dotcom-only": never;
+  }>((await octokitGhes30ViaConstructorOptions.request("GET /emojis")).data);
 
   const OctokitGHES30 = OctokitGHES31.withDefaults({
     version: "ghes-3.0",
@@ -38,7 +45,10 @@ export async function test() {
   expectType<never>(
     await octokitGhes30ViaChainedDefaults.request("GET /new-ghes-only")
   );
-  expectType<Octokit.Response<any, any>>(
-    await octokitGhes30ViaChainedDefaults.request("GET /emojis")
-  );
+  expectType<{
+    "+1": string;
+    "-1": string;
+    "ghes-only": string;
+    "dotcom-only": never;
+  }>((await octokitGhes30ViaChainedDefaults.request("GET /emojis")).data);
 }
