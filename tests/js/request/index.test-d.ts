@@ -4,7 +4,7 @@ import { request } from "./index.js";
 import "@octokit-next/types-rest-api-ghes-3.1";
 
 export async function test() {
-  // knownn route, uses explicit version
+  // known route, uses explicit version
   const ghesOnlyResponse = await request("GET /ghes-only", {
     request: {
       version: "ghes-3.1",
