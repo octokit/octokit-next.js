@@ -9,9 +9,6 @@ interface CallbackAuth {
   (options?: Record<string, unknown>): Promise<unknown>;
 }
 
-const optionsTest = {} as Octokit.Options<"github.com">;
-console.log(optionsTest.auth);
-
 declare function createCallbackAuth(
   options: CallbackStrategyOptions
 ): CallbackAuth;
