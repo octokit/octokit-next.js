@@ -5,10 +5,12 @@ import { Octokit } from "./index.js";
 type CallbackStrategyOptions = {
   callback: () => string | Promise<string>;
 };
-
 interface CallbackAuth {
   (options?: Record<string, unknown>): Promise<unknown>;
 }
+
+const optionsTest = {} as Octokit.Options<"github.com">;
+console.log(optionsTest.auth);
 
 declare function createCallbackAuth(
   options: CallbackStrategyOptions
@@ -34,9 +36,9 @@ export async function test() {
     },
   });
 
-  // @ts-expect-error - invalid auth options
   new Octokit({
     authStrategy: createCallbackAuth,
+    // @ts-expect-error - invalid auth options
     auth: "token",
   });
 
@@ -45,5 +47,7 @@ export async function test() {
   });
 
   // @ts-expect-error - auth is required to be set to `{ callback }`
-  new OctokitWithCallbackAuth();
+  const test = new OctokitWithCallbackAuth();
+
+  expectType<typeof createCallbackAuth>(test.options.authStrategy);
 }
