@@ -1,11 +1,10 @@
 import { Octokit } from "@octokit-next/types";
 
-type DotcomResponseHeaders = Octokit.ResponseHeaders & {
-  "x-dotcom-only": string;
-};
-
 declare module "@octokit-next/types" {
   namespace Octokit {
+    interface ResponseHeaders {
+      "x-dotcom-only": string;
+    }
     interface Endpoints {
       "GET /emojis": {
         parameters: {};
@@ -15,7 +14,7 @@ declare module "@octokit-next/types" {
             "-1": string;
             "dotcom-only": string;
           },
-          DotcomResponseHeaders
+          Octokit.ResponseHeaders
         >;
       };
       "GET /dotcom-only": {
@@ -24,7 +23,7 @@ declare module "@octokit-next/types" {
           {
             ok: boolean;
           },
-          DotcomResponseHeaders
+          Octokit.ResponseHeaders
         >;
       };
 
@@ -35,7 +34,7 @@ declare module "@octokit-next/types" {
           {
             ok: boolean;
           },
-          DotcomResponseHeaders
+          Octokit.ResponseHeaders
         >;
       };
     }

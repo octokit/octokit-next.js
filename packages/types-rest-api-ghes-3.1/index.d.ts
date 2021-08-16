@@ -2,19 +2,20 @@ import { Octokit } from "@octokit-next/types";
 
 import "@octokit-next/types-rest-api-github.com";
 
-type GHES31ResponseHeadersDiff = {
+export type ResponseHeadersGHES31 = {
   "x-github-enterprise-version": string;
 
   /** `x-dotcom-only` only exists on github.com */
   "x-dotcom-only": never;
 };
-type GHES31ResponseHeaders = Omit<
-  Octokit.ApiVersions["github.com"]["ResponseHeaders"],
-  keyof GHES31ResponseHeadersDiff
-> &
-  GHES31ResponseHeadersDiff;
 
-type GHES30EndpointsDiff = {
+type ResponseHeaders = Omit<
+  Octokit.ApiVersions["github.com"]["ResponseHeaders"],
+  keyof ResponseHeadersGHES31
+> &
+  ResponseHeadersGHES31;
+
+export type EndpointsGHES31 = {
   "GET /emojis": {
     parameters: {};
     response: Octokit.Response<
@@ -25,7 +26,7 @@ type GHES30EndpointsDiff = {
         /** `dotcom-only` only exists on github.com */
         "dotcom-only": never;
       },
-      GHES31ResponseHeaders
+      ResponseHeaders
     >;
   };
 
@@ -38,7 +39,7 @@ type GHES30EndpointsDiff = {
       {
         ok: boolean;
       },
-      GHES31ResponseHeaders
+      ResponseHeaders
     >;
   };
 
@@ -48,7 +49,7 @@ type GHES30EndpointsDiff = {
       {
         ok: boolean;
       },
-      GHES31ResponseHeaders
+      ResponseHeaders
     >;
   };
 };
@@ -57,13 +58,13 @@ declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.1": {
-        ResponseHeaders: GHES31ResponseHeaders;
+        ResponseHeaders: ResponseHeaders;
 
         Endpoints: Omit<
           Octokit.ApiVersions["github.com"]["Endpoints"],
-          keyof GHES30EndpointsDiff
+          keyof EndpointsGHES31
         > &
-          GHES30EndpointsDiff;
+          EndpointsGHES31;
       };
     }
   }
