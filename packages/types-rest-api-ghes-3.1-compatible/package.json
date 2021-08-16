@@ -1,0 +1,22 @@
+{
+  "name": "@octokit-next/types-rest-api-ghes-3.1-compatible",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "version": "0.0.0-development",
+  "description": "Types for GHES 3.1 (compatible) REST API requests and responses",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/types-rest-api-ghes-3.1-compatible"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.1-compatible#readme",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development",
+    "@octokit-next/types-rest-api-github.com": "0.0.0-development"
+  }
+}
