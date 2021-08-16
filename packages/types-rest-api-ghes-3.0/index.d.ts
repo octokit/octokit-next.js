@@ -1,8 +1,17 @@
 import { Octokit } from "@octokit-next/types";
 
-import "@octokit-next/types-rest-api-ghes-3.1";
+import {
+  ResponseHeadersGHES31,
+  EndpointsGHES31,
+} from "@octokit-next/types-rest-api-ghes-3.1";
 
-type GHES30ResponseHeaders = Octokit.ApiVersions["ghes-3.1"]["ResponseHeaders"];
+export type ResponseHeadersGHES30 = ResponseHeadersGHES31;
+
+type ResponseHeaders = Omit<
+  Octokit.ApiVersions["github.com"]["ResponseHeaders"],
+  keyof ResponseHeadersGHES30
+> &
+  ResponseHeadersGHES30;
 
 type GHES30EndpointsDiff = {
   /** new endpoint added after GHES 3.0 */
@@ -12,17 +21,20 @@ type GHES30EndpointsDiff = {
   "GET /new-ghes-only": never;
 };
 
+export type EndpointsGHES30 = Omit<EndpointsGHES31, keyof GHES30EndpointsDiff> &
+  GHES30EndpointsDiff;
+
 declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.0": {
-        ResponseHeaders: GHES30ResponseHeaders;
+        ResponseHeaders: ResponseHeaders;
 
         Endpoints: Omit<
-          Octokit.ApiVersions["ghes-3.1"]["Endpoints"],
-          keyof GHES30EndpointsDiff
+          Octokit.ApiVersions["github.com"]["Endpoints"],
+          keyof EndpointsGHES30
         > &
-          GHES30EndpointsDiff;
+          EndpointsGHES30;
       };
     }
   }
