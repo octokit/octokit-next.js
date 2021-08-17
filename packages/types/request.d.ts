@@ -1,9 +1,8 @@
 import { Octokit } from "./index.js";
 
-type EndpointParameters
-  <TVersion extends keyof Octokit.ApiVersions = "github.com"> = 
-    { request: Octokit.RequestOptions<TVersion> } 
-    & Record<string, unknown>;
+type EndpointParameters<
+  TVersion extends keyof Octokit.ApiVersions = "github.com"
+> = { request: Octokit.RequestOptions<TVersion> } & Record<string, unknown>;
 
 type UnknownResponse = {
   /**
@@ -57,7 +56,7 @@ export interface RequestInterface<
       };
     } & ("parameters" extends keyof Endpoint
       ? Endpoint["parameters"] & EndpointParameters<RVersion>
-      : never)
+      : Record<string, unknown>)
   ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
 
   /**
@@ -72,8 +71,8 @@ export interface RequestInterface<
   >(
     route: Route,
     options?: "parameters" extends keyof Endpoint
-      ? Endpoint["parameters"] & EndpointParameters
-      : never
+      ? Endpoint["parameters"] & EndpointParameters<TVersion>
+      : Record<string, unknown>
   ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
 
   /**
@@ -84,6 +83,6 @@ export interface RequestInterface<
    */
   <Route extends string>(
     route: Route,
-    options?: EndpointParameters
+    options?: Record<string, unknown>
   ): Promise<UnknownResponse>;
 }
