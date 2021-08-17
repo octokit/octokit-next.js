@@ -63,7 +63,7 @@
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-rest-api-github.com"
+          "pkgRoot": "packages/types-rest-api"
         }
       ],
       [
@@ -104,7 +104,7 @@
     "packages/types",
     "packages/core",
     "packages/types-openapi",
-    "packages/types-rest-api-github.com",
+    "packages/types-rest-api",
     "packages/types-rest-api-ghes-3.1",
     "packages/types-rest-api-ghes-3.1-compatible",
     "packages/types-rest-api-ghes-3.0",

@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit-next/types";
 
-import "@octokit-next/types-rest-api-github.com";
+import "@octokit-next/types-rest-api";
 
 export type ResponseHeadersGHES31 = {
   "x-github-enterprise-version": string;

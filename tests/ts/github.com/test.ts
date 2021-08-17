@@ -1,6 +1,6 @@
 import { Octokit } from "@octokit-next/core";
 
-import "@octokit-next/types-rest-api-github.com";
+import "@octokit-next/types-rest-api";
 
 function expectType<T>(value: T): void {}
 

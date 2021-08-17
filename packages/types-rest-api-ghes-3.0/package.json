@@ -17,6 +17,6 @@
   "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/types-rest-api-github.com": "0.0.0-development"
+    "@octokit-next/types-rest-api": "0.0.0-development"
   }
 }

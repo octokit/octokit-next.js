@@ -1,4 +1,4 @@
-# `@octokit-next/types-rest-api-github.com`
+# `@octokit-next/types-rest-api`
 
 > Types for github.com REST API requests and responses
 
