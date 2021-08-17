@@ -9,7 +9,7 @@ export async function test() {
     version: "ghes-3.1",
   });
 
-  const dotcomOnlyResponse = await octokit.request("GET /dotcom-only");
+  const dotcomOnlyResponse = octokit.request("GET /dotcom-only");
   expectType<never>(dotcomOnlyResponse);
 
   const ghesOnlyResponse = await octokit.request("GET /ghes-only");

@@ -12,6 +12,14 @@ export async function test() {
   });
   expectType<boolean>(ghesOnlyResponse.data.ok);
 
+  // known route, but unsupported in given version
+  const dotcomOnlyResponse = await request("GET /dotcom-only", {
+    request: {
+      version: "ghes-3.1",
+    },
+  });
+  expectType<never>(dotcomOnlyResponse);
+
   // known route, uses "github.com" types by default
   const rootEndpointResponse = await request("GET /");
 

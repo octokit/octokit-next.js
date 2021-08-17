@@ -1,9 +1,9 @@
+import { ConditionalKeys } from "type-fest";
 import { Octokit } from "./index.js";
 
-type EndpointParameters
-  <TVersion extends keyof Octokit.ApiVersions = "github.com"> = 
-    { request: Octokit.RequestOptions<TVersion> } 
-    & Record<string, unknown>;
+type EndpointParameters<
+  TVersion extends keyof Octokit.ApiVersions = "github.com"
+> = { request: Octokit.RequestOptions<TVersion> } & Record<string, unknown>;
 
 type UnknownResponse = {
   /**
@@ -47,7 +47,10 @@ export interface RequestInterface<
    */
   <
     RVersion extends keyof Octokit.ApiVersions,
-    Route extends keyof Octokit.ApiVersions[RVersion]["Endpoints"],
+    Route extends ConditionalKeysOmit<
+      Octokit.ApiVersions[RVersion]["Endpoints"],
+      never
+    >,
     Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
   >(
     route: Route,
@@ -57,8 +60,32 @@ export interface RequestInterface<
       };
     } & ("parameters" extends keyof Endpoint
       ? Endpoint["parameters"] & EndpointParameters<RVersion>
-      : never)
+      : Record<string, unknown>)
   ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+
+  /**
+   * ⚠️🚫 Known endpoint, but not supported by the selected version.
+   *
+   * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
+   * @param {object} parameters URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
+   *
+   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route and version
+   */
+  <
+    RVersion extends keyof Octokit.ApiVersions,
+    Route extends ConditionalKeys<
+      Octokit.ApiVersions[RVersion]["Endpoints"],
+      never
+    >,
+    Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
+  >(
+    route: Route,
+    options: {
+      request: {
+        version: RVersion;
+      };
+    } & Record<string, unknown>
+  ): never;
 
   /**
    * Send a request to a known endpoint
@@ -67,14 +94,35 @@ export interface RequestInterface<
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
   <
-    Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"],
+    Route extends ConditionalKeysOmit<
+      Octokit.ApiVersions[TVersion]["Endpoints"],
+      never
+    >,
     Endpoint = Octokit.ApiVersions[TVersion]["Endpoints"][Route]
   >(
     route: Route,
     options?: "parameters" extends keyof Endpoint
-      ? Endpoint["parameters"] & EndpointParameters
-      : never
+      ? Endpoint["parameters"] & EndpointParameters<TVersion>
+      : Record<string, unknown>
   ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+
+  /**
+   * ⚠️🚫 Known endpoint, but not supported by the selected version.
+   *
+   * @param {string} unsupportedRoute Request method + URL. Example: `'GET /orgs/{org}'`
+   * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
+   *
+   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route and version
+   */
+  <
+    Route extends ConditionalKeys<
+      Octokit.ApiVersions[TVersion]["Endpoints"],
+      never
+    >
+  >(
+    unsupportedRoute: Route,
+    options?: never
+  ): never;
 
   /**
    * Send a request to an unknown endpoint
@@ -84,6 +132,20 @@ export interface RequestInterface<
    */
   <Route extends string>(
     route: Route,
-    options?: EndpointParameters
+    options?: Record<string, unknown>
   ): Promise<UnknownResponse>;
 }
+
+type ConditionalKeysOmit<Base, Condition> = NonNullable<
+  // Wrap in `NonNullable` to strip away the `undefined` type from the produced union.
+  {
+    // Map through all the keys of the given base type.
+    [Key in keyof Base]: Base[Key] extends Condition // Omit keys with types extending the given `Condition` type.
+      ? // Discard this key since the condition passes.
+        never
+      : // Retain this key since the condition fails.
+        Key;
+
+    // Convert the produced object into a union type of the keys which passed the conditional test.
+  }[keyof Base]
+>;

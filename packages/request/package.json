@@ -18,6 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "node-fetch": "3.0.0-beta.10"
+    "node-fetch": "3.0.0-beta.10",
+    "type-fest": "^2.0.0"
   }
 }
