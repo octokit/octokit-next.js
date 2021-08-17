@@ -15,7 +15,7 @@ const packageDefaults = {
     access: "public",
   },
   version: "0.0.0-development",
-  types: "types.d.ts",
+  types: "index.d.ts",
   author: "Gregor Martynus (https://twitter.com/gr2m)",
   license: "MIT",
   octokit: {
@@ -89,9 +89,9 @@ type Repository = components["schemas"]["full-repository"]
     );
 
     await writeFile(
-      `packages/${packageName}/types.d.ts`,
+      `packages/${packageName}/index.d.ts`,
       await openapiTS(`cache/openapi/${name}.json`)
     );
-    console.log(`packages/${packageName}/types.d.ts written`);
+    console.log(`packages/${packageName}/index.d.ts written`);
   }
 }
