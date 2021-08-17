@@ -47,7 +47,10 @@ export interface RequestInterface<
    */
   <
     RVersion extends keyof Octokit.ApiVersions,
-    Route extends keyof Octokit.ApiVersions[RVersion]["Endpoints"],
+    Route extends ConditionalKeysOmit<
+      Octokit.ApiVersions[RVersion]["Endpoints"],
+      never
+    >,
     Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
   >(
     route: Route,
@@ -59,6 +62,30 @@ export interface RequestInterface<
       ? Endpoint["parameters"] & EndpointParameters<RVersion>
       : Record<string, unknown>)
   ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+
+  /**
+   * ⚠️🚫 Known endpoint, but not supported by the selected version.
+   *
+   * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
+   * @param {object} parameters URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
+   *
+   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route and version
+   */
+  <
+    RVersion extends keyof Octokit.ApiVersions,
+    Route extends ConditionalKeys<
+      Octokit.ApiVersions[RVersion]["Endpoints"],
+      never
+    >,
+    Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
+  >(
+    route: Route,
+    options: {
+      request: {
+        version: RVersion;
+      };
+    } & Record<string, unknown>
+  ): never;
 
   /**
    * Send a request to a known endpoint
@@ -85,7 +112,7 @@ export interface RequestInterface<
    * @param {string} unsupportedRoute Request method + URL. Example: `'GET /orgs/{org}'`
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    *
-   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route
+   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route and version
    */
   <
     Route extends ConditionalKeys<
