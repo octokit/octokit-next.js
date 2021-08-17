@@ -26,6 +26,7 @@ declare module "@octokit-next/types" {
             parameters: EndpointsGHES30compatible[route]["parameters"];
             response: Octokit.Response<
               EndpointsGHES30compatible[route]["response"]["data"],
+              EndpointsGHES30compatible[route]["response"]["status"],
               ResponseHeadersGHES30compatible
             >;
           };

@@ -26,6 +26,7 @@ export type EndpointsGHES31 = {
         /** `dotcom-only` only exists on github.com */
         "dotcom-only": never;
       },
+      200,
       ResponseHeaders
     >;
   };
@@ -39,6 +40,7 @@ export type EndpointsGHES31 = {
       {
         ok: boolean;
       },
+      200,
       ResponseHeaders
     >;
   };
@@ -49,6 +51,7 @@ export type EndpointsGHES31 = {
       {
         ok: boolean;
       },
+      200,
       ResponseHeaders
     >;
   };
