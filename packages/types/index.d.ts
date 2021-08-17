@@ -69,9 +69,44 @@ export namespace Octokit {
     version?: TVersion;
 
     /**
-     * override the built-in fetch method, e.g. for testing
+     * Custom replacement for built-in fetch method. Useful for testing or request hooks.
      */
-    fetch?: (resource: any, init?: any) => Promise<any>;
+    fetch?: (resource: unknown, init?: unknown) => Promise<unknown>;
+
+    /**
+     * Node only. Useful for custom proxy, certificate, or dns lookup.
+     *
+     * @see https://nodejs.org/api/http.html#http_class_http_agent
+     */
+    agent?: unknown;
+
+    /**
+     * Use an `AbortController` instance to cancel a request. In node you can only cancel streamed requests.
+     */
+    signal?: unknown;
+
+    /**
+     * Node only. Request/response timeout in ms, it resets on redirect. 0 to disable (OS limit applies). `options.request.signal` is recommended instead.
+     */
+    timeout?: number;
+
+    [option: string]: unknown;
+  }
+
+  interface RequestHeaders {
+    /**
+     * Avoid setting `headers.accept`, use `mediaType.{format|previews}` option instead.
+     */
+    accept?: string;
+    /**
+     * Use `authorization` to send authenticated request, remember `token ` / `bearer ` prefixes. Example: `token 1234567890abcdef1234567890abcdef12345678`
+     */
+    authorization?: string;
+    /**
+     * `user-agent` is set do a default and can be overwritten as needed.
+     */
+    "user-agent"?: string;
+    [header: string]: string | number | undefined;
   }
 
   interface ResponseHeaders {
