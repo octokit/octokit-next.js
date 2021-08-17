@@ -42,8 +42,12 @@ jobs:
       # do not update cache for renovate update
       - name: Update & generate types
         run: |
+          # openapi types
           node scripts/openapi/download.js
           node scripts/openapi/generate-types.cjs
+          # rest api types
+          node scripts/update-endpoints/fetch-json.cjs
+          node scripts/update-endpoints/typescript.cjs
         if: github.event_name != 'push'
 
       # create/update pull request for dispatch event update
