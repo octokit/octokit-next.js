@@ -1,3 +1,4 @@
+import { ConditionalKeys } from "type-fest";
 import { Octokit } from "./index.js";
 
 type EndpointParameters<
@@ -66,7 +67,10 @@ export interface RequestInterface<
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
   <
-    Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"],
+    Route extends ConditionalKeysOmit<
+      Octokit.ApiVersions[TVersion]["Endpoints"],
+      never
+    >,
     Endpoint = Octokit.ApiVersions[TVersion]["Endpoints"][Route]
   >(
     route: Route,
@@ -74,6 +78,24 @@ export interface RequestInterface<
       ? Endpoint["parameters"] & EndpointParameters<TVersion>
       : Record<string, unknown>
   ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+
+  /**
+   * ⚠️🚫 Known endpoint, but not supported by the selected version.
+   *
+   * @param {string} unsupportedRoute Request method + URL. Example: `'GET /orgs/{org}'`
+   * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
+   *
+   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route
+   */
+  <
+    Route extends ConditionalKeys<
+      Octokit.ApiVersions[TVersion]["Endpoints"],
+      never
+    >
+  >(
+    unsupportedRoute: Route,
+    options?: never
+  ): never;
 
   /**
    * Send a request to an unknown endpoint
@@ -86,3 +108,17 @@ export interface RequestInterface<
     options?: Record<string, unknown>
   ): Promise<UnknownResponse>;
 }
+
+type ConditionalKeysOmit<Base, Condition> = NonNullable<
+  // Wrap in `NonNullable` to strip away the `undefined` type from the produced union.
+  {
+    // Map through all the keys of the given base type.
+    [Key in keyof Base]: Base[Key] extends Condition // Omit keys with types extending the given `Condition` type.
+      ? // Discard this key since the condition passes.
+        never
+      : // Retain this key since the condition fails.
+        Key;
+
+    // Convert the produced object into a union type of the keys which passed the conditional test.
+  }[keyof Base]
+>;
