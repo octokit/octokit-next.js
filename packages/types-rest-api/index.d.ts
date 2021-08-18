@@ -43,13 +43,16 @@ type RequiredPreview<T> = T extends string
     }
   : {};
 
+type Simplify<T> = { [KeyType in keyof T]: T[KeyType] };
+
 type Operation<
   Url extends keyof paths,
   Method extends keyof paths[Url],
   preview = unknown
 > = {
-  parameters: ToOctokitParameters<paths[Url][Method]> &
-    RequiredPreview<preview>;
+  parameters: Simplify<
+    ToOctokitParameters<paths[Url][Method]> & RequiredPreview<preview>
+  >;
   request: {
     method: Method extends keyof MethodsMap ? MethodsMap[Method] : never;
     url: Url;
@@ -79,7 +82,7 @@ type SuccessResponseDataType<Responses> = {
     Responses[K]
   > extends never
     ? never
-    : Octokit.Response<GetContentKeyIfPresent<Responses[K]>, K>;
+    : Simplify<Octokit.Response<GetContentKeyIfPresent<Responses[K]>, K>>;
 }[SuccessStatuses & keyof Responses];
 type RedirectResponseDataType<Responses> = {
   [K in RedirectStatuses & keyof Responses]: Octokit.Response<unknown, K>;
