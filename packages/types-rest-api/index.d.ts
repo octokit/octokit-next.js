@@ -54,7 +54,7 @@ type Operation<
     ToOctokitParameters<paths[Url][Method]> & RequiredPreview<preview>
   >;
   request: {
-    method: Method extends keyof MethodsMap ? MethodsMap[Method] : never;
+    method: Method extends string ? Uppercase<Method> : never;
     url: Url;
     headers: Octokit.RequestHeaders;
     request: Octokit.RequestOptions;
@@ -62,13 +62,6 @@ type Operation<
   response: ExtractOctokitResponse<paths[Url][Method]>;
 };
 
-type MethodsMap = {
-  delete: "DELETE";
-  get: "GET";
-  patch: "PATCH";
-  post: "POST";
-  put: "PUT";
-};
 type SuccessStatuses = 200 | 201 | 202 | 204;
 type RedirectStatuses = 301 | 302;
 type EmptyResponseStatuses = 201 | 204;
