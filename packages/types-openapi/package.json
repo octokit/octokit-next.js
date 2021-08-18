@@ -6,14 +6,10 @@
     "url": "https://github.com/octokit/octokit-next.js",
     "directory": "packages/types-openapi"
   },
-  "publishConfig": {
-    "access": "public"
-  },
+  "publishConfig": { "access": "public" },
   "version": "0.0.0-development",
   "types": "index.d.ts",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
-  "octokit": {
-    "openapi-version": "3.9.0"
-  }
+  "octokit": { "openapi-version": "3.9.1" }
 }

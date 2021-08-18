@@ -34,7 +34,8 @@ async function run() {
 
   const files = await readdir("cache/openapi");
   for (const fileName of files) {
-    if (!/\.json$/.test(fileName)) continue;
+    if (!fileName.endsWith(".json")) continue;
+    if (/diff/.test(fileName)) continue;
 
     const name = basename(fileName, ".json");
 
