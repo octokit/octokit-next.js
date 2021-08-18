@@ -137,24 +137,10 @@ declare module "@octokit-next/types" {
         "delete"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/apps#revoke-a-grant-for-an-application
-       */
-      "DELETE /applications/{client_id}/grants/{access_token}": Operation<
-        "/applications/{client_id}/grants/{access_token}",
-        "delete"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/apps#delete-an-app-token
        */
       "DELETE /applications/{client_id}/token": Operation<
         "/applications/{client_id}/token",
-        "delete"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/apps#revoke-an-authorization-for-an-application
-       */
-      "DELETE /applications/{client_id}/tokens/{access_token}": Operation<
-        "/applications/{client_id}/tokens/{access_token}",
         "delete"
       >;
       /**
@@ -1033,13 +1019,6 @@ declare module "@octokit-next/types" {
        */
       "GET /applications/grants/{grant_id}": Operation<
         "/applications/grants/{grant_id}",
-        "get"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/apps#check-an-authorization
-       */
-      "GET /applications/{client_id}/tokens/{access_token}": Operation<
-        "/applications/{client_id}/tokens/{access_token}",
         "get"
       >;
       /**
@@ -3996,13 +3975,6 @@ declare module "@octokit-next/types" {
        */
       "POST /applications/{client_id}/token/scoped": Operation<
         "/applications/{client_id}/token/scoped",
-        "post"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/apps#reset-an-authorization
-       */
-      "POST /applications/{client_id}/tokens/{access_token}": Operation<
-        "/applications/{client_id}/tokens/{access_token}",
         "post"
       >;
       /**
