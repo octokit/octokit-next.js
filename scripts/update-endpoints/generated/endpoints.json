@@ -1715,22 +1715,6 @@
     "renamed": null
   },
   {
-    "method": "GET",
-    "url": "/applications/{client_id}/tokens/{access_token}",
-    "documentationUrl": "https://docs.github.com/rest/reference/apps#check-an-authorization",
-    "parameters": [
-      { "alias": null, "deprecated": null, "in": "PATH", "name": "client_id" },
-      {
-        "alias": null,
-        "deprecated": null,
-        "in": "PATH",
-        "name": "access_token"
-      }
-    ],
-    "previews": [],
-    "renamed": null
-  },
-  {
     "method": "POST",
     "url": "/applications/{client_id}/token",
     "documentationUrl": "https://docs.github.com/rest/reference/apps#check-a-token",
@@ -2327,22 +2311,6 @@
     "renamed": null
   },
   {
-    "method": "POST",
-    "url": "/applications/{client_id}/tokens/{access_token}",
-    "documentationUrl": "https://docs.github.com/rest/reference/apps#reset-an-authorization",
-    "parameters": [
-      { "alias": null, "deprecated": null, "in": "PATH", "name": "client_id" },
-      {
-        "alias": null,
-        "deprecated": null,
-        "in": "PATH",
-        "name": "access_token"
-      }
-    ],
-    "previews": [],
-    "renamed": null
-  },
-  {
     "method": "PATCH",
     "url": "/applications/{client_id}/token",
     "documentationUrl": "https://docs.github.com/rest/reference/apps#reset-a-token",
@@ -2352,38 +2320,6 @@
         "alias": null,
         "deprecated": null,
         "in": "BODY",
-        "name": "access_token"
-      }
-    ],
-    "previews": [],
-    "renamed": null
-  },
-  {
-    "method": "DELETE",
-    "url": "/applications/{client_id}/tokens/{access_token}",
-    "documentationUrl": "https://docs.github.com/rest/reference/apps#revoke-an-authorization-for-an-application",
-    "parameters": [
-      { "alias": null, "deprecated": null, "in": "PATH", "name": "client_id" },
-      {
-        "alias": null,
-        "deprecated": null,
-        "in": "PATH",
-        "name": "access_token"
-      }
-    ],
-    "previews": [],
-    "renamed": null
-  },
-  {
-    "method": "DELETE",
-    "url": "/applications/{client_id}/grants/{access_token}",
-    "documentationUrl": "https://docs.github.com/rest/reference/apps#revoke-a-grant-for-an-application",
-    "parameters": [
-      { "alias": null, "deprecated": null, "in": "PATH", "name": "client_id" },
-      {
-        "alias": null,
-        "deprecated": null,
-        "in": "PATH",
         "name": "access_token"
       }
     ],
