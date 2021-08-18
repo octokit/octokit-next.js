@@ -47,7 +47,7 @@ if (!Array.isArray(data)) {
 for (const file of data) {
   if (
     file.name !== "api.github.com.json" &&
-    file.name !== "ghes-3.1.deref.json"
+    file.name !== "ghes-3.1.diff.json"
   ) {
     continue;
   }
