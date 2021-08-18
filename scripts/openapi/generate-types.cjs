@@ -32,8 +32,6 @@ async function run() {
     console.log("packages/%s deleted", packageName);
   }
 
-  // TODO delete all `packages/types-openapi*` packages
-
   const files = await readdir("cache/openapi");
   for (const fileName of files) {
     if (!/\.json$/.test(fileName)) continue;
