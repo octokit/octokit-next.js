@@ -7096,6 +7096,61 @@
     "renamed": null
   },
   {
+    "method": "GET",
+    "url": "/user/packages",
+    "documentationUrl": "https://docs.github.com/rest/reference/packages#list-packages-for-the-authenticated-user",
+    "parameters": [
+      {
+        "alias": null,
+        "deprecated": null,
+        "in": "QUERY",
+        "name": "package_type"
+      },
+      { "alias": null, "deprecated": null, "in": "QUERY", "name": "visibility" }
+    ],
+    "previews": [],
+    "renamed": null
+  },
+  {
+    "method": "GET",
+    "url": "/orgs/{org}/packages",
+    "documentationUrl": "https://docs.github.com/rest/reference/packages#list-packages-for-an-organization",
+    "parameters": [
+      {
+        "alias": null,
+        "deprecated": null,
+        "in": "QUERY",
+        "name": "package_type"
+      },
+      { "alias": null, "deprecated": null, "in": "PATH", "name": "org" },
+      { "alias": null, "deprecated": null, "in": "QUERY", "name": "visibility" }
+    ],
+    "previews": [],
+    "renamed": null
+  },
+  {
+    "method": "GET",
+    "url": "/user/{username}/packages",
+    "documentationUrl": "https://docs.github.com/rest/reference/packages#list-packages-for-user",
+    "parameters": [
+      {
+        "alias": null,
+        "deprecated": null,
+        "in": "QUERY",
+        "name": "package_type"
+      },
+      {
+        "alias": null,
+        "deprecated": null,
+        "in": "QUERY",
+        "name": "visibility"
+      },
+      { "alias": null, "deprecated": null, "in": "PATH", "name": "username" }
+    ],
+    "previews": [],
+    "renamed": null
+  },
+  {
     "method": "POST",
     "url": "/user/packages/{package_type}/{package_name}/restore{?token}",
     "documentationUrl": "https://docs.github.com/rest/reference/packages#restore-a-package-for-the-authenticated-user",

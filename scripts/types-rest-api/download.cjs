@@ -1,5 +1,5 @@
 const { writeFileSync } = require("fs");
-const path = require("path");
+const { resolve } = require("path");
 
 const graphql = require("github-openapi-graphql-query");
 const prettier = require("prettier");
@@ -42,7 +42,7 @@ async function main() {
   });
 
   writeFileSync(
-    path.resolve(__dirname, "generated", "endpoints.json"),
+    resolve("cache/types-rest-api/endpoints.json"),
     prettier.format(JSON.stringify(endpoints), {
       parser: "json",
     })

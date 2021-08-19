@@ -5,7 +5,7 @@ const Handlebars = require("handlebars");
 const prettier = require("prettier");
 const sortKeys = require("sort-keys");
 
-const ENDPOINTS = require("./generated/endpoints.json");
+const ENDPOINTS = require("../../cache/types-rest-api/endpoints.json");
 const ENDPOINTS_PATH = resolve(
   __dirname,
   "../../packages/types-rest-api/index.d.ts"

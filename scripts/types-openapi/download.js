@@ -12,8 +12,8 @@ if (!process.env.GITHUB_TOKEN) {
 
 const version = process.env.OCTOKIT_OPENAPI_VERSION.replace(/^v/, "");
 
-await rm("cache/openapi", { recursive: true });
-await mkdir("cache/openapi");
+await rm("cache/types-openapi", { recursive: true });
+await mkdir("cache/types-openapi");
 
 const data = await new Promise((resolve, reject) => {
   get(
@@ -44,24 +44,20 @@ if (!Array.isArray(data)) {
   );
 }
 
+// download the OpenAPI spec for api.github.com
 for (const file of data) {
-  if (
-    file.name !== "api.github.com.json" &&
-    file.name !== "ghes-3.1.diff.json"
-  ) {
-    continue;
-  }
+  if (file.name !== "api.github.com.json") continue;
 
   download(version, file.name);
 }
 
 function download(version, fileName) {
-  const localPath = `cache/openapi/${fileName}`;
+  const localPath = `cache/types-openapi/${fileName}`;
 
   const file = createWriteStream(localPath);
   const url = `https://unpkg.com/@octokit/openapi@${version}/generated/${fileName}`;
 
-  console.log("Downloading %s", url);
+  console.log("Downloading %s to localPath", url, localPath);
 
   return new Promise((resolve, reject) => {
     get(url, (response) => {

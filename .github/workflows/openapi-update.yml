@@ -43,11 +43,11 @@ jobs:
       - name: Update & generate types
         run: |
           # openapi types
-          node scripts/openapi/download.js
-          node scripts/openapi/generate-types.cjs
+          node scripts/types-openapi/download.js
+          node scripts/types-openapi/update.cjs
           # rest api types
-          node scripts/rest-api/fetch-json.cjs
-          node scripts/rest-api/typescript.cjs
+          node scripts/types-rest-api/download.cjs
+          node scripts/types-rest-api/update.cjs
         if: github.event_name != 'push'
 
       # create/update pull request for dispatch event update

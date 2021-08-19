@@ -1572,6 +1572,10 @@ declare module "@octokit-next/types" {
         "get"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/packages#list-packages-for-an-organization
+       */
+      "GET /orgs/{org}/packages": Operation<"/orgs/{org}/packages", "get">;
+      /**
        * @see https://docs.github.com/rest/reference/packages#get-a-package-for-an-organization
        */
       "GET /orgs/{org}/packages/{package_type}/{package_name}": Operation<
@@ -3354,6 +3358,10 @@ declare module "@octokit-next/types" {
        */
       "GET /user/orgs": Operation<"/user/orgs", "get">;
       /**
+       * @see https://docs.github.com/rest/reference/packages#list-packages-for-the-authenticated-user
+       */
+      "GET /user/packages": Operation<"/user/packages", "get">;
+      /**
        * @see https://docs.github.com/rest/reference/packages#get-a-package-for-the-authenticated-user
        */
       "GET /user/packages/{package_type}/{package_name}": Operation<
@@ -3408,6 +3416,13 @@ declare module "@octokit-next/types" {
        * @see https://docs.github.com/rest/reference/teams#list-teams-for-the-authenticated-user
        */
       "GET /user/teams": Operation<"/user/teams", "get">;
+      /**
+       * @see https://docs.github.com/rest/reference/packages#list-packages-for-user
+       */
+      "GET /user/{username}/packages": Operation<
+        "/user/{username}/packages",
+        "get"
+      >;
       /**
        * @see https://docs.github.com/rest/reference/users#list-users
        */
