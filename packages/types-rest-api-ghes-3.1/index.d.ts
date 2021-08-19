@@ -2,20 +2,17 @@ import { Octokit } from "@octokit-next/types";
 
 import "@octokit-next/types-rest-api";
 
-export type ResponseHeadersGHES31 = {
+export type ResponseHeadersDiff = {
   "x-github-enterprise-version": string;
-
-  /** `x-dotcom-only` only exists on github.com */
-  "x-dotcom-only": never;
 };
 
 type ResponseHeaders = Omit<
   Octokit.ApiVersions["github.com"]["ResponseHeaders"],
-  keyof ResponseHeadersGHES31
+  keyof ResponseHeadersDiff
 > &
-  ResponseHeadersGHES31;
+  ResponseHeadersDiff;
 
-export type EndpointsGHES31 = {
+export type EndpointsDiff = {
   "GET /emojis": {
     parameters: {};
     response: Octokit.Response<
@@ -65,9 +62,9 @@ declare module "@octokit-next/types" {
 
         Endpoints: Omit<
           Octokit.ApiVersions["github.com"]["Endpoints"],
-          keyof EndpointsGHES31
+          keyof EndpointsDiff
         > &
-          EndpointsGHES31;
+          EndpointsDiff;
       };
     }
   }
