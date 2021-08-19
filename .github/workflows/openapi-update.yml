@@ -45,9 +45,11 @@ jobs:
           # openapi types
           node scripts/types-openapi/download.js
           node scripts/types-openapi/update.cjs
-          # rest api types
+          # rest api types for github.com
           node scripts/types-rest-api/download.cjs
           node scripts/types-rest-api/update.cjs
+          # rest api types for the ... rest
+          node scripts/types-rest-api-ghes/download.cjs
         if: github.event_name != 'push'
 
       # create/update pull request for dispatch event update
