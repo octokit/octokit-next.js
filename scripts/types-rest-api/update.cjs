@@ -6,17 +6,17 @@ const prettier = require("prettier");
 const sortKeys = require("sort-keys");
 
 const ENDPOINTS = require("../../cache/types-rest-api/endpoints.json");
-const ENDPOINTS_PATH = resolve(
+const DECLARATIONS_PATH = resolve(
   __dirname,
   "../../packages/types-rest-api/index.d.ts"
 );
-const ENDPOINTS_TEMPLATE_PATH = resolve(
+const DECLARATIONS_TEMPLATE_PATH = resolve(
   __dirname,
   "templates/index.d.ts.template"
 );
 
 const template = Handlebars.compile(
-  readFileSync(ENDPOINTS_TEMPLATE_PATH, "utf8")
+  readFileSync(DECLARATIONS_TEMPLATE_PATH, "utf8")
 );
 
 const endpointsByRoute = {};
@@ -63,10 +63,10 @@ async function run() {
   });
 
   writeFileSync(
-    ENDPOINTS_PATH,
+    DECLARATIONS_PATH,
     prettier.format(result, { parser: "typescript" })
   );
-  console.log(`${ENDPOINTS_PATH} updated.`);
+  console.log(`${DECLARATIONS_PATH} updated.`);
 }
 
 function toOpenApiUrl(endpoint) {
