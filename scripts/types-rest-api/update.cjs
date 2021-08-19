@@ -12,7 +12,7 @@ const ENDPOINTS_PATH = resolve(
 );
 const ENDPOINTS_TEMPLATE_PATH = resolve(
   __dirname,
-  "templates/endpoints.ts.template"
+  "templates/index.d.ts.template"
 );
 
 const template = Handlebars.compile(
