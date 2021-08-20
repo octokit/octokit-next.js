@@ -49,10 +49,12 @@ async function run() {
     const currentVersionName = currentVersion.replace("-", " ").toUpperCase();
 
     const packageName = `types-rest-api-${currentVersion}`;
+
     const diffPackageName =
-      diffVersion === "api.github.com"
+      diffVersion === "github.com"
         ? `types-rest-api`
         : `types-rest-api-${diffVersion}`;
+
     const packagePath = `packages/${packageName}`;
 
     // delete current package directory
@@ -76,9 +78,10 @@ async function run() {
           },
           dependencies: {
             "@octokit-next/types": "0.0.0-development",
-            [`@octokit-next/${diffPackageName}`]: "0.0.0-development",
             [`@octokit-next/types-openapi-${currentVersion}`]:
               "0.0.0-development",
+            "@octokit-next/types-rest-api": "0.0.0-development",
+            [`@octokit-next/${diffPackageName}`]: "0.0.0-development",
           },
           ...packageDefaults,
         }),

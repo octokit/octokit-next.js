@@ -31,10 +31,10 @@ async function run() {
         ? "types-openapi"
         : sourceFilename.replace(/^(.*)\.json$/, "types-openapi-$1");
 
-    if (packageName.startsWith("types-openapi")) {
-      await rm(`packages/${packageName}`, { recursive: true });
-      console.log(`packages/${packageName} deleted`);
-    }
+    if (!packageName.startsWith("types-openapi")) continue;
+
+    await rm(`packages/${packageName}`, { recursive: true }).catch(() => {});
+    console.log(`packages/${packageName} deleted`);
 
     await mkdir(`packages/${packageName}`);
     await writeFile(

@@ -11,14 +11,12 @@ export async function test() {
 
   const rootResponse = await octokit.request("GET /");
   expectType<string>(rootResponse.data.emojis_url);
-
-  // `GET /feeds`: the `security_advisories_url` was added in GHES 3.1 and does not exist in GHES 3.0
-  const feedsResponse = await octokit.request("GET /feeds");
-  expectType<never>(feedsResponse.data.security_advisories_url);
+  expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 
   // `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
   expectType<never>(await octokit.request("GET /orgs/{org}/audit-log"));
 
-  const { headers } = await octokit.request("GET /");
-  expectType<string>(headers["x-github-enterprise-version"]);
+  // `GET /feeds`: the `security_advisories_url` was added in GHES 3.1 and does not exist in GHES 3.0
+  const feedsResponse = await octokit.request("GET /feeds");
+  expectType<never>(feedsResponse.data.security_advisories_url);
 }
