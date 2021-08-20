@@ -9,6 +9,8 @@ export async function test() {
     version: "github.com",
   });
 
-  const dotcomOnlyResponse = await octokit.request("GET /dotcom-only");
-  expectType<boolean>(dotcomOnlyResponse.data.ok);
+  const dotcomOnlyResponse = await octokit.request(
+    "GET /marketplace_listing/plans"
+  );
+  expectType<number>(dotcomOnlyResponse.data[0].id);
 }

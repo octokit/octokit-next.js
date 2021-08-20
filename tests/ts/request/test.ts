@@ -12,10 +12,10 @@ export async function test() {
   expectType<string>(rootEndpointResponse.headers["x-ratelimit-limit"]);
   expectType<string>(rootEndpointResponse.data.emojis_url);
 
-  const ghesOnlyResponse = await request("GET /ghes-only", {
+  const ghesOnlyResponse = await request("GET /admin/users", {
     request: {
       version: "ghes-3.1",
     },
   });
-  expectType<boolean>(ghesOnlyResponse.data.ok);
+  expectType<string>(ghesOnlyResponse.data[0].login);
 }

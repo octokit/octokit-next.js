@@ -5,15 +5,15 @@ import "@octokit-next/types-rest-api-ghes-3.1";
 
 export async function test() {
   // known route, uses explicit version
-  const ghesOnlyResponse = await request("GET /ghes-only", {
+  const ghesOnlyResponse = await request("GET /admin/users", {
     request: {
       version: "ghes-3.1",
     },
   });
-  expectType<boolean>(ghesOnlyResponse.data.ok);
+  expectType<string>(ghesOnlyResponse.data[0].login);
 
   // known route, but unsupported in given version
-  const dotcomOnlyResponse = await request("GET /dotcom-only", {
+  const dotcomOnlyResponse = await request("GET /marketplace_listing/plans", {
     request: {
       version: "ghes-3.1",
     },

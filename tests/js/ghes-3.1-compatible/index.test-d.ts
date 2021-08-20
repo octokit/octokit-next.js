@@ -13,29 +13,36 @@ export async function test() {
   expectType<{
     emojis_url: string;
   }>(response.data);
-  expectType<
-    Omit<
-      Octokit.ResponseHeaders,
-      "x-github-enterprise-version" | "x-dotcom-only"
-    >
-  >(response.headers);
+  expectType<Omit<Octokit.ResponseHeaders, "x-github-enterprise-version">>(
+    response.headers
+  );
 
-  const newEndpointResponse = await octokit.request("GET /new-endpoint");
-  expectType<{ ok: boolean }>(newEndpointResponse.data);
+  // `/repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1
+  const newEndpointResponse = await octokit.request(
+    "POST /repos/{owner}/{repo}/branches/{branch}/rename"
+  );
+  expectType<string>(newEndpointResponse.data.name);
 
-  expectType<unknown>((await octokit.request("GET /dotcom-only")).data);
-  expectType<unknown>((await octokit.request("GET /ghes-only")).data);
+  expectType<unknown>(
+    (await octokit.request("GET /marketplace_listing/plans")).data
+  );
+  expectType<unknown>((await octokit.request("GET /admin/users")).data);
 
-  const dotcomOnlyResponse = await octokit.request("GET /dotcom-only", {
-    request: {
-      version: "github.com",
-    },
-  });
-  expectType<boolean>(dotcomOnlyResponse.data.ok);
-  const ghesOnlyResponse = await octokit.request("GET /ghes-only", {
+  // with versions set explicitly
+  const dotcomOnlyResponse = await octokit.request(
+    "GET /marketplace_listing/plans",
+    {
+      request: {
+        version: "github.com",
+      },
+    }
+  );
+  expectType<number>(dotcomOnlyResponse.data[0].id);
+
+  const ghesOnlyResponse = await octokit.request("GET /admin/users", {
     request: {
       version: "ghes-3.1",
     },
   });
-  expectType<boolean>(ghesOnlyResponse.data.ok);
+  expectType<string>(ghesOnlyResponse.data[0].login);
 }

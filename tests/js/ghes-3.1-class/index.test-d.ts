@@ -9,19 +9,20 @@ export async function test() {
     baseUrl: "https://github.acme-inc.com/api/v3",
   });
 
-  const emojisResponseGhes31 = await octokit.request("GET /emojis");
-  expectType<string>(emojisResponseGhes31.data["+1"]);
-  expectType<string>(emojisResponseGhes31.data["-1"]);
-  expectType<string>(emojisResponseGhes31.data["ghes-only"]);
-  expectType<never>(emojisResponseGhes31.data["dotcom-only"]);
+  const rootResponse = await octokit.request("GET /");
+  expectType<string>(rootResponse.data.emojis_url);
 
-  expectType<never>(await octokit.request("GET /dotcom-only"));
-  expectNotType<never>(await octokit.request("GET /new-endpoint"));
+  // The `api` key was removed for GHES versions, but
+  // the `installed_version` key was added.
+  const metaResponse = await octokit.request("GET /meta");
+  expectType<string>(metaResponse.data.installed_version);
+  expectType<never>(metaResponse.data.api);
 
-  const { headers } = await octokit.request("GET /emojis");
-  expectType<string>(headers["x-github-enterprise-version"]);
-  expectType<never>(headers["x-dotcom-only"]);
+  expectType<never>(await octokit.request("GET /marketplace_listing/plans"));
+  // `GET /repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1
+  expectNotType<never>(
+    await octokit.request("GET /repos/{owner}/{repo}/branches/{branch}/rename")
+  );
 
-  expectNotType<never>(await octokit.request("GET /ghes-only"));
-  expectNotType<never>(await octokit.request("GET /new-ghes-only"));
+  expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 }
