@@ -24,31 +24,41 @@ const packageDefaults = {
 };
 
 async function run() {
-  await rm(`packages/types-openapi`, { recursive: true });
-  console.log("packages/types-openapi deleted");
+  const openapiFiles = await readdir("cache/types-openapi");
 
-  await mkdir(`packages/types-openapi`);
-  await writeFile(
-    `packages/types-openapi/package.json`,
-    prettier.format(
-      JSON.stringify({
-        name: `@octokit-next/types-openapi`,
-        description: `Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com`,
-        repository: {
-          type: "git",
-          url: "https://github.com/octokit/octokit-next.js",
-          directory: `packages/types-openapi`,
-        },
-        ...packageDefaults,
-      }),
-      { parser: "json" }
-    )
-  );
-  await writeFile(
-    `packages/types-openapi/README.md`,
-    prettier.format(
-      `
-# @octokit-next/types-openapi
+  for (const sourceFilename of openapiFiles) {
+    const packageName =
+      sourceFilename === "api.github.com.json"
+        ? "types-openapi"
+        : sourceFilename.replace(/^(.*)\.json$/, "openapi-types-$1");
+
+    if (packageName.startsWith("types-openapi")) {
+      await rm(`packages/${packageName}`, { recursive: true });
+      console.log(`packages/${packageName} deleted`);
+    }
+
+    await mkdir(`packages/${packageName}`);
+    await writeFile(
+      `packages/${packageName}/package.json`,
+      prettier.format(
+        JSON.stringify({
+          name: `@octokit-next/${packageName}`,
+          description: `Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com`,
+          repository: {
+            type: "git",
+            url: "https://github.com/octokit/octokit-next.js",
+            directory: `packages/${packageName}`,
+          },
+          ...packageDefaults,
+        }),
+        { parser: "json" }
+      )
+    );
+    await writeFile(
+      `packages/${packageName}/README.md`,
+      prettier.format(
+        `
+# @octokit-next/${packageName}
 
 > Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com
 
@@ -57,7 +67,7 @@ This package is continously updated based on [GitHub's OpenAPI specification](ht
 ## Usage
 
 \`\`\`ts
-import { components } from "@octokit-next/types-openapi";
+import { components } from "@octokit-next/${packageName}";
 
 type Repository = components["schemas"]["full-repository"]
 \`\`\`
@@ -66,13 +76,14 @@ type Repository = components["schemas"]["full-repository"]
 
 [MIT](LICENSE)
 `,
-      { parser: "markdown" }
-    )
-  );
+        { parser: "markdown" }
+      )
+    );
 
-  await writeFile(
-    `packages/types-openapi/index.d.ts`,
-    await openapiTS(`cache/types-openapi/api.github.com.json`)
-  );
-  console.log(`packages/types-openapi/index.d.ts written`);
+    await writeFile(
+      `packages/${packageName}/index.d.ts`,
+      await openapiTS(`cache/types-openapi/${sourceFilename}`)
+    );
+    console.log(`packages/${packageName}/index.d.ts written`);
+  }
 }

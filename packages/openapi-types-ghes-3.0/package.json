@@ -1,0 +1,15 @@
+{
+  "name": "@octokit-next/openapy-types-ghes-3.0",
+  "description": "Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js",
+    "directory": "packages/openapy-types-ghes-3.0"
+  },
+  "publishConfig": { "access": "public" },
+  "version": "0.0.0-development",
+  "types": "index.d.ts",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "octokit": { "openapi-version": "3.10.1" }
+}
