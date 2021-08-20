@@ -15,1086 +15,931 @@ type ResponseHeaders = Omit<
 
 export type EndpointsDiff = {
   /**
-   * The endpoint `DELETE /orgs/{org}/blocks/{username}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#unblock-a-user-from-an-organization
    */
   "DELETE /orgs/{org}/blocks/{username}": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/credential-authorizations/{credential_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#remove-a-saml-sso-authorization-for-an-organization
    */
   "DELETE /orgs/{org}/credential-authorizations/{credential_id}": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#remove-interaction-restrictions-for-an-organization
    */
   "DELETE /orgs/{org}/interaction-limits": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/invitations/{invitation_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#cancel-an-organization-invitation
    */
   "DELETE /orgs/{org}/invitations/{invitation_id}": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/migrations/{migration_id}/archive` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#delete-an-organization-migration-archive
    */
   "DELETE /orgs/{org}/migrations/{migration_id}/archive": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#unlock-an-organization-repository
    */
   "DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/packages/{package_type}/{package_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#delete-a-package-for-an-organization
    */
   "DELETE /orgs/{org}/packages/{package_type}/{package_name}": never;
   /**
-   * The endpoint `DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#delete-a-package-version-for-an-organization
    */
   "DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/v3/repos#delete-autolink
    */
   "DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}": never;
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/automated-security-fixes` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#disable-automated-security-fixes
    */
   "DELETE /repos/{owner}/{repo}/automated-security-fixes": never;
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/environments/{environment_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#delete-an-environment
    */
   "DELETE /repos/{owner}/{repo}/environments/{environment_name}": never;
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/import` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#cancel-an-import
    */
   "DELETE /repos/{owner}/{repo}/import": never;
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#remove-interaction-restrictions-for-a-repository
    */
   "DELETE /repos/{owner}/{repo}/interaction-limits": never;
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/vulnerability-alerts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#disable-vulnerability-alerts
    */
   "DELETE /repos/{owner}/{repo}/vulnerability-alerts": never;
   /**
-   * The endpoint `DELETE /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#delete-an-environment-secret
    */
   "DELETE /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": never;
   /**
-   * The endpoint `DELETE /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#delete-a-scim-group-from-an-enterprise
    */
   "DELETE /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
   /**
-   * The endpoint `DELETE /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#delete-a-scim-user-from-an-enterprise
    */
   "DELETE /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/scim#delete-a-scim-user-from-an-organization
    */
   "DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `DELETE /user/blocks/{username}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/users#unblock-a-user
    */
   "DELETE /user/blocks/{username}": never;
   /**
-   * The endpoint `DELETE /user/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#remove-interaction-restrictions-from-your-public-repositories
    */
   "DELETE /user/interaction-limits": never;
   /**
-   * The endpoint `DELETE /user/migrations/{migration_id}/archive` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#delete-a-user-migration-archive
    */
   "DELETE /user/migrations/{migration_id}/archive": never;
   /**
-   * The endpoint `DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#unlock-a-user-repository
    */
   "DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock": never;
   /**
-   * The endpoint `DELETE /user/packages/{package_type}/{package_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#delete-a-package-for-the-authenticated-user
    */
   "DELETE /user/packages/{package_type}/{package_name}": never;
   /**
-   * The endpoint `DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#delete-a-package-version-for-the-authenticated-user
    */
   "DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
   /**
-   * The endpoint `DELETE /users/{username}/packages/{package_type}/{package_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#delete-a-package-for-a-user
    */
   "DELETE /users/{username}/packages/{package_type}/{package_name}": never;
   /**
-   * The endpoint `DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#delete-a-package-version-for-a-user
    */
   "DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
   /**
-   * The endpoint `GET /app/hook/deliveries` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-deliveries-for-an-app-webhook
    */
   "GET /app/hook/deliveries": never;
   /**
-   * The endpoint `GET /app/hook/deliveries/{delivery_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#get-a-delivery-for-an-app-webhook
    */
   "GET /app/hook/deliveries/{delivery_id}": never;
   /**
-   * The endpoint `GET /enterprises/{enterprise}/audit-log` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#get-the-audit-log-for-an-enterprise
    */
   "GET /enterprises/{enterprise}/audit-log": never;
   /**
-   * The endpoint `GET /enterprises/{enterprise}/settings/billing/actions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-github-actions-billing-for-an-enterprise
    */
   "GET /enterprises/{enterprise}/settings/billing/actions": never;
   /**
-   * The endpoint `GET /enterprises/{enterprise}/settings/billing/packages` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-github-packages-billing-for-an-enterprise
    */
   "GET /enterprises/{enterprise}/settings/billing/packages": never;
   /**
-   * The endpoint `GET /enterprises/{enterprise}/settings/billing/shared-storage` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-shared-storage-billing-for-an-enterprise
    */
   "GET /enterprises/{enterprise}/settings/billing/shared-storage": never;
   /**
-   * The endpoint `GET /marketplace_listing/accounts/{account_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#get-a-subscription-plan-for-an-account
    */
   "GET /marketplace_listing/accounts/{account_id}": never;
   /**
-   * The endpoint `GET /marketplace_listing/plans` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-plans
    */
   "GET /marketplace_listing/plans": never;
   /**
-   * The endpoint `GET /marketplace_listing/plans/{plan_id}/accounts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-accounts-for-a-plan
    */
   "GET /marketplace_listing/plans/{plan_id}/accounts": never;
   /**
-   * The endpoint `GET /marketplace_listing/stubbed/accounts/{account_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#get-a-subscription-plan-for-an-account-stubbed
    */
   "GET /marketplace_listing/stubbed/accounts/{account_id}": never;
   /**
-   * The endpoint `GET /marketplace_listing/stubbed/plans` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-plans-stubbed
    */
   "GET /marketplace_listing/stubbed/plans": never;
   /**
-   * The endpoint `GET /marketplace_listing/stubbed/plans/{plan_id}/accounts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-accounts-for-a-plan-stubbed
    */
   "GET /marketplace_listing/stubbed/plans/{plan_id}/accounts": never;
   /**
-   * The endpoint `GET /orgs/{org}/blocks` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#list-users-blocked-by-an-organization
    */
   "GET /orgs/{org}/blocks": never;
   /**
-   * The endpoint `GET /orgs/{org}/blocks/{username}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#check-if-a-user-is-blocked-by-an-organization
    */
   "GET /orgs/{org}/blocks/{username}": never;
   /**
-   * The endpoint `GET /orgs/{org}/credential-authorizations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#list-saml-sso-authorizations-for-an-organization
    */
   "GET /orgs/{org}/credential-authorizations": never;
   /**
-   * The endpoint `GET /orgs/{org}/failed_invitations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#list-failed-organization-invitations
    */
   "GET /orgs/{org}/failed_invitations": never;
   /**
-   * The endpoint `GET /orgs/{org}/hooks/{hook_id}/deliveries` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#list-deliveries-for-an-organization-webhook
    */
   "GET /orgs/{org}/hooks/{hook_id}/deliveries": never;
   /**
-   * The endpoint `GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#get-a-webhook-delivery-for-an-organization-webhook
    */
   "GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}": never;
   /**
-   * The endpoint `GET /orgs/{org}/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#get-interaction-restrictions-for-an-organization
    */
   "GET /orgs/{org}/interaction-limits": never;
   /**
-   * The endpoint `GET /orgs/{org}/invitations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#list-pending-organization-invitations
    */
   "GET /orgs/{org}/invitations": never;
   /**
-   * The endpoint `GET /orgs/{org}/invitations/{invitation_id}/teams` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#list-organization-invitation-teams
    */
   "GET /orgs/{org}/invitations/{invitation_id}/teams": never;
   /**
-   * The endpoint `GET /orgs/{org}/migrations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#list-organization-migrations
    */
   "GET /orgs/{org}/migrations": never;
   /**
-   * The endpoint `GET /orgs/{org}/migrations/{migration_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#get-an-organization-migration-status
    */
   "GET /orgs/{org}/migrations/{migration_id}": never;
   /**
-   * The endpoint `GET /orgs/{org}/migrations/{migration_id}/archive` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#download-an-organization-migration-archive
    */
   "GET /orgs/{org}/migrations/{migration_id}/archive": never;
   /**
-   * The endpoint `GET /orgs/{org}/migrations/{migration_id}/repositories` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#list-repositories-in-an-organization-migration
    */
   "GET /orgs/{org}/migrations/{migration_id}/repositories": never;
   /**
-   * The endpoint `GET /orgs/{org}/packages` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#list-packages-for-an-organization
    */
   "GET /orgs/{org}/packages": never;
   /**
-   * The endpoint `GET /orgs/{org}/packages/{package_type}/{package_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-a-package-for-an-organization
    */
   "GET /orgs/{org}/packages/{package_type}/{package_name}": never;
   /**
-   * The endpoint `GET /orgs/{org}/packages/{package_type}/{package_name}/versions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-all-package-versions-for-a-package-owned-by-an-organization
    */
   "GET /orgs/{org}/packages/{package_type}/{package_name}/versions": never;
   /**
-   * The endpoint `GET /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-a-package-version-for-an-organization
    */
   "GET /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
   /**
-   * The endpoint `GET /orgs/{org}/settings/billing/actions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-github-actions-billing-for-an-organization
    */
   "GET /orgs/{org}/settings/billing/actions": never;
   /**
-   * The endpoint `GET /orgs/{org}/settings/billing/packages` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-github-packages-billing-for-an-organization
    */
   "GET /orgs/{org}/settings/billing/packages": never;
   /**
-   * The endpoint `GET /orgs/{org}/settings/billing/shared-storage` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-shared-storage-billing-for-an-organization
    */
   "GET /orgs/{org}/settings/billing/shared-storage": never;
   /**
-   * The endpoint `GET /orgs/{org}/team-sync/groups` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#list-idp-groups-for-an-organization
    */
   "GET /orgs/{org}/team-sync/groups": never;
   /**
-   * The endpoint `GET /orgs/{org}/teams/{team_slug}/invitations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#list-pending-team-invitations
    */
   "GET /orgs/{org}/teams/{team_slug}/invitations": never;
   /**
-   * The endpoint `GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#list-idp-groups-for-a-team
    */
   "GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#get-the-review-history-for-a-workflow-run
    */
   "GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#get-pending-deployments-for-a-workflow-run
    */
   "GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#get-workflow-run-usage
    */
   "GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#get-workflow-usage
    */
   "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/autolinks` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/v3/repos#list-autolinks
    */
   "GET /repos/{owner}/{repo}/autolinks": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/autolinks/{autolink_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/v3/repos#get-autolink
    */
   "GET /repos/{owner}/{repo}/autolinks/{autolink_id}": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/community/code_of_conduct` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/codes-of-conduct#get-the-code-of-conduct-for-a-repository
    */
   "GET /repos/{owner}/{repo}/community/code_of_conduct": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/community/profile` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-community-profile-metrics
    */
   "GET /repos/{owner}/{repo}/community/profile": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/environments` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-all-environments
    */
   "GET /repos/{owner}/{repo}/environments": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/environments/{environment_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-an-environment
    */
   "GET /repos/{owner}/{repo}/environments/{environment_name}": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#list-deliveries-for-a-repository-webhook
    */
   "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-a-delivery-for-a-repository-webhook
    */
   "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/import` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#get-an-import-status
    */
   "GET /repos/{owner}/{repo}/import": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/import/authors` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#get-commit-authors
    */
   "GET /repos/{owner}/{repo}/import/authors": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/import/large_files` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#get-large-files
    */
   "GET /repos/{owner}/{repo}/import/large_files": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#get-interaction-restrictions-for-a-repository
    */
   "GET /repos/{owner}/{repo}/interaction-limits": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/pages/health` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-a-dns-health-check-for-github-pages
    */
   "GET /repos/{owner}/{repo}/pages/health": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/traffic/clones` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-repository-clones
    */
   "GET /repos/{owner}/{repo}/traffic/clones": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/traffic/popular/paths` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-top-referral-paths
    */
   "GET /repos/{owner}/{repo}/traffic/popular/paths": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/traffic/popular/referrers` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-top-referral-sources
    */
   "GET /repos/{owner}/{repo}/traffic/popular/referrers": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/traffic/views` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#get-page-views
    */
   "GET /repos/{owner}/{repo}/traffic/views": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/vulnerability-alerts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#check-if-vulnerability-alerts-are-enabled-for-a-repository
    */
   "GET /repos/{owner}/{repo}/vulnerability-alerts": never;
   /**
-   * The endpoint `GET /repositories/{repository_id}/environments/{environment_name}/secrets` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#list-environment-secrets
    */
   "GET /repositories/{repository_id}/environments/{environment_name}/secrets": never;
   /**
-   * The endpoint `GET /repositories/{repository_id}/environments/{environment_name}/secrets/public-key` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#get-an-environment-public-key
    */
   "GET /repositories/{repository_id}/environments/{environment_name}/secrets/public-key": never;
   /**
-   * The endpoint `GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#get-an-environment-secret
    */
   "GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": never;
   /**
-   * The endpoint `GET /scim/v2/enterprises/{enterprise}/Groups` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#list-provisioned-scim-groups-for-an-enterprise
    */
   "GET /scim/v2/enterprises/{enterprise}/Groups": never;
   /**
-   * The endpoint `GET /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#get-scim-provisioning-information-for-an-enterprise-group
    */
   "GET /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
   /**
-   * The endpoint `GET /scim/v2/enterprises/{enterprise}/Users` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#list-scim-provisioned-identities-for-an-enterprise
    */
   "GET /scim/v2/enterprises/{enterprise}/Users": never;
   /**
-   * The endpoint `GET /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#get-scim-provisioning-information-for-an-enterprise-user
    */
   "GET /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `GET /scim/v2/organizations/{org}/Users` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/scim#list-scim-provisioned-identities
    */
   "GET /scim/v2/organizations/{org}/Users": never;
   /**
-   * The endpoint `GET /scim/v2/organizations/{org}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/scim#get-scim-provisioning-information-for-a-user
    */
   "GET /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `GET /teams/{team_id}/invitations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#list-pending-team-invitations-legacy
    */
   "GET /teams/{team_id}/invitations": never;
   /**
-   * The endpoint `GET /teams/{team_id}/team-sync/group-mappings` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#list-idp-groups-for-a-team-legacy
    */
   "GET /teams/{team_id}/team-sync/group-mappings": never;
   /**
-   * The endpoint `GET /user/blocks` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/users#list-users-blocked-by-the-authenticated-user
    */
   "GET /user/blocks": never;
   /**
-   * The endpoint `GET /user/blocks/{username}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/users#check-if-a-user-is-blocked-by-the-authenticated-user
    */
   "GET /user/blocks/{username}": never;
   /**
-   * The endpoint `GET /user/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#get-interaction-restrictions-for-your-public-repositories
    */
   "GET /user/interaction-limits": never;
   /**
-   * The endpoint `GET /user/marketplace_purchases` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-subscriptions-for-the-authenticated-user
    */
   "GET /user/marketplace_purchases": never;
   /**
-   * The endpoint `GET /user/marketplace_purchases/stubbed` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#list-subscriptions-for-the-authenticated-user-stubbed
    */
   "GET /user/marketplace_purchases/stubbed": never;
   /**
-   * The endpoint `GET /user/migrations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#list-user-migrations
    */
   "GET /user/migrations": never;
   /**
-   * The endpoint `GET /user/migrations/{migration_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#get-a-user-migration-status
    */
   "GET /user/migrations/{migration_id}": never;
   /**
-   * The endpoint `GET /user/migrations/{migration_id}/archive` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#download-a-user-migration-archive
    */
   "GET /user/migrations/{migration_id}/archive": never;
   /**
-   * The endpoint `GET /user/migrations/{migration_id}/repositories` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#list-repositories-for-a-user-migration
    */
   "GET /user/migrations/{migration_id}/repositories": never;
   /**
-   * The endpoint `GET /user/packages` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#list-packages-for-the-authenticated-user
    */
   "GET /user/packages": never;
   /**
-   * The endpoint `GET /user/packages/{package_type}/{package_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-a-package-for-the-authenticated-user
    */
   "GET /user/packages/{package_type}/{package_name}": never;
   /**
-   * The endpoint `GET /user/packages/{package_type}/{package_name}/versions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-all-package-versions-for-a-package-owned-by-the-authenticated-user
    */
   "GET /user/packages/{package_type}/{package_name}/versions": never;
   /**
-   * The endpoint `GET /user/packages/{package_type}/{package_name}/versions/{package_version_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-a-package-version-for-the-authenticated-user
    */
   "GET /user/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
   /**
-   * The endpoint `GET /user/{username}/packages` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#list-packages-for-user
    */
   "GET /user/{username}/packages": never;
   /**
-   * The endpoint `GET /users/{username}/packages/{package_type}/{package_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-a-package-for-a-user
    */
   "GET /users/{username}/packages/{package_type}/{package_name}": never;
   /**
-   * The endpoint `GET /users/{username}/packages/{package_type}/{package_name}/versions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-all-package-versions-for-a-package-owned-by-a-user
    */
   "GET /users/{username}/packages/{package_type}/{package_name}/versions": never;
   /**
-   * The endpoint `GET /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#get-a-package-version-for-a-user
    */
   "GET /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
   /**
-   * The endpoint `GET /users/{username}/settings/billing/actions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-github-actions-billing-for-a-user
    */
   "GET /users/{username}/settings/billing/actions": never;
   /**
-   * The endpoint `GET /users/{username}/settings/billing/packages` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-github-packages-billing-for-a-user
    */
   "GET /users/{username}/settings/billing/packages": never;
   /**
-   * The endpoint `GET /users/{username}/settings/billing/shared-storage` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/billing#get-shared-storage-billing-for-a-user
    */
   "GET /users/{username}/settings/billing/shared-storage": never;
   /**
-   * The endpoint `PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#create-or-update-idp-group-connections
    */
   "PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings": never;
   /**
-   * The endpoint `PATCH /repos/{owner}/{repo}/import` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#update-an-import
    */
   "PATCH /repos/{owner}/{repo}/import": never;
   /**
-   * The endpoint `PATCH /repos/{owner}/{repo}/import/authors/{author_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#map-a-commit-author
    */
   "PATCH /repos/{owner}/{repo}/import/authors/{author_id}": never;
   /**
-   * The endpoint `PATCH /repos/{owner}/{repo}/import/lfs` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#update-git-lfs-preference
    */
   "PATCH /repos/{owner}/{repo}/import/lfs": never;
   /**
-   * The endpoint `PATCH /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#update-an-attribute-for-a-scim-enterprise-group
    */
   "PATCH /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
   /**
-   * The endpoint `PATCH /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#update-an-attribute-for-a-scim-enterprise-user
    */
   "PATCH /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/scim#update-an-attribute-for-a-scim-user
    */
   "PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `PATCH /teams/{team_id}/team-sync/group-mappings` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/teams#create-or-update-idp-group-connections-legacy
    */
   "PATCH /teams/{team_id}/team-sync/group-mappings": never;
   /**
-   * The endpoint `PATCH /user/email/visibility` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/users#set-primary-email-visibility-for-the-authenticated-user
    */
   "PATCH /user/email/visibility": never;
   /**
-   * The endpoint `POST /app/hook/deliveries/{delivery_id}/attempts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/apps#redeliver-a-delivery-for-an-app-webhook
    */
   "POST /app/hook/deliveries/{delivery_id}/attempts": never;
   /**
-   * The endpoint `POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#redeliver-a-delivery-for-an-organization-webhook
    */
   "POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": never;
   /**
-   * The endpoint `POST /orgs/{org}/invitations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#create-an-organization-invitation
    */
   "POST /orgs/{org}/invitations": never;
   /**
-   * The endpoint `POST /orgs/{org}/migrations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#start-an-organization-migration
    */
   "POST /orgs/{org}/migrations": never;
   /**
-   * The endpoint `POST /orgs/{org}/packages/{package_type}/{package_name}/restore` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#restore-a-package-for-an-organization
    */
   "POST /orgs/{org}/packages/{package_type}/{package_name}/restore": never;
   /**
-   * The endpoint `POST /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#restore-a-package-version-for-an-organization
    */
   "POST /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": never;
   /**
-   * The endpoint `POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#approve-a-workflow-run-for-a-fork-pull-request
    */
   "POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve": never;
   /**
-   * The endpoint `POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#review-pending-deployments-for-a-workflow-run
    */
   "POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments": never;
   /**
-   * The endpoint `POST /repos/{owner}/{repo}/autolinks` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/v3/repos#create-an-autolink
    */
   "POST /repos/{owner}/{repo}/autolinks": never;
   /**
-   * The endpoint `POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#redeliver-a-delivery-for-a-repository-webhook
    */
   "POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": never;
   /**
-   * The endpoint `POST /repos/{owner}/{repo}/releases/{release_id}/reactions` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/reactions/#create-reaction-for-a-release
    */
   "POST /repos/{owner}/{repo}/releases/{release_id}/reactions": never;
   /**
-   * The endpoint `POST /scim/v2/enterprises/{enterprise}/Groups` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#provision-a-scim-enterprise-group-and-invite-users
    */
   "POST /scim/v2/enterprises/{enterprise}/Groups": never;
   /**
-   * The endpoint `POST /scim/v2/enterprises/{enterprise}/Users` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#provision-and-invite-a-scim-enterprise-user
    */
   "POST /scim/v2/enterprises/{enterprise}/Users": never;
   /**
-   * The endpoint `POST /scim/v2/organizations/{org}/Users` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/scim#provision-and-invite-a-scim-user
    */
   "POST /scim/v2/organizations/{org}/Users": never;
   /**
-   * The endpoint `POST /user/migrations` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#start-a-user-migration
    */
   "POST /user/migrations": never;
   /**
-   * The endpoint `POST /user/packages/{package_type}/{package_name}/restore` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#restore-a-package-for-the-authenticated-user
    */
   "POST /user/packages/{package_type}/{package_name}/restore": never;
   /**
-   * The endpoint `POST /user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#restore-a-package-version-for-the-authenticated-user
    */
   "POST /user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": never;
   /**
-   * The endpoint `POST /users/{username}/packages/{package_type}/{package_name}/restore` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#restore-a-package-for-a-user
    */
   "POST /users/{username}/packages/{package_type}/{package_name}/restore": never;
   /**
-   * The endpoint `POST /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/packages#restore-a-package-version-for-a-user
    */
   "POST /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": never;
   /**
-   * The endpoint `PUT /orgs/{org}/blocks/{username}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/orgs#block-a-user-from-an-organization
    */
   "PUT /orgs/{org}/blocks/{username}": never;
   /**
-   * The endpoint `PUT /orgs/{org}/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#set-interaction-restrictions-for-an-organization
    */
   "PUT /orgs/{org}/interaction-limits": never;
   /**
-   * The endpoint `PUT /repos/{owner}/{repo}/automated-security-fixes` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#enable-automated-security-fixes
    */
   "PUT /repos/{owner}/{repo}/automated-security-fixes": never;
   /**
-   * The endpoint `PUT /repos/{owner}/{repo}/environments/{environment_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#create-or-update-an-environment
    */
   "PUT /repos/{owner}/{repo}/environments/{environment_name}": never;
   /**
-   * The endpoint `PUT /repos/{owner}/{repo}/import` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/migrations#start-an-import
    */
   "PUT /repos/{owner}/{repo}/import": never;
   /**
-   * The endpoint `PUT /repos/{owner}/{repo}/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#set-interaction-restrictions-for-a-repository
    */
   "PUT /repos/{owner}/{repo}/interaction-limits": never;
   /**
-   * The endpoint `PUT /repos/{owner}/{repo}/vulnerability-alerts` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/repos#enable-vulnerability-alerts
    */
   "PUT /repos/{owner}/{repo}/vulnerability-alerts": never;
   /**
-   * The endpoint `PUT /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/actions#create-or-update-an-environment-secret
    */
   "PUT /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": never;
   /**
-   * The endpoint `PUT /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#set-scim-information-for-a-provisioned-enterprise-group
    */
   "PUT /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
   /**
-   * The endpoint `PUT /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/enterprise-admin#set-scim-information-for-a-provisioned-enterprise-user
    */
   "PUT /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `PUT /scim/v2/organizations/{org}/Users/{scim_user_id}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/scim#set-scim-information-for-a-provisioned-user
    */
   "PUT /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
   /**
-   * The endpoint `PUT /user/blocks/{username}` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/users#block-a-user
    */
   "PUT /user/blocks/{username}": never;
   /**
-   * The endpoint `PUT /user/interaction-limits` exists for github.com
-   * but does not exist for ghes-3.1
+   * The endpoint exists for github.com but does not exist for ghes-3.1
    *
    * @see https://docs.github.com/rest/reference/interactions#set-interaction-restrictions-for-your-public-repositories
    */

@@ -1,22 +1,20 @@
 {
   "name": "@octokit-next/types-rest-api-ghes-3.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
-  "version": "0.0.0-development",
-  "description": "Types for GHES 3.0 REST API requests and responses",
-  "types": "./index.d.ts",
+  "description": "Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/octokit/octokit-next.js.git",
     "directory": "packages/types-rest-api-ghes-3.0"
   },
-  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.0#readme",
-  "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/types-rest-api": "0.0.0-development"
-  }
+    "@octokit-next/types-rest-api-ghes-3.1": "0.0.0-development",
+    "@octokit-next/types-openapi-ghes-3.0": "0.0.0-development"
+  },
+  "publishConfig": { "access": "public" },
+  "version": "0.0.0-development",
+  "types": "index.d.ts",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "octokit": { "openapi-version": "3.10.1" }
 }

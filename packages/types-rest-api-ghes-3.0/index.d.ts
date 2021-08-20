@@ -16,57 +16,49 @@ type ResponseHeaders = Omit<
 
 export type EndpointsDiff = ImportEndpointsDiff & {
   /**
-   * The endpoint `DELETE /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/code-scanning#delete-a-code-scanning-analysis-from-a-repository
    */
   "DELETE /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}": never;
   /**
-   * The endpoint `GET /orgs/{org}/audit-log` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/orgs#get-audit-log
    */
   "GET /orgs/{org}/audit-log": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/code-scanning#list-instances-of-a-code-scanning-alert
    */
   "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/code-scanning#get-a-code-scanning-analysis-for-a-repository
    */
   "GET /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/code-scanning#list-recent-code-scanning-analyses-for-a-repository
    */
   "GET /repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/secret-scanning/alerts` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/secret-scanning#list-secret-scanning-alerts-for-a-repository
    */
   "GET /repos/{owner}/{repo}/secret-scanning/alerts": never;
   /**
-   * The endpoint `GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/secret-scanning#get-a-secret-scanning-alert
    */
   "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}": never;
   /**
-   * The endpoint `POST /repos/{owner}/{repo}/branches/{branch}/rename` exists for ghes-3.1
-   * but does not exist for ghes-3.0
+   * The endpoint exists for ghes-3.1 but does not exist for ghes-3.0
    *
    * @see https://docs.github.com/enterprise-server@3.1/rest/reference/repos#rename-a-branch
    */

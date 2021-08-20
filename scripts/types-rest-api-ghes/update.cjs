@@ -1,9 +1,14 @@
-const { readdirSync, readFileSync, writeFileSync } = require("fs");
+const { readFileSync } = require("fs");
+const { readdir, mkdir, rm, writeFile } = require("fs/promises");
 const { resolve } = require("path");
 
 const Handlebars = require("handlebars");
 const prettier = require("prettier");
 const sortKeys = require("sort-keys");
+
+if (!process.env.OCTOKIT_OPENAPI_VERSION) {
+  throw new Error("OCTOKIT_OPENAPI_VERSION is not set");
+}
 
 const DIFF_TO_DOTCOM_TEMPLATE_PATH = resolve(
   __dirname,
@@ -21,13 +26,87 @@ const templateDiffToGHES = Handlebars.compile(
   readFileSync(DIFF_TO_GHES_TEMPLATE_PATH, "utf8")
 );
 
+const packageDefaults = {
+  publishConfig: {
+    access: "public",
+  },
+  version: "0.0.0-development",
+  types: "index.d.ts",
+  author: "Gregor Martynus (https://twitter.com/gr2m)",
+  license: "MIT",
+  octokit: {
+    "openapi-version": process.env.OCTOKIT_OPENAPI_VERSION.replace(/^v/, ""),
+  },
+};
+
 run();
 
 async function run() {
-  const diffFiles = readdirSync("cache/types-rest-api-ghes");
+  const diffFiles = await readdir("cache/types-rest-api-ghes");
 
   for (const diffFile of diffFiles) {
     const [currentVersion, diffVersion] = toVersions(diffFile);
+    const currentVersionName = currentVersion.replace("-", " ").toUpperCase();
+
+    const packageName = `types-rest-api-${currentVersion}`;
+    const diffPackageName =
+      diffVersion === "api.github.com"
+        ? `types-rest-api`
+        : `types-rest-api-${diffVersion}`;
+    const packagePath = `packages/${packageName}`;
+
+    // delete current package directory
+    await rm(packagePath, { recursive: true });
+    console.log("%s deleted", packagePath);
+
+    // recreate package directory
+    await mkdir(packagePath);
+
+    // create package.json
+    await writeFile(
+      `${packagePath}/package.json`,
+      prettier.format(
+        JSON.stringify({
+          name: `@octokit-next/${packageName}`,
+          description: `Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com`,
+          repository: {
+            type: "git",
+            url: "https://github.com/octokit/octokit-next.js.git",
+            directory: packagePath,
+          },
+          dependencies: {
+            "@octokit-next/types": "0.0.0-development",
+            [`@octokit-next/${diffPackageName}`]: "0.0.0-development",
+            [`@octokit-next/types-openapi-${currentVersion}`]:
+              "0.0.0-development",
+          },
+          ...packageDefaults,
+        }),
+        { parser: "json" }
+      )
+    );
+    console.log("%s updated", `${packagePath}/package.json`);
+
+    // create README.md
+    await writeFile(
+      `${packagePath}/README.md`,
+      prettier.format(
+        `
+# \`@octokit-next/${packageName}\`
+
+> Types for ${currentVersionName} REST API requests and responses
+
+🚫⚠️ This package is part of an experimental Octokit SDK for testing purpose only - DO NOT USE
+
+[learn more](https://github.com/octokit/octokit-next.js)
+        
+`,
+        { parser: "markdown" }
+      )
+    );
+    console.log("%s updated", `${packagePath}/README.md`);
+
+    // create index.d.ts
     const { paths } = JSON.parse(
       readFileSync("cache/types-rest-api-ghes/" + diffFile, "utf8")
     );
@@ -55,21 +134,13 @@ async function run() {
       }),
     });
 
-    const declarationsPath = resolve(
-      `packages/types-rest-api-${currentVersion}/index.d.ts`
-    );
+    const declarationsPath = resolve(`${packagePath}/index.d.ts`);
 
-    writeFileSync(
+    await writeFile(
       declarationsPath,
       prettier.format(result, { parser: "typescript" })
     );
     console.log(`${declarationsPath} updated.`);
-
-    // TODO
-    //
-    // - delete the package folder and recreate it with all its files
-    // - add the respective `@octokit-next/types-openapi-ghes-*` package as dependency with version set to `0.0.0-develpoment`
-    // - install `semantic-release-plugin-update-version-in-files` and replace the versions in `packages/*/package.json` files
   }
 
   // for (const endpoint of ENDPOINTS) {

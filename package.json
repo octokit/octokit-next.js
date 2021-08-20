@@ -101,6 +101,15 @@
         {
           "pkgRoot": "packages/types-rest-api-ghes-3.0-compatible"
         }
+      ],
+      [
+        "semantic-release-plugin-update-version-in-files",
+        {
+          "files": [
+            "packages/*/package.json"
+          ],
+          "placeholder": "0.0.0-development"
+        }
       ]
     ]
   },
