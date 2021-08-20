@@ -112,13 +112,25 @@ async function run() {
     );
 
     const removedEndpointsByRoute = {};
-
     for (const [path, methods] of paths["removed"]) {
       for (const [method, operation] of Object.entries(methods)) {
         const route = [method.toUpperCase(), path].join(" ");
 
         removedEndpointsByRoute[route] = {
           documentationUrl: operation.externalDocs.url,
+        };
+      }
+    }
+    const addedEndpointsByRoute = {};
+    for (const [path, methods] of paths["added"]) {
+      for (const [method, operation] of Object.entries(methods)) {
+        const route = [method.toUpperCase(), path].join(" ");
+
+        addedEndpointsByRoute[route] = {
+          method,
+          url: toOpenApiUrl(path),
+          requiredPreview: toRequiredPreviewName(operation),
+          documentationUrl: operation.externalDocs?.url,
         };
       }
     }
@@ -129,6 +141,9 @@ async function run() {
     const result = template({
       currentVersion,
       diffVersion,
+      addedEndpointsByRoute: sortKeys(addedEndpointsByRoute, {
+        deep: true,
+      }),
       removedEndpointsByRoute: sortKeys(removedEndpointsByRoute, {
         deep: true,
       }),
@@ -142,55 +157,11 @@ async function run() {
     );
     console.log(`${declarationsPath} updated.`);
   }
-
-  // for (const endpoint of ENDPOINTS) {
-  //   if (endpoint.renamed) continue;
-
-  //   const route = `${endpoint.method} ${endpoint.url}`;
-
-  //   // The root endpoint types are set by default
-  //   if (route === "GET /") continue;
-
-  //   endpointsByRoute[route] = {
-  //     method: endpoint.method.toLowerCase(),
-  //     url: toOpenApiUrl(endpoint),
-  //     requiredPreview: (endpoint.previews[0] || {}).name,
-  //     documentationUrl: endpoint.documentationUrl,
-  //   };
-
-  //   // handle deprecated URL parameters
-  //   for (const parameter of endpoint.parameters) {
-  //     if (!parameter.deprecated || parameter.in !== "PATH") continue;
-  //     const { alias, name } = parameter;
-  //     const deprecatedRoute = route.replace(
-  //       new RegExp(`\\{${alias}\\}`),
-  //       `{${name}}`
-  //     );
-
-  //     endpointsByRoute[deprecatedRoute] = Object.assign(
-  //       {},
-  //       endpointsByRoute[route],
-  //       {
-  //         deprecated: `"${name}" is now "${alias}"`,
-  //       }
-  //     );
-  //   }
-  // }
-
-  // const result = template({
-  //   endpointsByRoute: sortKeys(endpointsByRoute, { deep: true }),
-  // });
-
-  // writeFileSync(
-  //   DECLARATIONS_PATH,
-  //   prettier.format(result, { parser: "typescript" })
-  // );
-  // console.log(`${DECLARATIONS_PATH} updated.`);
 }
 
-function toOpenApiUrl(endpoint) {
+function toOpenApiUrl(url) {
   return (
-    endpoint.url
+    url
       // stecial case for "Upload a release asset": remove ":origin" prefix
       .replace(/^\{origin\}/, "")
       // remove query parameters

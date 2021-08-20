@@ -30,7 +30,7 @@ async function run() {
     const packageName =
       sourceFilename === "api.github.com.json"
         ? "types-openapi"
-        : sourceFilename.replace(/^(.*)\.json$/, "openapi-types-$1");
+        : sourceFilename.replace(/^(.*)\.json$/, "types-openapi-$1");
 
     if (packageName.startsWith("types-openapi")) {
       await rm(`packages/${packageName}`, { recursive: true });
