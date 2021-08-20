@@ -10,6 +10,12 @@ if (!process.env.GITHUB_TOKEN) {
   throw new Error("GITHUB_TOKEN is not set");
 }
 
+const SUPPORTED_VERSIONS = [
+  "api.github.com.json",
+  "ghes-3.1.json",
+  "ghes-3.0.json",
+];
+
 const version = process.env.OCTOKIT_OPENAPI_VERSION.replace(/^v/, "");
 
 await rm("cache/types-openapi", { recursive: true });
@@ -46,9 +52,12 @@ if (!Array.isArray(data)) {
 
 // download the OpenAPI spec for api.github.com
 for (const file of data) {
-  if (file.name !== "api.github.com.json") continue;
+  if (!SUPPORTED_VERSIONS.includes(file.name)) {
+    console.log("%s not supported", file.name);
+    continue;
+  }
 
-  download(version, file.name);
+  await download(version, file.name);
 }
 
 function download(version, fileName) {
