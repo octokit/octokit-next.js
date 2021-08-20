@@ -126,7 +126,6 @@ export namespace Octokit {
     "x-ratelimit-limit": string;
     "x-ratelimit-remaining": string;
     "x-ratelimit-reset": string;
-    "x-dotcom-only": string;
 
     [header: string]: string | number | undefined;
   }
