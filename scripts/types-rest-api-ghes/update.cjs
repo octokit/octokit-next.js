@@ -64,6 +64,12 @@ async function run() {
       prettier.format(result, { parser: "typescript" })
     );
     console.log(`${declarationsPath} updated.`);
+
+    // TODO
+    //
+    // - delete the package folder and recreate it with all its files
+    // - add the respective `@octokit-next/types-openapi-ghes-*` package as dependency with version set to `0.0.0-develpoment`
+    // - install `semantic-release-plugin-update-version-in-files` and replace the versions in `packages/*/package.json` files
   }
 
   // for (const endpoint of ENDPOINTS) {
