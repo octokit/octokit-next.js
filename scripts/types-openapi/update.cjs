@@ -1,5 +1,4 @@
 const { readdir, mkdir, rm, writeFile } = require("fs/promises");
-const { basename } = require("path");
 
 const prettier = require("prettier");
 const openapiTS = require("openapi-typescript").default;
