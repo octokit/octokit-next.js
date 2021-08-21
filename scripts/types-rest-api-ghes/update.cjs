@@ -18,6 +18,7 @@ const DIFF_TO_GHES_TEMPLATE_PATH = resolve(
   __dirname,
   "templates/diff-to-ghes.d.ts.template"
 );
+const pkg = require(resolve(process.cwd(), "package.json"));
 
 const templateDiffToDotcom = Handlebars.compile(
   readFileSync(DIFF_TO_DOTCOM_TEMPLATE_PATH, "utf8")
@@ -82,6 +83,7 @@ async function run() {
               "0.0.0-development",
             "@octokit-next/types-rest-api": "0.0.0-development",
             [`@octokit-next/${diffPackageName}`]: "0.0.0-development",
+            "type-fest": pkg.devDependencies["type-fest"],
           },
           ...packageDefaults,
         }),
