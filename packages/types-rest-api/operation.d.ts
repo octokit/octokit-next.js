@@ -88,10 +88,10 @@ type GetContentKeyIfPresent<T> = "content" extends keyof T
 type DataType<T> = {
   [K in KnownJsonResponseTypes & keyof T]: T[K];
 }[KnownJsonResponseTypes & keyof T];
-type ExtractOctokitResponse<R> = "responses" extends keyof R
-  ? SuccessResponseDataType<R["responses"]> extends never
-    ? RedirectResponseDataType<R["responses"]> extends never
-      ? EmptyResponseDataType<R["responses"]>
-      : RedirectResponseDataType<R["responses"]>
-    : SuccessResponseDataType<R["responses"]>
+type ExtractOctokitResponse<Operation> = "responses" extends keyof Operation
+  ? SuccessResponseDataType<Operation["responses"]> extends never
+    ? RedirectResponseDataType<Operation["responses"]> extends never
+      ? EmptyResponseDataType<Operation["responses"]>
+      : RedirectResponseDataType<Operation["responses"]>
+    : SuccessResponseDataType<Operation["responses"]>
   : unknown;
