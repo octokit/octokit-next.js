@@ -2,18 +2,13 @@
 import { Octokit } from "@octokit-next/types";
 import { Operation } from "@octokit-next/types-rest-api";
 import { paths } from "@octokit-next/types-openapi-ghes-3.1";
+import { Simplify } from "type-fest";
 
 import "@octokit-next/types-rest-api";
 
 export type ResponseHeadersDiff = {
   "x-github-enterprise-version": string;
 };
-
-type ResponseHeaders = Omit<
-  Octokit.ApiVersions["github.com"]["ResponseHeaders"],
-  keyof ResponseHeadersDiff
-> &
-  ResponseHeadersDiff;
 
 export type EndpointsDiff = {
   // ADDED endpoints
@@ -1533,7 +1528,10 @@ declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.1": {
-        ResponseHeaders: ResponseHeaders;
+        ResponseHeaders: Simplify<
+          Octokit.ApiVersions["github.com"]["ResponseHeaders"] &
+            ResponseHeadersDiff
+        >;
 
         Endpoints: Omit<
           Octokit.ApiVersions["github.com"]["Endpoints"],
