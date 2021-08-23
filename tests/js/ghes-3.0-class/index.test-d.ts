@@ -11,6 +11,7 @@ export async function test() {
 
   const rootResponse = await octokit.request("GET /");
   expectType<string>(rootResponse.data.emojis_url);
+
   expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 
   // `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
