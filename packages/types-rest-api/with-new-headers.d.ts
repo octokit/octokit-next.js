@@ -2,19 +2,24 @@ import { Octokit } from "@octokit-next/types";
 import { Simplify } from "type-fest";
 
 /**
- * When creating types for version-specific types, we need to iterate over
- * all unchanged endpoints types and apply the new headers types to them.
+ * When creating types for version-specific endpoints, we need to
+ * apply the version-specific headers to them.
  */
-export type WithNewHeaders<Endpoints extends Record<string, Endpoint>> = {
-  [K in keyof Endpoints]: {
-    parameters: Endpoints[K]["parameters"];
-    request: Endpoints[K]["request"];
-    response: Simplify<
-      Omit<Endpoints[K]["response"], "headers"> & {
-        headers: Octokit.ApiVersions["ghes-3.0"]["ResponseHeaders"];
-      }
-    >;
-  };
+export type WithNewHeaders<
+  Endpoints extends Record<string, Endpoint | never>,
+  Headers extends Record<string, unknown>
+> = {
+  [K in keyof Endpoints]: Endpoints[K] extends never
+    ? never
+    : {
+        parameters: Endpoints[K]["parameters"];
+        request: Endpoints[K]["request"];
+        response: Simplify<
+          Omit<Endpoints[K]["response"], "headers"> & {
+            headers: Headers;
+          }
+        >;
+      };
 };
 
 type Endpoint = {

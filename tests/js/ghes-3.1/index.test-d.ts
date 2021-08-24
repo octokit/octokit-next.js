@@ -9,11 +9,18 @@ export async function test() {
     version: "ghes-3.1",
   });
 
-  const dotcomOnlyResponse = octokit.request("GET /marketplace_listing/plans");
+  const dotcomOnlyResponse = await octokit.request(
+    "GET /marketplace_listing/plans"
+  );
   expectType<never>(dotcomOnlyResponse);
 
-  const ghesOnlyResponse = await octokit.request("GET /admin/users");
-  expectType<string>(ghesOnlyResponse.data[0].login);
+  const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
+    hook_id: 1,
+    mediaType: {
+      previews: ["superpro"],
+    },
+  });
+  expectType<number | undefined>(ghesOnlyResponse.data.id);
   expectType<string>(ghesOnlyResponse.headers["x-github-enterprise-version"]);
 
   const dotcomOnlyResponse2 = await octokit.request(

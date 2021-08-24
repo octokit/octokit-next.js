@@ -10,6 +10,10 @@ export type ResponseHeadersDiff = {
   "x-github-enterprise-version": string;
 };
 
+export type ResponseHeaders = Simplify<
+  Octokit.ApiVersions["github.com"]["ResponseHeaders"] & ResponseHeadersDiff
+>;
+
 export type EndpointsDiff = {
   // ADDED endpoints
 
@@ -1534,17 +1538,14 @@ declare module "@octokit-next/types" {
         >;
 
         Endpoints: Simplify<
-          Omit<
-            Octokit.ApiVersions["github.com"]["Endpoints"],
-            keyof EndpointsDiff
-          > &
-            EndpointsDiff &
-            WithNewHeaders<
-              Omit<
-                Octokit.ApiVersions["github.com"]["Endpoints"],
-                keyof EndpointsDiff
-              >
-            >
+          WithNewHeaders<
+            Omit<
+              Octokit.ApiVersions["github.com"]["Endpoints"],
+              keyof EndpointsDiff
+            > &
+              EndpointsDiff,
+            Octokit.ApiVersions["ghes-3.1"]["ResponseHeaders"]
+          >
         >;
       };
     }

@@ -12,10 +12,14 @@ export async function test() {
   expectType<string>(rootEndpointResponse.headers["x-ratelimit-limit"]);
   expectType<string>(rootEndpointResponse.data.emojis_url);
 
-  const ghesOnlyResponse = await request("GET /admin/users", {
+  const ghesOnlyResponse = await request("GET /admin/hooks/{hook_id}", {
+    hook_id: 1,
+    mediaType: {
+      previews: ["superpro"],
+    },
     request: {
       version: "ghes-3.1",
     },
   });
-  expectType<string>(ghesOnlyResponse.data[0].login);
+  expectType<number | undefined>(ghesOnlyResponse.data.id);
 }

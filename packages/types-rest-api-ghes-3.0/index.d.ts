@@ -11,6 +11,10 @@ import {
 
 export type ResponseHeadersDiff = ImportResponseHeadersDiff;
 
+export type ResponseHeaders = Simplify<
+  Octokit.ApiVersions["ghes-3.1"]["ResponseHeaders"] & ResponseHeadersDiff
+>;
+
 export type EndpointsDiff = ImportEndpointsDiff & {
   // ADDED endpoints
 
@@ -76,17 +80,14 @@ declare module "@octokit-next/types" {
         >;
 
         Endpoints: Simplify<
-          Omit<
-            Octokit.ApiVersions["github.com"]["Endpoints"],
-            keyof EndpointsDiff
-          > &
-            EndpointsDiff &
-            WithNewHeaders<
-              Omit<
-                Octokit.ApiVersions["github.com"]["Endpoints"],
-                keyof EndpointsDiff
-              >
-            >
+          WithNewHeaders<
+            Omit<
+              Octokit.ApiVersions["github.com"]["Endpoints"],
+              keyof EndpointsDiff
+            > &
+              EndpointsDiff,
+            Octokit.ApiVersions["ghes-3.0"]["ResponseHeaders"]
+          >
         >;
       };
     }

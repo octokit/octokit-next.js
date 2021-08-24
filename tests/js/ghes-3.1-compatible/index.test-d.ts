@@ -10,9 +10,7 @@ export async function test() {
   });
 
   const response = await octokit.request("GET /");
-  expectType<{
-    emojis_url: string;
-  }>(response.data);
+  expectType<string>(response.data.emojis_url);
   expectType<Omit<Octokit.ResponseHeaders, "x-github-enterprise-version">>(
     response.headers
   );
@@ -26,7 +24,16 @@ export async function test() {
   expectType<unknown>(
     (await octokit.request("GET /marketplace_listing/plans")).data
   );
-  expectType<unknown>((await octokit.request("GET /admin/users")).data);
+  expectType<unknown>(
+    (
+      await octokit.request("GET /admin/hooks/{hook_id}", {
+        hook_id: 1,
+        mediaType: {
+          previews: ["superpro"],
+        },
+      })
+    ).data
+  );
 
   // with versions set explicitly
   const dotcomOnlyResponse = await octokit.request(
@@ -39,10 +46,14 @@ export async function test() {
   );
   expectType<number>(dotcomOnlyResponse.data[0].id);
 
-  const ghesOnlyResponse = await octokit.request("GET /admin/users", {
+  const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
+    hook_id: 1,
+    mediaType: {
+      previews: ["superpro"],
+    },
     request: {
       version: "ghes-3.1",
     },
   });
-  expectType<string>(ghesOnlyResponse.data[0].login);
+  expectType<number | undefined>(ghesOnlyResponse.data.id);
 }

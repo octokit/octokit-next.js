@@ -3,7 +3,7 @@ import { Octokit } from "./index.js";
 
 type EndpointParameters<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
-> = { request: Octokit.RequestOptions<TVersion> } & Record<string, unknown>;
+> = { request?: Octokit.RequestOptions<TVersion> } & Record<string, unknown>;
 
 type UnknownResponse = {
   /**
@@ -40,30 +40,6 @@ export interface RequestInterface<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
 > {
   /**
-   * Send a request to a known endpoint using a version specified in `request.version`.
-   *
-   * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
-   * @param {object} parameters URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
-   */
-  <
-    RVersion extends keyof Octokit.ApiVersions,
-    Route extends ConditionalKeysOmit<
-      Octokit.ApiVersions[RVersion]["Endpoints"],
-      never
-    >,
-    Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
-  >(
-    route: Route,
-    options: {
-      request: {
-        version: RVersion;
-      };
-    } & ("parameters" extends keyof Endpoint
-      ? Endpoint["parameters"] & EndpointParameters<RVersion>
-      : Record<string, unknown>)
-  ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
-
-  /**
    * ⚠️🚫 Known endpoint, but not supported by the selected version.
    *
    * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
@@ -88,23 +64,41 @@ export interface RequestInterface<
   ): never;
 
   /**
-   * Send a request to a known endpoint
+   * Send a request to a known endpoint using a version specified in `request.version`.
+   *
+   * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
+   * @param {object} parameters URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
+   */
+  <
+    RVersion extends keyof Octokit.ApiVersions,
+    Route extends ConditionalKeysOmit<
+      Octokit.ApiVersions[RVersion]["Endpoints"],
+      never
+    >,
+    Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
+  >(
+    route: Route,
+    options: {
+      request: {
+        version: RVersion;
+      };
+    } & ("parameters" extends keyof Endpoint
+      ? Endpoint["parameters"] & EndpointParameters<RVersion>
+      : Record<string, unknown>)
+  ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+
+  /**
+   * Send a request to an unknown endpoint
    *
    * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
-  <
-    Route extends ConditionalKeysOmit<
-      Octokit.ApiVersions[TVersion]["Endpoints"],
-      never
-    >,
-    Endpoint = Octokit.ApiVersions[TVersion]["Endpoints"][Route]
-  >(
-    route: Route,
-    options?: "parameters" extends keyof Endpoint
-      ? Endpoint["parameters"] & EndpointParameters<TVersion>
-      : Record<string, unknown>
-  ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+  <Route extends string>(
+    route: Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
+      ? never
+      : Route,
+    options?: Record<string, unknown>
+  ): Promise<UnknownResponse>;
 
   /**
    * ⚠️🚫 Known endpoint, but not supported by the selected version.
@@ -125,15 +119,23 @@ export interface RequestInterface<
   ): never;
 
   /**
-   * Send a request to an unknown endpoint
+   * Send a request to a known endpoint
    *
    * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
-  <Route extends string>(
+  <
+    Route extends ConditionalKeysOmit<
+      Octokit.ApiVersions[TVersion]["Endpoints"],
+      never
+    >,
+    Endpoint = Octokit.ApiVersions[TVersion]["Endpoints"][Route]
+  >(
     route: Route,
-    options?: Record<string, unknown>
-  ): Promise<UnknownResponse>;
+    options?: "parameters" extends keyof Endpoint
+      ? Endpoint["parameters"] & EndpointParameters<TVersion>
+      : Record<string, unknown>
+  ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
 }
 
 type ConditionalKeysOmit<Base, Condition> = NonNullable<
