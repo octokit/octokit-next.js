@@ -75,17 +75,19 @@ declare module "@octokit-next/types" {
             ResponseHeadersDiff
         >;
 
-        Endpoints: Omit<
-          Octokit.ApiVersions["github.com"]["Endpoints"],
-          keyof EndpointsDiff
-        > &
-          EndpointsDiff &
-          WithNewHeaders<
-            Omit<
-              Octokit.ApiVersions["github.com"]["Endpoints"],
-              keyof EndpointsDiff
+        Endpoints: Simplify<
+          Omit<
+            Octokit.ApiVersions["github.com"]["Endpoints"],
+            keyof EndpointsDiff
+          > &
+            EndpointsDiff &
+            WithNewHeaders<
+              Omit<
+                Octokit.ApiVersions["github.com"]["Endpoints"],
+                keyof EndpointsDiff
+              >
             >
-          >;
+        >;
       };
     }
   }
