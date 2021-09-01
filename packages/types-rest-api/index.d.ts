@@ -3,7 +3,6 @@ import { paths } from "@octokit-next/types-openapi";
 
 import { Operation } from "./operation";
 export { Operation } from "./operation";
-export { WithNewHeaders } from "./with-new-headers";
 
 declare module "@octokit-next/types" {
   namespace Octokit {
@@ -1760,6 +1759,14 @@ declare module "@octokit-next/types" {
        * @see https://docs.github.com/rest/reference/repos#list-organization-repositories
        */
       "GET /orgs/{org}/repos": Operation<paths, "get", "/orgs/{org}/repos">;
+      /**
+       * @see https://docs.github.com/rest/reference/secret-scanning#list-secret-scanning-alerts-by-organization
+       */
+      "GET /orgs/{org}/secret-scanning/alerts": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/secret-scanning/alerts"
+      >;
       /**
        * @see https://docs.github.com/rest/reference/billing#get-github-actions-billing-for-an-organization
        */
