@@ -5256,6 +5256,13 @@
         "deprecated": null,
         "in": "PATH",
         "name": "issue_number"
+      },
+      { "alias": null, "deprecated": null, "in": "BODY", "name": "labels" },
+      {
+        "alias": null,
+        "deprecated": null,
+        "in": "BODY",
+        "name": "labels[].name"
       }
     ],
     "previews": [],
@@ -11736,6 +11743,25 @@
         "in": "PATH",
         "name": "alert_number"
       }
+    ],
+    "previews": [],
+    "renamed": null
+  },
+  {
+    "method": "GET",
+    "url": "/orgs/{org}/secret-scanning/alerts",
+    "documentationUrl": "https://docs.github.com/rest/reference/secret-scanning#list-secret-scanning-alerts-by-organization",
+    "parameters": [
+      { "alias": null, "deprecated": null, "in": "PATH", "name": "org" },
+      { "alias": null, "deprecated": null, "in": "QUERY", "name": "state" },
+      {
+        "alias": null,
+        "deprecated": null,
+        "in": "QUERY",
+        "name": "secret_type"
+      },
+      { "alias": null, "deprecated": null, "in": "QUERY", "name": "page" },
+      { "alias": null, "deprecated": null, "in": "QUERY", "name": "per_page" }
     ],
     "previews": [],
     "renamed": null
