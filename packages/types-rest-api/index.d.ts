@@ -3,6 +3,7 @@ import { paths } from "@octokit-next/types-openapi";
 
 import { Operation } from "./operation";
 export { Operation } from "./operation";
+export { WithNewHeaders } from "./with-new-headers";
 
 declare module "@octokit-next/types" {
   namespace Octokit {
