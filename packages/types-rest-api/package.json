@@ -1,5 +1,5 @@
 {
-  "name": "@octokit-next/types-rest-api-github.com",
+  "name": "@octokit-next/types-rest-api",
   "publishConfig": {
     "access": "public"
   },
@@ -10,12 +10,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/octokit/octokit-next.js.git",
-    "directory": "packages/types-rest-api-github.com"
+    "directory": "packages/types-rest-api"
   },
-  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-github.com#readme",
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api#readme",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
-    "@octokit-next/types": "0.0.0-development"
+    "@octokit-next/types": "0.0.0-development",
+    "type-fest": "^2.0.0"
   }
 }

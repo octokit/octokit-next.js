@@ -255,9 +255,16 @@ export async function test() {
     required: "",
   });
 
-  const response = await octokitCoreWithGhes31Version.request("GET /ghes-only");
-
-  expectType<boolean>(response.data.ok);
+  const response = await octokitCoreWithGhes31Version.request(
+    "GET /admin/hooks/{hook_id}",
+    {
+      hook_id: 1,
+      mediaType: {
+        previews: ["superpro"],
+      },
+    }
+  );
+  expectType<number | undefined>(response.data.id);
 
   const OctokitGHES31 = Octokit.withDefaults({
     version: "ghes-3.1",
@@ -265,27 +272,36 @@ export async function test() {
   const octokitGhes31 = new OctokitGHES31({
     required: "",
   });
-  expectType<never>(await octokitGhes31.request("GET /dotcom-only"));
-  expectType<{
-    "+1": string;
-    "-1": string;
-    "ghes-only": string;
-    "dotcom-only": never;
-  }>((await octokitGhes31.request("GET /emojis")).data);
+  expectType<never>(
+    await octokitGhes31.request("GET /marketplace_listing/plans")
+  );
+
+  // TODO: make changed properties work (#28)
+  // // The `api` key was removed for GHES versions, but
+  // // the `installed_version` key was added.
+  // expectType<string>(
+  //   (await octokitGhes31.request("GET /meta")).data.installed_version
+  // );
+  // expectType<never>((await octokitGhes31.request("GET /meta")).data.api);
 
   const octokitGhes30ViaConstructorOptions = new OctokitGHES31({
     version: "ghes-3.0",
     required: "",
   });
   expectType<never>(
-    await octokitGhes30ViaConstructorOptions.request("GET /new-ghes-only")
+    await octokitGhes30ViaConstructorOptions.request(
+      "GET /orgs/{org}/audit-log"
+    )
   );
-  expectType<{
-    "+1": string;
-    "-1": string;
-    "ghes-only": string;
-    "dotcom-only": never;
-  }>((await octokitGhes30ViaConstructorOptions.request("GET /emojis")).data);
+
+  // TODO: make changed properties work (#28)
+  // expectType<string>(
+  //   (await octokitGhes30ViaConstructorOptions.request("GET /meta")).data
+  //     .installed_version
+  // );
+  // expectType<never>(
+  //   (await octokitGhes30ViaConstructorOptions.request("GET /meta")).data.api
+  // );
 
   const OctokitGHES30 = OctokitGHES31.withDefaults({
     version: "ghes-3.0",
@@ -293,13 +309,13 @@ export async function test() {
   const octokitGhes30ViaChainedDefaults = new OctokitGHES30({
     required: "",
   });
-  expectType<never>(
-    await octokitGhes30ViaChainedDefaults.request("GET /new-ghes-only")
-  );
-  expectType<{
-    "+1": string;
-    "-1": string;
-    "ghes-only": string;
-    "dotcom-only": never;
-  }>((await octokitGhes30ViaChainedDefaults.request("GET /emojis")).data);
+
+  // TODO: make changed properties work (#28)
+  // expectType<string>(
+  //   (await octokitGhes30ViaChainedDefaults.request("GET /meta")).data
+  //     .installed_version
+  // );
+  // expectType<never>(
+  //   (await octokitGhes30ViaChainedDefaults.request("GET /meta")).data.api
+  // );
 }

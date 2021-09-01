@@ -1,32 +1,30 @@
 import { Octokit } from "@octokit-next/types";
 
 import {
-  EndpointsGHES30,
-  ResponseHeadersGHES30,
+  EndpointsDiff,
+  ResponseHeadersDiff,
 } from "@octokit-next/types-rest-api-ghes-3.0";
 
-export type ResponseHeadersGHES30compatible = Omit<
+export type ResponseHeadersCompatible = Omit<
   Octokit.ResponseHeaders,
-  keyof ResponseHeadersGHES30
+  keyof ResponseHeadersDiff
 >;
 
-export type EndpointsGHES30compatible = Omit<
-  Octokit.Endpoints,
-  keyof EndpointsGHES30
->;
+export type EndpointsCompatible = Omit<Octokit.Endpoints, keyof EndpointsDiff>;
 
 declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.0-compatible": {
-        ResponseHeaders: ResponseHeaders;
+        ResponseHeaders: EndpointsCompatible;
 
         Endpoints: {
-          [route in keyof EndpointsGHES30compatible]: {
-            parameters: EndpointsGHES30compatible[route]["parameters"];
+          [route in keyof EndpointsCompatible]: {
+            parameters: EndpointsCompatible[route]["parameters"];
             response: Octokit.Response<
-              EndpointsGHES30compatible[route]["response"]["data"],
-              ResponseHeadersGHES30compatible
+              EndpointsCompatible[route]["response"]["data"],
+              EndpointsCompatible[route]["response"]["status"],
+              ResponseHeadersCompatible
             >;
           };
         };

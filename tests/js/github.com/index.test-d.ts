@@ -9,9 +9,15 @@ export async function test() {
     baseUrl: "https://github.acme-inc.com/api/v3",
   });
 
-  const emojisResponse = await octokit.request("GET /emojis");
-  expectType<string>(emojisResponse.data["+1"]);
-  expectType<string>(emojisResponse.data["-1"]);
-  expectType<string>(emojisResponse.data["dotcom-only"]);
-  expectType<string>(emojisResponse.headers["x-dotcom-only"]);
+  const rootResponse = await octokit.request("GET /");
+  expectType<string>(rootResponse.data.emojis_url);
+  // @ts-expect-error - invalid keys
+  rootResponse.data.unknown;
+
+  const licenseResponse = await octokit.request("GET /licenses/{license}");
+  expectType<string>(licenseResponse.data.body);
+  expectType<boolean>(licenseResponse.data.featured);
+
+  // @ts-expect-error - invalid keys
+  licenseResponse.data.unknown;
 }

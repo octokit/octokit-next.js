@@ -1,6 +1,6 @@
 import { ExtendOctokitWith, Octokit } from "@octokit-next/core";
 
-import "@octokit-next/types-rest-api-github.com";
+import "@octokit-next/types-rest-api";
 
 export const OctokitAllEndpoints: ExtendOctokitWith<
   Octokit<"github.com">,

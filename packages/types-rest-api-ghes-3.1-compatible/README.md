@@ -24,7 +24,7 @@ The routes suggested for `octokit.request(route)` are only the ones that exist f
 To override the version specified in the constructor it can be set using the `request.version` option
 
 ```ts
-const ghesOnlyResponse = await octokit.request("GET /ghes-only", {
+const ghesOnlyResponse = await octokit.request("GET /admins/users", {
   request: {
     version: "ghes-3.1",
   },
