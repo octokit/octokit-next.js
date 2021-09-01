@@ -8,14 +8,18 @@
   },
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/types-openapi-ghes-3.1": "0.0.0-development",
+    "@octokit-next/types-openapi-ghes-3.1-diff-to-api.github.com": "0.0.0-development",
     "@octokit-next/types-rest-api": "0.0.0-development",
     "type-fest": "^2.0.0"
   },
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.0.0-development",
   "types": "index.d.ts",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
-  "octokit": { "openapi-version": "3.10.1" }
+  "octokit": {
+    "openapi-version": "3.10.1"
+  }
 }
