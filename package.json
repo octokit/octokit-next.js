@@ -119,7 +119,7 @@
     "handlebars": "^4.7.7",
     "openapi-typescript": "^4.0.2",
     "prettier": "^2.3.2",
-    "sort-keys": "^4.2.0",
+    "sort-keys": "^5.0.0",
     "tsd": "^0.17.0",
     "type-fest": "^2.0.0",
     "typescript": "^4.3.5",
