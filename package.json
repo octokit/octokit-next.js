@@ -126,17 +126,7 @@
     "uvu": "^0.5.1"
   },
   "workspaces": [
-    "packages/types",
-    "packages/core",
-    "packages/types-openapi",
-    "packages/types-openapi-ghes-3.1",
-    "packages/types-openapi-ghes-3.0",
-    "packages/types-rest-api",
-    "packages/types-rest-api-ghes-3.1",
-    "packages/types-rest-api-ghes-3.1-compatible",
-    "packages/types-rest-api-ghes-3.0",
-    "packages/types-rest-api-ghes-3.0-compatible",
-    "packages/request"
+    "packages/*"
   ],
   "engines": {
     "node": ">=16.5.0",
