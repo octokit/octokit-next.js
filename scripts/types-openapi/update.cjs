@@ -24,6 +24,14 @@ const packageDefaults = {
 
 async function run() {
   const openapiFiles = await readdir("cache/types-openapi");
+  const packagesFolders = await readdir("packages");
+
+  for (const packageName of packagesFolders) {
+    if (packageName.startsWith("types-openapi")) {
+      await rm(`packages/${packageName}`, { recursive: true }).catch(() => {});
+      console.log(`packages/${packageName} deleted`);
+    }
+  }
 
   for (const sourceFilename of openapiFiles) {
     const packageName =
@@ -32,9 +40,6 @@ async function run() {
         : sourceFilename.replace(/^(.*)\.json$/, "types-openapi-$1");
 
     if (!packageName.startsWith("types-openapi")) continue;
-
-    await rm(`packages/${packageName}`, { recursive: true }).catch(() => {});
-    console.log(`packages/${packageName} deleted`);
 
     await mkdir(`packages/${packageName}`);
     await writeFile(
