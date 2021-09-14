@@ -20,8 +20,18 @@ export interface paths {
      */
     get: operations["activity/get-feeds"];
   };
+  "/gists": {
+    /**
+     * Allows you to add a new gist with one or more files.
+     *
+     * **Note:** Don't name your files "gistfile" with a numerical suffix. This is the format of the automatic naming scheme that Gist uses internally.
+     */
+    post: operations["gists/create"];
+  };
   "/gists/{gist_id}": {
     get: operations["gists/get"];
+    /** Allows you to update or delete a gist file and rename gist files. Files from the previous version of the gist that aren't explicitly changed during an edit are unchanged. */
+    patch: operations["gists/update"];
   };
   "/gists/{gist_id}/forks": {
     get: operations["gists/list-forks"];
@@ -36,6 +46,16 @@ export interface paths {
   "/repos/{owner}/{repo}/pulls": {
     /** Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://help.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
     get: operations["pulls/list"];
+    /**
+     * Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://help.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     *
+     * To open or update a pull request in a public repository, you must have write access to the head or the source branch. For organization-owned repositories, you must be a member of the organization that owns the repository to open or update a pull request.
+     *
+     * You can create a new pull request.
+     *
+     * This endpoint triggers [notifications](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/guides/best-practices-for-integrators#dealing-with-rate-limits)" for details.
+     */
+    post: operations["pulls/create"];
   };
   "/repos/{owner}/{repo}/pulls/{pull_number}": {
     /**
@@ -56,6 +76,20 @@ export interface paths {
      * Pass the appropriate [media type](https://docs.github.com/enterprise-server@3.0/rest/overview/media-types/#commits-commit-comparison-and-pull-requests) to fetch diff and patch formats.
      */
     get: operations["pulls/get"];
+    /**
+     * Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://help.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     *
+     * To open or update a pull request in a public repository, you must have write access to the head or the source branch. For organization-owned repositories, you must be a member of the organization that owns the repository to open or update a pull request.
+     */
+    patch: operations["pulls/update"];
+  };
+  "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers": {
+    /** This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.0/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details. */
+    post: operations["pulls/request-reviewers"];
+  };
+  "/user": {
+    /** **Note:** If your email is set to private and you send an `email` parameter as part of this request to update your profile, your privacy settings are still enforced: the email address will not be displayed on your public profile or via the API. */
+    patch: operations["users/update-authenticated"];
   };
 }
 
@@ -117,9 +151,9 @@ export interface components {
         updated_at: string;
         description: string | null;
         comments: number;
-        user: components["schemas"]["simple-user"] | null;
+        user: components["schemas"]["nullable-simple-user"];
         comments_url: string;
-        owner?: components["schemas"]["simple-user"] | null;
+        owner?: components["schemas"]["nullable-simple-user"];
         truncated?: boolean;
         forks?: { [key: string]: unknown }[];
         history?: { [key: string]: unknown }[];
@@ -171,7 +205,7 @@ export interface components {
       state: string;
       locked: boolean;
       title: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       body: string | null;
       labels: {
         id?: number;
@@ -182,14 +216,14 @@ export interface components {
         color?: string;
         default?: boolean;
       }[];
-      milestone: components["schemas"]["milestone"] | null;
+      milestone: components["schemas"]["nullable-milestone"];
       active_lock_reason?: string | null;
       created_at: string;
       updated_at: string;
       closed_at: string | null;
       merged_at: string | null;
       merge_commit_sha: string | null;
-      assignee: components["schemas"]["simple-user"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
       assignees?: components["schemas"]["simple-user"][] | null;
       requested_reviewers?: components["schemas"]["simple-user"][] | null;
       requested_teams?: components["schemas"]["team"][] | null;
@@ -198,14 +232,14 @@ export interface components {
         ref: string;
         repo: components["schemas"]["repository"];
         sha: string;
-        user: components["schemas"]["simple-user"] | null;
+        user: components["schemas"]["nullable-simple-user"];
       };
       base: {
         label: string;
         ref: string;
         repo: components["schemas"]["repository"];
         sha: string;
-        user: components["schemas"]["simple-user"] | null;
+        user: components["schemas"]["nullable-simple-user"];
       };
       _links: {
         comments: components["schemas"]["link"];
@@ -242,7 +276,7 @@ export interface components {
       locked: boolean;
       /** The title of the pull request. */
       title: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       body: string | null;
       labels: {
         id?: number;
@@ -253,14 +287,14 @@ export interface components {
         color?: string;
         default?: boolean;
       }[];
-      milestone: components["schemas"]["milestone"] | null;
+      milestone: components["schemas"]["nullable-milestone"];
       active_lock_reason?: string | null;
       created_at: string;
       updated_at: string;
       closed_at: string | null;
       merged_at: string | null;
       merge_commit_sha: string | null;
-      assignee: components["schemas"]["simple-user"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
       assignees?: components["schemas"]["simple-user"][] | null;
       requested_reviewers?: components["schemas"]["simple-user"][] | null;
       requested_teams?: components["schemas"]["team-simple"][] | null;
@@ -379,6 +413,7 @@ export interface components {
           watchers_count: number;
           created_at: string;
           updated_at: string;
+          allow_forking?: boolean;
         } | null;
         sha: string;
         user: {
@@ -500,7 +535,7 @@ export interface components {
           allow_merge_commit?: boolean;
           allow_squash_merge?: boolean;
           allow_rebase_merge?: boolean;
-          license: components["schemas"]["license-simple"] | null;
+          license: components["schemas"]["nullable-license-simple"];
           pushed_at: string;
           size: number;
           ssh_url: string;
@@ -511,6 +546,7 @@ export interface components {
           watchers_count: number;
           created_at: string;
           updated_at: string;
+          allow_forking?: boolean;
         };
         sha: string;
         user: {
@@ -551,7 +587,7 @@ export interface components {
       mergeable: boolean | null;
       rebaseable?: boolean | null;
       mergeable_state: string;
-      merged_by: components["schemas"]["simple-user"] | null;
+      merged_by: components["schemas"]["nullable-simple-user"];
       comments: number;
       review_comments: number;
       /** Indicates whether maintainers can modify the pull request. */
@@ -560,6 +596,55 @@ export interface components {
       additions: number;
       deletions: number;
       changed_files: number;
+    };
+    /** Private User */
+    "private-user": {
+      login: string;
+      id: number;
+      node_id: string;
+      avatar_url: string;
+      gravatar_id: string | null;
+      url: string;
+      html_url: string;
+      followers_url: string;
+      following_url: string;
+      gists_url: string;
+      starred_url: string;
+      subscriptions_url: string;
+      organizations_url: string;
+      repos_url: string;
+      events_url: string;
+      received_events_url: string;
+      type: string;
+      site_admin: boolean;
+      name: string | null;
+      company: string | null;
+      blog: string | null;
+      location: string | null;
+      email: string | null;
+      hireable: boolean | null;
+      bio: string | null;
+      public_repos: number;
+      public_gists: number;
+      followers: number;
+      following: number;
+      created_at: string;
+      updated_at: string;
+      private_gists: number;
+      total_private_repos: number;
+      owned_private_repos: number;
+      disk_usage: number;
+      collaborators: number;
+      two_factor_authentication: boolean;
+      plan?: {
+        collaborators: number;
+        name: string;
+        space: number;
+        private_repos: number;
+      };
+      suspended_at?: string | null;
+      business_plus?: boolean;
+      ldap_dn?: string;
     };
     /** Hypermedia Link with Type */
     "link-with-type": {
@@ -614,7 +699,7 @@ export interface components {
     };
     /** Gist History */
     "gist-history": {
-      user?: components["schemas"]["simple-user"];
+      user?: components["schemas"]["nullable-simple-user"];
       version?: string;
       committed_at?: string;
       change_status?: {
@@ -624,6 +709,30 @@ export interface components {
       };
       url?: string;
     };
+    /** Simple User */
+    "nullable-simple-user": {
+      name?: string | null;
+      email?: string | null;
+      login: string;
+      id: number;
+      node_id: string;
+      avatar_url: string;
+      gravatar_id: string | null;
+      url: string;
+      html_url: string;
+      followers_url: string;
+      following_url: string;
+      gists_url: string;
+      starred_url: string;
+      subscriptions_url: string;
+      organizations_url: string;
+      repos_url: string;
+      events_url: string;
+      received_events_url: string;
+      type: string;
+      site_admin: boolean;
+      starred_at?: string;
+    } | null;
     /** Simple User */
     "simple-user": {
       name?: string | null;
@@ -647,7 +756,7 @@ export interface components {
       type: string;
       site_admin: boolean;
       starred_at?: string;
-    } | null;
+    };
     /** Basic Error */
     "basic-error": {
       message?: string;
@@ -669,7 +778,7 @@ export interface components {
       }[];
     };
     /** A collection of related issues and pull requests. */
-    milestone: {
+    "nullable-milestone": {
       url: string;
       html_url: string;
       labels_url: string;
@@ -682,14 +791,14 @@ export interface components {
       /** The title of the milestone. */
       title: string;
       description: string | null;
-      creator: components["schemas"]["simple-user"] | null;
+      creator: components["schemas"]["nullable-simple-user"];
       open_issues: number;
       closed_issues: number;
       created_at: string;
       updated_at: string;
       closed_at: string | null;
       due_on: string | null;
-    };
+    } | null;
     /** Groups of organization members that gives permissions on specified repositories. */
     team: {
       id: number;
@@ -710,10 +819,10 @@ export interface components {
       html_url: string;
       members_url: string;
       repositories_url: string;
-      parent: components["schemas"]["team-simple"] | null;
+      parent: components["schemas"]["nullable-team-simple"];
     };
     /** Groups of organization members that gives permissions on specified repositories. */
-    "team-simple": {
+    "nullable-team-simple": {
       /** Unique identifier of the team */
       id: number;
       node_id: string;
@@ -742,8 +851,8 @@ export interface components {
       /** The name of the repository. */
       name: string;
       full_name: string;
-      license: components["schemas"]["license-simple"] | null;
-      organization?: components["schemas"]["simple-user"] | null;
+      license: components["schemas"]["nullable-license-simple"];
+      organization?: components["schemas"]["nullable-simple-user"];
       forks: number;
       permissions?: {
         admin: boolean;
@@ -946,6 +1055,8 @@ export interface components {
       delete_branch_on_merge?: boolean;
       /** Whether to allow merge commits for pull requests. */
       allow_merge_commit?: boolean;
+      /** Whether to allow forking this repo */
+      allow_forking?: boolean;
       subscribers_count?: number;
       network_count?: number;
       open_issues: number;
@@ -954,14 +1065,14 @@ export interface components {
       starred_at?: string;
     };
     /** License Simple */
-    "license-simple": {
+    "nullable-license-simple": {
       key: string;
       name: string;
       url: string | null;
       spdx_id: string | null;
       node_id: string;
       html_url?: string;
-    };
+    } | null;
     /** Hypermedia Link */
     link: {
       href: string;
@@ -976,10 +1087,50 @@ export interface components {
       | "MEMBER"
       | "NONE"
       | "OWNER";
+    /** Groups of organization members that gives permissions on specified repositories. */
+    "team-simple": {
+      /** Unique identifier of the team */
+      id: number;
+      node_id: string;
+      /** URL for the team */
+      url: string;
+      members_url: string;
+      /** Name of the team */
+      name: string;
+      /** Description of the team */
+      description: string | null;
+      /** Permission that the team will have for its repositories */
+      permission: string;
+      /** The level of privacy this team should have */
+      privacy?: string;
+      html_url: string;
+      repositories_url: string;
+      slug: string;
+      /** Distinguished Name (DN) that team maps to within LDAP environment */
+      ldap_dn?: string;
+    };
   };
   responses: {
     /** Not modified */
     not_modified: unknown;
+    /** Forbidden */
+    forbidden: {
+      content: {
+        "application/json": components["schemas"]["basic-error"];
+      };
+    };
+    /** Resource not found */
+    not_found: {
+      content: {
+        "application/json": components["schemas"]["basic-error"];
+      };
+    };
+    /** Validation failed */
+    validation_failed: {
+      content: {
+        "application/json": components["schemas"]["validation-error"];
+      };
+    };
     /** Forbidden Gist */
     forbidden_gist: {
       content: {
@@ -994,24 +1145,6 @@ export interface components {
         };
       };
     };
-    /** Resource not found */
-    not_found: {
-      content: {
-        "application/json": components["schemas"]["basic-error"];
-      };
-    };
-    /** Forbidden */
-    forbidden: {
-      content: {
-        "application/json": components["schemas"]["basic-error"];
-      };
-    };
-    /** Validation failed */
-    validation_failed: {
-      content: {
-        "application/json": components["schemas"]["validation-error"];
-      };
-    };
     /** Preview header missing */
     preview_header_missing: {
       content: {
@@ -1023,6 +1156,12 @@ export interface components {
     };
     /** Internal Error */
     internal_error: {
+      content: {
+        "application/json": components["schemas"]["basic-error"];
+      };
+    };
+    /** Requires authentication */
+    requires_authentication: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
@@ -1071,6 +1210,45 @@ export interface operations {
       };
     };
   };
+  /**
+   * Allows you to add a new gist with one or more files.
+   *
+   * **Note:** Don't name your files "gistfile" with a numerical suffix. This is the format of the automatic naming scheme that Gist uses internally.
+   */
+  "gists/create": {
+    parameters: {};
+    responses: {
+      /** Response */
+      201: {
+        headers: {
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["gist-simple"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** Description of the gist */
+          description?: string;
+          /** Names and content for the files that make up the gist */
+          files: {
+            [key: string]: {
+              /** Content of the file */
+              content: string;
+            };
+          };
+          public?: boolean | ("true" | "false");
+        };
+      };
+    };
+  };
   "gists/get": {
     parameters: {
       path: {
@@ -1088,6 +1266,35 @@ export interface operations {
       304: components["responses"]["not_modified"];
       403: components["responses"]["forbidden_gist"];
       404: components["responses"]["not_found"];
+    };
+  };
+  /** Allows you to update or delete a gist file and rename gist files. Files from the previous version of the gist that aren't explicitly changed during an edit are unchanged. */
+  "gists/update": {
+    parameters: {
+      path: {
+        /** gist_id parameter */
+        gist_id: components["parameters"]["gist-id"];
+      };
+    };
+    responses: {
+      /** Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["gist-simple"];
+        };
+      };
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** Description of the gist */
+          description?: string;
+          /** Names of files to be updated */
+          files?: { [key: string]: Partial<{ [key: string]: unknown }> };
+        } | null;
+      };
     };
   };
   "gists/list-forks": {
@@ -1202,6 +1409,55 @@ export interface operations {
   /**
    * Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://help.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
+   * To open or update a pull request in a public repository, you must have write access to the head or the source branch. For organization-owned repositories, you must be a member of the organization that owns the repository to open or update a pull request.
+   *
+   * You can create a new pull request.
+   *
+   * This endpoint triggers [notifications](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/guides/best-practices-for-integrators#dealing-with-rate-limits)" for details.
+   */
+  "pulls/create": {
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
+    responses: {
+      /** Response */
+      201: {
+        headers: {
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["pull-request"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      422: components["responses"]["validation_failed"];
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** The title of the new pull request. */
+          title?: string;
+          /** The name of the branch where your changes are implemented. For cross-repository pull requests in the same network, namespace `head` with a user like this: `username:branch`. */
+          head: string;
+          /** The name of the branch you want the changes pulled into. This should be an existing branch on the current repository. You cannot submit a pull request to one repository that requests a merge to a base of another repository. */
+          base: string;
+          /** The contents of the pull request. */
+          body?: string;
+          /** Indicates whether [maintainers can modify](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/) the pull request. */
+          maintainer_can_modify?: boolean;
+          /** Indicates whether the pull request is a draft. See "[Draft Pull Requests](https://help.github.com/en/articles/about-pull-requests#draft-pull-requests)" in the GitHub Help documentation to learn more. */
+          draft?: boolean;
+          issue?: number;
+        };
+      };
+    };
+  };
+  /**
+   * Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://help.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   *
    * Lists details of a pull request by providing its number.
    *
    * When you get, [create](https://docs.github.com/enterprise-server@3.0/rest/reference/pulls/#create-a-pull-request), or [edit](https://docs.github.com/enterprise-server@3.0/rest/reference/pulls#update-a-pull-request) a pull request, GitHub Enterprise Server creates a merge commit to test whether the pull request can be automatically merged into the base branch. This test commit is not added to the base branch or the head branch. You can review the status of the test commit using the `mergeable` key. For more information, see "[Checking mergeability of pull requests](https://docs.github.com/enterprise-server@3.0/rest/guides/getting-started-with-the-git-database-api#checking-mergeability-of-pull-requests)".
@@ -1234,6 +1490,116 @@ export interface operations {
       304: components["responses"]["not_modified"];
       404: components["responses"]["not_found"];
       500: components["responses"]["internal_error"];
+    };
+  };
+  /**
+   * Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://help.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   *
+   * To open or update a pull request in a public repository, you must have write access to the head or the source branch. For organization-owned repositories, you must be a member of the organization that owns the repository to open or update a pull request.
+   */
+  "pulls/update": {
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        pull_number: components["parameters"]["pull-number"];
+      };
+    };
+    responses: {
+      /** Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["pull-request"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      422: components["responses"]["validation_failed"];
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** The title of the pull request. */
+          title?: string;
+          /** The contents of the pull request. */
+          body?: string;
+          /** State of this Pull Request. Either `open` or `closed`. */
+          state?: "open" | "closed";
+          /** The name of the branch you want your changes pulled into. This should be an existing branch on the current repository. You cannot update the base branch on a pull request to point to another repository. */
+          base?: string;
+          /** Indicates whether [maintainers can modify](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/) the pull request. */
+          maintainer_can_modify?: boolean;
+        };
+      };
+    };
+  };
+  /** This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.0/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.0/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details. */
+  "pulls/request-reviewers": {
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        pull_number: components["parameters"]["pull-number"];
+      };
+    };
+    responses: {
+      /** Response */
+      201: {
+        content: {
+          "application/json": components["schemas"]["pull-request-simple"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      /** Unprocessable Entity if user is not a collaborator */
+      422: unknown;
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** An array of user `login`s that will be requested. */
+          reviewers?: string[];
+          /** An array of team `slug`s that will be requested. */
+          team_reviewers?: string[];
+        };
+      };
+    };
+  };
+  /** **Note:** If your email is set to private and you send an `email` parameter as part of this request to update your profile, your privacy settings are still enforced: the email address will not be displayed on your public profile or via the API. */
+  "users/update-authenticated": {
+    parameters: {};
+    responses: {
+      /** Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["private-user"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      401: components["responses"]["requires_authentication"];
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** The new name of the user. */
+          name?: string;
+          /** The publicly visible email address of the user. */
+          email?: string;
+          /** The new blog URL of the user. */
+          blog?: string;
+          /** The new Twitter username of the user. */
+          twitter_username?: string | null;
+          /** The new company of the user. */
+          company?: string;
+          /** The new location of the user. */
+          location?: string;
+          /** The new hiring availability of the user. */
+          hireable?: boolean;
+          /** The new short biography of the user. */
+          bio?: string;
+        };
+      };
     };
   };
 }
