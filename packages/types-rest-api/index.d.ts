@@ -5055,6 +5055,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/labels"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/repos#sync-a-fork-branch-with-the-upstream-repository
+       */
+      "POST /repos/{owner}/{repo}/merge-upstream": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/merge-upstream"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/repos#merge-a-branch
        */
       "POST /repos/{owner}/{repo}/merges": Operation<

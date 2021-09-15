@@ -2810,7 +2810,7 @@ export interface paths {
     /**
      * Create a fork for the authenticated user.
      *
-     * **Note**: Forking a Repository happens asynchronously. You may have to wait a short period of time before you can access the git objects. If this takes longer than 5 minutes, be sure to contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=rest-api).
+     * **Note**: Forking a Repository happens asynchronously. You may have to wait a short period of time before you can access the git objects. If this takes longer than 5 minutes, be sure to contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=dotcom-rest-api).
      */
     post: operations["repos/create-fork"];
   };
@@ -3495,7 +3495,7 @@ export interface paths {
      *
      * **Notes:**
      * *   GitHub Enterprise Server renames asset filenames that have special characters, non-alphanumeric characters, and leading or trailing periods. The "[List assets for a release](https://docs.github.com/enterprise-server@3.1/rest/reference/repos#list-assets-for-a-release)"
-     * endpoint lists the renamed filenames. For more information and help, contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=rest-api).
+     * endpoint lists the renamed filenames. For more information and help, contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=dotcom-rest-api).
      * *   If you upload an asset with the same filename as another uploaded asset, you'll receive an error and must delete the old file before you can re-upload the new asset.
      */
     post: operations["repos/upload-release-asset"];
@@ -4449,532 +4449,82 @@ export interface paths {
     post: operations["apps/create-content-attachment"];
   };
   "/app/hook/deliveries": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["apps/list-webhook-deliveries"];
   };
   "/app/hook/deliveries/{delivery_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["apps/get-webhook-delivery"];
   };
   "/app/hook/deliveries/{delivery_id}/attempts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     post: operations["apps/redeliver-webhook-delivery"];
   };
-  "/enterprises/{enterprise}/audit-log": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["enterprise-admin/get-audit-log"];
-  };
-  "/enterprises/{enterprise}/settings/billing/actions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-github-actions-billing-ghe"];
-  };
-  "/enterprises/{enterprise}/settings/billing/packages": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-github-packages-billing-ghe"];
-  };
-  "/enterprises/{enterprise}/settings/billing/shared-storage": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-shared-storage-billing-ghe"];
-  };
-  "/marketplace_listing/accounts/{account_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/get-subscription-plan-for-account"];
-  };
-  "/marketplace_listing/plans": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/list-plans"];
-  };
-  "/marketplace_listing/plans/{plan_id}/accounts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/list-accounts-for-plan"];
-  };
-  "/marketplace_listing/stubbed/accounts/{account_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/get-subscription-plan-for-account-stubbed"];
-  };
-  "/marketplace_listing/stubbed/plans": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/list-plans-stubbed"];
-  };
-  "/marketplace_listing/stubbed/plans/{plan_id}/accounts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/list-accounts-for-plan-stubbed"];
-  };
-  "/orgs/{org}/blocks": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["orgs/list-blocked-users"];
-  };
-  "/orgs/{org}/blocks/{username}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["orgs/check-blocked-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["orgs/block-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["orgs/unblock-user"];
-  };
-  "/orgs/{org}/credential-authorizations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["orgs/list-saml-sso-authorizations"];
-  };
-  "/orgs/{org}/credential-authorizations/{credential_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["orgs/remove-saml-sso-authorization"];
-  };
-  "/orgs/{org}/failed_invitations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["orgs/list-failed-invitations"];
-  };
   "/orgs/{org}/hooks/{hook_id}/deliveries": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["orgs/list-webhook-deliveries"];
   };
   "/orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["orgs/get-webhook-delivery"];
   };
   "/orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     post: operations["orgs/redeliver-webhook-delivery"];
   };
-  "/orgs/{org}/interaction-limits": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["interactions/get-restrictions-for-org"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["interactions/set-restrictions-for-org"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["interactions/remove-restrictions-for-org"];
-  };
-  "/orgs/{org}/invitations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["orgs/list-pending-invitations"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["orgs/create-invitation"];
-  };
-  "/orgs/{org}/invitations/{invitation_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["orgs/cancel-invitation"];
-  };
-  "/orgs/{org}/invitations/{invitation_id}/teams": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["orgs/list-invitation-teams"];
-  };
-  "/orgs/{org}/migrations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/list-for-org"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["migrations/start-for-org"];
-  };
-  "/orgs/{org}/migrations/{migration_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/get-status-for-org"];
-  };
-  "/orgs/{org}/migrations/{migration_id}/archive": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/download-archive-for-org"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["migrations/delete-archive-for-org"];
-  };
-  "/orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["migrations/unlock-repo-for-org"];
-  };
-  "/orgs/{org}/migrations/{migration_id}/repositories": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/list-repos-for-org"];
-  };
-  "/orgs/{org}/packages": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/list-packages-for-organization"];
-  };
-  "/orgs/{org}/packages/{package_type}/{package_name}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-package-for-organization"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["packages/delete-package-for-org"];
-  };
-  "/orgs/{org}/packages/{package_type}/{package_name}/restore": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["packages/restore-package-for-org"];
-  };
-  "/orgs/{org}/packages/{package_type}/{package_name}/versions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-all-package-versions-for-package-owned-by-org"];
-  };
-  "/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-package-version-for-organization"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["packages/delete-package-version-for-org"];
-  };
-  "/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["packages/restore-package-version-for-org"];
-  };
-  "/orgs/{org}/secret-scanning/alerts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["secret-scanning/list-alerts-for-org"];
-  };
-  "/orgs/{org}/settings/billing/actions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-github-actions-billing-org"];
-  };
-  "/orgs/{org}/settings/billing/packages": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-github-packages-billing-org"];
-  };
-  "/orgs/{org}/settings/billing/shared-storage": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-shared-storage-billing-org"];
-  };
-  "/orgs/{org}/team-sync/groups": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["teams/list-idp-groups-for-org"];
-  };
-  "/orgs/{org}/teams/{team_slug}/invitations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["teams/list-pending-invitations-in-org"];
-  };
-  "/orgs/{org}/teams/{team_slug}/team-sync/group-mappings": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["teams/list-idp-groups-in-org"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["teams/create-or-update-idp-group-connections-in-org"];
-  };
   "/repos/{owner}/{repo}/actions/runs/{run_id}/approvals": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["actions/get-reviews-for-run"];
   };
-  "/repos/{owner}/{repo}/actions/runs/{run_id}/approve": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["actions/approve-workflow-run"];
-  };
   "/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["actions/get-pending-deployments-for-run"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     post: operations["actions/review-pending-deployments-for-run"];
   };
-  "/repos/{owner}/{repo}/actions/runs/{run_id}/timing": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["actions/get-workflow-run-usage"];
-  };
-  "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["actions/get-workflow-usage"];
-  };
-  "/repos/{owner}/{repo}/autolinks": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/list-autolinks"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["repos/create-autolink"];
-  };
-  "/repos/{owner}/{repo}/autolinks/{autolink_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-autolink"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["repos/delete-autolink"];
-  };
-  "/repos/{owner}/{repo}/automated-security-fixes": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["repos/enable-automated-security-fixes"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["repos/disable-automated-security-fixes"];
-  };
-  "/repos/{owner}/{repo}/community/code_of_conduct": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["codes-of-conduct/get-for-repo"];
-  };
-  "/repos/{owner}/{repo}/community/profile": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-community-profile-metrics"];
-  };
   "/repos/{owner}/{repo}/environments": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["repos/get-all-environments"];
   };
   "/repos/{owner}/{repo}/environments/{environment_name}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["repos/get-environment"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     put: operations["repos/create-or-update-environment"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     delete: operations["repos/delete-an-environment"];
   };
   "/repos/{owner}/{repo}/hooks/{hook_id}/deliveries": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["repos/list-webhook-deliveries"];
   };
   "/repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["repos/get-webhook-delivery"];
   };
   "/repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     post: operations["repos/redeliver-webhook-delivery"];
   };
-  "/repos/{owner}/{repo}/import": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/get-import-status"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["migrations/start-import"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["migrations/cancel-import"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["migrations/update-import"];
-  };
-  "/repos/{owner}/{repo}/import/authors": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/get-commit-authors"];
-  };
-  "/repos/{owner}/{repo}/import/authors/{author_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["migrations/map-commit-author"];
-  };
-  "/repos/{owner}/{repo}/import/large_files": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/get-large-files"];
-  };
-  "/repos/{owner}/{repo}/import/lfs": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["migrations/set-lfs-preference"];
-  };
-  "/repos/{owner}/{repo}/interaction-limits": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["interactions/get-restrictions-for-repo"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["interactions/set-restrictions-for-repo"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["interactions/remove-restrictions-for-repo"];
-  };
-  "/repos/{owner}/{repo}/pages/health": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-pages-health-check"];
-  };
   "/repos/{owner}/{repo}/releases/{release_id}/reactions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     post: operations["reactions/create-for-release"];
   };
-  "/repos/{owner}/{repo}/traffic/clones": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-clones"];
-  };
-  "/repos/{owner}/{repo}/traffic/popular/paths": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-top-paths"];
-  };
-  "/repos/{owner}/{repo}/traffic/popular/referrers": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-top-referrers"];
-  };
-  "/repos/{owner}/{repo}/traffic/views": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/get-views"];
-  };
-  "/repos/{owner}/{repo}/vulnerability-alerts": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["repos/check-vulnerability-alerts"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["repos/enable-vulnerability-alerts"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["repos/disable-vulnerability-alerts"];
-  };
   "/repositories/{repository_id}/environments/{environment_name}/secrets": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["actions/list-environment-secrets"];
   };
   "/repositories/{repository_id}/environments/{environment_name}/secrets/public-key": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["actions/get-environment-public-key"];
   };
   "/repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     get: operations["actions/get-environment-secret"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     put: operations["actions/create-or-update-environment-secret"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+    /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
     delete: operations["actions/delete-environment-secret"];
-  };
-  "/scim/v2/enterprises/{enterprise}/Groups": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["enterprise-admin/list-provisioned-groups-enterprise"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["enterprise-admin/provision-and-invite-enterprise-group"];
-  };
-  "/scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["enterprise-admin/get-provisioning-information-for-enterprise-group"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["enterprise-admin/set-information-for-provisioned-enterprise-group"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["enterprise-admin/delete-scim-group-from-enterprise"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["enterprise-admin/update-attribute-for-enterprise-group"];
-  };
-  "/scim/v2/enterprises/{enterprise}/Users": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["enterprise-admin/list-provisioned-identities-enterprise"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["enterprise-admin/provision-and-invite-enterprise-user"];
-  };
-  "/scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["enterprise-admin/get-provisioning-information-for-enterprise-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["enterprise-admin/set-information-for-provisioned-enterprise-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["enterprise-admin/delete-user-from-enterprise"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["enterprise-admin/update-attribute-for-enterprise-user"];
-  };
-  "/scim/v2/organizations/{org}/Users": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["scim/list-provisioned-identities"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["scim/provision-and-invite-user"];
-  };
-  "/scim/v2/organizations/{org}/Users/{scim_user_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["scim/get-provisioning-information-for-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["scim/set-information-for-provisioned-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["scim/delete-user-from-org"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["scim/update-attribute-for-user"];
-  };
-  "/teams/{team_id}/invitations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["teams/list-pending-invitations-legacy"];
-  };
-  "/teams/{team_id}/team-sync/group-mappings": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["teams/list-idp-groups-for-legacy"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["teams/create-or-update-idp-group-connections-legacy"];
-  };
-  "/user/blocks": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["users/list-blocked-by-authenticated"];
-  };
-  "/user/blocks/{username}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["users/check-blocked"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["users/block"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["users/unblock"];
-  };
-  "/user/email/visibility": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    patch: operations["users/set-primary-email-visibility-for-authenticated"];
-  };
-  "/user/interaction-limits": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["interactions/get-restrictions-for-authenticated-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    put: operations["interactions/set-restrictions-for-authenticated-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["interactions/remove-restrictions-for-authenticated-user"];
-  };
-  "/user/marketplace_purchases": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/list-subscriptions-for-authenticated-user"];
-  };
-  "/user/marketplace_purchases/stubbed": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["apps/list-subscriptions-for-authenticated-user-stubbed"];
-  };
-  "/user/migrations": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/list-for-authenticated-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["migrations/start-for-authenticated-user"];
-  };
-  "/user/migrations/{migration_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/get-status-for-authenticated-user"];
-  };
-  "/user/migrations/{migration_id}/archive": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/get-archive-for-authenticated-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["migrations/delete-archive-for-authenticated-user"];
-  };
-  "/user/migrations/{migration_id}/repos/{repo_name}/lock": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["migrations/unlock-repo-for-authenticated-user"];
-  };
-  "/user/migrations/{migration_id}/repositories": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["migrations/list-repos-for-user"];
-  };
-  "/user/packages": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/list-packages-for-authenticated-user"];
-  };
-  "/user/packages/{package_type}/{package_name}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-package-for-authenticated-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["packages/delete-package-for-authenticated-user"];
-  };
-  "/user/packages/{package_type}/{package_name}/restore": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["packages/restore-package-for-authenticated-user"];
-  };
-  "/user/packages/{package_type}/{package_name}/versions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-all-package-versions-for-package-owned-by-authenticated-user"];
-  };
-  "/user/packages/{package_type}/{package_name}/versions/{package_version_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-package-version-for-authenticated-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["packages/delete-package-version-for-authenticated-user"];
-  };
-  "/user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["packages/restore-package-version-for-authenticated-user"];
-  };
-  "/user/{username}/packages": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/list-packages-for-user"];
-  };
-  "/users/{username}/packages/{package_type}/{package_name}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-package-for-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["packages/delete-package-for-user"];
-  };
-  "/users/{username}/packages/{package_type}/{package_name}/restore": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["packages/restore-package-for-user"];
-  };
-  "/users/{username}/packages/{package_type}/{package_name}/versions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-all-package-versions-for-package-owned-by-user"];
-  };
-  "/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["packages/get-package-version-for-user"];
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    delete: operations["packages/delete-package-version-for-user"];
-  };
-  "/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    post: operations["packages/restore-package-version-for-user"];
-  };
-  "/users/{username}/settings/billing/actions": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-github-actions-billing-user"];
-  };
-  "/users/{username}/settings/billing/packages": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-github-packages-billing-user"];
-  };
-  "/users/{username}/settings/billing/shared-storage": {
-    /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-    get: operations["billing/get-shared-storage-billing-user"];
   };
 }
 
@@ -5157,7 +4707,7 @@ export interface components {
       allow_downstream_configuration?: boolean;
     };
     /** Simple User */
-    "simple-user": {
+    "nullable-simple-user": {
       name?: string | null;
       email?: string | null;
       login: string;
@@ -5245,7 +4795,31 @@ export interface components {
       /** The level of permission to grant the access token to manage team discussions and related comments. Can be one of: `read` or `write`. */
       team_discussions?: "read" | "write";
     };
-    "scoped-installation": {
+    /** Simple User */
+    "simple-user": {
+      name?: string | null;
+      email?: string | null;
+      login: string;
+      id: number;
+      node_id: string;
+      avatar_url: string;
+      gravatar_id: string | null;
+      url: string;
+      html_url: string;
+      followers_url: string;
+      following_url: string;
+      gists_url: string;
+      starred_url: string;
+      subscriptions_url: string;
+      organizations_url: string;
+      repos_url: string;
+      events_url: string;
+      received_events_url: string;
+      type: string;
+      site_admin: boolean;
+      starred_at?: string;
+    };
+    "nullable-scoped-installation": {
       permissions: components["schemas"]["app-permissions"];
       /** Describe whether all repositories have been selected or there's a selection involved */
       repository_selection: "all" | "selected";
@@ -5254,7 +4828,7 @@ export interface components {
       single_file_paths?: string[];
       repositories_url: string;
       account: components["schemas"]["simple-user"];
-    };
+    } | null;
     /** The authorization for an OAuth app, GitHub App, or a Personal Access Token. */
     authorization: {
       id: number;
@@ -5274,8 +4848,10 @@ export interface components {
       updated_at: string;
       created_at: string;
       fingerprint: string | null;
-      user?: components["schemas"]["simple-user"] | null;
-      installation?: components["schemas"]["scoped-installation"] | null;
+      user?: components["schemas"]["nullable-simple-user"];
+      installation?: components["schemas"]["nullable-scoped-installation"];
+    } & {
+      expires_at: unknown;
     };
     /** GitHub apps are a new way to extend GitHub. They can be installed directly on organizations and user accounts and granted access to specific repositories. They come with granular permissions and built-in webhooks. GitHub apps are first class actors within GitHub. */
     integration: {
@@ -5284,7 +4860,7 @@ export interface components {
       /** The slug name of the GitHub app */
       slug?: string;
       node_id: string;
-      owner: components["schemas"]["simple-user"] | null;
+      owner: components["schemas"]["nullable-simple-user"];
       /** The name of the GitHub app */
       name: string;
       description: string | null;
@@ -5308,7 +4884,7 @@ export interface components {
       client_secret?: string;
       webhook_secret?: string | null;
       pem?: string;
-    } | null;
+    };
     /** Basic Error */
     "basic-error": {
       message?: string;
@@ -5379,19 +4955,19 @@ export interface components {
       has_multiple_single_files?: boolean;
       single_file_paths?: string[];
       app_slug: string;
-      suspended_by: components["schemas"]["simple-user"] | null;
+      suspended_by: components["schemas"]["nullable-simple-user"];
       suspended_at: string | null;
       contact_email?: string | null;
     };
     /** License Simple */
-    "license-simple": {
+    "nullable-license-simple": {
       key: string;
       name: string;
       url: string | null;
       spdx_id: string | null;
       node_id: string;
       html_url?: string;
-    };
+    } | null;
     /** A git repository */
     repository: {
       /** Unique identifier of the repository */
@@ -5400,8 +4976,8 @@ export interface components {
       /** The name of the repository. */
       name: string;
       full_name: string;
-      license: components["schemas"]["license-simple"] | null;
-      organization?: components["schemas"]["simple-user"] | null;
+      license: components["schemas"]["nullable-license-simple"];
+      organization?: components["schemas"]["nullable-simple-user"];
       forks: number;
       permissions?: {
         admin: boolean;
@@ -5604,6 +5180,8 @@ export interface components {
       delete_branch_on_merge?: boolean;
       /** Whether to allow merge commits for pull requests. */
       allow_merge_commit?: boolean;
+      /** Whether to allow forking this repo */
+      allow_forking?: boolean;
       subscribers_count?: number;
       network_count?: number;
       open_issues: number;
@@ -5647,8 +5225,34 @@ export interface components {
       created_at: string;
       updated_at: string;
       scopes: string[];
-      user?: components["schemas"]["simple-user"] | null;
+      user?: components["schemas"]["nullable-simple-user"];
     };
+    /** The authorization for an OAuth app, GitHub App, or a Personal Access Token. */
+    "nullable-authorization":
+      | ({
+          id: number;
+          url: string;
+          /** A list of scopes that this authorization is in. */
+          scopes: string[] | null;
+          token: string;
+          token_last_eight: string | null;
+          hashed_token: string | null;
+          app: {
+            client_id: string;
+            name: string;
+            url: string;
+          };
+          note: string | null;
+          note_url: string | null;
+          updated_at: string;
+          created_at: string;
+          fingerprint: string | null;
+          user?: components["schemas"]["nullable-simple-user"];
+          installation?: components["schemas"]["nullable-scoped-installation"];
+        } & {
+          expires_at: unknown;
+        })
+      | null;
     /** Code Of Conduct */
     "code-of-conduct": {
       key: string;
@@ -5834,7 +5438,7 @@ export interface components {
       default: boolean;
     };
     /** A collection of related issues and pull requests. */
-    milestone: {
+    "nullable-milestone": {
       url: string;
       html_url: string;
       labels_url: string;
@@ -5847,14 +5451,14 @@ export interface components {
       /** The title of the milestone. */
       title: string;
       description: string | null;
-      creator: components["schemas"]["simple-user"] | null;
+      creator: components["schemas"]["nullable-simple-user"];
       open_issues: number;
       closed_issues: number;
       created_at: string;
       updated_at: string;
       closed_at: string | null;
       due_on: string | null;
-    };
+    } | null;
     /** How the author is associated with the repository. */
     author_association:
       | "COLLABORATOR"
@@ -5865,6 +5469,38 @@ export interface components {
       | "MEMBER"
       | "NONE"
       | "OWNER";
+    /** GitHub apps are a new way to extend GitHub. They can be installed directly on organizations and user accounts and granted access to specific repositories. They come with granular permissions and built-in webhooks. GitHub apps are first class actors within GitHub. */
+    "nullable-integration": {
+      /** Unique identifier of the GitHub app */
+      id: number;
+      /** The slug name of the GitHub app */
+      slug?: string;
+      node_id: string;
+      owner: components["schemas"]["nullable-simple-user"];
+      /** The name of the GitHub app */
+      name: string;
+      description: string | null;
+      external_url: string;
+      html_url: string;
+      created_at: string;
+      updated_at: string;
+      /** The set of permissions for the GitHub app */
+      permissions: {
+        issues?: string;
+        checks?: string;
+        metadata?: string;
+        contents?: string;
+        deployments?: string;
+      } & { [key: string]: string };
+      /** The list of events for the GitHub app */
+      events: string[];
+      /** The number of installations associated with the GitHub app */
+      installations_count?: number;
+      client_id?: string;
+      client_secret?: string;
+      webhook_secret?: string | null;
+      pem?: string;
+    } | null;
     /** Issue Simple */
     "issue-simple": {
       id: number;
@@ -5879,11 +5515,11 @@ export interface components {
       state: string;
       title: string;
       body?: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       labels: components["schemas"]["label"][];
-      assignee: components["schemas"]["simple-user"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
       assignees?: components["schemas"]["simple-user"][] | null;
-      milestone: components["schemas"]["milestone"] | null;
+      milestone: components["schemas"]["nullable-milestone"];
       locked: boolean;
       active_lock_reason?: string | null;
       comments: number;
@@ -5902,7 +5538,7 @@ export interface components {
       body_text?: string;
       timeline_url?: string;
       repository?: components["schemas"]["repository"];
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     "reaction-rollup": {
       url: string;
@@ -5928,12 +5564,12 @@ export interface components {
       body_text?: string;
       body_html?: string;
       html_url: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       created_at: string;
       updated_at: string;
       issue_url: string;
       author_association: components["schemas"]["author_association"];
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
       reactions?: components["schemas"]["reaction-rollup"];
     };
     /** Event */
@@ -6013,9 +5649,9 @@ export interface components {
       updated_at: string;
       description: string | null;
       comments: number;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       comments_url: string;
-      owner?: components["schemas"]["simple-user"] | null;
+      owner?: components["schemas"]["simple-user"];
       truncated?: boolean;
       forks?: { [key: string]: unknown }[];
       history?: { [key: string]: unknown }[];
@@ -6069,7 +5705,7 @@ export interface components {
     };
     /** Gist History */
     "gist-history": {
-      user?: components["schemas"]["simple-user"];
+      user?: components["schemas"]["nullable-simple-user"];
       version?: string;
       committed_at?: string;
       change_status?: {
@@ -6115,9 +5751,9 @@ export interface components {
         updated_at: string;
         description: string | null;
         comments: number;
-        user: components["schemas"]["simple-user"] | null;
+        user: components["schemas"]["nullable-simple-user"];
         comments_url: string;
-        owner?: components["schemas"]["simple-user"] | null;
+        owner?: components["schemas"]["nullable-simple-user"];
         truncated?: boolean;
         forks?: { [key: string]: unknown }[];
         history?: { [key: string]: unknown }[];
@@ -6158,7 +5794,7 @@ export interface components {
       url: string;
       /** The comment text. */
       body: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       created_at: string;
       updated_at: string;
       author_association: components["schemas"]["author_association"];
@@ -6167,7 +5803,7 @@ export interface components {
     "gist-commit": {
       url: string;
       version: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       change_status: {
         total?: number;
         additions?: number;
@@ -6199,7 +5835,7 @@ export interface components {
       title: string;
       /** Contents of the issue */
       body?: string | null;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       /** Labels to associate with this issue; pass one or more label names to replace the set of labels on this issue; send an empty array to clear all labels from the issue; note that the labels are silently dropped for users without push access to the repository */
       labels: (
         | string
@@ -6213,9 +5849,9 @@ export interface components {
             default?: boolean;
           }
       )[];
-      assignee: components["schemas"]["simple-user"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
       assignees?: components["schemas"]["simple-user"][] | null;
-      milestone: components["schemas"]["milestone"] | null;
+      milestone: components["schemas"]["nullable-milestone"];
       locked: boolean;
       active_lock_reason?: string | null;
       comments: number;
@@ -6229,14 +5865,23 @@ export interface components {
       closed_at: string | null;
       created_at: string;
       updated_at: string;
-      closed_by?: components["schemas"]["simple-user"] | null;
+      closed_by?: components["schemas"]["nullable-simple-user"];
       body_html?: string;
       body_text?: string;
       timeline_url?: string;
       repository?: components["schemas"]["repository"];
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
       author_association: components["schemas"]["author_association"];
       reactions?: components["schemas"]["reaction-rollup"];
+    };
+    /** License Simple */
+    "license-simple": {
+      key: string;
+      name: string;
+      url: string | null;
+      spdx_id: string | null;
+      node_id: string;
+      html_url?: string;
     };
     /** License */
     license: {
@@ -6261,6 +5906,227 @@ export interface components {
       dependabot?: string[];
       installed_version?: string;
     };
+    /** A git repository */
+    "nullable-repository": {
+      /** Unique identifier of the repository */
+      id: number;
+      node_id: string;
+      /** The name of the repository. */
+      name: string;
+      full_name: string;
+      license: components["schemas"]["nullable-license-simple"];
+      organization?: components["schemas"]["nullable-simple-user"];
+      forks: number;
+      permissions?: {
+        admin: boolean;
+        pull: boolean;
+        triage?: boolean;
+        push: boolean;
+        maintain?: boolean;
+      };
+      owner: components["schemas"]["simple-user"];
+      /** Whether the repository is private or public. */
+      private: boolean;
+      html_url: string;
+      description: string | null;
+      fork: boolean;
+      url: string;
+      archive_url: string;
+      assignees_url: string;
+      blobs_url: string;
+      branches_url: string;
+      collaborators_url: string;
+      comments_url: string;
+      commits_url: string;
+      compare_url: string;
+      contents_url: string;
+      contributors_url: string;
+      deployments_url: string;
+      downloads_url: string;
+      events_url: string;
+      forks_url: string;
+      git_commits_url: string;
+      git_refs_url: string;
+      git_tags_url: string;
+      git_url: string;
+      issue_comment_url: string;
+      issue_events_url: string;
+      issues_url: string;
+      keys_url: string;
+      labels_url: string;
+      languages_url: string;
+      merges_url: string;
+      milestones_url: string;
+      notifications_url: string;
+      pulls_url: string;
+      releases_url: string;
+      ssh_url: string;
+      stargazers_url: string;
+      statuses_url: string;
+      subscribers_url: string;
+      subscription_url: string;
+      tags_url: string;
+      teams_url: string;
+      trees_url: string;
+      clone_url: string;
+      mirror_url: string | null;
+      hooks_url: string;
+      svn_url: string;
+      homepage: string | null;
+      language: string | null;
+      forks_count: number;
+      stargazers_count: number;
+      watchers_count: number;
+      size: number;
+      /** The default branch of the repository. */
+      default_branch: string;
+      open_issues_count: number;
+      /** Whether this repository acts as a template that can be used to generate new repositories. */
+      is_template?: boolean;
+      topics?: string[];
+      /** Whether issues are enabled. */
+      has_issues: boolean;
+      /** Whether projects are enabled. */
+      has_projects: boolean;
+      /** Whether the wiki is enabled. */
+      has_wiki: boolean;
+      has_pages: boolean;
+      /** Whether downloads are enabled. */
+      has_downloads: boolean;
+      /** Whether the repository is archived. */
+      archived: boolean;
+      /** Returns whether or not this repository disabled. */
+      disabled: boolean;
+      /** The repository visibility: public, private, or internal. */
+      visibility?: string;
+      pushed_at: string | null;
+      created_at: string | null;
+      updated_at: string | null;
+      /** Whether to allow rebase merges for pull requests. */
+      allow_rebase_merge?: boolean;
+      template_repository?: {
+        id?: number;
+        node_id?: string;
+        name?: string;
+        full_name?: string;
+        owner?: {
+          login?: string;
+          id?: number;
+          node_id?: string;
+          avatar_url?: string;
+          gravatar_id?: string;
+          url?: string;
+          html_url?: string;
+          followers_url?: string;
+          following_url?: string;
+          gists_url?: string;
+          starred_url?: string;
+          subscriptions_url?: string;
+          organizations_url?: string;
+          repos_url?: string;
+          events_url?: string;
+          received_events_url?: string;
+          type?: string;
+          site_admin?: boolean;
+        };
+        private?: boolean;
+        html_url?: string;
+        description?: string;
+        fork?: boolean;
+        url?: string;
+        archive_url?: string;
+        assignees_url?: string;
+        blobs_url?: string;
+        branches_url?: string;
+        collaborators_url?: string;
+        comments_url?: string;
+        commits_url?: string;
+        compare_url?: string;
+        contents_url?: string;
+        contributors_url?: string;
+        deployments_url?: string;
+        downloads_url?: string;
+        events_url?: string;
+        forks_url?: string;
+        git_commits_url?: string;
+        git_refs_url?: string;
+        git_tags_url?: string;
+        git_url?: string;
+        issue_comment_url?: string;
+        issue_events_url?: string;
+        issues_url?: string;
+        keys_url?: string;
+        labels_url?: string;
+        languages_url?: string;
+        merges_url?: string;
+        milestones_url?: string;
+        notifications_url?: string;
+        pulls_url?: string;
+        releases_url?: string;
+        ssh_url?: string;
+        stargazers_url?: string;
+        statuses_url?: string;
+        subscribers_url?: string;
+        subscription_url?: string;
+        tags_url?: string;
+        teams_url?: string;
+        trees_url?: string;
+        clone_url?: string;
+        mirror_url?: string;
+        hooks_url?: string;
+        svn_url?: string;
+        homepage?: string;
+        language?: string;
+        forks_count?: number;
+        stargazers_count?: number;
+        watchers_count?: number;
+        size?: number;
+        default_branch?: string;
+        open_issues_count?: number;
+        is_template?: boolean;
+        topics?: string[];
+        has_issues?: boolean;
+        has_projects?: boolean;
+        has_wiki?: boolean;
+        has_pages?: boolean;
+        has_downloads?: boolean;
+        archived?: boolean;
+        disabled?: boolean;
+        visibility?: string;
+        pushed_at?: string;
+        created_at?: string;
+        updated_at?: string;
+        permissions?: {
+          admin?: boolean;
+          maintain?: boolean;
+          push?: boolean;
+          triage?: boolean;
+          pull?: boolean;
+        };
+        allow_rebase_merge?: boolean;
+        temp_clone_token?: string;
+        allow_squash_merge?: boolean;
+        delete_branch_on_merge?: boolean;
+        allow_merge_commit?: boolean;
+        subscribers_count?: number;
+        network_count?: number;
+      } | null;
+      temp_clone_token?: string;
+      /** Whether to allow squash merges for pull requests. */
+      allow_squash_merge?: boolean;
+      /** Whether to delete head branches when pull requests are merged */
+      delete_branch_on_merge?: boolean;
+      /** Whether to allow merge commits for pull requests. */
+      allow_merge_commit?: boolean;
+      /** Whether to allow forking this repo */
+      allow_forking?: boolean;
+      subscribers_count?: number;
+      network_count?: number;
+      open_issues: number;
+      watchers: number;
+      master_branch?: string;
+      starred_at?: string;
+    } | null;
     /** Minimal Repository */
     "minimal-repository": {
       id: number;
@@ -6342,7 +6208,7 @@ export interface components {
         triage?: boolean;
         pull?: boolean;
       };
-      template_repository?: components["schemas"]["repository"] | null;
+      template_repository?: components["schemas"]["nullable-repository"];
       temp_clone_token?: string;
       delete_branch_on_merge?: boolean;
       subscribers_count?: number;
@@ -6358,6 +6224,7 @@ export interface components {
       forks?: number;
       open_issues?: number;
       watchers?: number;
+      allow_forking?: boolean;
     };
     /** Thread */
     thread: {
@@ -6569,7 +6436,7 @@ export interface components {
       role: "admin" | "member" | "billing_manager";
       organization_url: string;
       organization: components["schemas"]["organization-simple"];
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       permissions?: {
         can_create_repository: boolean;
       };
@@ -6596,7 +6463,7 @@ export interface components {
       number: number;
       /** State of the project; either 'open' or 'closed' */
       state: string;
-      creator: components["schemas"]["simple-user"] | null;
+      creator: components["schemas"]["nullable-simple-user"];
       created_at: string;
       updated_at: string;
       /** The baseline permission that all organization members have on this project. Only present if owner is an organization. */
@@ -6605,7 +6472,7 @@ export interface components {
       private?: boolean;
     };
     /** Groups of organization members that gives permissions on specified repositories. */
-    "team-simple": {
+    "nullable-team-simple": {
       /** Unique identifier of the team */
       id: number;
       node_id: string;
@@ -6646,7 +6513,7 @@ export interface components {
       html_url: string;
       members_url: string;
       repositories_url: string;
-      parent: components["schemas"]["team-simple"] | null;
+      parent: components["schemas"]["nullable-team-simple"];
     };
     /** Groups of organization members that gives permissions on specified repositories. */
     "team-full": {
@@ -6666,7 +6533,7 @@ export interface components {
       permission: string;
       members_url: string;
       repositories_url: string;
-      parent?: components["schemas"]["team-simple"] | null;
+      parent?: components["schemas"]["nullable-team-simple"];
       members_count: number;
       repos_count: number;
       created_at: string;
@@ -6677,7 +6544,7 @@ export interface components {
     };
     /** A team discussion is a persistent record of a free-form conversation within a team. */
     "team-discussion": {
-      author: components["schemas"]["simple-user"] | null;
+      author: components["schemas"]["nullable-simple-user"];
       /** The main text of the discussion. */
       body: string;
       body_html: string;
@@ -6704,7 +6571,7 @@ export interface components {
     };
     /** A reply to a discussion within a team. */
     "team-discussion-comment": {
-      author: components["schemas"]["simple-user"] | null;
+      author: components["schemas"]["nullable-simple-user"];
       /** The main text of the comment. */
       body: string;
       body_html: string;
@@ -6725,7 +6592,7 @@ export interface components {
     reaction: {
       id: number;
       node_id: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       /** The reaction to use */
       content:
         | "+1"
@@ -6779,7 +6646,7 @@ export interface components {
       /** The name of the repository. */
       name: string;
       full_name: string;
-      license: components["schemas"]["license-simple"] | null;
+      license: components["schemas"]["nullable-license-simple"];
       forks: number;
       permissions?: {
         admin: boolean;
@@ -6788,7 +6655,7 @@ export interface components {
         push: boolean;
         maintain?: boolean;
       };
-      owner: components["schemas"]["simple-user"] | null;
+      owner: components["schemas"]["nullable-simple-user"];
       /** Whether the repository is private or public. */
       private: boolean;
       html_url: string;
@@ -6868,7 +6735,7 @@ export interface components {
       updated_at: string | null;
       /** Whether to allow rebase merges for pull requests. */
       allow_rebase_merge?: boolean;
-      template_repository?: components["schemas"]["repository"] | null;
+      template_repository?: components["schemas"]["nullable-repository"];
       temp_clone_token?: string;
       /** Whether to allow squash merges for pull requests. */
       allow_squash_merge?: boolean;
@@ -6876,6 +6743,8 @@ export interface components {
       delete_branch_on_merge?: boolean;
       /** Whether to allow merge commits for pull requests. */
       allow_merge_commit?: boolean;
+      /** Whether to allow forking this repo */
+      allow_forking?: boolean;
       subscribers_count?: number;
       network_count?: number;
       open_issues: number;
@@ -6889,7 +6758,7 @@ export interface components {
       id: number;
       node_id: string;
       note: string | null;
-      creator: components["schemas"]["simple-user"] | null;
+      creator: components["schemas"]["nullable-simple-user"];
       created_at: string;
       updated_at: string;
       /** Whether or not the card is archived */
@@ -6916,7 +6785,7 @@ export interface components {
     /** Repository Collaborator Permission */
     "repository-collaborator-permission": {
       permission: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
     };
     "rate-limit": {
       limit: number;
@@ -7027,15 +6896,16 @@ export interface components {
         pull: boolean;
       };
       allow_rebase_merge?: boolean;
-      template_repository?: components["schemas"]["repository"] | null;
+      template_repository?: components["schemas"]["nullable-repository"];
       temp_clone_token?: string | null;
       allow_squash_merge?: boolean;
       delete_branch_on_merge?: boolean;
       allow_merge_commit?: boolean;
+      allow_forking?: boolean;
       subscribers_count: number;
       network_count: number;
-      license: components["schemas"]["license-simple"] | null;
-      organization?: components["schemas"]["simple-user"] | null;
+      license: components["schemas"]["nullable-license-simple"];
+      organization?: components["schemas"]["nullable-simple-user"];
       parent?: components["schemas"]["repository"];
       source?: components["schemas"]["repository"];
       forks: number;
@@ -7131,7 +7001,7 @@ export interface components {
       };
     };
     /** Simple Commit */
-    "simple-commit": {
+    "nullable-simple-commit": {
       id: string;
       tree_id: string;
       message: string;
@@ -7144,7 +7014,7 @@ export interface components {
         name: string;
         email: string;
       } | null;
-    };
+    } | null;
     /** An invocation of a workflow */
     "workflow-run": {
       /** The ID of the workflow run. */
@@ -7186,7 +7056,7 @@ export interface components {
       rerun_url: string;
       /** The URL to the workflow. */
       workflow_url: string;
-      head_commit: components["schemas"]["simple-commit"] | null;
+      head_commit: components["schemas"]["nullable-simple-commit"];
       repository: components["schemas"]["minimal-repository"];
       head_repository: components["schemas"]["minimal-repository"];
       head_repository_id?: number;
@@ -7367,11 +7237,11 @@ export interface components {
       protection_url?: string;
     };
     /** Metaproperties for Git author/committer information. */
-    "git-user": {
+    "nullable-git-user": {
       name?: string;
       email?: string;
       date?: string;
-    };
+    } | null;
     verification: {
       verified: boolean;
       reason: string;
@@ -7387,8 +7257,8 @@ export interface components {
       comments_url: string;
       commit: {
         url: string;
-        author: components["schemas"]["git-user"] | null;
-        committer: components["schemas"]["git-user"] | null;
+        author: components["schemas"]["nullable-git-user"];
+        committer: components["schemas"]["nullable-git-user"];
         message: string;
         comment_count: number;
         tree: {
@@ -7397,8 +7267,8 @@ export interface components {
         };
         verification?: components["schemas"]["verification"];
       };
-      author: components["schemas"]["simple-user"] | null;
-      committer: components["schemas"]["simple-user"] | null;
+      author: components["schemas"]["nullable-simple-user"];
+      committer: components["schemas"]["nullable-simple-user"];
       parents: {
         sha: string;
         url: string;
@@ -7503,7 +7373,7 @@ export interface components {
       transient_environment?: boolean;
       /** Specifies if the given environment is one that end-users directly interact with. Default: false. */
       production_environment?: boolean;
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     /** A check performed on the code of a given code change */
     "check-run": {
@@ -7543,7 +7413,7 @@ export interface components {
       check_suite: {
         id: number;
       } | null;
-      app: components["schemas"]["integration"] | null;
+      app: components["schemas"]["nullable-integration"];
       pull_requests: components["schemas"]["pull-request-minimal"][];
       deployment?: components["schemas"]["deployment-simple"];
     };
@@ -7559,6 +7429,21 @@ export interface components {
       message: string | null;
       raw_details: string | null;
       blob_href: string;
+    };
+    /** Simple Commit */
+    "simple-commit": {
+      id: string;
+      tree_id: string;
+      message: string;
+      timestamp: string;
+      author: {
+        name: string;
+        email: string;
+      } | null;
+      committer: {
+        name: string;
+        email: string;
+      } | null;
     };
     /** A suite of checks performed on the code of a given code change */
     "check-suite": {
@@ -7583,7 +7468,7 @@ export interface components {
       before: string | null;
       after: string | null;
       pull_requests: components["schemas"]["pull-request-minimal"][] | null;
-      app: components["schemas"]["integration"] | null;
+      app: components["schemas"]["nullable-integration"];
       repository: components["schemas"]["minimal-repository"];
       created_at: string | null;
       updated_at: string | null;
@@ -7685,7 +7570,7 @@ export interface components {
       html_url: components["schemas"]["alert-html-url"];
       instances_url: components["schemas"]["alert-instances-url"];
       state: components["schemas"]["code-scanning-alert-state"];
-      dismissed_by: components["schemas"]["simple-user"];
+      dismissed_by: components["schemas"]["nullable-simple-user"];
       dismissed_at: components["schemas"]["code-scanning-alert-dismissed-at"];
       dismissed_reason: components["schemas"]["code-scanning-alert-dismissed-reason"];
       rule: components["schemas"]["code-scanning-alert-rule-summary"];
@@ -7716,7 +7601,7 @@ export interface components {
       instances?: { [key: string]: unknown };
       instances_url: components["schemas"]["alert-instances-url"];
       state: components["schemas"]["code-scanning-alert-state"];
-      dismissed_by: components["schemas"]["simple-user"];
+      dismissed_by: components["schemas"]["nullable-simple-user"];
       dismissed_at: components["schemas"]["code-scanning-alert-dismissed-at"];
       dismissed_reason: components["schemas"]["code-scanning-alert-dismissed-reason"];
       rule: components["schemas"]["code-scanning-alert-rule"];
@@ -7823,8 +7708,8 @@ export interface components {
       /** Unique identifier of the repository invitation. */
       id: number;
       repository: components["schemas"]["minimal-repository"];
-      invitee: components["schemas"]["simple-user"] | null;
-      inviter: components["schemas"]["simple-user"] | null;
+      invitee: components["schemas"]["nullable-simple-user"];
+      inviter: components["schemas"]["nullable-simple-user"];
       /** The permission associated with the invitation. */
       permissions: "read" | "write" | "admin" | "triage" | "maintain";
       created_at: string;
@@ -7846,7 +7731,7 @@ export interface components {
       position: number | null;
       line: number | null;
       commit_id: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       created_at: string;
       updated_at: string;
       author_association: components["schemas"]["author_association"];
@@ -7893,7 +7778,7 @@ export interface components {
       state: string;
       locked: boolean;
       title: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       body: string | null;
       labels: {
         id?: number;
@@ -7904,14 +7789,14 @@ export interface components {
         color?: string;
         default?: boolean;
       }[];
-      milestone: components["schemas"]["milestone"] | null;
+      milestone: components["schemas"]["nullable-milestone"];
       active_lock_reason?: string | null;
       created_at: string;
       updated_at: string;
       closed_at: string | null;
       merged_at: string | null;
       merge_commit_sha: string | null;
-      assignee: components["schemas"]["simple-user"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
       assignees?: components["schemas"]["simple-user"][] | null;
       requested_reviewers?: components["schemas"]["simple-user"][] | null;
       requested_teams?: components["schemas"]["team"][] | null;
@@ -7920,14 +7805,14 @@ export interface components {
         ref: string;
         repo: components["schemas"]["repository"];
         sha: string;
-        user: components["schemas"]["simple-user"] | null;
+        user: components["schemas"]["nullable-simple-user"];
       };
       base: {
         label: string;
         ref: string;
         repo: components["schemas"]["repository"];
         sha: string;
-        user: components["schemas"]["simple-user"] | null;
+        user: components["schemas"]["nullable-simple-user"];
       };
       _links: {
         comments: components["schemas"]["link"];
@@ -7979,13 +7864,20 @@ export interface components {
       context: string;
       created_at: string;
       updated_at: string;
-      creator: components["schemas"]["simple-user"];
+      creator: components["schemas"]["nullable-simple-user"];
     };
     /** Diff Entry */
     "diff-entry": {
       sha: string;
       filename: string;
-      status: string;
+      status:
+        | "added"
+        | "removed"
+        | "modified"
+        | "renamed"
+        | "copied"
+        | "changed"
+        | "unchanged";
       additions: number;
       deletions: number;
       changes: number;
@@ -8225,7 +8117,7 @@ export interface components {
       /** Name for the target deployment environment. */
       environment: string;
       description: string | null;
-      creator: components["schemas"]["simple-user"] | null;
+      creator: components["schemas"]["nullable-simple-user"];
       created_at: string;
       updated_at: string;
       statuses_url: string;
@@ -8234,7 +8126,7 @@ export interface components {
       transient_environment?: boolean;
       /** Specifies if the given environment is one that end-users directly interact with. Default: false. */
       production_environment?: boolean;
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     /** The status of a deployment. */
     "deployment-status": {
@@ -8250,7 +8142,7 @@ export interface components {
         | "success"
         | "queued"
         | "in_progress";
-      creator: components["schemas"]["simple-user"] | null;
+      creator: components["schemas"]["nullable-simple-user"];
       /** A short description of the status. */
       description: string;
       /** The environment of the deployment that the status is for. */
@@ -8265,7 +8157,7 @@ export interface components {
       environment_url?: string;
       /** The URL to associate with this status. */
       log_url?: string;
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     /** Short Blob */
     "short-blob": {
@@ -8445,17 +8337,17 @@ export interface components {
       id: number;
       node_id: string;
       url: string;
-      actor: components["schemas"]["simple-user"] | null;
+      actor: components["schemas"]["nullable-simple-user"];
       event: string;
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
       issue?: components["schemas"]["issue-simple"];
       label?: components["schemas"]["issue-event-label"];
-      assignee?: components["schemas"]["simple-user"] | null;
-      assigner?: components["schemas"]["simple-user"] | null;
-      review_requester?: components["schemas"]["simple-user"] | null;
-      requested_reviewer?: components["schemas"]["simple-user"] | null;
+      assignee?: components["schemas"]["nullable-simple-user"];
+      assigner?: components["schemas"]["nullable-simple-user"];
+      review_requester?: components["schemas"]["nullable-simple-user"];
+      requested_reviewer?: components["schemas"]["nullable-simple-user"];
       requested_team?: components["schemas"]["team"];
       dismissed_review?: components["schemas"]["issue-event-dismissed-review"];
       milestone?: components["schemas"]["issue-event-milestone"];
@@ -8463,7 +8355,7 @@ export interface components {
       rename?: components["schemas"]["issue-event-rename"];
       author_association?: components["schemas"]["author_association"];
       lock_reason?: string | null;
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     /** Labeled Issue Event */
     "labeled-issue-event": {
@@ -8475,7 +8367,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       label: {
         name: string;
         color: string;
@@ -8491,7 +8383,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       label: {
         name: string;
         color: string;
@@ -8521,7 +8413,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       assignee: components["schemas"]["simple-user"];
       assigner: components["schemas"]["simple-user"];
     };
@@ -8535,7 +8427,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       milestone: {
         title: string;
       };
@@ -8550,7 +8442,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       milestone: {
         title: string;
       };
@@ -8565,7 +8457,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       rename: {
         from: string;
         to: string;
@@ -8581,7 +8473,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       review_requester: components["schemas"]["simple-user"];
       requested_team?: components["schemas"]["team"];
       requested_reviewer?: components["schemas"]["simple-user"];
@@ -8596,7 +8488,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       review_requester: components["schemas"]["simple-user"];
       requested_team?: components["schemas"]["team"];
       requested_reviewer?: components["schemas"]["simple-user"];
@@ -8611,7 +8503,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       dismissed_review: {
         state: string;
         review_id: number;
@@ -8629,7 +8521,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       lock_reason: string | null;
     };
     /** Added to Project Issue Event */
@@ -8642,7 +8534,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       project_card?: {
         id: number;
         url: string;
@@ -8662,7 +8554,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       project_card?: {
         id: number;
         url: string;
@@ -8682,7 +8574,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       project_card?: {
         id: number;
         url: string;
@@ -8749,7 +8641,7 @@ export interface components {
       updated_at: string;
       issue_url: string;
       author_association: components["schemas"]["author_association"];
-      performed_via_github_app?: components["schemas"]["integration"];
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
       reactions?: components["schemas"]["reaction-rollup"];
     };
     /** Timeline Cross Referenced Event */
@@ -8920,7 +8812,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       assignee: components["schemas"]["simple-user"];
     };
     /** Timeline Unassigned Issue Event */
@@ -8933,7 +8825,7 @@ export interface components {
       commit_id: string | null;
       commit_url: string | null;
       created_at: string;
-      performed_via_github_app: components["schemas"]["integration"];
+      performed_via_github_app: components["schemas"]["nullable-integration"];
       assignee: components["schemas"]["simple-user"];
     };
     /** Timeline Event */
@@ -8990,7 +8882,29 @@ export interface components {
         html: string | null;
         self: string;
       };
-      license: components["schemas"]["license-simple"] | null;
+      license: components["schemas"]["nullable-license-simple"];
+    };
+    /** A collection of related issues and pull requests. */
+    milestone: {
+      url: string;
+      html_url: string;
+      labels_url: string;
+      id: number;
+      node_id: string;
+      /** The number of the milestone. */
+      number: number;
+      /** The state of the milestone. */
+      state: "open" | "closed";
+      /** The title of the milestone. */
+      title: string;
+      description: string | null;
+      creator: components["schemas"]["nullable-simple-user"];
+      open_issues: number;
+      closed_issues: number;
+      created_at: string;
+      updated_at: string;
+      closed_at: string | null;
+      due_on: string | null;
     };
     "pages-source-hash": {
       branch: string;
@@ -9041,7 +8955,7 @@ export interface components {
       error: {
         message: string | null;
       };
-      pusher: components["schemas"]["simple-user"] | null;
+      pusher: components["schemas"]["nullable-simple-user"];
       commit: string;
       duration: number;
       created_at: string;
@@ -9057,6 +8971,28 @@ export interface components {
       name?: string;
       enforcement?: string;
       configuration_url?: string;
+    };
+    /** Groups of organization members that gives permissions on specified repositories. */
+    "team-simple": {
+      /** Unique identifier of the team */
+      id: number;
+      node_id: string;
+      /** URL for the team */
+      url: string;
+      members_url: string;
+      /** Name of the team */
+      name: string;
+      /** Description of the team */
+      description: string | null;
+      /** Permission that the team will have for its repositories */
+      permission: string;
+      /** The level of privacy this team should have */
+      privacy?: string;
+      html_url: string;
+      repositories_url: string;
+      slug: string;
+      /** Distinguished Name (DN) that team maps to within LDAP environment */
+      ldap_dn?: string;
     };
     /** Pull requests let you tell others about changes you've pushed to a repository on GitHub. Once a pull request is sent, interested parties can review the set of changes, discuss potential modifications, and even push follow-up commits if necessary. */
     "pull-request": {
@@ -9079,7 +9015,7 @@ export interface components {
       locked: boolean;
       /** The title of the pull request. */
       title: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       body: string | null;
       labels: {
         id?: number;
@@ -9090,14 +9026,14 @@ export interface components {
         color?: string;
         default?: boolean;
       }[];
-      milestone: components["schemas"]["milestone"] | null;
+      milestone: components["schemas"]["nullable-milestone"];
       active_lock_reason?: string | null;
       created_at: string;
       updated_at: string;
       closed_at: string | null;
       merged_at: string | null;
       merge_commit_sha: string | null;
-      assignee: components["schemas"]["simple-user"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
       assignees?: components["schemas"]["simple-user"][] | null;
       requested_reviewers?: components["schemas"]["simple-user"][] | null;
       requested_teams?: components["schemas"]["team-simple"][] | null;
@@ -9216,6 +9152,7 @@ export interface components {
           watchers_count: number;
           created_at: string;
           updated_at: string;
+          allow_forking?: boolean;
         } | null;
         sha: string;
         user: {
@@ -9337,7 +9274,7 @@ export interface components {
           allow_merge_commit?: boolean;
           allow_squash_merge?: boolean;
           allow_rebase_merge?: boolean;
-          license: components["schemas"]["license-simple"] | null;
+          license: components["schemas"]["nullable-license-simple"];
           pushed_at: string;
           size: number;
           ssh_url: string;
@@ -9348,6 +9285,7 @@ export interface components {
           watchers_count: number;
           created_at: string;
           updated_at: string;
+          allow_forking?: boolean;
         };
         sha: string;
         user: {
@@ -9389,7 +9327,7 @@ export interface components {
       mergeable: boolean | null;
       rebaseable?: boolean | null;
       mergeable_state: string;
-      merged_by: components["schemas"]["simple-user"] | null;
+      merged_by: components["schemas"]["nullable-simple-user"];
       comments: number;
       review_comments: number;
       /** Indicates whether maintainers can modify the pull request. */
@@ -9415,7 +9353,7 @@ export interface components {
       /** Unique identifier of the review */
       id: number;
       node_id: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       /** The text of the review. */
       body: string;
       state: string;
@@ -9449,7 +9387,7 @@ export interface components {
       commit_id: string;
       original_commit_id: string;
       in_reply_to_id?: number;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       body: string;
       created_at: string;
       updated_at: string;
@@ -9493,7 +9431,7 @@ export interface components {
       download_count: number;
       created_at: string;
       updated_at: string;
-      uploader: components["schemas"]["simple-user"] | null;
+      uploader: components["schemas"]["nullable-simple-user"];
     };
     /** A release. */
     release: {
@@ -9534,11 +9472,13 @@ export interface components {
       created_at?: components["schemas"]["alert-created-at"];
       url?: components["schemas"]["alert-url"];
       html_url?: components["schemas"]["alert-html-url"];
+      /** The REST API URL of the code locations for this alert. */
+      locations_url?: string;
       state?: components["schemas"]["secret-scanning-alert-state"];
       resolution?: components["schemas"]["secret-scanning-alert-resolution"];
       /** The time that the alert was resolved in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`. */
       resolved_at?: string | null;
-      resolved_by?: components["schemas"]["simple-user"];
+      resolved_by?: components["schemas"]["nullable-simple-user"];
       /** The type of secret that secret scanning detected. */
       secret_type?: string;
       /** The secret that was detected. */
@@ -9547,7 +9487,7 @@ export interface components {
     /** Stargazer */
     stargazer: {
       starred_at: string;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
     };
     /** Code Frequency Stat */
     "code-frequency-stat": number[];
@@ -9559,7 +9499,7 @@ export interface components {
     };
     /** Contributor Activity */
     "contributor-activity": {
-      author: components["schemas"]["simple-user"] | null;
+      author: components["schemas"]["nullable-simple-user"];
       total: number;
       weeks: {
         w?: number;
@@ -9636,7 +9576,7 @@ export interface components {
           email: string;
           date: string;
         };
-        committer: components["schemas"]["git-user"] | null;
+        committer: components["schemas"]["nullable-git-user"];
         comment_count: number;
         message: string;
         tree: {
@@ -9646,8 +9586,8 @@ export interface components {
         url: string;
         verification?: components["schemas"]["verification"];
       };
-      author: components["schemas"]["simple-user"] | null;
-      committer: components["schemas"]["git-user"] | null;
+      author: components["schemas"]["nullable-simple-user"];
+      committer: components["schemas"]["nullable-git-user"];
       parents: {
         url?: string;
         html_url?: string;
@@ -9673,7 +9613,7 @@ export interface components {
       locked: boolean;
       active_lock_reason?: string | null;
       assignees?: components["schemas"]["simple-user"][] | null;
-      user: components["schemas"]["simple-user"] | null;
+      user: components["schemas"]["nullable-simple-user"];
       labels: {
         id?: number;
         node_id?: string;
@@ -9684,8 +9624,8 @@ export interface components {
         description?: string | null;
       }[];
       state: string;
-      assignee: components["schemas"]["simple-user"] | null;
-      milestone: components["schemas"]["milestone"] | null;
+      assignee: components["schemas"]["nullable-simple-user"];
+      milestone: components["schemas"]["nullable-milestone"];
       comments: number;
       created_at: string;
       updated_at: string;
@@ -9706,7 +9646,7 @@ export interface components {
       body_html?: string;
       body_text?: string;
       timeline_url?: string;
-      performed_via_github_app?: components["schemas"]["integration"] | null;
+      performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     /** Label Search Result Item */
     "label-search-result-item": {
@@ -9726,7 +9666,7 @@ export interface components {
       node_id: string;
       name: string;
       full_name: string;
-      owner: components["schemas"]["simple-user"] | null;
+      owner: components["schemas"]["nullable-simple-user"];
       private: boolean;
       html_url: string;
       description: string | null;
@@ -9798,7 +9738,7 @@ export interface components {
       archived: boolean;
       /** Returns whether or not this repository disabled. */
       disabled: boolean;
-      license: components["schemas"]["license-simple"] | null;
+      license: components["schemas"]["nullable-license-simple"];
       permissions?: {
         admin: boolean;
         maintain?: boolean;
@@ -9812,6 +9752,7 @@ export interface components {
       allow_squash_merge?: boolean;
       allow_rebase_merge?: boolean;
       delete_branch_on_merge?: boolean;
+      allow_forking?: boolean;
     };
     /** Topic Search Result Item */
     "topic-search-result-item": {
@@ -11735,7 +11676,7 @@ export interface operations {
       /** Response */
       200: {
         content: {
-          "application/json": components["schemas"]["authorization"] | null;
+          "application/json": components["schemas"]["nullable-authorization"];
         };
       };
       404: components["responses"]["not_found"];
@@ -17647,6 +17588,8 @@ export interface operations {
           delete_branch_on_merge?: boolean;
           /** `true` to archive this repository. **Note**: You cannot unarchive repositories through the API. */
           archived?: boolean;
+          /** Either `true` to allow private forks, or `false` to prevent private forks. */
+          allow_forking?: boolean;
         };
       };
     };
@@ -21919,7 +21862,7 @@ export interface operations {
   /**
    * Create a fork for the authenticated user.
    *
-   * **Note**: Forking a Repository happens asynchronously. You may have to wait a short period of time before you can access the git objects. If this takes longer than 5 minutes, be sure to contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=rest-api).
+   * **Note**: Forking a Repository happens asynchronously. You may have to wait a short period of time before you can access the git objects. If this takes longer than 5 minutes, be sure to contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=dotcom-rest-api).
    */
   "repos/create-fork": {
     parameters: {
@@ -25834,7 +25777,7 @@ export interface operations {
    *
    * **Notes:**
    * *   GitHub Enterprise Server renames asset filenames that have special characters, non-alphanumeric characters, and leading or trailing periods. The "[List assets for a release](https://docs.github.com/enterprise-server@3.1/rest/reference/repos#list-assets-for-a-release)"
-   * endpoint lists the renamed filenames. For more information and help, contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=rest-api).
+   * endpoint lists the renamed filenames. For more information and help, contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=dotcom-rest-api).
    * *   If you upload an asset with the same filename as another uploaded asset, you'll receive an error and must delete the old file before you can re-upload the new asset.
    */
   "repos/upload-release-asset": {
@@ -29624,1093 +29567,155 @@ export interface operations {
       };
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "apps/list-webhook-deliveries": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "apps/get-webhook-delivery": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "apps/redeliver-webhook-delivery": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/get-audit-log": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-github-actions-billing-ghe": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-github-packages-billing-ghe": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-shared-storage-billing-ghe": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/get-subscription-plan-for-account": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/list-plans": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/list-accounts-for-plan": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/get-subscription-plan-for-account-stubbed": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/list-plans-stubbed": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/list-accounts-for-plan-stubbed": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/list-blocked-users": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/check-blocked-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/block-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/unblock-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/list-saml-sso-authorizations": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/remove-saml-sso-authorization": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/list-failed-invitations": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "orgs/list-webhook-deliveries": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "orgs/get-webhook-delivery": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "orgs/redeliver-webhook-delivery": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/get-restrictions-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/set-restrictions-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/remove-restrictions-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/list-pending-invitations": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/create-invitation": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/cancel-invitation": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "orgs/list-invitation-teams": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/list-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/start-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/get-status-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/download-archive-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/delete-archive-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/unlock-repo-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/list-repos-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/list-packages-for-organization": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-package-for-organization": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/delete-package-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/restore-package-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-all-package-versions-for-package-owned-by-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-package-version-for-organization": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/delete-package-version-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/restore-package-version-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "secret-scanning/list-alerts-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-github-actions-billing-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-github-packages-billing-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-shared-storage-billing-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/list-idp-groups-for-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/list-pending-invitations-in-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/list-idp-groups-in-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/create-or-update-idp-group-connections-in-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/get-reviews-for-run": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "actions/approve-workflow-run": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/get-pending-deployments-for-run": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/review-pending-deployments-for-run": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "actions/get-workflow-run-usage": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "actions/get-workflow-usage": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/list-autolinks": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/create-autolink": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-autolink": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/delete-autolink": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/enable-automated-security-fixes": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/disable-automated-security-fixes": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "codes-of-conduct/get-for-repo": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-community-profile-metrics": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/get-all-environments": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/get-environment": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/create-or-update-environment": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/delete-an-environment": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/list-webhook-deliveries": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/get-webhook-delivery": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "repos/redeliver-webhook-delivery": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/get-import-status": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/start-import": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/cancel-import": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/update-import": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/get-commit-authors": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/map-commit-author": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/get-large-files": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/set-lfs-preference": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/get-restrictions-for-repo": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/set-restrictions-for-repo": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/remove-restrictions-for-repo": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-pages-health-check": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "reactions/create-for-release": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-clones": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-top-paths": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-top-referrers": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/get-views": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/check-vulnerability-alerts": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/enable-vulnerability-alerts": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "repos/disable-vulnerability-alerts": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/list-environment-secrets": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/get-environment-public-key": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/get-environment-secret": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/create-or-update-environment-secret": {
     responses: {
       /** Not Implemented */
       501: unknown;
     };
   };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
+  /** This endpoint does not exist ghes-3.1.json. It was added in ghes-3.2.json */
   "actions/delete-environment-secret": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/list-provisioned-groups-enterprise": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/provision-and-invite-enterprise-group": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/get-provisioning-information-for-enterprise-group": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/set-information-for-provisioned-enterprise-group": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/delete-scim-group-from-enterprise": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/update-attribute-for-enterprise-group": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/list-provisioned-identities-enterprise": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/provision-and-invite-enterprise-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/get-provisioning-information-for-enterprise-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/set-information-for-provisioned-enterprise-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/delete-user-from-enterprise": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "enterprise-admin/update-attribute-for-enterprise-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "scim/list-provisioned-identities": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "scim/provision-and-invite-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "scim/get-provisioning-information-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "scim/set-information-for-provisioned-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "scim/delete-user-from-org": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "scim/update-attribute-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/list-pending-invitations-legacy": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/list-idp-groups-for-legacy": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "teams/create-or-update-idp-group-connections-legacy": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "users/list-blocked-by-authenticated": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "users/check-blocked": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "users/block": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "users/unblock": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "users/set-primary-email-visibility-for-authenticated": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/get-restrictions-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/set-restrictions-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "interactions/remove-restrictions-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/list-subscriptions-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "apps/list-subscriptions-for-authenticated-user-stubbed": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/list-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/start-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/get-status-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/get-archive-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/delete-archive-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/unlock-repo-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "migrations/list-repos-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/list-packages-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-package-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/delete-package-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/restore-package-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-all-package-versions-for-package-owned-by-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-package-version-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/delete-package-version-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/restore-package-version-for-authenticated-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/list-packages-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-package-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/delete-package-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/restore-package-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-all-package-versions-for-package-owned-by-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/get-package-version-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/delete-package-version-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "packages/restore-package-version-for-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-github-actions-billing-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-github-packages-billing-user": {
-    responses: {
-      /** Not Implemented */
-      501: unknown;
-    };
-  };
-  /** This endpoint does not exist ghes-3.1.json. It was added in api.github.com.json */
-  "billing/get-shared-storage-billing-user": {
     responses: {
       /** Not Implemented */
       501: unknown;

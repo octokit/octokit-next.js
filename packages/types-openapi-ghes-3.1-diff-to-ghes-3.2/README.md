@@ -1,4 +1,4 @@
-# @octokit-next/types-openapi-ghes-3.1-diff-to-api.github.com
+# @octokit-next/types-openapi-ghes-3.1-diff-to-ghes-3.2
 
 > Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com
 
@@ -7,7 +7,7 @@ This package is continously updated based on [GitHub's OpenAPI specification](ht
 ## Usage
 
 ```ts
-import { components } from "@octokit-next/types-openapi-ghes-3.1-diff-to-api.github.com";
+import { components } from "@octokit-next/types-openapi-ghes-3.1-diff-to-ghes-3.2";
 
 type Repository = components["schemas"]["full-repository"];
 ```

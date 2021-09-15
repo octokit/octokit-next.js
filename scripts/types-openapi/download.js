@@ -12,8 +12,10 @@ if (!process.env.GITHUB_TOKEN) {
 
 const SUPPORTED_VERSIONS = [
   "api.github.com.json",
+  "ghes-3.2.json",
+  "ghes-3.2-diff-to-api.github.com.json",
   "ghes-3.1.json",
-  "ghes-3.1-diff-to-api.github.com.json",
+  "ghes-3.1-diff-to-ghes-3.2.json",
   "ghes-3.0.json",
   "ghes-3.0-diff-to-ghes-3.1.json",
 ];
