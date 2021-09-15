@@ -3,7 +3,7 @@ import { Octokit } from "@octokit-next/types";
 import {
   EndpointsDiff,
   ResponseHeadersDiff,
-} from "@octokit-next/types-rest-api-ghes-3.0";
+} from "@octokit-next/types-rest-api-ghes-3.2";
 
 export type ResponseHeadersCompatible = Omit<
   Octokit.ResponseHeaders,
@@ -15,7 +15,7 @@ export type EndpointsCompatible = Omit<Octokit.Endpoints, keyof EndpointsDiff>;
 declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
-      "ghes-3.0-compatible": {
+      "ghes-3.2-compatible": {
         ResponseHeaders: ResponseHeadersCompatible;
 
         Endpoints: {
