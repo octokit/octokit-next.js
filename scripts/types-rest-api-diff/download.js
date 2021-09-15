@@ -51,8 +51,8 @@ async function run() {
   for (const file of data) {
     if (!file.name.includes("-anicca-diff-to-")) continue;
 
-    // only download the diffs for GHES 3.0 & 3.1 for now
-    if (!file.name.startsWith("ghes-3") && !file.name.startsWith("github.ae")) {
+    // ignore GHES 2.x
+    if (file.name.startsWith("ghes-2")) {
       continue;
     }
 
