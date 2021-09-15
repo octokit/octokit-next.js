@@ -16,7 +16,7 @@ declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.0-compatible": {
-        ResponseHeaders: EndpointsCompatible;
+        ResponseHeaders: ResponseHeadersCompatible;
 
         Endpoints: {
           [route in keyof EndpointsCompatible]: {
