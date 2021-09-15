@@ -1,0 +1,21 @@
+{
+  "name": "@octokit-next/types-rest-api-ghes-3.2",
+  "description": "Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/types-rest-api-ghes-3.2"
+  },
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development",
+    "@octokit-next/types-openapi-ghes-3.2": "0.0.0-development",
+    "@octokit-next/types-rest-api": "0.0.0-development",
+    "type-fest": "^2.0.0"
+  },
+  "publishConfig": { "access": "public" },
+  "version": "0.0.0-development",
+  "types": "index.d.ts",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "octokit": { "openapi-version": "5.2.2" }
+}
