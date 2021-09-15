@@ -10,22 +10,6 @@ if (!process.env.GITHUB_TOKEN) {
   throw new Error("GITHUB_TOKEN is not set");
 }
 
-const SUPPORTED_VERSIONS = [
-  "api.github.com.json",
-
-  "github.ae-diff-to-api.github.com.json",
-  "github.ae.json",
-
-  "ghes-3.2.json",
-  "ghes-3.2-diff-to-api.github.com.json",
-
-  "ghes-3.1.json",
-  "ghes-3.1-diff-to-ghes-3.2.json",
-
-  "ghes-3.0.json",
-  "ghes-3.0-diff-to-ghes-3.1.json",
-];
-
 const version = process.env.OCTOKIT_OPENAPI_VERSION.replace(/^v/, "");
 
 await rm("cache/types-openapi", { recursive: true });
@@ -62,7 +46,26 @@ if (!Array.isArray(data)) {
 
 // download the OpenAPI spec for api.github.com
 for (const file of data) {
-  if (!SUPPORTED_VERSIONS.includes(file.name)) {
+  // ignore anicca files (https://github.com/xuorig/anicca)
+  if (/anicca/.test(file.name)) {
+    console.log("%s not supported", file.name);
+    continue;
+  }
+
+  // ignore GHES 2.x files
+  if (file.name.startsWith("ghes-2")) {
+    console.log("%s not supported", file.name);
+    continue;
+  }
+
+  // ignore deref files
+  if (file.name.endsWith(".deref.json")) {
+    console.log("%s not supported", file.name);
+    continue;
+  }
+
+  // ignore non-json files
+  if (!file.name.endsWith(".json")) {
     console.log("%s not supported", file.name);
     continue;
   }
