@@ -15,8 +15,8 @@ const version = process.env.OCTOKIT_OPENAPI_VERSION.replace(/^v/, "");
 run();
 
 async function run() {
-  await rm("cache/types-rest-api-ghes", { recursive: true });
-  await mkdir("cache/types-rest-api-ghes");
+  await rm("cache/types-rest-api-diff", { recursive: true });
+  await mkdir("cache/types-rest-api-diff");
 
   const data = await new Promise((resolve, reject) => {
     get(
@@ -60,7 +60,7 @@ async function run() {
   }
 
   function download(version, fileName) {
-    const localPath = `cache/types-rest-api-ghes/${fileName}`;
+    const localPath = `cache/types-rest-api-diff/${fileName}`;
 
     const file = createWriteStream(localPath);
     const url = `https://unpkg.com/@octokit/openapi@${version}/generated/${fileName}`;
