@@ -1,0 +1,357 @@
+{
+  "paths": {
+    "changed": {
+      "/feeds": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": {
+                          "removed": ["security_advisories_url"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/gists": {
+        "post": {
+          "responses": {
+            "changed": {
+              "201": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": {
+                          "changed": {
+                            "forks": {
+                              "items_changed": {
+                                "properties_changed": {
+                                  "changed": {
+                                    "user": {
+                                      "properties_changed": {
+                                        "removed": ["twitter_username"]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/gists/{gist_id}": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": {
+                          "changed": {
+                            "forks": {
+                              "items_changed": {
+                                "properties_changed": {
+                                  "changed": {
+                                    "user": {
+                                      "properties_changed": {
+                                        "removed": ["twitter_username"]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": {
+                          "changed": {
+                            "forks": {
+                              "items_changed": {
+                                "properties_changed": {
+                                  "changed": {
+                                    "user": {
+                                      "properties_changed": {
+                                        "removed": ["twitter_username"]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/gists/{gist_id}/forks": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "items_changed": {
+                          "properties_changed": {
+                            "changed": {
+                              "forks": {
+                                "items_changed": {
+                                  "properties_changed": {
+                                    "changed": {
+                                      "user": {
+                                        "properties_changed": {
+                                          "removed": ["twitter_username"]
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/gists/{gist_id}/{sha}": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": {
+                          "changed": {
+                            "forks": {
+                              "items_changed": {
+                                "properties_changed": {
+                                  "changed": {
+                                    "user": {
+                                      "properties_changed": {
+                                        "removed": ["twitter_username"]
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/repos/{owner}/{repo}/commits/{commit_sha}/pulls": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "items_changed": {
+                          "properties_changed": { "removed": ["auto_merge"] },
+                          "required_changed": { "removed": ["auto_merge"] }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/repos/{owner}/{repo}/pulls": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "items_changed": {
+                          "properties_changed": { "removed": ["auto_merge"] },
+                          "required_changed": { "removed": ["auto_merge"] }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "responses": {
+            "changed": {
+              "201": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": { "removed": ["auto_merge"] },
+                        "required_changed": { "removed": ["auto_merge"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/repos/{owner}/{repo}/pulls/{pull_number}": {
+        "get": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": { "removed": ["auto_merge"] },
+                        "required_changed": { "removed": ["auto_merge"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": { "removed": ["auto_merge"] },
+                        "required_changed": { "removed": ["auto_merge"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers": {
+        "post": {
+          "responses": {
+            "changed": {
+              "201": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": { "removed": ["auto_merge"] },
+                        "required_changed": { "removed": ["auto_merge"] }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user": {
+        "patch": {
+          "responses": {
+            "changed": {
+              "200": {
+                "content": {
+                  "changed": {
+                    "application/json": {
+                      "schema_changed": {
+                        "properties_changed": {
+                          "removed": ["twitter_username"]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "removed": {
+      "/orgs/{org}/audit-log": ["get"],
+      "/repos/{owner}/{repo}/branches/{branch}/rename": ["post"],
+      "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances": [
+        "get"
+      ],
+      "/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}": [
+        "get",
+        "delete"
+      ],
+      "/repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}": ["get"],
+      "/repos/{owner}/{repo}/secret-scanning/alerts": ["get"],
+      "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}": ["get"]
+    }
+  }
+}
