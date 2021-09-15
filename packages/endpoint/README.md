@@ -48,8 +48,7 @@ Node
 Install with <code>npm install @octokit-next/endpoint</code>
 
 ```js
-const { endpoint } = require("@octokit-next/endpoint");
-// or: import { endpoint } from "@octokit-next/endpoint";
+import { endpoint } from "@octokit-next/endpoint";
 ```
 
 </td></tr>
@@ -278,40 +277,52 @@ All other options will be passed depending on the `method` and `url` options.
 Override or set default options. Example:
 
 ```js
-const request = require("request");
-const myEndpoint = require("@octokit-next/endpoint").defaults({
+const myEndpoint = endpoint.defaults({
   baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
   headers: {
     "user-agent": "myApp/1.2.3",
     authorization: `token 0000000000000000000000000000000000000001`,
   },
+});
+
+const options = myEndpoint(`GET /orgs/{org}/repos`, {
   org: "my-project",
   per_page: 100,
 });
-
-request(myEndpoint(`GET /orgs/{org}/repos`));
+// {
+//   "method": "GET",
+//   "url": "https://api.github.com/orgs/my-project/repos?per_page=100",
+//   "headers": {
+//     "accept": "application/vnd.github.v3+json",
+//     "authorization": "token 0000000000000000000000000000000000000001",
+//     "user-agent": "myApp/1.2.3"
+//   }
+// }
 ```
 
 You can call `.defaults()` again on the returned method, the defaults will cascade.
 
 ```js
-const myProjectEndpoint = endpoint.defaults({
-  baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
+const myEndpointWithToken2 = myEndpoint.defaults({
   headers: {
-    "user-agent": "myApp/1.2.3",
-  },
-  org: "my-project",
-});
-const myProjectEndpointWithAuth = myProjectEndpoint.defaults({
-  headers: {
-    authorization: `token 0000000000000000000000000000000000000001`,
+    authorization: `token 0000000000000000000000000000000000000002`,
   },
 });
-```
 
-`myProjectEndpointWithAuth` now defaults the `baseUrl`, `headers['user-agent']`,
-`org` and `headers['authorization']` on top of `headers['accept']` that is set
-by the global default.
+const options2 = myEndpoint(`GET /orgs/{org}/repos`, {
+  org: "my-project",
+  per_page: 100,
+});
+// {
+//   "method": "GET",
+//   "url": "https://api.github.com/orgs/my-project/repos?per_page=100",
+//   "headers": {
+//     "accept": "application/vnd.github.v3+json",
+//     "authorization": "token 0000000000000000000000000000000000000002",
+//     "user-agent": "myApp/1.2.3"
+//   }
+// }
+```
 
 ### `endpoint.DEFAULTS`
 
