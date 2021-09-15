@@ -15,8 +15,8 @@ const version = process.env.OCTOKIT_OPENAPI_VERSION.replace(/^v/, "");
 run();
 
 async function run() {
-  await rm("cache/types-rest-api-ghes", { recursive: true });
-  await mkdir("cache/types-rest-api-ghes");
+  await rm("cache/types-rest-api-diff", { recursive: true });
+  await mkdir("cache/types-rest-api-diff");
 
   const data = await new Promise((resolve, reject) => {
     get(
@@ -52,7 +52,7 @@ async function run() {
     if (!file.name.includes("-anicca-diff-to-")) continue;
 
     // only download the diffs for GHES 3.0 & 3.1 for now
-    if (!file.name.startsWith("ghes-3")) {
+    if (!file.name.startsWith("ghes-3") && !file.name.startsWith("github.ae")) {
       continue;
     }
 
@@ -60,7 +60,7 @@ async function run() {
   }
 
   function download(version, fileName) {
-    const localPath = `cache/types-rest-api-ghes/${fileName}`;
+    const localPath = `cache/types-rest-api-diff/${fileName}`;
 
     const file = createWriteStream(localPath);
     const url = `https://unpkg.com/@octokit/openapi@${version}/generated/${fileName}`;

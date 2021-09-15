@@ -43,7 +43,7 @@ const packageDefaults = {
 run();
 
 async function run() {
-  const diffFiles = await readdir("cache/types-rest-api-ghes");
+  const diffFiles = await readdir("cache/types-rest-api-diff");
 
   for (const diffFile of diffFiles) {
     const [currentVersion, diffVersion] = toVersions(diffFile);
@@ -113,7 +113,7 @@ async function run() {
     console.log("%s updated", `${packagePath}/README.md`);
 
     // create index.d.ts
-    const diffPathName = "cache/types-rest-api-ghes/" + diffFile;
+    const diffPathName = "cache/types-rest-api-diff/" + diffFile;
     console.log("Reading paths from %s", diffPathName);
     const { paths } = JSON.parse(readFileSync(diffPathName, "utf8"));
 
