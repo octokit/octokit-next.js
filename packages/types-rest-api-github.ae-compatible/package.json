@@ -1,0 +1,21 @@
+{
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development",
+    "@octokit-next/types-openapi-github.ae": "0.0.0-development"
+  },
+  "description": "Types for GITHUB.AE (compatible) REST API requests and responses",
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-github.ae-compatible#readme",
+  "license": "MIT",
+  "name": "@octokit-next/types-rest-api-github.ae-compatible",
+  "octokit": { "openapi-version": "5.2.2" },
+  "publishConfig": { "access": "public" },
+  "repository": {
+    "directory": "packages/types-rest-api-github.ae-compatible",
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git"
+  },
+  "type": "module",
+  "types": "index.d.ts",
+  "version": "0.0.0-development"
+}
