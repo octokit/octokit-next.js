@@ -59,11 +59,12 @@ async function run() {
     const packagePath = `packages/${packageName}`;
 
     // delete current package directory
-    await rm(packagePath, { recursive: true });
+    await rm(packagePath, { recursive: true, force: true });
     console.log("%s deleted", packagePath);
 
     // recreate package directory
     await mkdir(packagePath);
+    console.log("%s created", packagePath);
 
     // create package.json
     await writeFile(
@@ -112,31 +113,37 @@ async function run() {
     console.log("%s updated", `${packagePath}/README.md`);
 
     // create index.d.ts
-    const { paths } = JSON.parse(
-      readFileSync("cache/types-rest-api-ghes/" + diffFile, "utf8")
-    );
+    const diffPathName = "cache/types-rest-api-ghes/" + diffFile;
+    console.log("Reading paths from %s", diffPathName);
+    const { paths } = JSON.parse(readFileSync(diffPathName, "utf8"));
 
     const removedEndpointsByRoute = {};
-    for (const [path, methods] of paths["removed"]) {
-      for (const [method, operation] of Object.entries(methods)) {
-        const route = [method.toUpperCase(), path].join(" ");
 
-        removedEndpointsByRoute[route] = {
-          documentationUrl: operation.externalDocs.url,
-        };
+    if (paths["removed"]) {
+      for (const [path, methods] of Object.entries(paths["removed"])) {
+        for (const method of methods) {
+          const route = [method.toUpperCase(), path].join(" ");
+          removedEndpointsByRoute[route] = {
+            // TODO: would be nice to get the documentation URL for the removed endpoint here
+            // documentationUrl: operation.externalDocs.url,
+          };
+        }
       }
     }
-    const addedEndpointsByRoute = {};
-    for (const [path, methods] of paths["added"]) {
-      for (const [method, operation] of Object.entries(methods)) {
-        const route = [method.toUpperCase(), path].join(" ");
 
-        addedEndpointsByRoute[route] = {
-          method,
-          url: toOpenApiUrl(path),
-          requiredPreview: toRequiredPreviewName(operation),
-          documentationUrl: operation.externalDocs?.url,
-        };
+    const addedEndpointsByRoute = {};
+    if (paths["added"]) {
+      for (const [path, methods] of Object.entries(paths["added"])) {
+        for (const [method, operation] of Object.entries(methods)) {
+          const route = [method.toUpperCase(), path].join(" ");
+
+          addedEndpointsByRoute[route] = {
+            method,
+            url: toOpenApiUrl(path),
+            requiredPreview: toRequiredPreviewName(operation),
+            documentationUrl: operation.externalDocs?.url,
+          };
+        }
       }
     }
 
@@ -187,7 +194,9 @@ function toRequiredPreviewName(operation) {
 }
 
 function toVersions(filename) {
-  const [, part1, part2] = filename.match(/^(.*)\.diff-to-(.*)\.deref\.json$/);
+  const [, part1, part2] = filename.match(
+    /^(.*)-anicca-diff-to-(.*)\.deref\.json$/
+  );
   const VERSION_MAP = {
     "api.github.com": "github.com",
   };

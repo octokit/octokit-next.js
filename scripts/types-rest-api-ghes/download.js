@@ -49,13 +49,10 @@ async function run() {
 
   // download the OpenAPI spec for api.github.com
   for (const file of data) {
-    if (!file.name.includes(".diff-to-")) continue;
+    if (!file.name.includes("-anicca-diff-to-")) continue;
 
     // only download the diffs for GHES 3.0 & 3.1 for now
-    if (
-      !file.name.startsWith("ghes-3.1") &&
-      !file.name.startsWith("ghes-3.0")
-    ) {
+    if (!file.name.startsWith("ghes-3")) {
       continue;
     }
 

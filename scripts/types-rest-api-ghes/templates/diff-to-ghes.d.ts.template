@@ -39,8 +39,6 @@ export type EndpointsDiff = ImportEndpointsDiff & {
   {{#each removedEndpointsByRoute}}
   /**
   * The endpoint exists for {{../diffVersion}} but does not exist for {{../currentVersion}}
-  * 
-  * @see {{documentationUrl}}
   */
   "{{@key}}": never
   {{/each}}
