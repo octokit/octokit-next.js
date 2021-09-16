@@ -1,0 +1,29 @@
+{
+  "name": "@octokit-next/endpoint",
+  "version": "0.0.0-development",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Turns REST API endpoints into generic request options",
+  "scripts": {
+    "test": "exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/endpoint"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/endpoint#readme",
+  "keywords": [
+    "octokit",
+    "github",
+    "api"
+  ],
+  "author": "Gregor Martynus (https://github.com/gr2m)",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development",
+    "is-plain-obj": "^4.0.0",
+    "universal-user-agent": "^7.0.0"
+  }
+}
