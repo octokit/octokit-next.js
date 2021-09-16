@@ -52,6 +52,12 @@
       [
         "@semantic-release/npm",
         {
+          "pkgRoot": "packages/endpoint"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
           "pkgRoot": "packages/request"
         }
       ],
