@@ -18,6 +18,7 @@
   - [`endpoint.DEFAULTS`](#endpointdefaults)
   - [`endpoint.merge(route, options)` or `endpoint.merge(options)`](#endpointmergeroute-options-or-endpointmergeoptions)
   - [`endpoint.parse()`](#endpointparse)
+- [Types](#types)
 - [Special cases](#special-cases)
   - [The `data` parameter – set request body directly](#the-data-parameter-%E2%80%93-set-request-body-directly)
   - [Set parameters for both the URL/query and the request body](#set-parameters-for-both-the-urlquery-and-the-request-body)
