@@ -9,7 +9,9 @@
   "exports": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "c8 --check-coverage --lines 100 --functions 100 --branches 100 --statements 100 uvu test"
+    "test": "npm run test:code",
+    "test:code": "c8 uvu test",
+    "test:types": "tsd"
   },
   "repository": {
     "type": "git",
@@ -28,5 +30,12 @@
     "@octokit-next/types": "0.0.0-development",
     "is-plain-obj": "^4.0.0",
     "universal-user-agent": "^7.0.0"
+  },
+  "c8": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100,
+    "statements": 100
   }
 }

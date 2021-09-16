@@ -52,6 +52,17 @@ import { endpoint } from "@octokit-next/endpoint";
 ```
 
 </td></tr>
+<tr><th>
+Deno
+</th><td>
+
+Load <code>@octokit-next/endpoint</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>, including types.
+
+```js
+import { endpoint } from "https://cdn.skypack.dev/octokit?dts";
+```
+
+</td></tr>
 </tbody>
 </table>
 
@@ -85,13 +96,23 @@ You can pass `requestOptions` to common request libraries
 
 ```js
 const { url, ...options } = requestOptions;
-// using with fetch (https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 fetch(url, options);
-// using with request (https://github.com/request/request)
-request(requestOptions);
-// using with got (https://github.com/sindresorhus/got)
+// https://github.com/sindresorhus/got
 got[options.method](url, options);
-// using with axios
+// https://github.com/axios/axios
+axios(requestOptions);
+```
+
+For `PUT/POST` endpoints with request body parameters, the code is slightly different
+
+```js
+const { url, data, ...options } = requestOptions;
+// https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+fetch(url, { ...options, body: JSON.stringify(data) });
+// https://github.com/sindresorhus/got
+got[options.method](url, { ...options, json: data });
+// https://github.com/axios/axios
 axios(requestOptions);
 ```
 
@@ -374,6 +395,90 @@ myProjectEndpoint.merge("GET /orgs/{org}/repos", {
 
 Stateless method to turn endpoint options into request options. Calling
 `endpoint(options)` is the same as calling `endpoint.parse(endpoint.merge(options))`.
+
+## Types
+
+`@octokit-next/endpoint` supports types for all REST API endpoints across all supported targets (github.com, GitHub AE, GitHub Enterprise Server).
+
+In order to take advantage of the types, you have to install the `@octokit-next/types-rest-api*` packages for the platform(s) you want to target.
+
+For example, to get types for all of github.com's REST API endpoints, use `@octokit-next/types-rest-api`.
+
+```js
+/// <reference types="@octokit-next/types-rest-api" />
+
+import { endpoint } from "@octokit-next/endpoint";
+
+endpoint("");
+// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all 700+ REST API endpoints
+
+const requestOptions = endpoint("GET /orgs/{org}/repos", { org: "octokit" });
+// requestOptions.method is now typed as `"GET"` instead of `string`
+// requestOptions.url is now typed as `"/orgs/{org}/repos"` instead of `string`
+// requestOptions.data does not exist on types.
+```
+
+To support GitHub Enterprise Server 3.0 and all new versions, import `@octokit-next/types-rest-api-ghes-3.0` and set the request version:
+
+```js
+/// <reference types="@octokit-next/types-rest-api-ghes-3.0" />
+
+import { endpoint } from "@octokit-next/endpoint";
+
+endpoint("", {
+  request: {
+    version: "ghes-3.0",
+  },
+});
+// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all GHES 3.0 REST API endpoints
+
+const requestOptions = endpoint("GET /admin/users/{username}", {
+  request: {
+    version: "ghes-3.0",
+  },
+  username: "octocat",
+});
+// requestOptions.method is now typed as `"GET"` instead of `string`
+// requestOptions.url is now typed as `"/admin/users/{username}"` instead of `string`
+// requestOptions.data does not exist on types.
+```
+
+Types in the `@octokit-next/types-rest-api-ghes` packages are additive. So you can set `request.version` to `ghes-3.1` and `ghes-3.2` as well.
+
+The version can be set using `endpoint.defaults()` as well. You can override the version in each `endpoint()` call.
+
+```js
+/// <reference types="@octokit-next/types-rest-api-ghes-3.0" />
+
+import { endpoint } from "@octokit-next/endpoint";
+
+const ghes30endpoint = endpoint.defaults({
+  request: {
+    version: "ghes-3.0",
+  },
+});
+
+endpoint("");
+// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all GHES 3.0 REST API endpoints
+```
+
+If you need your script to work across github.com and a minimal GitHub Enterprise Server version, you can use any of the `@octokit-next/types-rest-api-ghes-*-compatible` packages.
+
+```js
+/// <reference types="@octokit-next/types-rest-api-ghes-3.0-compatible" />
+
+import { endpoint } from "@octokit-next/endpoint";
+
+const ghes30endpoint = endpoint.defaults({
+  request: {
+    version: "ghes-3.0",
+  },
+});
+
+endpoint("");
+// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all REST API endpoints
+// that exist in both github.com and GitHub Enterprise Server 3.0
+```
 
 ## Special cases
 

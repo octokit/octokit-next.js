@@ -1,3 +1,5 @@
+import { EndpointInterface } from "./endpoint";
+export { EndpointInterface } from "./endpoint";
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
 
@@ -59,6 +61,8 @@ export namespace Octokit {
      */
     request?: RequestOptions;
   }
+
+  type RequestMethod = "DELETE" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT";
 
   interface RequestOptions<
     TVersion extends keyof Octokit.ApiVersions = "github.com"
