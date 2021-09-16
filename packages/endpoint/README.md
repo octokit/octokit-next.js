@@ -145,7 +145,7 @@ axios(requestOptions);
       </td>
       <td>
         <strong>Required unless <code>route</code> is set.</strong> A path or full URL which may contain <code>:variable</code> or <code>{variable}</code> placeholders,
-        e.g., <code>/orgs/{org}/repos</code>. The <code>url</code> is parsed using <a href="https://github.com/bramstein/url-template">url-template</a>.
+        e.g., <code>/orgs/{org}/repos</code>.
       </td>
     </tr>
     <tr>
