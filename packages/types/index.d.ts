@@ -227,6 +227,7 @@ export namespace Octokit {
   interface ApiVersions {
     "github.com": {
       ResponseHeaders: Octokit.ResponseHeaders;
+      RequestHeaders: Octokit.RequestHeaders;
       Endpoints: Octokit.Endpoints;
     };
   }
