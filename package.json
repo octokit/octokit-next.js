@@ -32,26 +32,9 @@
         "semantic-release-plugin-update-version-in-files",
         {
           "files": [
-            "packages/*/package.json"
+            "packages/*/package.json",
+            "packages/*/lib/version.js"
           ]
-        }
-      ],
-      [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "packages/types"
-        }
-      ],
-      [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "packages/request"
-        }
-      ],
-      [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "packages/core"
         }
       ],
       [
@@ -63,7 +46,19 @@
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-openapi-ghes-3.1"
+          "pkgRoot": "packages/core"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/request"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types"
         }
       ],
       [
@@ -75,7 +70,61 @@
       [
         "@semantic-release/npm",
         {
+          "pkgRoot": "packages/types-openapi-ghes-3.0-diff-to-ghes-3.1"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.1"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.1-diff-to-ghes-3.2"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.2"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.2-diff-to-api.github.com"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-github.ae"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-github.ae-diff-to-api.github.com"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
           "pkgRoot": "packages/types-rest-api"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.0"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.0-compatible"
         }
       ],
       [
@@ -93,22 +142,25 @@
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-rest-api-ghes-3.0"
+          "pkgRoot": "packages/types-rest-api-ghes-3.2"
         }
       ],
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-rest-api-ghes-3.0-compatible"
+          "pkgRoot": "packages/types-rest-api-ghes-3.2-compatible"
         }
       ],
       [
-        "semantic-release-plugin-update-version-in-files",
+        "@semantic-release/npm",
         {
-          "files": [
-            "packages/*/package.json"
-          ],
-          "placeholder": "0.0.0-development"
+          "pkgRoot": "packages/types-rest-api-github.ae"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-github.ae-compatible"
         }
       ]
     ]
