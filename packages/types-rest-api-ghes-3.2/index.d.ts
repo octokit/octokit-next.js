@@ -14,9 +14,7 @@ export type ResponseHeaders = Simplify<
   Octokit.ApiVersions["github.com"]["ResponseHeaders"] & ResponseHeadersDiff
 >;
 
-export type EndpointsDiff = {
-  // ADDED endpoints
-
+export type AddedEndpoints = {
   /**
    * @see https://docs.github.com/enterprise-server@3.2/rest/reference/enterprise-admin#delete-a-global-webhook
    */
@@ -593,550 +591,144 @@ export type EndpointsDiff = {
     "put",
     "/users/{username}/suspended"
   >;
-
-  // REMOVED endpoints
-
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/blocks/{username}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/credential-authorizations/{credential_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/invitations/{invitation_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/migrations/{migration_id}/archive": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/packages/{package_type}/{package_name}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /repos/{owner}/{repo}/automated-security-fixes": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /repos/{owner}/{repo}/import": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /repos/{owner}/{repo}/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /repos/{owner}/{repo}/vulnerability-alerts": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /user/blocks/{username}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /user/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /user/migrations/{migration_id}/archive": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /user/packages/{package_type}/{package_name}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /users/{username}/packages/{package_type}/{package_name}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /enterprises/{enterprise}/audit-log": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /enterprises/{enterprise}/settings/billing/actions": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /enterprises/{enterprise}/settings/billing/packages": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /enterprises/{enterprise}/settings/billing/shared-storage": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /marketplace_listing/accounts/{account_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /marketplace_listing/plans": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /marketplace_listing/plans/{plan_id}/accounts": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /marketplace_listing/stubbed/accounts/{account_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /marketplace_listing/stubbed/plans": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /marketplace_listing/stubbed/plans/{plan_id}/accounts": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/blocks": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/blocks/{username}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/credential-authorizations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/failed_invitations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/invitations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/invitations/{invitation_id}/teams": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/migrations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/migrations/{migration_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/migrations/{migration_id}/archive": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/migrations/{migration_id}/repositories": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/packages": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/packages/{package_type}/{package_name}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/packages/{package_type}/{package_name}/versions": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/secret-scanning/alerts": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/settings/billing/actions": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/settings/billing/packages": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/settings/billing/shared-storage": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/team-sync/groups": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/teams/{team_slug}/invitations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/autolinks": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/autolinks/{autolink_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/community/code_of_conduct": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/community/profile": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/import": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/import/authors": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/import/large_files": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/pages/health": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/traffic/clones": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/traffic/popular/paths": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/traffic/popular/referrers": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/traffic/views": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /repos/{owner}/{repo}/vulnerability-alerts": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /scim/v2/enterprises/{enterprise}/Groups": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /scim/v2/enterprises/{enterprise}/Users": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /scim/v2/organizations/{org}/Users": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /teams/{team_id}/invitations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /teams/{team_id}/team-sync/group-mappings": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/blocks": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/blocks/{username}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/marketplace_purchases": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/marketplace_purchases/stubbed": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/migrations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/migrations/{migration_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/migrations/{migration_id}/archive": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/migrations/{migration_id}/repositories": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/packages": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/packages/{package_type}/{package_name}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/packages/{package_type}/{package_name}/versions": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /user/{username}/packages": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /users/{username}/packages/{package_type}/{package_name}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /users/{username}/packages/{package_type}/{package_name}/versions": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /users/{username}/settings/billing/actions": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /users/{username}/settings/billing/packages": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "GET /users/{username}/settings/billing/shared-storage": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /repos/{owner}/{repo}/import": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /repos/{owner}/{repo}/import/authors/{author_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /repos/{owner}/{repo}/import/lfs": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /teams/{team_id}/team-sync/group-mappings": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PATCH /user/email/visibility": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /orgs/{org}/invitations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /orgs/{org}/migrations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /orgs/{org}/packages/{package_type}/{package_name}/restore": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /repos/{owner}/{repo}/autolinks": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /repos/{owner}/{repo}/merge-upstream": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /scim/v2/enterprises/{enterprise}/Groups": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /scim/v2/enterprises/{enterprise}/Users": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /scim/v2/organizations/{org}/Users": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /user/migrations": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /user/packages/{package_type}/{package_name}/restore": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /users/{username}/packages/{package_type}/{package_name}/restore": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "POST /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /orgs/{org}/blocks/{username}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /orgs/{org}/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /repos/{owner}/{repo}/automated-security-fixes": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /repos/{owner}/{repo}/import": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /repos/{owner}/{repo}/interaction-limits": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /repos/{owner}/{repo}/vulnerability-alerts": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /scim/v2/organizations/{org}/Users/{scim_user_id}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /user/blocks/{username}": never;
-  /**
-   * The endpoint exists for github.com but does not exist for ghes-3.2
-   */
-  "PUT /user/interaction-limits": never;
 };
+
+export type RemovedRoutes =
+  | "DELETE /orgs/{org}/blocks/{username}"
+  | "DELETE /orgs/{org}/credential-authorizations/{credential_id}"
+  | "DELETE /orgs/{org}/interaction-limits"
+  | "DELETE /orgs/{org}/invitations/{invitation_id}"
+  | "DELETE /orgs/{org}/migrations/{migration_id}/archive"
+  | "DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock"
+  | "DELETE /orgs/{org}/packages/{package_type}/{package_name}"
+  | "DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "DELETE /repos/{owner}/{repo}/autolinks/{autolink_id}"
+  | "DELETE /repos/{owner}/{repo}/automated-security-fixes"
+  | "DELETE /repos/{owner}/{repo}/import"
+  | "DELETE /repos/{owner}/{repo}/interaction-limits"
+  | "DELETE /repos/{owner}/{repo}/vulnerability-alerts"
+  | "DELETE /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
+  | "DELETE /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
+  | "DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}"
+  | "DELETE /user/blocks/{username}"
+  | "DELETE /user/interaction-limits"
+  | "DELETE /user/migrations/{migration_id}/archive"
+  | "DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock"
+  | "DELETE /user/packages/{package_type}/{package_name}"
+  | "DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "DELETE /users/{username}/packages/{package_type}/{package_name}"
+  | "DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "GET /enterprises/{enterprise}/audit-log"
+  | "GET /enterprises/{enterprise}/settings/billing/actions"
+  | "GET /enterprises/{enterprise}/settings/billing/packages"
+  | "GET /enterprises/{enterprise}/settings/billing/shared-storage"
+  | "GET /marketplace_listing/accounts/{account_id}"
+  | "GET /marketplace_listing/plans"
+  | "GET /marketplace_listing/plans/{plan_id}/accounts"
+  | "GET /marketplace_listing/stubbed/accounts/{account_id}"
+  | "GET /marketplace_listing/stubbed/plans"
+  | "GET /marketplace_listing/stubbed/plans/{plan_id}/accounts"
+  | "GET /orgs/{org}/blocks"
+  | "GET /orgs/{org}/blocks/{username}"
+  | "GET /orgs/{org}/credential-authorizations"
+  | "GET /orgs/{org}/failed_invitations"
+  | "GET /orgs/{org}/interaction-limits"
+  | "GET /orgs/{org}/invitations"
+  | "GET /orgs/{org}/invitations/{invitation_id}/teams"
+  | "GET /orgs/{org}/migrations"
+  | "GET /orgs/{org}/migrations/{migration_id}"
+  | "GET /orgs/{org}/migrations/{migration_id}/archive"
+  | "GET /orgs/{org}/migrations/{migration_id}/repositories"
+  | "GET /orgs/{org}/packages"
+  | "GET /orgs/{org}/packages/{package_type}/{package_name}"
+  | "GET /orgs/{org}/packages/{package_type}/{package_name}/versions"
+  | "GET /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "GET /orgs/{org}/secret-scanning/alerts"
+  | "GET /orgs/{org}/settings/billing/actions"
+  | "GET /orgs/{org}/settings/billing/packages"
+  | "GET /orgs/{org}/settings/billing/shared-storage"
+  | "GET /orgs/{org}/team-sync/groups"
+  | "GET /orgs/{org}/teams/{team_slug}/invitations"
+  | "GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings"
+  | "GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing"
+  | "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing"
+  | "GET /repos/{owner}/{repo}/autolinks"
+  | "GET /repos/{owner}/{repo}/autolinks/{autolink_id}"
+  | "GET /repos/{owner}/{repo}/community/code_of_conduct"
+  | "GET /repos/{owner}/{repo}/community/profile"
+  | "GET /repos/{owner}/{repo}/import"
+  | "GET /repos/{owner}/{repo}/import/authors"
+  | "GET /repos/{owner}/{repo}/import/large_files"
+  | "GET /repos/{owner}/{repo}/interaction-limits"
+  | "GET /repos/{owner}/{repo}/pages/health"
+  | "GET /repos/{owner}/{repo}/traffic/clones"
+  | "GET /repos/{owner}/{repo}/traffic/popular/paths"
+  | "GET /repos/{owner}/{repo}/traffic/popular/referrers"
+  | "GET /repos/{owner}/{repo}/traffic/views"
+  | "GET /repos/{owner}/{repo}/vulnerability-alerts"
+  | "GET /scim/v2/enterprises/{enterprise}/Groups"
+  | "GET /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
+  | "GET /scim/v2/enterprises/{enterprise}/Users"
+  | "GET /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
+  | "GET /scim/v2/organizations/{org}/Users"
+  | "GET /scim/v2/organizations/{org}/Users/{scim_user_id}"
+  | "GET /teams/{team_id}/invitations"
+  | "GET /teams/{team_id}/team-sync/group-mappings"
+  | "GET /user/blocks"
+  | "GET /user/blocks/{username}"
+  | "GET /user/interaction-limits"
+  | "GET /user/marketplace_purchases"
+  | "GET /user/marketplace_purchases/stubbed"
+  | "GET /user/migrations"
+  | "GET /user/migrations/{migration_id}"
+  | "GET /user/migrations/{migration_id}/archive"
+  | "GET /user/migrations/{migration_id}/repositories"
+  | "GET /user/packages"
+  | "GET /user/packages/{package_type}/{package_name}"
+  | "GET /user/packages/{package_type}/{package_name}/versions"
+  | "GET /user/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "GET /user/{username}/packages"
+  | "GET /users/{username}/packages/{package_type}/{package_name}"
+  | "GET /users/{username}/packages/{package_type}/{package_name}/versions"
+  | "GET /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "GET /users/{username}/settings/billing/actions"
+  | "GET /users/{username}/settings/billing/packages"
+  | "GET /users/{username}/settings/billing/shared-storage"
+  | "PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings"
+  | "PATCH /repos/{owner}/{repo}/import"
+  | "PATCH /repos/{owner}/{repo}/import/authors/{author_id}"
+  | "PATCH /repos/{owner}/{repo}/import/lfs"
+  | "PATCH /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
+  | "PATCH /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
+  | "PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}"
+  | "PATCH /teams/{team_id}/team-sync/group-mappings"
+  | "PATCH /user/email/visibility"
+  | "POST /orgs/{org}/invitations"
+  | "POST /orgs/{org}/migrations"
+  | "POST /orgs/{org}/packages/{package_type}/{package_name}/restore"
+  | "POST /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+  | "POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve"
+  | "POST /repos/{owner}/{repo}/autolinks"
+  | "POST /repos/{owner}/{repo}/merge-upstream"
+  | "POST /scim/v2/enterprises/{enterprise}/Groups"
+  | "POST /scim/v2/enterprises/{enterprise}/Users"
+  | "POST /scim/v2/organizations/{org}/Users"
+  | "POST /user/migrations"
+  | "POST /user/packages/{package_type}/{package_name}/restore"
+  | "POST /user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+  | "POST /users/{username}/packages/{package_type}/{package_name}/restore"
+  | "POST /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+  | "PUT /orgs/{org}/blocks/{username}"
+  | "PUT /orgs/{org}/interaction-limits"
+  | "PUT /repos/{owner}/{repo}/automated-security-fixes"
+  | "PUT /repos/{owner}/{repo}/import"
+  | "PUT /repos/{owner}/{repo}/interaction-limits"
+  | "PUT /repos/{owner}/{repo}/vulnerability-alerts"
+  | "PUT /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
+  | "PUT /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
+  | "PUT /scim/v2/organizations/{org}/Users/{scim_user_id}"
+  | "PUT /user/blocks/{username}"
+  | "PUT /user/interaction-limits";
 
 declare module "@octokit-next/types" {
   namespace Octokit {
@@ -1151,9 +743,9 @@ declare module "@octokit-next/types" {
           WithNewHeaders<
             Omit<
               Octokit.ApiVersions["github.com"]["Endpoints"],
-              keyof EndpointsDiff
+              keyof AddedEndpoints | RemovedRoutes
             > &
-              EndpointsDiff,
+              AddedEndpoints,
             Octokit.ApiVersions["ghes-3.2"]["ResponseHeaders"]
           >
         >;

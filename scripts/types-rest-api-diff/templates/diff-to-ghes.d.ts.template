@@ -6,7 +6,7 @@ import { Simplify } from "type-fest";
 
 import {
   ResponseHeadersDiff as ImportResponseHeadersDiff,
-  EndpointsDiff as ImportEndpointsDiff,
+  AddedEndpoints as ImportAddedEndpoints,
 } from "@octokit-next/types-rest-api-{{diffVersion}}";
 
 export type ResponseHeadersDiff = ImportResponseHeadersDiff
@@ -16,9 +16,7 @@ export type ResponseHeaders = Simplify<
   ResponseHeadersDiff
 >;
 
-export type EndpointsDiff = ImportEndpointsDiff & {
-  // ADDED endpoints
-
+export type AddedEndpoints = ImportAddedEndpoints & {
   {{#each addedEndpointsByRoute}}
   /**
   * @see {{documentationUrl}}
@@ -33,32 +31,28 @@ export type EndpointsDiff = ImportEndpointsDiff & {
     {{#requiredPreview}}, "{{.}}"{{/requiredPreview}}
   >,
   {{/each}}
-
-  // REMOVED endpoints
-
-  {{#each removedEndpointsByRoute}}
-  /**
-  * The endpoint exists for {{../diffVersion}} but does not exist for {{../currentVersion}}
-  */
-  "{{@key}}": never
-  {{/each}}
 };
+
+export type RemovedRoutes = 
+  {{#each removedEndpointsByRoute}}
+  | "{{@key}}"
+  {{/each}}
 
 declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "{{currentVersion}}": {
         ResponseHeaders: Simplify<
-          Octokit.ApiVersions["github.com"]["ResponseHeaders"] &
+          Octokit.ApiVersions["{{diffVersion}}"]["ResponseHeaders"] &
           ResponseHeadersDiff
         >;
 
         Endpoints: Simplify<
           WithNewHeaders<
             Omit<
-              Octokit.ApiVersions["github.com"]["Endpoints"],
-              keyof EndpointsDiff
-            > & EndpointsDiff,
+              Octokit.ApiVersions["{{diffVersion}}"]["Endpoints"],
+              keyof AddedEndpoints | RemovedRoutes
+            > & AddedEndpoints,
             Octokit.ApiVersions["{{currentVersion}}"]["ResponseHeaders"]
           > 
         >;

@@ -15,9 +15,7 @@ export type ResponseHeaders = Simplify<
   ResponseHeadersDiff
 >;
 
-export type EndpointsDiff = {
-  // ADDED endpoints
-
+export type AddedEndpoints = {
   {{#each addedEndpointsByRoute}}
   /**
   * @see {{documentationUrl}}
@@ -32,16 +30,12 @@ export type EndpointsDiff = {
     {{#requiredPreview}}, "{{.}}"{{/requiredPreview}}
   >,
   {{/each}}
-
-  // REMOVED endpoints
-
-  {{#each removedEndpointsByRoute}}
-  /**
-  * The endpoint exists for {{../diffVersion}} but does not exist for {{../currentVersion}}
-  */
-  "{{@key}}": never
-  {{/each}}
 };
+
+export type RemovedRoutes = 
+  {{#each removedEndpointsByRoute}}
+  | "{{@key}}"
+  {{/each}}
 
 declare module "@octokit-next/types" {
   namespace Octokit {
@@ -56,8 +50,8 @@ declare module "@octokit-next/types" {
           WithNewHeaders<
             Omit<
               Octokit.ApiVersions["github.com"]["Endpoints"],
-              keyof EndpointsDiff
-            > & EndpointsDiff,
+              keyof AddedEndpoints | RemovedRoutes
+            > & AddedEndpoints,
             Octokit.ApiVersions["{{currentVersion}}"]["ResponseHeaders"]
           >
         >;

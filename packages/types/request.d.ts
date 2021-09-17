@@ -1,4 +1,3 @@
-import { ConditionalKeys } from "type-fest";
 import { Octokit } from "./index.js";
 
 type EndpointParameters<
@@ -40,52 +39,52 @@ export interface RequestInterface<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
 > {
   /**
-   * ⚠️🚫 Known endpoint, but not supported by the selected version.
+   * Send a request to a known endpoint for the version specified in `request.version`.
    *
    * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
    * @param {object} parameters URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
-   *
-   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route and version
    */
-  <
-    RVersion extends keyof Octokit.ApiVersions,
-    Route extends ConditionalKeys<
-      Octokit.ApiVersions[RVersion]["Endpoints"],
-      never
-    >,
-    Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
-  >(
+  <Route extends AllKnownRoutes, RVersion extends VersionsByRoute[Route]>(
     route: Route,
     options: {
       request: {
         version: RVersion;
       };
-    } & Record<string, unknown>
-  ): never;
+    } & (Route extends keyof Octokit.ApiVersions[RVersion]["Endpoints"]
+      ? "parameters" extends keyof Octokit.ApiVersions[RVersion]["Endpoints"][Route]
+        ? Octokit.ApiVersions[RVersion]["Endpoints"][Route]["parameters"]
+        : never
+      : never)
+  ): Route extends keyof Octokit.ApiVersions[RVersion]["Endpoints"]
+    ? "response" extends keyof Octokit.ApiVersions[RVersion]["Endpoints"][Route]
+      ? Octokit.ApiVersions[RVersion]["Endpoints"][Route]["response"]
+      : never
+    : never;
 
   /**
-   * Send a request to a known endpoint using a version specified in `request.version`.
+   * Send a request to a known endpoint
    *
    * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
    * @param {object} parameters URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
-  <
-    RVersion extends keyof Octokit.ApiVersions,
-    Route extends ConditionalKeysOmit<
-      Octokit.ApiVersions[RVersion]["Endpoints"],
-      never
-    >,
-    Endpoint = Octokit.ApiVersions[RVersion]["Endpoints"][Route]
-  >(
+  <Route extends AllKnownRoutes>(
     route: Route,
-    options: {
-      request: {
-        version: RVersion;
-      };
-    } & ("parameters" extends keyof Endpoint
-      ? Endpoint["parameters"] & EndpointParameters<RVersion>
-      : Record<string, unknown>)
-  ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
+    options: TVersion extends VersionsByRoute[Route]
+      ? Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
+        ? "parameters" extends keyof Octokit.ApiVersions[TVersion]["Endpoints"][Route]
+          ? Octokit.ApiVersions[TVersion]["Endpoints"][Route]["parameters"]
+          : never
+        : never
+      : {
+          request: {
+            version: VersionsByRoute[Route];
+          };
+        }
+  ): Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
+    ? "response" extends keyof Octokit.ApiVersions[TVersion]["Endpoints"][Route]
+      ? Octokit.ApiVersions[TVersion]["Endpoints"][Route]["response"]
+      : never
+    : never;
 
   /**
    * Send a request to an unknown endpoint
@@ -94,60 +93,22 @@ export interface RequestInterface<
    * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
    */
   <Route extends string>(
-    route: Route extends keyof Octokit.ApiVersions[TVersion]["Endpoints"]
-      ? never
-      : Route,
+    route: Route extends AllKnownRoutes ? never : Route,
     options?: Record<string, unknown>
   ): Promise<UnknownResponse>;
-
-  /**
-   * ⚠️🚫 Known endpoint, but not supported by the selected version.
-   *
-   * @param {string} unsupportedRoute Request method + URL. Example: `'GET /orgs/{org}'`
-   * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
-   *
-   * @deprecated not really deprecated, but it's the only way to give a visual hint that you cannot use `request` with this route and version
-   */
-  <
-    Route extends ConditionalKeys<
-      Octokit.ApiVersions[TVersion]["Endpoints"],
-      never
-    >
-  >(
-    unsupportedRoute: Route,
-    options?: never
-  ): never;
-
-  /**
-   * Send a request to a known endpoint
-   *
-   * @param {string} route Request method + URL. Example: `'GET /orgs/{org}'`
-   * @param {object} [parameters] URL, query or body parameters, as well as `headers`, `mediaType.{format|previews}`, `request`, or `baseUrl`.
-   */
-  <
-    Route extends ConditionalKeysOmit<
-      Octokit.ApiVersions[TVersion]["Endpoints"],
-      never
-    >,
-    Endpoint = Octokit.ApiVersions[TVersion]["Endpoints"][Route]
-  >(
-    route: Route,
-    options?: "parameters" extends keyof Endpoint
-      ? Endpoint["parameters"] & EndpointParameters<TVersion>
-      : Record<string, unknown>
-  ): "response" extends keyof Endpoint ? Promise<Endpoint["response"]> : never;
 }
 
-type ConditionalKeysOmit<Base, Condition> = NonNullable<
-  // Wrap in `NonNullable` to strip away the `undefined` type from the produced union.
-  {
-    // Map through all the keys of the given base type.
-    [Key in keyof Base]: Base[Key] extends Condition // Omit keys with types extending the given `Condition` type.
-      ? // Discard this key since the condition passes.
-        never
-      : // Retain this key since the condition fails.
-        Key;
+// turn { [version]: { Endpoints: { [route]: Endpoint } } } into { [version]: { [route]: Endpoint } }
+type EndpointsByVersion = {
+  [Version in keyof Octokit.ApiVersions]: "Endpoints" extends keyof Octokit.ApiVersions[Version]
+    ? Octokit.ApiVersions[Version]["Endpoints"]
+    : never;
+};
 
-    // Convert the produced object into a union type of the keys which passed the conditional test.
-  }[keyof Base]
->;
+// Generic type to remap { k1: { k2: v }} to { k2: k1[]}
+type Remap<T extends EndpointsByVersion> = {
+  [P in keyof T as keyof T[P]]: P;
+};
+
+type VersionsByRoute = Remap<EndpointsByVersion>;
+type AllKnownRoutes = keyof VersionsByRoute;

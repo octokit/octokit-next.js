@@ -6,7 +6,7 @@ import { Simplify } from "type-fest";
 
 import {
   ResponseHeadersDiff as ImportResponseHeadersDiff,
-  EndpointsDiff as ImportEndpointsDiff,
+  AddedEndpoints as ImportAddedEndpoints,
 } from "@octokit-next/types-rest-api-ghes-3.2";
 
 export type ResponseHeadersDiff = ImportResponseHeadersDiff;
@@ -15,117 +15,48 @@ export type ResponseHeaders = Simplify<
   Octokit.ApiVersions["ghes-3.2"]["ResponseHeaders"] & ResponseHeadersDiff
 >;
 
-export type EndpointsDiff = ImportEndpointsDiff & {
-  // ADDED endpoints
+export type AddedEndpoints = ImportAddedEndpoints & {};
 
-  // REMOVED endpoints
-
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "DELETE /repos/{owner}/{repo}/environments/{environment_name}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "DELETE /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /app/hook/deliveries": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /app/hook/deliveries/{delivery_id}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /orgs/{org}/hooks/{hook_id}/deliveries": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repos/{owner}/{repo}/environments": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repos/{owner}/{repo}/environments/{environment_name}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repositories/{repository_id}/environments/{environment_name}/secrets": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repositories/{repository_id}/environments/{environment_name}/secrets/public-key": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "POST /app/hook/deliveries/{delivery_id}/attempts": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "POST /repos/{owner}/{repo}/releases/{release_id}/reactions": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "PUT /repos/{owner}/{repo}/environments/{environment_name}": never;
-  /**
-   * The endpoint exists for ghes-3.2 but does not exist for ghes-3.1
-   */
-  "PUT /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}": never;
-};
+export type RemovedRoutes =
+  | "DELETE /repos/{owner}/{repo}/environments/{environment_name}"
+  | "DELETE /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
+  | "GET /app/hook/deliveries"
+  | "GET /app/hook/deliveries/{delivery_id}"
+  | "GET /orgs/{org}/hooks/{hook_id}/deliveries"
+  | "GET /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}"
+  | "GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals"
+  | "GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments"
+  | "GET /repos/{owner}/{repo}/environments"
+  | "GET /repos/{owner}/{repo}/environments/{environment_name}"
+  | "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries"
+  | "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}"
+  | "GET /repositories/{repository_id}/environments/{environment_name}/secrets"
+  | "GET /repositories/{repository_id}/environments/{environment_name}/secrets/public-key"
+  | "GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
+  | "POST /app/hook/deliveries/{delivery_id}/attempts"
+  | "POST /orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts"
+  | "POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments"
+  | "POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts"
+  | "POST /repos/{owner}/{repo}/releases/{release_id}/reactions"
+  | "PUT /repos/{owner}/{repo}/environments/{environment_name}"
+  | "PUT /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}";
 
 declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.1": {
         ResponseHeaders: Simplify<
-          Octokit.ApiVersions["github.com"]["ResponseHeaders"] &
+          Octokit.ApiVersions["ghes-3.2"]["ResponseHeaders"] &
             ResponseHeadersDiff
         >;
 
         Endpoints: Simplify<
           WithNewHeaders<
             Omit<
-              Octokit.ApiVersions["github.com"]["Endpoints"],
-              keyof EndpointsDiff
+              Octokit.ApiVersions["ghes-3.2"]["Endpoints"],
+              keyof AddedEndpoints | RemovedRoutes
             > &
-              EndpointsDiff,
+              AddedEndpoints,
             Octokit.ApiVersions["ghes-3.1"]["ResponseHeaders"]
           >
         >;

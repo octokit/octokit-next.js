@@ -274,7 +274,7 @@ const ghesOnlyResponse = await octokit.request("GET /admins/users", {
 import { Octokit } from "@octokit-next/types";
 
 import {
-  EndpointsDiff,
+  AddedEndpoints,
   ResponseHeadersDiff,
 } from "@octokit-next/${packageName}";
 
@@ -283,7 +283,7 @@ export type ResponseHeadersCompatible = Omit<
   keyof ResponseHeadersDiff
 >;
 
-export type EndpointsCompatible = Omit<Octokit.Endpoints, keyof EndpointsDiff>;
+export type EndpointsCompatible = Omit<Octokit.Endpoints, keyof AddedEndpoints>;
 
 declare module "@octokit-next/types" {
   namespace Octokit {
