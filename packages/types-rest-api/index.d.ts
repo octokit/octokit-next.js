@@ -1008,6 +1008,10 @@ declare module "@octokit-next/types" {
         "/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
       >;
       /**
+       * @see https://docs.github.com/rest/overview/resources-in-the-rest-api#root-endpoint
+       */
+      "GET /": Operation<paths, "get", "/">;
+      /**
        * @see https://docs.github.com/rest/reference/apps#get-the-authenticated-app
        */
       "GET /app": Operation<paths, "get", "/app">;

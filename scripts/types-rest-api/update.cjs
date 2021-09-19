@@ -29,9 +29,6 @@ async function run() {
 
     const route = `${endpoint.method} ${endpoint.url}`;
 
-    // The root endpoint types are set by default
-    if (route === "GET /") continue;
-
     endpointsByRoute[route] = {
       method: endpoint.method.toLowerCase(),
       url: toOpenApiUrl(endpoint),
