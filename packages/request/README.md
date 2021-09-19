@@ -5,3 +5,7 @@
 🚫⚠️ This package is part of an experimental Octokit SDK for testing purpose only - DO NOT USE
 
 [learn more](https://github.com/octokit/octokit-next.js)
+
+## Note for later
+
+We removed type support for unknown routes
