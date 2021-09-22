@@ -10,11 +10,11 @@ export async function test() {
 
   expectType<Plugin[]>(Octokit.plugins);
 
-  const rootResponse = await octokit.request("GET /");
-  expectType<string>(rootResponse.data.emojis_url);
-
-  const emojisResponse = await octokit.request("GET /emojis");
-  expectType<unknown>(emojisResponse.data);
+  const unknownResponse = await octokit.request("GET /");
+  expectType<number>(unknownResponse.status);
+  expectType<string>(unknownResponse.url);
+  expectType<unknown>(unknownResponse.data);
+  expectType<Record<string, unknown>>(unknownResponse.headers);
 
   const OctokitWithEmptyDefaults = Octokit.withDefaults({
     // there should be no required options
@@ -26,6 +26,6 @@ export async function test() {
   ]);
   const octokitWithDefaultsAndPlugins = new OctokitWithDefaultsAndPlugins();
 
-  const emojisResponse2 = octokitWithDefaultsAndPlugins.request("GET /");
-  expectType<string>(rootResponse.data.emojis_url);
+  const unknownResponse2 = await octokitWithDefaultsAndPlugins.request("GET /");
+  expectType<number>(unknownResponse2.status);
 }
