@@ -1,7 +1,7 @@
 import { Octokit } from "@octokit-next/types";
 
 import {
-  EndpointsDiff,
+  RemovedRoutes,
   ResponseHeadersDiff,
 } from "@octokit-next/types-rest-api-ghes-3.0";
 
@@ -10,7 +10,7 @@ export type ResponseHeadersCompatible = Omit<
   keyof ResponseHeadersDiff
 >;
 
-export type EndpointsCompatible = Omit<Octokit.Endpoints, keyof EndpointsDiff>;
+export type EndpointsCompatible = Omit<Octokit.Endpoints, RemovedRoutes>;
 
 declare module "@octokit-next/types" {
   namespace Octokit {
