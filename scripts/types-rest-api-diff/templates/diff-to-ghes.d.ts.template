@@ -7,6 +7,7 @@ import { Simplify } from "type-fest";
 import {
   ResponseHeadersDiff as ImportResponseHeadersDiff,
   AddedEndpoints as ImportAddedEndpoints,
+  RemovedRoutes as ImportRemovedRoutes,
 } from "@octokit-next/types-rest-api-{{diffVersion}}";
 
 export type ResponseHeadersDiff = ImportResponseHeadersDiff
@@ -34,6 +35,7 @@ export type AddedEndpoints = ImportAddedEndpoints & {
 };
 
 export type RemovedRoutes = 
+  | ImportRemovedRoutes
   {{#each removedEndpointsByRoute}}
   | "{{@key}}"
   {{/each}}

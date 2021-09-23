@@ -7,6 +7,7 @@ import { Simplify } from "type-fest";
 import {
   ResponseHeadersDiff as ImportResponseHeadersDiff,
   AddedEndpoints as ImportAddedEndpoints,
+  RemovedRoutes as ImportRemovedRoutes,
 } from "@octokit-next/types-rest-api-ghes-3.1";
 
 export type ResponseHeadersDiff = ImportResponseHeadersDiff;
@@ -18,6 +19,7 @@ export type ResponseHeaders = Simplify<
 export type AddedEndpoints = ImportAddedEndpoints & {};
 
 export type RemovedRoutes =
+  | ImportRemovedRoutes
   | "DELETE /repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}"
   | "GET /orgs/{org}/audit-log"
   | "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances"
