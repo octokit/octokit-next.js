@@ -384,7 +384,8 @@ export type ExtendOctokitWith<
 > = OctokitClass &
   ConstructorRequiringOptionsIfNeeded<
     OctokitClass & ApplyPlugins<OctokitExtensions["plugins"]>,
-    OrObject<OctokitClass["options"], unknown>
+    OrObject<OctokitClass["options"], unknown>,
+    OctokitClass["options"]["version"]
   > &
   ApplyPlugins<OctokitExtensions["plugins"]> & {
     defaults: OrObject<OctokitExtensions["defaults"], undefined>;
