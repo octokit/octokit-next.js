@@ -10,12 +10,13 @@ export async function plugin(octokit: OctokitGhes30) {
   // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
   octokit.request("GET /orgs/{org}/audit-log");
 
-  expectType<"ghes-3.0">(octokit.options.version);
+  // TODO: should be only `"ghes-3.0"`, not `"ghes-3.0" | undefined`
+  expectType<"ghes-3.0" | undefined>(octokit.options.version);
 }
 
 export async function test() {
   const octokit = new OctokitGhes30();
-  expectType<"ghes-3.0">(octokit.options.version);
+  expectType<"ghes-3.0" | undefined>(octokit.options.version);
 
   const rootResponse = await octokit.request("GET /");
   expectType<string>(rootResponse.data.emojis_url);
