@@ -29,7 +29,7 @@ type UnknownResponse = {
  *    is used as a base for the types of the remaining parameters and the response
  * 2. When a known route is passed, the types for the parameters and the response are
  *    derived from the version passed in `RequestInterface<version>`, which defaults to `"github.com"`
- * 3. When an unknown route is passed, any parameters can be passed, and the response is unknown.
+ * 3. When no endpoint types are imported, then any route with any parameters can be passed in, and the response is unknown.
  */
 export interface RequestInterface<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
