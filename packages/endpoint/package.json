@@ -9,7 +9,7 @@
   "exports": "./index.js",
   "types": "./index.d.ts",
   "scripts": {
-    "test": "npm run test:code",
+    "test": "npm run test:code && npm run test:types",
     "test:code": "c8 uvu test",
     "test:types": "tsd"
   },
