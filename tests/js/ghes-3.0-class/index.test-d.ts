@@ -1,21 +1,39 @@
-import { expectType, expectNotType } from "tsd";
+import { expectType } from "tsd";
 
 import { OctokitGhes30 } from "./index.js";
 
-export async function test() {
-  new OctokitGhes30({});
+export async function plugin(octokit: OctokitGhes30) {
+  const rootResponse = await octokit.request("GET /");
+  expectType<string>(rootResponse.data.emojis_url);
+  expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 
-  const octokit = new OctokitGhes30({
-    baseUrl: "https://github.acme-inc.com/api/v3",
-  });
+  // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
+  octokit.request("GET /orgs/{org}/audit-log");
+
+  // TODO: should be only `"ghes-3.0"`, not `"ghes-3.0" | undefined`
+  expectType<"ghes-3.0" | undefined>(octokit.options.version);
+}
+
+export async function test() {
+  const octokit = new OctokitGhes30();
+  expectType<"ghes-3.0" | undefined>(octokit.options.version);
 
   const rootResponse = await octokit.request("GET /");
   expectType<string>(rootResponse.data.emojis_url);
 
   expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 
-  // `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
-  expectType<never>(await octokit.request("GET /orgs/{org}/audit-log"));
+  // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
+  await octokit.request("GET /orgs/{org}/audit-log", {
+    org: "octokit",
+  });
+
+  await octokit.request("GET /orgs/{org}/audit-log", {
+    org: "octokit",
+    request: {
+      version: "ghes-3.1",
+    },
+  });
 
   // TODO: make changed properties work (#28)
   // // `GET /feeds`: the `security_advisories_url` was added in GHES 3.1 and does not exist in GHES 3.0

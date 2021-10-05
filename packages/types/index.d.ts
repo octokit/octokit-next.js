@@ -154,59 +154,60 @@ export namespace Octokit {
    * Extendable interface for all of GitHub's REST API endpoints.
    *
    * Do not extend this interface in order to use it with GitHub Enterprise Server or AE. Extend ApiVersions[version] instead.
+   *
+   * @example
+   *
+   * ```ts
+   * "GET /": {
+   *   parameters: {};
+   *   request: {
+   *     method: "GET";
+   *     url: "/";
+   *     headers: Octokit.RequestHeaders;
+   *     request: Octokit.RequestOptions;
+   *   };
+   *   response: Octokit.Response<
+   *     {
+   *       current_user_url: string;
+   *       current_user_authorizations_html_url: string;
+   *       authorizations_url: string;
+   *       code_search_url: string;
+   *       commit_search_url: string;
+   *       emails_url: string;
+   *       emojis_url: string;
+   *       events_url: string;
+   *       feeds_url: string;
+   *       followers_url: string;
+   *       following_url: string;
+   *       gists_url: string;
+   *       hub_url: string;
+   *       issue_search_url: string;
+   *       issues_url: string;
+   *       keys_url: string;
+   *       label_search_url: string;
+   *       notifications_url: string;
+   *       organization_url: string;
+   *       organization_repositories_url: string;
+   *       organization_teams_url: string;
+   *       public_gists_url: string;
+   *       rate_limit_url: string;
+   *       repository_url: string;
+   *       repository_search_url: string;
+   *       current_user_repositories_url: string;
+   *       starred_url: string;
+   *       starred_gists_url: string;
+   *       topic_search_url?: string;
+   *       user_url: string;
+   *       user_organizations_url: string;
+   *       user_repositories_url: string;
+   *       user_search_url: string;
+   *     },
+   *     200
+   *   >;
+   * };
+   * ```
    */
-  interface Endpoints {
-    /**
-     * GitHub's root api endpoint. If this is the only endpoint you see, install and import one of the `@octokit-next/types-rest-api-*` packages.
-     */
-    "GET /": {
-      parameters: {};
-      request: {
-        method: "GET";
-        url: "/";
-        headers: Octokit.RequestHeaders;
-        request: Octokit.RequestOptions;
-      };
-      response: Octokit.Response<
-        {
-          current_user_url: string;
-          current_user_authorizations_html_url: string;
-          authorizations_url: string;
-          code_search_url: string;
-          commit_search_url: string;
-          emails_url: string;
-          emojis_url: string;
-          events_url: string;
-          feeds_url: string;
-          followers_url: string;
-          following_url: string;
-          gists_url: string;
-          hub_url: string;
-          issue_search_url: string;
-          issues_url: string;
-          keys_url: string;
-          label_search_url: string;
-          notifications_url: string;
-          organization_url: string;
-          organization_repositories_url: string;
-          organization_teams_url: string;
-          public_gists_url: string;
-          rate_limit_url: string;
-          repository_url: string;
-          repository_search_url: string;
-          current_user_repositories_url: string;
-          starred_url: string;
-          starred_gists_url: string;
-          topic_search_url?: string;
-          user_url: string;
-          user_organizations_url: string;
-          user_repositories_url: string;
-          user_search_url: string;
-        },
-        200
-      >;
-    };
-  }
+  interface Endpoints {}
 
   /**
    * The API Versions interface is meant with types for the target platform.
@@ -383,7 +384,8 @@ export type ExtendOctokitWith<
 > = OctokitClass &
   ConstructorRequiringOptionsIfNeeded<
     OctokitClass & ApplyPlugins<OctokitExtensions["plugins"]>,
-    OrObject<OctokitClass["options"], unknown>
+    OrObject<OctokitClass["options"], unknown>,
+    OctokitClass["options"]["version"]
   > &
   ApplyPlugins<OctokitExtensions["plugins"]> & {
     defaults: OrObject<OctokitExtensions["defaults"], undefined>;

@@ -21,7 +21,7 @@ export async function test() {
   new OctokitWithDefaultsAndPlugins({});
 
   const emojisResponse = await octokit.request("GET /");
-  expectType<string>(emojisResponse.data["emojis_url"]);
+  expectType<unknown>(emojisResponse.data);
 
   expectType<string>(octokit.foo);
   expectType<string>(octokit.bar);

@@ -2,11 +2,11 @@ import { expectType } from "tsd";
 
 import { Octokit } from "@octokit-next/core";
 
-import "@octokit-next/types-rest-api-ghes-3.1";
+import "@octokit-next/types-rest-api-ghes-3.2";
 
 export async function test() {
   const octokit = new Octokit({
-    version: "ghes-3.1",
+    version: "ghes-3.2",
   });
 
   // @ts-expect-error - `GET /marketplace_listing/plans` only exists for `github.com`
@@ -36,4 +36,10 @@ export async function test() {
     }
   );
   expectType<number>(dotcomOnlyResponse2.data[0].id);
+
+  // PATCH /admin/organizations/{org} was added in GHES 3.2
+  await octokit.request("PATCH /admin/organizations/{org}", {
+    org: "",
+    login: "",
+  });
 }

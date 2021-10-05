@@ -16,13 +16,12 @@ export async function test() {
   });
   expectType<number | undefined>(ghesOnlyResponse.data.id);
 
-  // known route, but unsupported in given version
-  const dotcomOnlyResponse = await request("GET /marketplace_listing/plans", {
+  // @ts-expect-error - `GET /marketplace_listing/plans` does not exist on GHES
+  await request("GET /marketplace_listing/plans", {
     request: {
       version: "ghes-3.1",
     },
   });
-  expectType<never>(dotcomOnlyResponse);
 
   // known route, uses "github.com" types by default
   const rootEndpointResponse = await request("GET /");
@@ -32,10 +31,6 @@ export async function test() {
   expectType<string>(rootEndpointResponse.headers["x-ratelimit-limit"]);
   expectType<string>(rootEndpointResponse.data.emojis_url);
 
-  // unknown route
-  const unknownResponse = await request("GET /unknown");
-  expectType<number>(unknownResponse.status);
-  expectType<string>(unknownResponse.url);
-  expectType<unknown>(unknownResponse.headers["x-ratelimit-limit"]);
-  expectType<unknown>(unknownResponse.data);
+  // @ts-expect-error - Unknown routes are not supported once types are imported
+  await request("GET /unknown");
 }

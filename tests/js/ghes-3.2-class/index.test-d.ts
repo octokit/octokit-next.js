@@ -1,11 +1,11 @@
-import { expectType, expectNotType } from "tsd";
+import { expectType } from "tsd";
 
-import { OctokitGhes31 } from "./index.js";
+import { OctokitGhes32 } from "./index.js";
 
 export async function test() {
-  new OctokitGhes31({});
+  new OctokitGhes32({});
 
-  const octokit = new OctokitGhes31({
+  const octokit = new OctokitGhes32({
     baseUrl: "https://github.acme-inc.com/api/v3",
   });
 
@@ -29,6 +29,13 @@ export async function test() {
     branch: "",
     new_name: "",
   });
+
+  // PATCH /admin/organizations/{org} was added in GHES 3.2
+  const response = await octokit.request("PATCH /admin/organizations/{org}", {
+    org: "",
+    login: "",
+  });
+  expectType<string | undefined>(response.data.url);
 
   expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 }

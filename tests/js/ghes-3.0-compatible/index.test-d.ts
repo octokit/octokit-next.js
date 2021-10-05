@@ -15,28 +15,19 @@ export async function test() {
     response.headers
   );
 
-  // `/repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1
-  // and is not available in GHES 3.0.
-  expectType<unknown>(
-    (
-      await octokit.request(
-        "POST /repos/{owner}/{repo}/branches/{branch}/rename"
-      )
-    ).data
-  );
-  expectType<unknown>(
-    (await octokit.request("GET /marketplace_listing/plans")).data
-  );
-  expectType<unknown>(
-    (
-      await octokit.request("GET /admin/hooks/{hook_id}", {
-        hook_id: 1,
-        mediaType: {
-          previews: ["superpro"],
-        },
-      })
-    ).data
-  );
+  // @ts-expect-error - `POST /repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1 and is not available in GHES 3.0.
+  await octokit.request("POST /repos/{owner}/{repo}/branches/{branch}/rename");
+
+  // @ts-expect-error - `GET /marketplace_listing/plans` is not available in GHES
+  await octokit.request("GET /marketplace_listing/plans");
+
+  // @ts-expect-error - `GET /admin/hooks/{hook_id}` is not available on github.com
+  await octokit.request("GET /admin/hooks/{hook_id}", {
+    hook_id: 1,
+    mediaType: {
+      previews: ["superpro"],
+    },
+  });
 
   // with versions set explicitly
   const dotcomOnlyResponse = await octokit.request(

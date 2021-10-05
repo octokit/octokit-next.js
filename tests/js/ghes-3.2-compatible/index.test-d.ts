@@ -2,11 +2,11 @@ import { expectType } from "tsd";
 
 import { Octokit } from "@octokit-next/core";
 
-import "@octokit-next/types-rest-api-ghes-3.1-compatible";
+import "@octokit-next/types-rest-api-ghes-3.2-compatible";
 
 export async function test() {
   const octokit = new Octokit({
-    version: "ghes-3.1-compatible",
+    version: "ghes-3.2-compatible",
   });
 
   const response = await octokit.request("GET /");
@@ -15,17 +15,15 @@ export async function test() {
     response.headers
   );
 
-  // `/repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1
+  // `GET /repos/{owner}/{repo}/environments` was added in GHES 3.2
   const newEndpointResponse = await octokit.request(
-    "POST /repos/{owner}/{repo}/branches/{branch}/rename",
+    "GET /repos/{owner}/{repo}/environments",
     {
       owner: "",
       repo: "",
-      branch: "",
-      new_name: "",
     }
   );
-  expectType<string>(newEndpointResponse.data.name);
+  expectType<number | undefined>(newEndpointResponse.data.total_count);
 
   // @ts-expect-error - GET /marketplace_listing/plans only exists on github.com
   await octokit.request("GET /marketplace_listing/plans");
@@ -55,7 +53,7 @@ export async function test() {
       previews: ["superpro"],
     },
     request: {
-      version: "ghes-3.1",
+      version: "ghes-3.2",
     },
   });
   expectType<number | undefined>(ghesOnlyResponse.data.id);

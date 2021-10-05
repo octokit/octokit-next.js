@@ -1,13 +1,15 @@
 import { Octokit } from "@octokit-next/types";
 import { Simplify } from "type-fest";
 
-type SuccessStatuses = 200 | 201 | 202 | 204;
+type SuccessStatuses = 200 | 201 | 202 | 204 | 205;
 type RedirectStatuses = 301 | 302;
-type EmptyResponseStatuses = 201 | 204;
+type EmptyResponseStatuses = 201 | 204 | 205;
 type KnownJsonResponseTypes =
   | "application/json"
+  | "application/octocat-stream" // GET /octocat
   | "application/scim+json"
-  | "text/html";
+  | "text/html"
+  | "text/plain"; // GET /zen
 
 export type Operation<
   paths extends Record<string, any>,

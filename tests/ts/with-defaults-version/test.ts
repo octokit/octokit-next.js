@@ -25,9 +25,9 @@ export async function test() {
   expectType<"ghes-3.1">(OctokitGHES31.defaults.version);
   const octokitGhes31 = new OctokitGHES31();
   expectType<"ghes-3.1">(octokitGhes31.options.version);
-  expectType<never>(
-    await octokitGhes31.request("GET /marketplace_listing/plans")
-  );
+
+  // @ts-expect-error - `GET /marketplace_listing/plans` only exists on `github.com`
+  await octokitGhes31.request("GET /marketplace_listing/plans");
 
   // TODO: make changed properties work (#28)
   // // The `api` key was removed for GHES versions, but
@@ -41,12 +41,8 @@ export async function test() {
   });
   expectType<"ghes-3.0">(octokitGhes30ViaConstructorOptions.options.version);
 
-  // `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
-  expectType<never>(
-    await octokitGhes30ViaConstructorOptions.request(
-      "GET /orgs/{org}/audit-log"
-    )
-  );
+  // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
+  await octokitGhes30ViaConstructorOptions.request("GET /orgs/{org}/audit-log");
 
   // TODO: make changed properties work (#28)
   // const metaResponseGhes30 = await octokitGhes30ViaConstructorOptions.request(
@@ -59,9 +55,9 @@ export async function test() {
     version: "ghes-3.0",
   });
   const octokitGhes30ViaChainedDefaults = new OctokitGHES30();
-  expectType<never>(
-    await octokitGhes30ViaChainedDefaults.request("GET /orgs/{org}/audit-log")
-  );
+  // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1 and does not exist in GHES 3.0
+  await octokitGhes30ViaChainedDefaults.request("GET /orgs/{org}/audit-log");
+
   const metaResponseGhes30chained =
     await octokitGhes30ViaChainedDefaults.request("GET /meta");
 
