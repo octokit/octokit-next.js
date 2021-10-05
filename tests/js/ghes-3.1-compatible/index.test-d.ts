@@ -17,23 +17,18 @@ export async function test() {
 
   // `/repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1
   const newEndpointResponse = await octokit.request(
-    "POST /repos/{owner}/{repo}/branches/{branch}/rename"
+    "POST /repos/{owner}/{repo}/branches/{branch}/rename",
+    {
+      owner: "",
+      repo: "",
+      branch: "",
+      new_name: "",
+    }
   );
   expectType<string>(newEndpointResponse.data.name);
 
-  expectType<unknown>(
-    (await octokit.request("GET /marketplace_listing/plans")).data
-  );
-  expectType<unknown>(
-    (
-      await octokit.request("GET /admin/hooks/{hook_id}", {
-        hook_id: 1,
-        mediaType: {
-          previews: ["superpro"],
-        },
-      })
-    ).data
-  );
+  // @ts-expect-error - GET /marketplace_listing/plans only exists on github.com
+  await octokit.request("GET /marketplace_listing/plans");
 
   // with versions set explicitly
   const dotcomOnlyResponse = await octokit.request(
@@ -45,6 +40,14 @@ export async function test() {
     }
   );
   expectType<number>(dotcomOnlyResponse.data[0].id);
+
+  // @ts-expect-error - GET /admin/hooks/{hook_id} only exists on GHES
+  await octokit.request("GET /admin/hooks/{hook_id}", {
+    hook_id: 1,
+    mediaType: {
+      previews: ["superpro"],
+    },
+  });
 
   const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
