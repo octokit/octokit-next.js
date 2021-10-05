@@ -23,7 +23,7 @@ export function readmeExample() {
 }
 
 export function ghesExample() {
-  const requestOptions = endpoint("GET /admin", {
+  const requestOptions = endpoint("PATCH /admin/organizations/{org}", {
     request: {
       version: "ghes-3.2",
     },
@@ -31,6 +31,14 @@ export function ghesExample() {
       authorization: "token 0000000000000000000000000000000000000001",
     },
     org: "octokit",
-    type: "private",
+    login: "new-octokit",
   });
+
+  expectType<"PATCH">(requestOptions.method);
+  expectType<"/admin/organizations/{org}">(requestOptions.url);
+  expectType<string>(requestOptions.headers["accept"]);
+  expectType<string>(requestOptions.headers["user-agent"]);
+  expectType<string | undefined>(requestOptions.headers["authorization"]);
+
+  expectType<Record<string, string>>(requestOptions.data);
 }
