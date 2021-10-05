@@ -9,19 +9,17 @@ export async function test() {
     version: "github.ae",
   });
 
-  const dotcomOnlyResponse = await octokit.request(
-    "GET /marketplace_listing/plans"
-  );
-  expectType<never>(dotcomOnlyResponse);
+  // @ts-expect-error - `GET /marketplace_listing/plans` exists only on `github.com`
+  await octokit.request("GET /marketplace_listing/plans");
 
-  const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
+  const getHookResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
     mediaType: {
       previews: ["superpro"],
     },
   });
-  expectType<number | undefined>(ghesOnlyResponse.data.id);
-  expectType<string>(ghesOnlyResponse.headers["x-github-enterprise-version"]);
+  expectType<number | undefined>(getHookResponse.data.id);
+  expectType<string>(getHookResponse.headers["x-github-enterprise-version"]);
 
   const dotcomOnlyResponse2 = await octokit.request(
     "GET /marketplace_listing/plans",
