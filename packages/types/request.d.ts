@@ -50,7 +50,7 @@ export interface RequestInterface<
       ? ParametersByVersionAndRoute[RVersion][Route]
       : never)
   ): Route extends keyof ResponseByVersionAndRoute[RVersion]
-    ? ResponseByVersionAndRoute[RVersion][Route]
+    ? Promise<ResponseByVersionAndRoute[RVersion][Route]>
     : never;
 
   /**
@@ -79,7 +79,7 @@ export interface RequestInterface<
         : never
     >
   ): Route extends keyof ResponseByVersionAndRoute[TVersion]
-    ? ResponseByVersionAndRoute[TVersion][Route]
+    ? Promise<ResponseByVersionAndRoute[TVersion][Route]>
     : never;
 
   /**
