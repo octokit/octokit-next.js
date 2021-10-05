@@ -172,7 +172,9 @@ type EndpointsByVersion = {
 type ParametersByVersionAndRoute = {
   [Version in keyof EndpointsByVersion]: {
     [Route in keyof EndpointsByVersion[Version]]: "parameters" extends keyof EndpointsByVersion[Version][Route]
-      ? EndpointsByVersion[Version][Route]["parameters"]
+      ? EndpointsByVersion[Version][Route]["parameters"] & {
+          headers?: Octokit.RequestHeaders;
+        }
       : never;
   };
 };
