@@ -1,6 +1,5 @@
 import { expectType } from "tsd";
 
-import "@octokit-next/types-rest-api";
 import "@octokit-next/types-rest-api-ghes-3.2";
 
 import { endpoint } from "./index.js";
@@ -14,10 +13,10 @@ export function readmeExample() {
     type: "private",
   });
   expectType<"GET">(requestOptions.method);
-  expectType<string>(requestOptions.url);
+  expectType<"/orgs/{org}/repos">(requestOptions.url);
   expectType<string>(requestOptions.headers["accept"]);
-  expectType<string>(requestOptions.headers["authorization"]);
   expectType<string>(requestOptions.headers["user-agent"]);
+  expectType<string | undefined>(requestOptions.headers["authorization"]);
 
   // @ts-expect-error - `.data` is not set for a GET operation
   requestOptions.data;
