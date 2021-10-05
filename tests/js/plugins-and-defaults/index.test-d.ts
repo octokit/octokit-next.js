@@ -272,9 +272,9 @@ export async function test() {
   const octokitGhes31 = new OctokitGHES31({
     required: "",
   });
-  expectType<never>(
-    await octokitGhes31.request("GET /marketplace_listing/plans")
-  );
+
+  // @ts-expect-error - `GET /marketplace_listing/plans` only exists on `github.com`
+  await octokitGhes31.request("GET /marketplace_listing/plans");
 
   // TODO: make changed properties work (#28)
   // // The `api` key was removed for GHES versions, but
@@ -288,10 +288,13 @@ export async function test() {
     version: "ghes-3.0",
     required: "",
   });
-  expectType<never>(
-    await octokitGhes30ViaConstructorOptions.request(
-      "GET /orgs/{org}/audit-log"
-    )
+
+  // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1
+  await octokitGhes30ViaConstructorOptions.request(
+    "GET /orgs/{org}/audit-log",
+    {
+      org: "",
+    }
   );
 
   // TODO: make changed properties work (#28)
