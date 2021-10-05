@@ -19,11 +19,16 @@ export async function test() {
   // expectType<string>(metaResponse.data.installed_version);
   // expectType<never>(metaResponse.data.api);
 
-  expectType<never>(await octokit.request("GET /marketplace_listing/plans"));
+  // @ts-expect-error - `GET /marketplace_listing/plans` only exists on `github.com`
+  await octokit.request("GET /marketplace_listing/plans");
+
   // `GET /repos/{owner}/{repo}/branches/{branch}/rename` was added in GHES 3.1
-  expectNotType<never>(
-    await octokit.request("GET /repos/{owner}/{repo}/branches/{branch}/rename")
-  );
+  await octokit.request("POST /repos/{owner}/{repo}/branches/{branch}/rename", {
+    owner: "",
+    repo: "",
+    branch: "",
+    new_name: "",
+  });
 
   expectType<string>(rootResponse.headers["x-github-enterprise-version"]);
 }
