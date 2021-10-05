@@ -8,7 +8,7 @@ export async function test() {
   });
 
   const rootResponse = await octokit.request("GET /");
-  expectType<string>(rootResponse.data.emojis_url);
+  expectType<unknown>(rootResponse.data);
 
   const unknownResponse = await octokit.request("GET /unknown");
   // @ts-expect-error - unknownResponse.data is unknown
