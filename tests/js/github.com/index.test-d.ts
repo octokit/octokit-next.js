@@ -14,7 +14,9 @@ export async function test() {
   // @ts-expect-error - invalid keys
   rootResponse.data.unknown;
 
-  const licenseResponse = await octokit.request("GET /licenses/{license}");
+  const licenseResponse = await octokit.request("GET /licenses/{license}", {
+    license: "",
+  });
   expectType<string>(licenseResponse.data.body);
   expectType<boolean>(licenseResponse.data.featured);
 
