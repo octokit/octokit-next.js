@@ -1,9 +1,5 @@
 import { Octokit } from "./index.js";
 
-type EndpointParameters<
-  TVersion extends keyof Octokit.ApiVersions = "github.com"
-> = { request?: Octokit.RequestOptions<TVersion> } & Record<string, unknown>;
-
 type UnknownResponse = {
   /**
    * http response headers
