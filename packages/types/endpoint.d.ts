@@ -1,3 +1,5 @@
+import { SetRequired } from "type-fest";
+
 import { Octokit } from "./index.js";
 
 /**
@@ -169,7 +171,7 @@ type ParametersByVersionAndRoute = {
   [Version in keyof EndpointsByVersion]: {
     [Route in keyof EndpointsByVersion[Version]]: "parameters" extends keyof EndpointsByVersion[Version][Route]
       ? EndpointsByVersion[Version][Route]["parameters"] & {
-          headers: Octokit.ApiVersions[Version]["RequestHeaders"];
+          headers?: Octokit.RequestHeaders;
         }
       : never;
   };
@@ -191,7 +193,9 @@ type ParametersByVersionAndRoute = {
 type RequestByVersionAndRoute = {
   [Version in keyof EndpointsByVersion]: {
     [Route in keyof EndpointsByVersion[Version]]: "request" extends keyof EndpointsByVersion[Version][Route]
-      ? EndpointsByVersion[Version][Route]["request"]
+      ? EndpointsByVersion[Version][Route]["request"] & {
+          headers: SetRequired<Octokit.RequestHeaders, "accept" | "user-agent">;
+        }
       : never;
   };
 };

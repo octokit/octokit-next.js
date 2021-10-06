@@ -40,5 +40,7 @@ export function ghesExample() {
   expectType<string>(requestOptions.headers["user-agent"]);
   expectType<string | undefined>(requestOptions.headers["authorization"]);
 
-  expectType<Record<string, string>>(requestOptions.data);
+  expectType<{
+    login: string;
+  }>(requestOptions.data);
 }

@@ -11,6 +11,8 @@ type KnownJsonResponseTypes =
   | "text/html"
   | "text/plain"; // GET /zen
 
+type ReadOnlyMethods = "get" | "head";
+
 export type Operation<
   paths extends Record<string, any>,
   Method extends keyof paths[Url],
@@ -20,12 +22,20 @@ export type Operation<
   parameters: Simplify<
     ToOctokitParameters<paths[Url][Method]> & RequiredPreview<preview>
   >;
-  request: {
-    method: Method extends string ? Uppercase<Method> : never;
-    url: Url;
-    headers: Octokit.RequestHeaders;
-    request: Octokit.RequestOptions;
-  };
+  request: Method extends ReadOnlyMethods
+    ? {
+        method: Method extends string ? Uppercase<Method> : never;
+        url: Url;
+        headers: Octokit.RequestHeaders;
+        request: Octokit.RequestOptions;
+      }
+    : {
+        method: Method extends string ? Uppercase<Method> : never;
+        url: Url;
+        headers: Octokit.RequestHeaders;
+        request: Octokit.RequestOptions;
+        data: ExtractRequestBody<paths[Url][Method]>;
+      };
   response: ExtractOctokitResponse<paths[Url][Method]>;
 };
 
