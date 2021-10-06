@@ -46,6 +46,8 @@ declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "{{currentVersion}}": {
+        RequestHeaders: Octokit.ApiVersions["github.com"]["RequestHeaders"];
+        
         ResponseHeaders: Simplify<
           Octokit.ApiVersions["{{diffVersion}}"]["ResponseHeaders"] &
           ResponseHeadersDiff

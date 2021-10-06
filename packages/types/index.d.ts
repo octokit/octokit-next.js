@@ -1,3 +1,5 @@
+import { EndpointInterface } from "./endpoint";
+export { EndpointInterface } from "./endpoint";
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
 
@@ -60,6 +62,8 @@ export namespace Octokit {
     request?: RequestOptions;
   }
 
+  type RequestMethod = "DELETE" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT";
+
   interface RequestOptions<
     TVersion extends keyof Octokit.ApiVersions = "github.com"
   > {
@@ -99,13 +103,14 @@ export namespace Octokit {
      */
     accept?: string;
     /**
-     * Use `authorization` to send authenticated request, remember `token ` / `bearer ` prefixes. Example: `token 1234567890abcdef1234567890abcdef12345678`
-     */
-    authorization?: string;
-    /**
      * `user-agent` is set do a default and can be overwritten as needed.
      */
     "user-agent"?: string;
+    /**
+     * Use `authorization` to send authenticated request, remember `token ` / `bearer ` prefixes. Example: `token 1234567890abcdef1234567890abcdef12345678`
+     */
+    authorization?: string;
+
     [header: string]: string | number | undefined;
   }
 
@@ -227,6 +232,7 @@ export namespace Octokit {
   interface ApiVersions {
     "github.com": {
       ResponseHeaders: Octokit.ResponseHeaders;
+      RequestHeaders: Octokit.RequestHeaders;
       Endpoints: Octokit.Endpoints;
     };
   }
@@ -356,6 +362,7 @@ export declare class Octokit<
   );
 
   request: RequestInterface<TVersion>;
+  endpoint: EndpointInterface<TVersion>;
 }
 
 /**

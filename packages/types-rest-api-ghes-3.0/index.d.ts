@@ -32,6 +32,8 @@ declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "ghes-3.0": {
+        RequestHeaders: Octokit.ApiVersions["github.com"]["RequestHeaders"];
+
         ResponseHeaders: Simplify<
           Octokit.ApiVersions["ghes-3.1"]["ResponseHeaders"] &
             ResponseHeadersDiff

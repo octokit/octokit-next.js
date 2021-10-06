@@ -559,6 +559,8 @@ declare module "@octokit-next/types" {
   namespace Octokit {
     interface ApiVersions {
       "github.ae": {
+        RequestHeaders: Octokit.ApiVersions["github.com"]["RequestHeaders"];
+
         ResponseHeaders: Simplify<
           Octokit.ApiVersions["github.com"]["ResponseHeaders"] &
             ResponseHeadersDiff
