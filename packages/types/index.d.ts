@@ -362,6 +362,7 @@ export declare class Octokit<
   );
 
   request: RequestInterface<TVersion>;
+  endpoint: EndpointInterface<TVersion>;
 }
 
 /**
