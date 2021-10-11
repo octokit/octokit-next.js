@@ -79,6 +79,25 @@ export function ghesExample() {
   }>(requestOptions.data);
 }
 
+export function objectExample() {
+  // @ts-expect-error - TODO: endpoint(options) is an alternative API to endpoint(route, parameters)
+  const requestOptions = endpoint({
+    method: "GET",
+    url: "/endpoint-test/{id}",
+    id: "id",
+  });
+
+  expectType<"GET">(requestOptions.method);
+  expectType<string>(requestOptions.url);
+  expectNotType<"/endpoint-test/{id}">(requestOptions.url);
+  expectType<string>(requestOptions.headers["accept"]);
+  expectType<string>(requestOptions.headers["user-agent"]);
+  expectType<string | undefined>(requestOptions.headers["authorization"]);
+
+  // @ts-expect-error - `.data` is not set for a GET operation
+  requestOptions.data;
+}
+
 export function apiWithDefaults() {
   const myEndpoint = endpoint.withDefaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
@@ -121,4 +140,49 @@ export function apiDEFAULTS() {
     // @ts-expect-error - TODO: fix this
     myEndpoint.DEFAULTS.baseUrl
   );
+}
+
+export function apiMerge() {
+  const myProjectEndpoint = endpoint.withDefaults({
+    baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
+    headers: {
+      "user-agent": "myApp/1.2.3",
+    },
+    org: "my-project",
+  });
+
+  // @ts-expect-error - TODO: add types for endpoint.merge(). Compare https://github.com/octokit/types.ts/blob/7e5dd312188253e962fa209b16963f78113ba8c3/src/EndpointInterface.ts#L49-L88
+  const options = myProjectEndpoint.merge("GET /orgs/{org}/repos", {
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+    },
+    org: "my-secret-project",
+    type: "private",
+  });
+
+  // expectType<{
+  //   baseUrl: "https://github-enterprise.acme-inc.com/api/v3";
+  //   method: "GET";
+  //   url: "/orgs/{org}/repos";
+  //   headers: {
+  //     accept: "application/vnd.github.v3+json";
+  //     authorization: `token 0000000000000000000000000000000000000001`;
+  //     "user-agent": "myApp/1.2.3";
+  //   };
+  //   org: "my-secret-project";
+  //   type: "private";
+  // }>(options);
+}
+
+export function apiParse() {
+  // @ts-expect-error - TODO: add types for endpoint.parse(). Compare https://github.com/octokit/types.ts/blob/7e5dd312188253e962fa209b16963f78113ba8c3/src/EndpointInterface.ts#L90-L98
+  const requestOptions = endpoint.parse({
+    method: "GET",
+    url: "/endpoint-test/{id}",
+    id: "id",
+  });
+
+  // expectType<"GET">(requestOptions.method);
+  // expectType<string>(requestOptions.url);
+  // expectNotType<"/endpoint-test/{id}">(requestOptions.url);
 }
