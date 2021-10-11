@@ -14,7 +14,7 @@
 - [Usage](#usage)
 - [API](#api)
   - [`endpoint(route, options)` or `endpoint(options)`](#endpointroute-options-or-endpointoptions)
-  - [`endpoint.defaults()`](#endpointdefaults)
+  - [`endpoint.withDefaults()`](#endpointdefaults)
   - [`endpoint.DEFAULTS`](#endpointdefaults)
   - [`endpoint.merge(route, options)` or `endpoint.merge(options)`](#endpointmergeroute-options-or-endpointmergeoptions)
   - [`endpoint.parse()`](#endpointparse)
@@ -213,7 +213,7 @@ axios(requestOptions);
         Array of Strings
       </td>
       <td>
-        Name of previews, such as <code>mercy</code>, <code>symmetra</code>, or <code>scarlet-witch</code>. See <a href="https://docs.github.com/rest/overview/api-previews">API Previews</a>. If <code>options.mediaType.previews</code> was set as default, the new previews will be merged into the default ones. Setting <code>options.mediaType.previews</code> will amend the <code>headers.accept</code> value. <code>options.mediaType.previews</code> will be merged with an existing array set using <code>.defaults()</code>.
+        Name of previews, such as <code>mercy</code>, <code>symmetra</code>, or <code>scarlet-witch</code>. See <a href="https://docs.github.com/rest/overview/api-previews">API Previews</a>. If <code>options.mediaType.previews</code> was set as default, the new previews will be merged into the default ones. Setting <code>options.mediaType.previews</code> will amend the <code>headers.accept</code> value. <code>options.mediaType.previews</code> will be merged with an existing array set using <code>.withDefaults()</code>.
       </td>
     </tr>
     <tr>
@@ -294,12 +294,12 @@ All other options will be passed depending on the `method` and `url` options.
   </tbody>
 </table>
 
-### `endpoint.defaults()`
+### `endpoint.withDefaults()`
 
 Override or set default options. Example:
 
 ```js
-const myEndpoint = endpoint.defaults({
+const myEndpoint = endpoint.withDefaults({
   baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
   headers: {
     "user-agent": "myApp/1.2.3",
@@ -322,10 +322,10 @@ const options = myEndpoint(`GET /orgs/{org}/repos`, {
 // }
 ```
 
-You can call `.defaults()` again on the returned method, the defaults will cascade.
+You can call `.withDefaults()` again on the returned method, the defaults will cascade.
 
 ```js
-const myEndpointWithToken2 = myEndpoint.defaults({
+const myEndpointWithToken2 = myEndpoint.withDefaults({
   headers: {
     authorization: `token 0000000000000000000000000000000000000002`,
   },
@@ -352,7 +352,7 @@ The current default options.
 
 ```js
 endpoint.DEFAULTS.baseUrl; // https://api.github.com
-const myEndpoint = endpoint.defaults({
+const myEndpoint = endpoint.withDefaults({
   baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
 });
 myEndpoint.DEFAULTS.baseUrl; // https://github-enterprise.acme-inc.com/api/v3
@@ -363,7 +363,7 @@ myEndpoint.DEFAULTS.baseUrl; // https://github-enterprise.acme-inc.com/api/v3
 Get the defaulted endpoint options, but without parsing them into request options:
 
 ```js
-const myProjectEndpoint = endpoint.defaults({
+const myProjectEndpoint = endpoint.withDefaults({
   baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
   headers: {
     "user-agent": "myApp/1.2.3",
@@ -446,14 +446,14 @@ const requestOptions = endpoint("GET /admin/users/{username}", {
 
 Types in the `@octokit-next/types-rest-api-ghes` packages are additive. So you can set `request.version` to `ghes-3.1` and `ghes-3.2` as well.
 
-The version can be set using `endpoint.defaults()` as well. You can override the version in each `endpoint()` call.
+The version can be set using `endpoint.withDefaults()` as well. You can override the version in each `endpoint()` call.
 
 ```js
 /// <reference types="@octokit-next/types-rest-api-ghes-3.0" />
 
 import { endpoint } from "@octokit-next/endpoint";
 
-const ghes30endpoint = endpoint.defaults({
+const ghes30endpoint = endpoint.withDefaults({
   request: {
     version: "ghes-3.0",
   },
@@ -470,7 +470,7 @@ If you need your script to work across github.com and a minimal GitHub Enterpris
 
 import { endpoint } from "@octokit-next/endpoint";
 
-const ghes30endpoint = endpoint.defaults({
+const ghes30endpoint = endpoint.withDefaults({
   request: {
     version: "ghes-3.0",
   },
