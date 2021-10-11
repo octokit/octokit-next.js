@@ -14,13 +14,33 @@ type GenericRequestOptions = {
   method: Octokit.RequestMethod;
   url: string;
   headers: Octokit.RequestHeaders;
+  baseUrl?: string;
+  mediaType?: {
+    previews?: string[];
+    format?: string;
+  };
   data?: unknown;
   request?: Octokit.RequestOptions;
 };
 
-type EndpointParameters<
+type KnownEndpointParameters<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
-> = { request?: Octokit.RequestOptions<TVersion> } & Record<string, unknown>;
+> = { request?: Octokit.RequestOptions<TVersion> } & Partial<
+  Omit<GenericRequestOptions, "request">
+>;
+
+type GLOBAL_DEFAULTS = {
+  method: "GET";
+  baseUrl: "https://api.github.com";
+  headers: {
+    accept: "application/vnd.github.v3+json";
+    "user-agent": string;
+  };
+  mediaType: {
+    format: "";
+    previews: [];
+  };
+};
 
 /**
  * The `EndpointInterface` is used for both the standalone `@octokit-next/endpoint` module
@@ -35,7 +55,8 @@ type EndpointParameters<
  * 3. When no endpoint types are imported, then any route with any parameters can be passed in, and the response is unknown.
  */
 export interface EndpointInterface<
-  TVersion extends keyof Octokit.ApiVersions = "github.com"
+  TVersion extends keyof Octokit.ApiVersions = "github.com",
+  TDefaults extends KnownEndpointParameters<TVersion> = GLOBAL_DEFAULTS
 > {
   /**
    * Send a request to a known endpoint for the version specified in `request.version`.
@@ -102,9 +123,19 @@ export interface EndpointInterface<
   ): GenericRequestOptions;
 
   /**
+   * Override or set default options
    *
+   * @todo implement inheriting the request version and .DEFAULTS from the options passed
    */
-  withDefaults(
-    options: EndpointParameters<TVersion>
-  ): EndpointInterface<TVersion>;
+  withDefaults<TOptions extends KnownEndpointParameters<TVersion>>(
+    options: TOptions
+  ): EndpointInterface<TVersion, Omit<TDefaults, keyof TOptions> & TOptions>;
+
+  /**
+   * The current default options
+   *
+   * @todo should have proper default values such as `https://api.github.com` and `GET`
+   *       and should be merged when set by `withDefaults()`
+   */
+  DEFAULTS: TDefaults;
 }

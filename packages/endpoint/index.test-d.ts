@@ -108,3 +108,17 @@ export function apiWithDefaults() {
   expectType<"GET">(options2.method);
   expectType<string>(options2.url);
 }
+
+export function apiDEFAULTS() {
+  expectType<"https://api.github.com">(endpoint.DEFAULTS.baseUrl);
+  const myEndpoint = endpoint.withDefaults({
+    baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
+  });
+
+  myEndpoint.DEFAULTS;
+
+  expectType<"https://github-enterprise.acme-inc.com/api/v3">(
+    // @ts-expect-error - TODO: fix this
+    myEndpoint.DEFAULTS.baseUrl
+  );
+}
