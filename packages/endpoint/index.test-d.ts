@@ -79,34 +79,32 @@ export function ghesExample() {
   }>(requestOptions.data);
 }
 
-// export function apiDefaults() {
-//   const myEndpoint = endpoint.defaults({
-//     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
-//     headers: {
-//       "user-agent": "myApp/1.2.3",
-//       authorization: `token 0000000000000000000000000000000000000001`,
-//     },
-//   });
+export function apiWithDefaults() {
+  const myEndpoint = endpoint.withDefaults({
+    baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
+    headers: {
+      "user-agent": "myApp/1.2.3",
+      authorization: `token 0000000000000000000000000000000000000001`,
+    },
+  });
 
-//   const options = myEndpoint(`GET /orgs/{org}/repos`, {
-//     org: "my-project",
-//     per_page: 100,
-//   });
+  const options = myEndpoint(`GET /endpoint-test/{id}`, {
+    id: "id",
+  });
 
-//   expectType<"GET">(options.method);
-//   expectType<string>(options.url);
+  expectType<"GET">(options.method);
+  expectType<string>(options.url);
 
-//   const myEndpointWithToken2 = myEndpoint.defaults({
-//     headers: {
-//       authorization: `token 0000000000000000000000000000000000000002`,
-//     },
-//   });
+  const myEndpointWithToken2 = myEndpoint.withDefaults({
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000002`,
+    },
+  });
 
-//   const options2 = myEndpoint(`GET /orgs/{org}/repos`, {
-//     org: "my-project",
-//     per_page: 100,
-//   });
+  const options2 = myEndpointWithToken2(`GET /endpoint-test/{id}`, {
+    id: "id",
+  });
 
-//   expectType<"GET">(options2.method);
-//   expectType<string>(options2.url);
-// }
+  expectType<"GET">(options2.method);
+  expectType<string>(options2.url);
+}

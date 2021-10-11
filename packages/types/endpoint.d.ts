@@ -100,4 +100,11 @@ export interface EndpointInterface<
       ? [Route, Record<string, unknown>?]
       : []
   ): GenericRequestOptions;
+
+  /**
+   *
+   */
+  withDefaults(
+    options: EndpointParameters<TVersion>
+  ): EndpointInterface<TVersion>;
 }
