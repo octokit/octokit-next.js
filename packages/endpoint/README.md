@@ -331,7 +331,7 @@ const myEndpointWithToken2 = myEndpoint.defaults({
   },
 });
 
-const options2 = myEndpoint(`GET /orgs/{org}/repos`, {
+const options2 = myEndpointWithToken2(`GET /orgs/{org}/repos`, {
   org: "my-project",
   per_page: 100,
 });
