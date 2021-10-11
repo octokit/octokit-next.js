@@ -1,4 +1,4 @@
-import { expectType } from "tsd";
+import { expectType, expectNotType } from "tsd";
 
 import { endpoint } from "./index.js";
 
@@ -14,7 +14,8 @@ declare module "@octokit-next/types" {
         };
         request: {
           method: "GET";
-          url: "/endpoint-test/{id}";
+          // the resulting `.url` property will replace the `{}` placeholders, so the type must be a generic string
+          url: string;
         };
         response: {};
       };
@@ -30,7 +31,7 @@ declare module "@octokit-next/types" {
             };
             request: {
               method: "POST";
-              url: "/endpoint-test/{id}/version-test";
+              url: string;
               data: {
                 test: string;
               };
@@ -48,7 +49,8 @@ export function readmeExample() {
     id: "id",
   });
   expectType<"GET">(requestOptions.method);
-  expectType<"/endpoint-test/{id}">(requestOptions.url);
+  expectType<string>(requestOptions.url);
+  expectNotType<"/endpoint-test/{id}">(requestOptions.url);
   expectType<string>(requestOptions.headers["accept"]);
   expectType<string>(requestOptions.headers["user-agent"]);
   expectType<string | undefined>(requestOptions.headers["authorization"]);
@@ -67,7 +69,7 @@ export function ghesExample() {
   });
 
   expectType<"POST">(requestOptions.method);
-  expectType<"/endpoint-test/{id}/version-test">(requestOptions.url);
+  expectType<string>(requestOptions.url);
   expectType<string>(requestOptions.headers["accept"]);
   expectType<string>(requestOptions.headers["user-agent"]);
   expectType<string | undefined>(requestOptions.headers["authorization"]);
@@ -76,3 +78,35 @@ export function ghesExample() {
     test: string;
   }>(requestOptions.data);
 }
+
+// export function apiDefaults() {
+//   const myEndpoint = endpoint.defaults({
+//     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
+//     headers: {
+//       "user-agent": "myApp/1.2.3",
+//       authorization: `token 0000000000000000000000000000000000000001`,
+//     },
+//   });
+
+//   const options = myEndpoint(`GET /orgs/{org}/repos`, {
+//     org: "my-project",
+//     per_page: 100,
+//   });
+
+//   expectType<"GET">(options.method);
+//   expectType<string>(options.url);
+
+//   const myEndpointWithToken2 = myEndpoint.defaults({
+//     headers: {
+//       authorization: `token 0000000000000000000000000000000000000002`,
+//     },
+//   });
+
+//   const options2 = myEndpoint(`GET /orgs/{org}/repos`, {
+//     org: "my-project",
+//     per_page: 100,
+//   });
+
+//   expectType<"GET">(options2.method);
+//   expectType<string>(options2.url);
+// }

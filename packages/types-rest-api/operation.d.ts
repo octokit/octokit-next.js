@@ -25,13 +25,13 @@ export type Operation<
   request: Method extends ReadOnlyMethods
     ? {
         method: Method extends string ? Uppercase<Method> : never;
-        url: Url;
+        url: string;
         headers: Octokit.RequestHeaders;
         request: Octokit.RequestOptions;
       }
     : {
         method: Method extends string ? Uppercase<Method> : never;
-        url: Url;
+        url: string;
         headers: Octokit.RequestHeaders;
         request: Octokit.RequestOptions;
         data: ExtractRequestBody<paths[Url][Method]>;
