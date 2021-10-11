@@ -411,7 +411,7 @@ For example, to get types for all of github.com's REST API endpoints, use `@octo
 import { endpoint } from "@octokit-next/endpoint";
 
 endpoint("");
-// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all 700+ REST API endpoints
+// Set cursor in the route argument and press `Ctrl + Space` to get a type ahead for all 700+ REST API endpoints
 
 const requestOptions = endpoint("GET /orgs/{org}/repos", { org: "octokit" });
 // requestOptions.method is now typed as `"GET"` instead of `string`
@@ -431,7 +431,7 @@ endpoint("", {
     version: "ghes-3.0",
   },
 });
-// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all GHES 3.0 REST API endpoints
+// Set cursor in the route argument and press `Ctrl + Space` to get a type ahead for all GHES 3.0 REST API endpoints
 
 const requestOptions = endpoint("GET /admin/users/{username}", {
   request: {
@@ -460,7 +460,7 @@ const ghes30endpoint = endpoint.withDefaults({
 });
 
 endpoint("");
-// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all GHES 3.0 REST API endpoints
+// Set cursor in the route argument and press `Ctrl + Space` to get a type ahead for all GHES 3.0 REST API endpoints
 ```
 
 If you need your script to work across github.com and a minimal GitHub Enterprise Server version, you can use any of the `@octokit-next/types-rest-api-ghes-*-compatible` packages.
@@ -477,7 +477,7 @@ const ghes30endpoint = endpoint.withDefaults({
 });
 
 endpoint("");
-// Set cursor in the route argument and press `Ctrl + Enter` to get a type ahead for all REST API endpoints
+// Set cursor in the route argument and press `Ctrl + Space` to get a type ahead for all REST API endpoints
 // that exist in both github.com and GitHub Enterprise Server 3.0
 ```
 
