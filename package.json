@@ -179,7 +179,7 @@
     "openapi-typescript": "^4.0.2",
     "prettier": "^2.3.2",
     "sort-keys": "^4.2.0",
-    "tsd": "^0.17.0",
+    "tsd": "^0.22.0",
     "type-fest": "^2.0.0",
     "typescript": "^4.4.3",
     "uvu": "^0.5.1"
