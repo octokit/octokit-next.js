@@ -176,7 +176,7 @@
     "c8": "^7.7.3",
     "github-openapi-graphql-query": "^2.0.0",
     "handlebars": "^4.7.7",
-    "openapi-typescript": "^4.0.2",
+    "openapi-typescript": "^5.0.0",
     "prettier": "^2.3.2",
     "sort-keys": "^4.2.0",
     "tsd": "^0.22.0",
