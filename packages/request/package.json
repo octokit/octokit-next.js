@@ -18,7 +18,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "data-uri-to-buffer": "^3.0.1",
+    "data-uri-to-buffer": "^4.0.0",
     "node-fetch": "3.2.6",
     "type-fest": "^2.0.0"
   }
