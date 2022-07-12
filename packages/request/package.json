@@ -19,7 +19,7 @@
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
     "data-uri-to-buffer": "^4.0.0",
-    "node-fetch": "3.2.6",
+    "node-fetch": "3.2.8",
     "type-fest": "^2.0.0"
   }
 }
