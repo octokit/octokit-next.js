@@ -16,11 +16,6 @@
     "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo $d; tsc -p $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
     "test:workspaces": "npm test --workspaces --if-present"
   },
-  "renovate": {
-    "extends": [
-      "github>gr2m/.github"
-    ]
-  },
   "release": {
     "branches": [
       "main"
