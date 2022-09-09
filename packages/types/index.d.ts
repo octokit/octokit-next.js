@@ -289,7 +289,7 @@ export declare class Octokit<
    * @see https://github.com/gr2m/javascript-plugin-architecture-with-typescript-definitions/pull/57
    */
   static withDefaults<
-    PredefinedOptionsOne,
+    PredefinedOptionsOne extends Record<string, unknown>,
     ClassOne extends Constructor<
       Octokit<TVersion, Octokit.Options<TVersion> & PredefinedOptionsOne>
     > &
