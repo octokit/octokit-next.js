@@ -14,10 +14,12 @@ type AuthStrategyAndOptions<
   AuthStrategy extends AuthStrategyInterface | undefined = undefined
 > = AuthStrategy extends undefined
   ? { auth?: string }
-  : {
+  : AuthStrategy extends AuthStrategyInterface
+  ? {
       authStrategy: AuthStrategy;
       auth: Parameters<AuthStrategy>[0];
-    };
+    }
+  : never;
 
 /**
  * Global Octokit interfaces that can be extended as needed.
@@ -63,7 +65,9 @@ export namespace Octokit {
      */
     auth?: TAuthStrategy extends undefined
       ? string
-      : Parameters<TAuthStrategy>[0];
+      : TAuthStrategy extends AuthStrategyInterface
+      ? Parameters<TAuthStrategy>[0]
+      : never;
 
     /**
      * Request options passed as default `{ request }` options to every request.
