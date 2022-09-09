@@ -12,7 +12,7 @@
     "test": "npm run test:workspaces && npm run test:code && npm run test:dts && npm run test:ts && npm run test:coverage",
     "test:code": "c8 node test.js",
     "test:coverage": "c8 check-coverage",
-    "test:dts": "for d in tests/js/* ; do echo $d; tsd $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
+    "test:dts": "for d in tests/js/* ; do echo npx tsd $d; tsd $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
     "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo $d; tsc -p $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
     "test:workspaces": "npm test --workspaces --if-present"
   },
@@ -174,7 +174,7 @@
     "openapi-typescript": "^5.0.0",
     "prettier": "^2.3.2",
     "sort-keys": "^5.0.0",
-    "tsd": "^0.22.0",
+    "tsd": "^0.23.0",
     "type-fest": "^2.0.0",
     "typescript": "^4.4.3",
     "uvu": "^0.5.1"
