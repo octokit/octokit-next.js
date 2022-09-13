@@ -35,7 +35,15 @@ export async function test() {
 
   new Octokit({
     authStrategy: createCallbackAuth,
-    // @ts-expect-error - invalid auth options
+    auth: {
+      // @ts-expect-error - callback must return string
+      callback() {},
+    },
+  });
+
+  new Octokit({
+    authStrategy: createCallbackAuth,
+    // @ts-expect-error - auth must be set to `{ callback }`
     auth: "token",
   });
 
@@ -43,8 +51,8 @@ export async function test() {
     authStrategy: createCallbackAuth,
   });
 
-  // @ts-expect-error - auth is required to be set to `{ callback }`
-  const test = new OctokitWithCallbackAuth();
+  // TODO: @ts-expect-error - auth is required to be set to `{ callback }`
+  const test = new OctokitWithCallbackAuth({});
 
   expectType<typeof createCallbackAuth>(test.options.authStrategy);
 }

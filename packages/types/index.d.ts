@@ -301,7 +301,7 @@ export declare class Octokit<
    * .withDefaults({ ... }).withDefaults({ ... }).withDefaults({ ... }).withDefaults({ ... })...
    * However, we don't see a clean way in today's TypeScript syntax to do so.
    * We instead artificially limit accurate type inference to just three levels,
-   * since real users are not likely to go past that.
+   * since users are unlikely to go past that.
    * @see https://github.com/gr2m/javascript-plugin-architecture-with-typescript-definitions/pull/57
    */
   static withDefaults<
