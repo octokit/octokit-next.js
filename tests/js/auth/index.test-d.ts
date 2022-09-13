@@ -51,7 +51,7 @@ export async function test() {
     authStrategy: createCallbackAuth,
   });
 
-  // TODO: @ts-expect-error - auth is required to be set to `{ callback }`
+  // @ts-expect-error - auth is required to be set to `{ callback }`
   const test = new OctokitWithCallbackAuth({});
 
   expectType<typeof createCallbackAuth>(test.options.authStrategy);
