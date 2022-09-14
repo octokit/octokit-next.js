@@ -461,7 +461,16 @@ type ClassWithPlugins = Constructor<any> & {
 
 type RemainingRequirements<
   PredefinedOptions extends { version?: keyof Octokit.ApiVersions }
-> = Omit<Octokit.Options, keyof PredefinedOptions>;
+> = "authStrategy" extends keyof PredefinedOptions
+  ? // if authStrategy is set and it's a valid auth strategy
+    PredefinedOptions["authStrategy"] extends AuthStrategyInterface
+    ? // then `options.auth` is required to be set to the strategy options
+      {
+        auth: Parameters<PredefinedOptions["authStrategy"]>[0];
+      } & Omit<Octokit.Options, keyof PredefinedOptions | "auth">
+    : // otherwise return all keys from `Octokit.Options` that are not set in `defaults.*`
+      Omit<Octokit.Options, keyof PredefinedOptions>
+  : Omit<Octokit.Options, keyof PredefinedOptions>;
 
 type NonOptionalKeys<Obj> = {
   [K in keyof Obj]: {} extends Pick<Obj, K> ? undefined : K;
@@ -473,7 +482,15 @@ type RequiredIfRemaining<
   TRemainingRequirements = RemainingRequirements<PredefinedOptions>
 > = NonOptionalKeys<TRemainingRequirements> extends undefined
   ? [(Partial<Octokit.Options> & NowProvided)?]
-  : [Partial<Octokit.Options> & NowProvided & TRemainingRequirements];
+  : [
+      Omit<
+        Partial<Octokit.Options>,
+        keyof RemainingRequirements<PredefinedOptions>
+        // | keyof NonOptionalKeys<NowProvided>
+      > &
+        RemainingRequirements<PredefinedOptions> &
+        NowProvided
+    ];
 
 type ConstructorRequiringOptionsIfNeeded<
   Class,
@@ -487,7 +504,7 @@ type ConstructorRequiringOptionsIfNeeded<
   new <NowProvided>(
     ...options: RequiredIfRemaining<PredefinedOptions, NowProvided>
   ): Class & {
-    options: NowProvided & PredefinedOptions;
+    options: NowProvided & Omit<PredefinedOptions, keyof NowProvided>;
     request: RequestInterface<TVersion>;
   };
 };
