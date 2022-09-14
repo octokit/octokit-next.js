@@ -35,7 +35,7 @@ console.log(data);
 
 A list of breaking changes compared to latest `@octokit/*` modules
 
-- Node 16 and other JavaScript runtime environments that lack a global `fetch` are no longer supported out-of-the-box. A `fetch` method such as provided by the [`node-fetch` npm module](https://github.com/node-fetch/node-fetch) can be passed to make Octokit work in these environments.
+- Node 16 and other JavaScript runtime environments that lack a global [`fetch()` method](https://developer.mozilla.org/en-US/docs/Web/API/fetch) are no longer supported out-of-the-box. A `fetch` method such as provided by the [`node-fetch` npm module](https://github.com/node-fetch/node-fetch) can be passed to make Octokit work in these environments.
 
   For `@octokit-next/core` and other SDKs built upon it you can do this
 
