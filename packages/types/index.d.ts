@@ -322,7 +322,7 @@ export declare class Octokit<
       authStrategy?: TAuthStrategy;
     }
   ): ConstructorRequiringOptionsIfNeeded<ClassOne, PredefinedOptionsOne> & {
-    withDefaults<ClassTwo, PredefinedOptionsTwo>(
+    withDefaults<PredefinedOptionsTwo, ClassTwo>(
       this: ClassTwo,
       defaults: PredefinedOptionsTwo & {
         version?: TVersion;
@@ -332,7 +332,7 @@ export declare class Octokit<
       ClassOne & ClassTwo,
       PredefinedOptionsOne & PredefinedOptionsTwo
     > & {
-      withDefaults<ClassThree, PredefinedOptionsThree>(
+      withDefaults<PredefinedOptionsThree, ClassThree>(
         this: ClassThree,
         defaults: PredefinedOptionsThree & {
           version?: TVersion;
