@@ -5,7 +5,6 @@ import { Octokit } from "./index.js";
 type CallbackStrategyOptions = {
   callback: () => string | Promise<string>;
 };
-
 interface CallbackAuth {
   (options?: Record<string, unknown>): Promise<unknown>;
 }
@@ -34,9 +33,17 @@ export async function test() {
     },
   });
 
-  // @ts-expect-error - invalid auth options
   new Octokit({
     authStrategy: createCallbackAuth,
+    auth: {
+      // @ts-expect-error - callback must return string
+      callback() {},
+    },
+  });
+
+  new Octokit({
+    authStrategy: createCallbackAuth,
+    // @ts-expect-error - auth must be set to `{ callback }`
     auth: "token",
   });
 
@@ -44,6 +51,35 @@ export async function test() {
     authStrategy: createCallbackAuth,
   });
 
-  // TODO: @ts-expect-error - auth is required to be set to `{ callback }`
+  const test = new OctokitWithCallbackAuth({
+    auth: {
+      callback() {
+        return "";
+      },
+    },
+  });
+  expectType<typeof createCallbackAuth>(test.options.authStrategy);
+
+  // Note: The code above gets the constructor options type from
+  //       `new <NowProvided>(...options: RequiredIfRemaining<PredefinedOptions, NowProvided>)`
+  //       while the code below gets the type from Octokit.constructor options
+  // TODO: @ts-expect-error - options is required
   new OctokitWithCallbackAuth();
+
+  // TODO: @ts-expect-error - options.auth is required
+  new OctokitWithCallbackAuth({});
+
+  // TODO: @ts-expect-error - options.auth must be set to `{ callback }`
+  new OctokitWithCallbackAuth({
+    auth: "",
+  });
+
+  // @ts-expect-error - callback must return string
+  new OctokitWithCallbackAuth({
+    auth: {
+      callback() {
+        return 1;
+      },
+    },
+  });
 }

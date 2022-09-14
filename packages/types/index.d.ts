@@ -1,4 +1,3 @@
-import { EndpointInterface } from "./endpoint";
 export { EndpointInterface } from "./endpoint";
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
@@ -10,16 +9,25 @@ interface AuthInterface {
   (options?: any): Promise<unknown>;
 }
 
-type AuthStrategyAndOptions<AuthStrategy extends AuthStrategyInterface> = {
-  authStrategy: AuthStrategy;
-  auth: Parameters<AuthStrategy>[0];
-};
+type AuthStrategyAndOptions<
+  AuthStrategy extends AuthStrategyInterface | undefined = undefined
+> = AuthStrategy extends undefined
+  ? { auth?: string }
+  : AuthStrategy extends AuthStrategyInterface
+  ? {
+      authStrategy: AuthStrategy;
+      auth: Parameters<AuthStrategy>[0];
+    }
+  : never;
 
 /**
  * Global Octokit interfaces that can be extended as needed.
  */
 export namespace Octokit {
-  interface Options<TVersion extends keyof Octokit.ApiVersions = "github.com"> {
+  interface Options<
+    TVersion extends keyof Octokit.ApiVersions = "github.com",
+    TAuthStrategy extends AuthStrategyInterface | undefined = undefined
+  > {
     /**
      * API version. Defaults to `"github.com"`.
      *
@@ -43,18 +51,22 @@ export namespace Octokit {
      */
     userAgent?: string;
 
-    // /**
-    //  * Auth strategy function
-    //  *
-    //  * @see https://github.com/octokit/auth.js
-    //  */
-    // authStrategy?: AuthStrategyInterface;
+    /**
+     * Auth strategy function
+     *
+     * @see https://github.com/octokit/auth.js
+     */
+    authStrategy?: TAuthStrategy;
 
-    // /**
-    //  * Auth strategy options. Can be set to an access token. If `authStrategy`
-    //  * option is set, the auth option must be set to the authentication strategy options.
-    //  */
-    // auth?: String | Record<string, unknown>;
+    /**
+     * Auth strategy options. Can be set to an access token. If `authStrategy`
+     * option is set, the auth option must be set to the authentication strategy options.
+     */
+    auth?: TAuthStrategy extends undefined
+      ? string
+      : TAuthStrategy extends AuthStrategyInterface
+      ? Parameters<TAuthStrategy>[0]
+      : never;
 
     /**
      * Request options passed as default `{ request }` options to every request.
@@ -240,8 +252,11 @@ export namespace Octokit {
 
 export declare class Octokit<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TOptions extends Octokit.Options<TVersion> = Octokit.Options<TVersion>,
-  TAuthStrategy extends AuthStrategyInterface | never = never
+  TAuthStrategy extends AuthStrategyInterface | undefined = undefined,
+  TOptions extends Octokit.Options<TVersion, TAuthStrategy> = Octokit.Options<
+    TVersion,
+    TAuthStrategy
+  >
 > {
   /**
    * Pass one or multiple plugin functions to extend the `Octokit` class.
@@ -285,30 +300,44 @@ export declare class Octokit<
    * .withDefaults({ ... }).withDefaults({ ... }).withDefaults({ ... }).withDefaults({ ... })...
    * However, we don't see a clean way in today's TypeScript syntax to do so.
    * We instead artificially limit accurate type inference to just three levels,
-   * since real users are not likely to go past that.
+   * since users are unlikely to go past that.
    * @see https://github.com/gr2m/javascript-plugin-architecture-with-typescript-definitions/pull/57
    */
   static withDefaults<
     PredefinedOptionsOne extends Record<string, unknown>,
     ClassOne extends Constructor<
-      Octokit<TVersion, Octokit.Options<TVersion> & PredefinedOptionsOne>
+      Octokit<
+        TVersion,
+        TAuthStrategy,
+        Octokit.Options<TVersion, TAuthStrategy> & PredefinedOptionsOne
+      >
     > &
       ClassWithPlugins,
-    TVersion extends keyof Octokit.ApiVersions = "github.com"
+    TVersion extends keyof Octokit.ApiVersions = "github.com",
+    TAuthStrategy extends AuthStrategyInterface | undefined = undefined
   >(
     this: ClassOne,
-    defaults: PredefinedOptionsOne & { version?: TVersion }
+    defaults: PredefinedOptionsOne & {
+      version?: TVersion;
+      authStrategy?: TAuthStrategy;
+    }
   ): ConstructorRequiringOptionsIfNeeded<ClassOne, PredefinedOptionsOne> & {
-    withDefaults<ClassTwo, PredefinedOptionsTwo>(
+    withDefaults<PredefinedOptionsTwo, ClassTwo>(
       this: ClassTwo,
-      defaults: PredefinedOptionsTwo & { version?: TVersion }
+      defaults: PredefinedOptionsTwo & {
+        version?: TVersion;
+        authStrategy?: TAuthStrategy;
+      }
     ): ConstructorRequiringOptionsIfNeeded<
       ClassOne & ClassTwo,
       PredefinedOptionsOne & PredefinedOptionsTwo
     > & {
-      withDefaults<ClassThree, PredefinedOptionsThree>(
+      withDefaults<PredefinedOptionsThree, ClassThree>(
         this: ClassThree,
-        defaults: PredefinedOptionsThree & { version?: TVersion }
+        defaults: PredefinedOptionsThree & {
+          version?: TVersion;
+          authStrategy?: TAuthStrategy;
+        }
       ): ConstructorRequiringOptionsIfNeeded<
         ClassOne & ClassTwo & ClassThree,
         PredefinedOptionsOne & PredefinedOptionsTwo & PredefinedOptionsThree
@@ -333,36 +362,34 @@ export declare class Octokit<
   };
 
   /**
+   * Constructor with optional `authStrategy`.
+   */
+  constructor(
+    ...options: NonOptionalKeys<TOptions> extends undefined
+      ? // If `authStrategy` is not set,
+        // `options.auth` can be set to an access token string in order
+        // to authenticate requests.
+        [
+          ({ version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
+            TOptions)?
+        ]
+      : // If `authStrategy` is set, `options.auth` must be
+        // set to whatever options the `authStrategy` expects.
+        [
+          { version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
+            TOptions
+        ]
+  );
+
+  /**
    * Options passed to the constructor combined with the constructor defaults
    */
   options: TOptions;
 
   /**
-   * Constructor without setting `authStrategy`
-   *
-   * You can optionally set the `auth` option to an access token string in order
-   * to authenticate requests.
+   * Send a request, with type support for GitHub's REST API.
    */
-  constructor(
-    ...options: NonOptionalKeys<TOptions> extends undefined
-      ? [({ version?: TVersion } & { auth?: string } & TOptions)?]
-      : [{ version?: TVersion } & { auth?: string } & TOptions]
-  );
-
-  /**
-   * Constructor with setting `authStrategy`
-   *
-   * The `auth` option must be set to whatever the function passed as `authStrategy` accepts
-   */
-  constructor(
-    // we assume that if `authStrategy` is set, the `auth` option is always required,
-    // hence the constructor options are always required
-    options: { version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
-      TOptions
-  );
-
   request: RequestInterface<TVersion>;
-  endpoint: EndpointInterface<TVersion>;
 }
 
 /**
@@ -371,7 +398,7 @@ export declare class Octokit<
  * @example
  *
  * ```ts
- * export const MyBase: ExtendOctokitWith<
+ * export const MyOctokit: ExtendOctokitWith<
  *   Octokit,
  *   {
  *     defaults: {
@@ -382,7 +409,7 @@ export declare class Octokit<
  * >;
  *
  * // support import to be used as a class instance type
- * export type MyBase = typeof MyBase;
+ * export type MyOctokit = typeof MyOctokit;
  * ```
  */
 export type ExtendOctokitWith<
@@ -432,21 +459,35 @@ type ClassWithPlugins = Constructor<any> & {
   plugins: Plugin[];
 };
 
-type RemainingRequirements<PredefinedOptions> =
-  keyof PredefinedOptions extends never
-    ? Octokit.Options
-    : Omit<Octokit.Options, keyof PredefinedOptions>;
+type RemainingRequirements<
+  PredefinedOptions extends { version?: keyof Octokit.ApiVersions }
+> = "authStrategy" extends keyof PredefinedOptions
+  ? // if authStrategy is set and it's a valid auth strategy
+    PredefinedOptions["authStrategy"] extends AuthStrategyInterface
+    ? // then `options.auth` is required to be set to the strategy options
+      {
+        auth: Parameters<PredefinedOptions["authStrategy"]>[0];
+      } & Omit<Octokit.Options, keyof PredefinedOptions | "auth">
+    : // otherwise return all keys from `Octokit.Options` that are not set in `defaults.*`
+      Omit<Octokit.Options, keyof PredefinedOptions>
+  : Omit<Octokit.Options, keyof PredefinedOptions>;
 
 type NonOptionalKeys<Obj> = {
   [K in keyof Obj]: {} extends Pick<Obj, K> ? undefined : K;
 }[keyof Obj];
 
-type RequiredIfRemaining<PredefinedOptions, NowProvided> = NonOptionalKeys<
-  RemainingRequirements<PredefinedOptions>
-> extends undefined
+type RequiredIfRemaining<
+  PredefinedOptions extends { version?: keyof Octokit.ApiVersions },
+  NowProvided,
+  TRemainingRequirements = RemainingRequirements<PredefinedOptions>
+> = NonOptionalKeys<TRemainingRequirements> extends undefined
   ? [(Partial<Octokit.Options> & NowProvided)?]
   : [
-      Partial<Octokit.Options> &
+      Omit<
+        Partial<Octokit.Options>,
+        keyof RemainingRequirements<PredefinedOptions>
+        // | keyof NonOptionalKeys<NowProvided>
+      > &
         RemainingRequirements<PredefinedOptions> &
         NowProvided
     ];
@@ -463,7 +504,7 @@ type ConstructorRequiringOptionsIfNeeded<
   new <NowProvided>(
     ...options: RequiredIfRemaining<PredefinedOptions, NowProvided>
   ): Class & {
-    options: NowProvided & PredefinedOptions;
+    options: NowProvided & Omit<PredefinedOptions, keyof NowProvided>;
     request: RequestInterface<TVersion>;
   };
 };

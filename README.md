@@ -31,6 +31,10 @@ const { data } = await octokit.request("GET /repos/{owner}/{repo}", {
 console.log(data);
 ```
 
+## Known issues
+
+- Constructor option Types (`options.auth`) are not set correctly when `authStrategy` is set via `.withDefaults({ authStrategy })` ([#20](https://github.com/octokit/octokit-next.js/issues/20))
+
 ## License
 
 [MIT](LICENSE)
