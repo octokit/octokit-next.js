@@ -459,24 +459,21 @@ type ClassWithPlugins = Constructor<any> & {
   plugins: Plugin[];
 };
 
-type RemainingRequirements<PredefinedOptions> =
-  keyof PredefinedOptions extends never
-    ? Octokit.Options
-    : Omit<Octokit.Options, keyof PredefinedOptions>;
+type RemainingRequirements<
+  PredefinedOptions extends { version?: keyof Octokit.ApiVersions }
+> = Omit<Octokit.Options, keyof PredefinedOptions>;
 
 type NonOptionalKeys<Obj> = {
   [K in keyof Obj]: {} extends Pick<Obj, K> ? undefined : K;
 }[keyof Obj];
 
-type RequiredIfRemaining<PredefinedOptions, NowProvided> = NonOptionalKeys<
-  RemainingRequirements<PredefinedOptions>
-> extends undefined
+type RequiredIfRemaining<
+  PredefinedOptions extends { version?: keyof Octokit.ApiVersions },
+  NowProvided,
+  TRemainingRequirements = RemainingRequirements<PredefinedOptions>
+> = NonOptionalKeys<TRemainingRequirements> extends undefined
   ? [(Partial<Octokit.Options> & NowProvided)?]
-  : [
-      Partial<Octokit.Options> &
-        RemainingRequirements<PredefinedOptions> &
-        NowProvided
-    ];
+  : [Partial<Octokit.Options> & NowProvided & TRemainingRequirements];
 
 type ConstructorRequiringOptionsIfNeeded<
   Class,
