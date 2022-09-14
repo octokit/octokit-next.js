@@ -31,6 +31,30 @@ const { data } = await octokit.request("GET /repos/{owner}/{repo}", {
 console.log(data);
 ```
 
+## Breaking changes
+
+A list of breaking changes compared to latest `@octokit/*` modules
+
+- Node 16 and other JavaScript runtime environments that lack a global `fetch` are no longer supported out-of-the-box. A `fetch` method such as provided by the [`node-fetch` npm module](https://github.com/node-fetch/node-fetch) can be passed to make Octokit work in these environments.
+
+  For `@octokit-next/core` and other SDKs built upon it you can do this
+
+  ```js
+  import { Octokit } from "octokit-next";
+  import fetch from "node-fetch";
+
+  const octokit = new Octokit({ request: { fetch } });
+  ```
+
+  For the static `@ocotkit-next/request` method you can do this
+
+  ```js
+  import { request } from "@octokit-next/request";
+  import fetch from "node-fetch";
+
+  const result = await request("GET /", { request: { fetch } });
+  ```
+
 ## Known issues
 
 - Constructor option Types (`options.auth`) are not set correctly when `authStrategy` is set via `.withDefaults({ authStrategy })` ([#20](https://github.com/octokit/octokit-next.js/issues/20))
