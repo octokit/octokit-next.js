@@ -1,4 +1,3 @@
-import { EndpointInterface } from "./endpoint";
 export { EndpointInterface } from "./endpoint";
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
@@ -387,8 +386,10 @@ export declare class Octokit<
    */
   options: TOptions;
 
+  /**
+   * Send a request, with type support for GitHub's REST API.
+   */
   request: RequestInterface<TVersion>;
-  endpoint: EndpointInterface<TVersion>;
 }
 
 /**
