@@ -54,12 +54,32 @@ export async function test() {
   const test = new OctokitWithCallbackAuth({
     auth: {
       callback() {
-        return "secret";
+        return "";
       },
     },
   });
   expectType<typeof createCallbackAuth>(test.options.authStrategy);
 
-  // TODO: @ts-expect-error - auth is required to be set to `{ callback }`
+  // @ts-expect-error - callback must return string
+  new OctokitWithCallbackAuth({
+    auth: {
+      callback() {
+        return 1;
+      },
+    },
+  });
+
+  // Note: The code above gets the constructor options type from
+  //       `new <NowProvided>(...options: RequiredIfRemaining<PredefinedOptions, NowProvided>)`
+  //       while the code below gets the type from Octokit.constructor options
+  // TODO: @ts-expect-error - options is required
   new OctokitWithCallbackAuth();
+
+  // TODO: @ts-expect-error - options.auth is required
+  new OctokitWithCallbackAuth({});
+
+  // TODO: @ts-expect-error - options.auth must be set to `{ callback }`
+  new OctokitWithCallbackAuth({
+    auth: "",
+  });
 }
