@@ -397,7 +397,7 @@ export declare class Octokit<
  * @example
  *
  * ```ts
- * export const MyBase: ExtendOctokitWith<
+ * export const MyOctokit: ExtendOctokitWith<
  *   Octokit,
  *   {
  *     defaults: {
@@ -408,7 +408,7 @@ export declare class Octokit<
  * >;
  *
  * // support import to be used as a class instance type
- * export type MyBase = typeof MyBase;
+ * export type MyOctokit = typeof MyOctokit;
  * ```
  */
 export type ExtendOctokitWith<
