@@ -363,27 +363,29 @@ export declare class Octokit<
   };
 
   /**
-   * Options passed to the constructor combined with the constructor defaults
-   */
-  options: TOptions;
-
-  /**
-   * Constructor without setting `authStrategy`
-   *
-   * You can optionally set the `auth` option to an access token string in order
-   * to authenticate requests.
+   * Constructor with optional `authStrategy`.
    */
   constructor(
     ...options: NonOptionalKeys<TOptions> extends undefined
-      ? [
+      ? // If `authStrategy` is not set,
+        // `options.auth` can be set to an access token string in order
+        // to authenticate requests.
+        [
           ({ version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
             TOptions)?
         ]
-      : [
+      : // If `authStrategy` is set, `options.auth` must be
+        // set to whatever options the `authStrategy` expects.
+        [
           { version?: TVersion } & AuthStrategyAndOptions<TAuthStrategy> &
             TOptions
         ]
   );
+
+  /**
+   * Options passed to the constructor combined with the constructor defaults
+   */
+  options: TOptions;
 
   request: RequestInterface<TVersion>;
   endpoint: EndpointInterface<TVersion>;
