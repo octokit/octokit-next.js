@@ -1,9 +1,7 @@
-import nodeFetch from "node-fetch";
-
 const DEFAULTS = {
   baseURL: "https://api.github.com",
   request: {
-    fetch: nodeFetch,
+    fetch: globalThis.fetch,
   },
 };
 
