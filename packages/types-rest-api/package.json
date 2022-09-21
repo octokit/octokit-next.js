@@ -17,6 +17,6 @@
   "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
-    "type-fest": "^2.0.0"
+    "type-fest": "^3.0.0"
   }
 }
