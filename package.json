@@ -60,6 +60,12 @@
       [
         "@semantic-release/npm",
         {
+          "pkgRoot": "packages/request-error"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
           "pkgRoot": "packages/types"
         }
       ],
