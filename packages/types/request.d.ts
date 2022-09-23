@@ -1,4 +1,9 @@
 import { Octokit } from "./index.js";
+import {
+  KnownEndpointParameters,
+  GLOBAL_DEFAULTS,
+  EndpointInterface,
+} from "./endpoint.js";
 
 import {
   ArgumentsTypesForRoute,
@@ -40,7 +45,8 @@ type UnknownResponse = {
  * 3. When no endpoint types are imported, then any route with any parameters can be passed in, and the response is unknown.
  */
 export interface RequestInterface<
-  TVersion extends keyof Octokit.ApiVersions = "github.com"
+  TVersion extends keyof Octokit.ApiVersions = "github.com",
+  TDefaults extends KnownEndpointParameters<TVersion> = GLOBAL_DEFAULTS
 > {
   /**
    * Send a request to a known endpoint for the version specified in `request.version`.
@@ -105,4 +111,18 @@ export interface RequestInterface<
       ? [Route, Record<string, unknown>?]
       : []
   ): Promise<UnknownResponse>;
+
+  /**
+   * Override or set default options
+   *
+   * @todo implement inheriting the request version and .DEFAULTS from the options passed
+   */
+  withDefaults<TOptions extends KnownEndpointParameters<TVersion>>(
+    options: TOptions
+  ): RequestInterface<TVersion, Omit<TDefaults, keyof TOptions> & TOptions>;
+
+  /**
+   *
+   */
+  endpoint: EndpointInterface<TVersion, TDefaults>;
 }
