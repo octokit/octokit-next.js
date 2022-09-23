@@ -1,0 +1,39 @@
+{
+  "name": "@octokit-next/request-error",
+  "version": "0.0.0-development",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "description": "Error class for Octokit request errors",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/request-error"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/request-error#readme",
+  "keywords": [
+    "octokit",
+    "github",
+    "api"
+  ],
+  "author": "Gregor Martynus (https://github.com/gr2m)",
+  "license": "MIT",
+  "scripts": {
+    "test": "npm run test:code && npm run test:types",
+    "test:code": "c8 uvu test",
+    "test:types": "tsd"
+  },
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development"
+  },
+  "c8": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100,
+    "statements": 100
+  }
+}
