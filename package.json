@@ -9,9 +9,8 @@
   "types": "./index.d.ts",
   "exports": "./index.js",
   "scripts": {
-    "test": "npm run test:workspaces && npm run test:code && npm run test:dts && npm run test:ts && npm run test:coverage",
-    "test:code": "c8 node test.js",
-    "test:coverage": "c8 check-coverage",
+    "test": "npm run test:workspaces && npm run test:code && npm run test:dts && npm run test:ts",
+    "test:code": "node test.js",
     "test:dts": "for d in tests/js/* ; do echo npx tsd $d; tsd $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
     "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo $d; tsc -p $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
     "test:workspaces": "npm test --workspaces --if-present"
@@ -175,10 +174,12 @@
   },
   "devDependencies": {
     "c8": "^7.7.3",
+    "fetch-mock": "npm:@gr2m/fetch-mock@9.11.0-pull-request-644.1",
     "github-openapi-graphql-query": "^2.0.0",
     "handlebars": "^4.7.7",
     "openapi-typescript": "^5.0.0",
     "prettier": "^2.3.2",
+    "sinon": "^14.0.0",
     "sort-keys": "^5.0.0",
     "tsd": "^0.24.1",
     "type-fest": "^3.0.0",
