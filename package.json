@@ -53,6 +53,12 @@
       [
         "@semantic-release/npm",
         {
+          "pkgRoot": "packages/graphql"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
           "pkgRoot": "packages/request"
         }
       ],
