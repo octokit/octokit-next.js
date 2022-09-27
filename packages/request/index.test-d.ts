@@ -1,5 +1,5 @@
 import { Octokit } from "@octokit-next/types";
-import { expectType, expectNotType } from "tsd";
+import { expectType } from "tsd";
 
 import { request } from "./index.js";
 
