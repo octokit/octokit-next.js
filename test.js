@@ -1,5 +1,6 @@
 import { test } from "uvu";
 import * as assert from "uvu/assert";
+import fetchMock from "fetch-mock";
 
 import { request } from "@octokit-next/request";
 import { Octokit } from "@octokit-next/core";
@@ -16,52 +17,26 @@ test("myOctokit.request is a function", () => {
 });
 
 test("octokit.request('GET /')", async () => {
-  const fetchMock = async function (url, options) {
-    assert.equal(url, "https://api.github.com/");
-    assert.equal(options.method, "GET");
-    return {
-      status: 200,
-      ok: true,
-      headers: new Map(),
-      url: "https://api.github.com",
-      async json() {
-        return { ok: true };
-      },
-    };
-  };
+  const mock = fetchMock.sandbox().get("https://api.github.com", { ok: true });
+
   const octokit = new Octokit({
     request: {
-      fetch: fetchMock,
+      fetch: mock,
     },
   });
   const response = await octokit.request("GET /");
-  assert.equal(response, {
-    status: 200,
-    url: "https://api.github.com",
-    headers: {},
-    data: { ok: true },
-  });
+  assert.equal(response.status, 200);
+  assert.equal(response.data, { ok: true });
 });
 
 test("octokit.request('GET /unknown')", async () => {
-  const fetchMock = async function (url, options) {
-    assert.equal(url, "https://api.github.com/unknown");
-    assert.equal(options.method, "GET");
-
-    return {
-      status: 404,
-      ok: false,
-      url: "https://api.github.com/unknown",
-      headers: new Map(),
-      async json() {
-        return { error: "not found" };
-      },
-    };
-  };
+  const mock = fetchMock
+    .sandbox()
+    .get("https://api.github.com/unknown", { status: 404 });
 
   const octokit = new Octokit({
     request: {
-      fetch: fetchMock,
+      fetch: mock,
     },
   });
 
@@ -76,32 +51,15 @@ test("octokit.request('GET /unknown')", async () => {
 });
 
 test("request('GET /')", async () => {
-  const fetchMock = async function (url, options) {
-    assert.equal(url, "https://api.github.com/");
-    assert.equal(options.method, "GET");
-
-    return {
-      status: 200,
-      ok: true,
-      headers: new Map(),
-      url: "https://api.github.com",
-      async json() {
-        return { ok: true };
-      },
-    };
-  };
+  const mock = fetchMock.sandbox().get("https://api.github.com/", { ok: true });
 
   const response = await request("GET /", {
     request: {
-      fetch: fetchMock,
+      fetch: mock,
     },
   });
-  assert.equal(response, {
-    status: 200,
-    url: "https://api.github.com",
-    headers: {},
-    data: { ok: true },
-  });
+  assert.equal(response.status, 200);
+  assert.equal(response.data, { ok: true });
 });
 
 test.run();

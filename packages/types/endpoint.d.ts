@@ -23,13 +23,13 @@ type GenericRequestOptions = {
   request?: Octokit.RequestOptions;
 };
 
-type KnownEndpointParameters<
+export type KnownEndpointParameters<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
 > = { request?: Octokit.RequestOptions<TVersion> } & Partial<
   Omit<GenericRequestOptions, "request">
 >;
 
-type GLOBAL_DEFAULTS = {
+export type GLOBAL_DEFAULTS = {
   method: "GET";
   baseUrl: "https://api.github.com";
   headers: {

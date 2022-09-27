@@ -8,11 +8,6 @@
   "description": "Turns REST API endpoints into generic request options",
   "exports": "./index.js",
   "types": "./index.d.ts",
-  "scripts": {
-    "test": "npm run test:code && npm run test:types",
-    "test:code": "c8 uvu test",
-    "test:types": "tsd"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/octokit/octokit-next.js.git",
@@ -26,6 +21,11 @@
   ],
   "author": "Gregor Martynus (https://github.com/gr2m)",
   "license": "MIT",
+  "scripts": {
+    "test": "npm run test:code && npm run test:types",
+    "test:code": "c8 uvu test",
+    "test:types": "tsd"
+  },
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
     "is-plain-obj": "^4.0.0",
