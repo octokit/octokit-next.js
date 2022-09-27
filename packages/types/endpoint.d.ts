@@ -7,26 +7,10 @@ import {
   RequestByVersionAndRoute,
 } from "./utils";
 
-/**
- * Generic request options as they are returned by the `endpoint()` method
- */
-type GenericRequestOptions = {
-  method: Octokit.RequestMethod;
-  url: string;
-  headers: Octokit.RequestHeaders;
-  baseUrl?: string;
-  mediaType?: {
-    previews?: string[];
-    format?: string;
-  };
-  data?: unknown;
-  request?: Octokit.RequestOptions;
-};
-
 export type KnownEndpointParameters<
   TVersion extends keyof Octokit.ApiVersions = "github.com"
 > = { request?: Octokit.RequestOptions<TVersion> } & Partial<
-  Omit<GenericRequestOptions, "request">
+  Omit<Octokit.EndpointOptions, "request">
 >;
 
 export type GLOBAL_DEFAULTS = {
@@ -120,7 +104,7 @@ export interface EndpointInterface<
     ...options: keyof Octokit.Endpoints extends never
       ? [Route, Record<string, unknown>?]
       : []
-  ): GenericRequestOptions;
+  ): Octokit.EndpointOptions;
 
   /**
    * Override or set default options

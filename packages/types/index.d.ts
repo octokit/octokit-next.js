@@ -76,6 +76,22 @@ export namespace Octokit {
 
   type RequestMethod = "DELETE" | "GET" | "HEAD" | "PATCH" | "POST" | "PUT";
 
+  /**
+   * Generic request options as they are returned by the `endpoint()` method
+   */
+  interface EndpointOptions {
+    method: RequestMethod;
+    url: string;
+    headers: RequestHeaders;
+    baseUrl?: string;
+    mediaType?: {
+      previews?: string[];
+      format?: string;
+    };
+    data?: unknown;
+    request?: RequestOptions;
+  }
+
   interface RequestOptions<
     TVersion extends keyof Octokit.ApiVersions = "github.com"
   > {
