@@ -1,15 +1,12 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 
 import { endpoint } from "../index.js";
 
-const test = suite("endpoint.parse()");
-
-test("is a function", () => {
-  assert.instance(endpoint.parse, Function, "endpoint.parse is a function");
+test("endpoint.parse() is a function", (t) => {
+  t.assert(endpoint.parse instanceof Function, "endpoint.parse is a function");
 });
 
-test("README example", () => {
+test("endpoint.parse() README example", (t) => {
   const input = {
     method: "GET",
     url: "/orgs/{org}/repos",
@@ -17,10 +14,10 @@ test("README example", () => {
     type: "private",
   };
 
-  assert.equal(endpoint(input), endpoint.parse(endpoint.merge(input)));
+  t.deepEqual(endpoint(input), endpoint.parse(endpoint.merge(input)));
 });
 
-test("defaults url to ''", () => {
+test("endpoint.parse() defaults url to ''", (t) => {
   const { url } = endpoint.parse({
     method: "GET",
     baseUrl: "https://example.com",
@@ -33,10 +30,11 @@ test("defaults url to ''", () => {
       previews: [],
     },
   });
-  assert.equal(url, "https://example.com/");
+
+  t.deepEqual(url, "https://example.com/");
 });
 
-test("does not alter input options", () => {
+test("endpoint.parse() does not alter input options", (t) => {
   const input = {
     baseUrl: "https://api.github.com/v3",
     method: "GET",
@@ -53,7 +51,5 @@ test("does not alter input options", () => {
 
   endpoint.parse(input);
 
-  assert.equal(input.headers.accept, "application/vnd.github.v3+json");
+  t.deepEqual(input.headers.accept, "application/vnd.github.v3+json");
 });
-
-test.run();
