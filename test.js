@@ -1,22 +1,21 @@
-import { test } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import fetchMock from "fetch-mock";
 
 import { request } from "@octokit-next/request";
 import { Octokit } from "@octokit-next/core";
 
-test("octokit.request is a function", () => {
+test("octokit.request is a function", (t) => {
   const octokit = new Octokit();
-  assert.equal(typeof octokit.request, "function");
+  t.deepEqual(typeof octokit.request, "function");
 });
 
-test("myOctokit.request is a function", () => {
+test("myOctokit.request is a function", (t) => {
   const MyOctokit = Octokit.withDefaults({}).withPlugins([() => {}]);
   const myOctokit = new MyOctokit();
-  assert.equal(typeof myOctokit.request, "function");
+  t.deepEqual(typeof myOctokit.request, "function");
 });
 
-test("octokit.request('GET /')", async () => {
+test("octokit.request('GET /')", async (t) => {
   const mock = fetchMock.sandbox().get("https://api.github.com", { ok: true });
 
   const octokit = new Octokit({
@@ -25,11 +24,11 @@ test("octokit.request('GET /')", async () => {
     },
   });
   const response = await octokit.request("GET /");
-  assert.equal(response.status, 200);
-  assert.equal(response.data, { ok: true });
+  t.deepEqual(response.status, 200);
+  t.deepEqual(response.data, { ok: true });
 });
 
-test("octokit.request('GET /unknown')", async () => {
+test("octokit.request('GET /unknown')", async (t) => {
   const mock = fetchMock
     .sandbox()
     .get("https://api.github.com/unknown", { status: 404 });
@@ -46,11 +45,11 @@ test("octokit.request('GET /unknown')", async () => {
   } catch (error) {
     if (!error.response) throw error;
 
-    assert.equal(error.response.status, 404);
+    t.deepEqual(error.response.status, 404);
   }
 });
 
-test("request('GET /')", async () => {
+test("request('GET /')", async (t) => {
   const mock = fetchMock.sandbox().get("https://api.github.com/", { ok: true });
 
   const response = await request("GET /", {
@@ -58,8 +57,6 @@ test("request('GET /')", async () => {
       fetch: mock,
     },
   });
-  assert.equal(response.status, 200);
-  assert.equal(response.data, { ok: true });
+  t.deepEqual(response.status, 200);
+  t.deepEqual(response.data, { ok: true });
 });
-
-test.run();
