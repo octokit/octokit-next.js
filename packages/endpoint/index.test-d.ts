@@ -99,7 +99,7 @@ export function objectExample() {
 }
 
 export function apiWithDefaults() {
-  const myEndpoint = endpoint.withDefaults({
+  const myEndpoint = endpoint.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     headers: {
       "user-agent": "myApp/1.2.3",
@@ -114,7 +114,7 @@ export function apiWithDefaults() {
   expectType<"GET">(options.method);
   expectType<string>(options.url);
 
-  const myEndpointWithToken2 = myEndpoint.withDefaults({
+  const myEndpointWithToken2 = myEndpoint.defaults({
     headers: {
       authorization: `token 0000000000000000000000000000000000000002`,
     },
@@ -130,7 +130,7 @@ export function apiWithDefaults() {
 
 export function apiDEFAULTS() {
   expectType<"https://api.github.com">(endpoint.DEFAULTS.baseUrl);
-  const myEndpoint = endpoint.withDefaults({
+  const myEndpoint = endpoint.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
   });
 
@@ -142,8 +142,25 @@ export function apiDEFAULTS() {
   );
 }
 
+export function apiDeepDefaults() {
+  expectType<"application/vnd.github.v3+json">(
+    endpoint.DEFAULTS.headers.accept
+  );
+  const myEndpoint = endpoint.defaults({
+    headers: {
+      foo: "bar",
+    },
+  });
+
+  // TODO: defaults should deeply merge
+  // expectType<"application/vnd.github.v3+json">(
+  //   myEndpoint.DEFAULTS.headers.accept
+  // );
+  expectType<string>(myEndpoint.DEFAULTS.headers.foo);
+}
+
 export function apiMerge() {
-  const myProjectEndpoint = endpoint.withDefaults({
+  const myProjectEndpoint = endpoint.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     headers: {
       "user-agent": "myApp/1.2.3",
