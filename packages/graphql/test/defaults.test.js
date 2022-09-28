@@ -1,5 +1,4 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 
 import fetchMock from "fetch-mock";
 import { getUserAgent } from "universal-user-agent";
@@ -9,13 +8,11 @@ import { graphql } from "../index.js";
 
 const userAgent = `octokit-graphql.js/${VERSION} ${getUserAgent()}`;
 
-const test = suite("graphql.defaults()");
-
-test("is a function", () => {
-  assert.instance(graphql.defaults, Function);
+test("graphql.defaults() is a function", (t) => {
+  t.assert(graphql.defaults instanceof Function);
 });
 
-test("README example", () => {
+test("graphql.defaults() README example", (t) => {
   const mockData = {
     repository: {
       issues: {
@@ -67,11 +64,11 @@ test("README example", () => {
         }
       }
     }`).then((result) => {
-    assert.equal(result, mockData);
+    t.deepEqual(result, mockData);
   });
 });
 
-test("repeated defaults", () => {
+test("graphql.defaults() repeated defaults", (t) => {
   const mockData = {
     repository: {
       issues: {
@@ -126,11 +123,11 @@ test("repeated defaults", () => {
         }
       }
     }`).then((result) => {
-    assert.equal(result, mockData);
+    t.deepEqual(result, mockData);
   });
 });
 
-test("handle baseUrl set with /api/v3 suffix", () => {
+test("graphql.defaults() handle baseUrl set with /api/v3 suffix", async (t) => {
   const ghesGraphQl = graphql.defaults({
     baseUrl: "https://github.acme-inc.com/api/v3",
     headers: {
@@ -149,14 +146,16 @@ test("handle baseUrl set with /api/v3 suffix", () => {
     },
   });
 
-  return ghesGraphQl(`query {
+  await t.notThrowsAsync(() =>
+    ghesGraphQl(`query {
       viewer {
         login
       }
-    }`);
+    }`)
+  );
 });
 
-test("set defaults on .endpoint", () => {
+test("graphql.defaults() set defaults on .endpoint", (t) => {
   const mockData = {
     repository: {
       issues: {
@@ -201,7 +200,7 @@ test("set defaults on .endpoint", () => {
   const { request: _request, ...requestOptions } =
     // @ts-expect-error - TODO: expects to set { url } but it really shouldn't
     authenticatedGraphql.endpoint();
-  assert.equal(requestOptions, {
+  t.deepEqual(requestOptions, {
     method: "POST",
     url: "https://api.github.com/graphql",
     headers: {
@@ -212,5 +211,3 @@ test("set defaults on .endpoint", () => {
     },
   });
 });
-
-test.run();
