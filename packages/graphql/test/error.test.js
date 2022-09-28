@@ -1,12 +1,9 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import fetchMock from "fetch-mock";
 
 import { graphql, GraphqlResponseError } from "../index.js";
 
-const test = suite("errors");
-
-test("Invalid query", () => {
+test("Invalid query", (t) => {
   const query = `{
   viewer {
     bioHtml
@@ -42,17 +39,17 @@ test("Invalid query", () => {
     })
 
     .catch((error) => {
-      assert.equal(
+      t.deepEqual(
         error.message,
         "Request failed due to following response errors:\n" +
           " - Field 'bioHtml' doesn't exist on type 'User'"
       );
-      assert.equal(error.errors, mockResponse.errors);
-      assert.equal(error.request.query, query);
+      t.deepEqual(error.errors, mockResponse.errors);
+      t.deepEqual(error.request.query, query);
     });
 });
 
-test("Should be able check if an error is instance of a GraphQL response error", () => {
+test("Should be able check if an error is instance of a GraphQL response error", (t) => {
   const query = `{
       repository {
         name
@@ -84,16 +81,19 @@ test("Should be able check if an error is instance of a GraphQL response error",
         .post("https://api.github.com/graphql", mockResponse),
     },
   })
-    .then((result) => {
-      throw new Error("Should not resolve");
+    .then(() => {
+      t.fail("Should not resolve");
     })
 
     .catch((error) => {
-      assert.instance(error, GraphqlResponseError);
+      t.assert(
+        error instanceof GraphqlResponseError,
+        "error instanceof GraphqlResponseError"
+      );
     });
 });
 
-test("Should throw an error for a partial response accompanied by errors", () => {
+test("Should throw an error for a partial response accompanied by errors", (t) => {
   const query = `{
       repository(name: "probot", owner: "probot") {
         name
@@ -150,26 +150,26 @@ test("Should throw an error for a partial response accompanied by errors", () =>
       throw new Error("Should not resolve");
     })
     .catch((error) => {
-      assert.equal(
+      t.deepEqual(
         error.message,
         "Request failed due to following response errors:\n" +
           " - `invalid cursor` does not appear to be a valid cursor."
       );
-      assert.equal(error.errors, mockResponse.errors);
-      assert.equal(error.request.query, query);
-      assert.equal(error.data, mockResponse.data);
-      assert.ok(
+      t.deepEqual(error.errors, mockResponse.errors);
+      t.deepEqual(error.request.query, query);
+      t.deepEqual(error.data, mockResponse.data);
+      t.assert(
         "x-github-request-id" in error.headers,
         '"x-github-request-id" header is set'
       );
-      assert.equal(
+      t.deepEqual(
         error.headers["x-github-request-id"],
         "C5E6:259A:1351B40:2E88B87:5F1F9C41"
       );
     });
 });
 
-test("Should throw for server error", () => {
+test("Should throw for server error", (t) => {
   const query = `{
       viewer {
         login
@@ -188,8 +188,6 @@ test("Should throw for server error", () => {
       throw new Error("Should not resolve");
     })
     .catch((error) => {
-      assert.equal(error.status, 500);
+      t.deepEqual(error.status, 500);
     });
 });
-
-test.run();
