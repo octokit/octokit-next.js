@@ -1,20 +1,16 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import fetchMock from "fetch-mock";
 
 import { request } from "../index.js";
 
-const test = suite("request.defaults()");
-
-test("is a function", () => {
-  assert.instance(
-    request.defaults,
-    Function,
+test("request.defaults() is a function", (t) => {
+  t.assert(
+    request.defaults instanceof Function,
     "request.defaults() is a function"
   );
 });
 
-test("README example", () => {
+test("request.defaults() README example", (t) => {
   const mock = fetchMock
     .sandbox()
     .mock(
@@ -43,11 +39,11 @@ test("README example", () => {
   });
 
   return myRequest(`GET /orgs/{org}/repos`).then((response) => {
-    assert.equal(response.status, 200);
+    t.deepEqual(response.status, 200);
   });
 });
 
-test("repeated defaults", () => {
+test("request.defaults() repeated defaults", (t) => {
   const mock = fetchMock
     .sandbox()
     .get(
@@ -84,8 +80,6 @@ test("repeated defaults", () => {
   });
 
   return myProjectRequestWithAuth(`GET /orgs/{org}/repos`).then((response) => {
-    assert.equal(response.status, 200);
+    t.deepEqual(response.status, 200);
   });
 });
-
-test.run();
