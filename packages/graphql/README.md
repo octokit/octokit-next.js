@@ -55,10 +55,8 @@ const { repository } = await graphql(
     {
       repository(owner: "octokit", name: "graphql.js") {
         issues(last: 3) {
-          edges {
-            node {
-              title
-            }
+          nodes {
+            title
           }
         }
       }
@@ -86,10 +84,8 @@ const { repository } = await graphqlWithAuth(`
   {
     repository(owner: "octokit", name: "graphql.js") {
       issues(last: 3) {
-        edges {
-          node {
-            title
-          }
+        nodes {
+          title
         }
       }
     }
@@ -100,7 +96,7 @@ const { repository } = await graphqlWithAuth(`
 For more complex authentication strategies such as GitHub Apps, we recommend to use an [authentication strategy plugin](https://github.com/octokit/auth.js).
 
 ```js
-const { createAppAuth } = require("@octokit/auth-app");
+const { createAppAuth } = require("@octokit-next/auth-app");
 const auth = createAppAuth({
   appId: process.env.APP_ID,
   privateKey: process.env.PRIVATE_KEY,
@@ -116,10 +112,8 @@ const { repository } = await graphqlWithAuth(
   `{
     repository(owner: "octokit", name: "graphql.js") {
       issues(last: 3) {
-        edges {
-          node {
-            title
-          }
+        nodes {
+          title
         }
       }
     }
@@ -133,15 +127,13 @@ const { repository } = await graphqlWithAuth(
 > Do not use [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) in the query strings as they make your code vulnerable to query injection attacks (see [#2](https://github.com/octokit-next/graphql.js/issues/2)). Use variables instead:
 
 ```js
-const { lastIssues } = await graphql(
+const { repository } = await graphql(
   `
     query lastIssues($owner: String!, $repo: String!, $num: Int = 3) {
       repository(owner: $owner, name: $repo) {
         issues(last: $num) {
-          edges {
-            node {
-              title
-            }
+          nodes {
+            title
           }
         }
       }
@@ -161,14 +153,12 @@ const { lastIssues } = await graphql(
 
 ```js
 const { graphql } = require("@octokit-next/graphql");
-const { lastIssues } = await graphql({
+const { repository } = await graphql({
   query: `query lastIssues($owner: String!, $repo: String!, $num: Int = 3) {
     repository(owner:$owner, name:$repo) {
       issues(last:$num) {
-        edges {
-          node {
-            title
-          }
+        nodes {
+          title
         }
       }
     }
@@ -195,10 +185,8 @@ const { repository } = await graphql(`
   {
     repository(owner: "acme-project", name: "acme-repo") {
       issues(last: 3) {
-        edges {
-          node {
-            title
-          }
+        nodes {
+          title
         }
       }
     }
@@ -206,10 +194,10 @@ const { repository } = await graphql(`
 `);
 ```
 
-### Use custom `@octokit/request` instance
+### Use custom `@octokit-next/request` instance
 
 ```js
-const { request } = require("@octokit/request");
+const { request } = require("@octokit-next/request");
 const { withCustomRequest } = require("@octokit-next/graphql");
 
 let requestCounter = 0;
@@ -230,10 +218,8 @@ await myGraphql(`
   {
     repository(owner: "acme-project", name: "acme-repo") {
       issues(last: 3) {
-        edges {
-          node {
-            title
-          }
+        nodes {
+          title
         }
       }
     }

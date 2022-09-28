@@ -93,7 +93,7 @@ export async function objectExample() {
 }
 
 export async function apiWithDefaults() {
-  const myRequest = request.withDefaults({
+  const myRequest = request.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     headers: {
       "user-agent": "myApp/1.2.3",
@@ -111,7 +111,7 @@ export async function apiWithDefaults() {
 
 export function apiDEFAULTS() {
   expectType<"https://api.github.com">(request.endpoint.DEFAULTS.baseUrl);
-  const myRequest = request.withDefaults({
+  const myRequest = request.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
   });
 

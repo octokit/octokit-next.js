@@ -1,4 +1,4 @@
-export { EndpointInterface } from "./endpoint";
+export { EndpointInterface, KnownEndpointParameters } from "./endpoint";
 import { RequestInterface } from "./request";
 export { RequestInterface } from "./request";
 

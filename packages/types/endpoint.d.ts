@@ -111,7 +111,7 @@ export interface EndpointInterface<
    *
    * @todo implement inheriting the request version and .DEFAULTS from the options passed
    */
-  withDefaults<TOptions extends KnownEndpointParameters<TVersion>>(
+  defaults<TOptions extends KnownEndpointParameters<TVersion>>(
     options: TOptions
   ): EndpointInterface<TVersion, Omit<TDefaults, keyof TOptions> & TOptions>;
 
