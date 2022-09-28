@@ -1,13 +1,10 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import fetchMock from "fetch-mock";
 import { request } from "@octokit-next/request";
 
 import { withCustomRequest } from "../index.js";
 
-const test = suite("withCustomRequest()");
-
-test("README example", () => {
+test("withCustomRequest() README example", (t) => {
   const myRequest = request.defaults({
     headers: {
       authorization: "token secret123",
@@ -73,8 +70,6 @@ test("README example", () => {
       },
     }
   ).then((result) => {
-    assert.equal(result, mockData);
+    t.deepEqual(result, mockData);
   });
 });
-
-test.run();
