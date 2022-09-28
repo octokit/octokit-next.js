@@ -23,7 +23,7 @@
   "license": "MIT",
   "scripts": {
     "test": "npm run test:code && npm run test:types",
-    "test:code": "c8 uvu test",
+    "test:code": "c8 ava test",
     "test:types": "tsd"
   },
   "dependencies": {

@@ -1,18 +1,15 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import { getUserAgent } from "universal-user-agent";
 
 import { endpoint } from "../index.js";
 import { VERSION } from "../lib/version.js";
 const userAgent = `octokit-endpoint.js/${VERSION} ${getUserAgent()}`;
 
-const test = suite("endpoint.merge()");
-
-test("is a function", () => {
-  assert.instance(endpoint.merge, Function, "endpoint.merge is a function");
+test("endpoint.merge() is a function", (t) => {
+  t.assert(endpoint.merge instanceof Function, "endpoint.merge is a function");
 });
 
-test("README example", () => {
+test("endpoint.merge() README example", (t) => {
   const myProjectEndpoint = endpoint.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     headers: {
@@ -27,7 +24,7 @@ test("README example", () => {
     type: "private",
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     mediaType: {
       format: "",
@@ -45,7 +42,7 @@ test("README example", () => {
   });
 });
 
-test("repeated defaults", () => {
+test("endpoint.merge() repeated defaults", (t) => {
   const myProjectEndpoint = endpoint.defaults({
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     headers: {
@@ -61,7 +58,7 @@ test("repeated defaults", () => {
 
   const options = myProjectEndpointWithAuth.merge(`GET /orgs/{org}/repos`);
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     baseUrl: "https://github-enterprise.acme-inc.com/api/v3",
     mediaType: {
       format: "",
@@ -78,9 +75,9 @@ test("repeated defaults", () => {
   });
 });
 
-test("no arguments", () => {
+test("endpoint.merge() no arguments", (t) => {
   const options = endpoint.merge();
-  assert.equal(options, {
+  t.deepEqual(options, {
     baseUrl: "https://api.github.com",
     mediaType: {
       format: "",
@@ -94,7 +91,7 @@ test("no arguments", () => {
   });
 });
 
-test("does not mutate the route param", () => {
+test("endpoint.merge() does not mutate the route param", (t) => {
   const route = {
     owner: "octokit",
     repo: "endpoint.js",
@@ -102,13 +99,13 @@ test("does not mutate the route param", () => {
 
   endpoint.merge(route);
 
-  assert.equal(route, {
+  t.deepEqual(route, {
     owner: "octokit",
     repo: "endpoint.js",
   });
 });
 
-test("does not mutate/lowercase the headers field of route", () => {
+test("endpoint.merge() does not mutate/lowercase the headers field of route", (t) => {
   const route = {
     owner: "octokit",
     repo: "endpoint.js",
@@ -119,7 +116,7 @@ test("does not mutate/lowercase the headers field of route", () => {
 
   endpoint.merge(route);
 
-  assert.equal(route, {
+  t.deepEqual(route, {
     owner: "octokit",
     repo: "endpoint.js",
     headers: {
@@ -127,5 +124,3 @@ test("does not mutate/lowercase the headers field of route", () => {
     },
   });
 });
-
-test.run();

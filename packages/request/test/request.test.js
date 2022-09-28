@@ -2,8 +2,7 @@ import fs from "node:fs";
 import stream from "node:stream";
 import * as url from "node:url";
 
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import { getUserAgent } from "universal-user-agent";
 import fetchMock from "fetch-mock";
 import sinon from "sinon";
@@ -13,13 +12,11 @@ import { request } from "../index.js";
 const userAgent = `octokit-request.js/0.0.0-development ${getUserAgent()}`;
 import stringToArrayBuffer from "string-to-arraybuffer";
 
-const test = suite("request.request()");
-
-test("is a function", () => {
-  assert.instance(request, Function);
+test("request.request() is a function", (t) => {
+  t.assert(request instanceof Function);
 });
 
-test("README example", () => {
+test("request.request() README example", (t) => {
   const mock = fetchMock
     .sandbox()
     .mock("https://api.github.com/orgs/octokit/repos?type=private", [], {
@@ -40,11 +37,11 @@ test("README example", () => {
       fetch: mock,
     },
   }).then((response) => {
-    assert.equal(response.data, []);
+    t.deepEqual(response.data, []);
   });
 });
 
-test("README example alternative", () => {
+test("request.request() README example alternative", (t) => {
   const mock = fetchMock
     .sandbox()
     .mock("https://api.github.com/orgs/octokit/repos?type=private", []);
@@ -61,12 +58,12 @@ test("README example alternative", () => {
       fetch: mock,
     },
   }).then((response) => {
-    assert.equal(response.data, []);
+    t.deepEqual(response.data, []);
   });
 });
 
 // TODO: until we migrate @octokit/auth-app to ESM, I'll just use a dummy auth strategy instead
-test("README authentication example", async () => {
+test("request.request() README authentication example", async (t) => {
   const mock = fetchMock.sandbox().mock(
     "https://api.github.com/test",
     { ok: true },
@@ -97,10 +94,10 @@ test("README authentication example", async () => {
     },
   });
   await requestWithAuth("GET /test");
-  assert.ok(mock.done());
+  t.assert(mock.done());
 });
 
-// test("README authentication example", async () => {
+// test("request.request() README authentication example", async (t) => {
 //   const clock = lolex.install({
 //     now: 0,
 //     toFake: ["Date"],
@@ -188,11 +185,11 @@ test("README authentication example", async () => {
 //     repo: "hello-world",
 //     title: "Hello from the engine room",
 //   });
-//   assert.ok(mock.done())
+//   t.assert(mock.done())
 //   clock.reset();
 // });
 
-test("Request with body", () => {
+test("request.request() Request with body", async (t) => {
   const mock = fetchMock
     .sandbox()
     .mock("https://api.github.com/repos/octocat/hello-world/issues", 201, {
@@ -201,7 +198,7 @@ test("Request with body", () => {
       },
     });
 
-  request("POST /repos/{owner}/{repo}/issues", {
+  const response = await request("POST /repos/{owner}/{repo}/issues", {
     owner: "octocat",
     repo: "hello-world",
     headers: {
@@ -215,19 +212,19 @@ test("Request with body", () => {
     request: {
       fetch: mock,
     },
-  }).then((response) => {
-    assert.equal(response.status, 201);
   });
+
+  t.deepEqual(response.status, 201);
 });
 
-test("Put without request body", () => {
+test("request.request() Put without request body", async (t) => {
   const mock = fetchMock
     .sandbox()
     .mock("https://api.github.com/user/starred/octocat/hello-world", 204, {
       body: undefined,
     });
 
-  request("PUT /user/starred/{owner}/{repo}", {
+  const response = await request("PUT /user/starred/{owner}/{repo}", {
     headers: {
       authorization: `token 0000000000000000000000000000000000000001`,
     },
@@ -236,12 +233,12 @@ test("Put without request body", () => {
     request: {
       fetch: mock,
     },
-  }).then((response) => {
-    assert.equal(response.status, 204);
   });
+
+  t.deepEqual(response.status, 204);
 });
 
-test("HEAD requests (octokit/rest.js#841)", () => {
+test("request.request() HEAD requests (octokit/rest.js#841)", async (t) => {
   const mock = fetchMock
     .sandbox()
     .head("https://api.github.com/repos/whatwg/html/pulls/1", {
@@ -268,23 +265,21 @@ test("HEAD requests (octokit/rest.js#841)", () => {
     },
   };
 
-  request(`HEAD /repos/{owner}/{repo}/pulls/{number}`, options)
-    .then((response) => {
-      assert.equal(response.status, 200);
+  const response = await request(
+    `HEAD /repos/{owner}/{repo}/pulls/{number}`,
+    options
+  );
+  t.deepEqual(response.status, 200);
 
-      return request(
-        `HEAD /repos/{owner}/{repo}/pulls/{number}`,
-        Object.assign(options, { number: 2 })
-      );
-    })
-
-    .then(() => {
-      throw new Error("should not resolve");
-    })
-
-    .catch((error) => {
-      assert.equal(error.status, 404);
-    });
+  try {
+    await request(
+      `HEAD /repos/{owner}/{repo}/pulls/{number}`,
+      Object.assign(options, { number: 2 })
+    );
+    t.fail("should not resolve");
+  } catch (error) {
+    t.deepEqual(error.status, 404);
+  }
 });
 
 // TODO: 🤔 unclear how to mock fetch redirect properly
@@ -315,11 +310,11 @@ test.skip("Binary response with redirect", () => {
       fetch: mock,
     },
   }).then((response) => {
-    assert.equal(response.data.length, 172);
+    t.deepEqual(response.data.length, 172);
   });
 });
 
-test("304 etag", () => {
+test("request.request() 304 etag", (t) => {
   const mock = fetchMock.sandbox().get((url, { headers }) => {
     return (
       url === "https://api.github.com/orgs/myorg" &&
@@ -339,11 +334,11 @@ test("304 etag", () => {
     })
 
     .catch((error) => {
-      assert.equal(error.status, 304);
+      t.deepEqual(error.status, 304);
     });
 });
 
-test("304 last-modified", () => {
+test("request.request() 304 last-modified", (t) => {
   const mock = fetchMock.sandbox().get((url, { headers }) => {
     return (
       url === "https://api.github.com/orgs/myorg" &&
@@ -364,11 +359,11 @@ test("304 last-modified", () => {
       throw new Error("should not resolve");
     })
     .catch((error) => {
-      assert.equal(error.status, 304);
+      t.deepEqual(error.status, 304);
     });
 });
 
-test("Not found", () => {
+test("request.request() Not found", (t) => {
   const mock = fetchMock.sandbox().get("path:/orgs/nope", 404);
 
   return request("GET /orgs/{org}", {
@@ -382,13 +377,13 @@ test("Not found", () => {
     })
 
     .catch((error) => {
-      assert.equal(error.status, 404);
-      assert.equal(error.request.method, "GET");
-      assert.equal(error.request.url, "https://api.github.com/orgs/nope");
+      t.deepEqual(error.status, 404);
+      t.deepEqual(error.request.method, "GET");
+      t.deepEqual(error.request.url, "https://api.github.com/orgs/nope");
     });
 });
 
-test("non-JSON response", () => {
+test("request.request() non-JSON response", (t) => {
   const mock = fetchMock
     .sandbox()
     .get("path:/repos/octokit-fixture-org/hello-world/contents/README.md", {
@@ -411,11 +406,11 @@ test("non-JSON response", () => {
       fetch: mock,
     },
   }).then((response) => {
-    assert.equal(response.data, "# hello-world");
+    t.deepEqual(response.data, "# hello-world");
   });
 });
 
-test("Request error", () => {
+test("request.request() Request error", (t) => {
   // port: 8 // officially unassigned port. See https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
   return request("GET https://127.0.0.1:8/")
     .then(() => {
@@ -423,11 +418,11 @@ test("Request error", () => {
     })
 
     .catch((error) => {
-      assert.equal(error.status, 500);
+      t.deepEqual(error.status, 500);
     });
 });
 
-test("custom user-agent", () => {
+test("request.request() custom user-agent", async (t) => {
   const mock = fetchMock
     .sandbox()
     .get(
@@ -435,20 +430,22 @@ test("custom user-agent", () => {
       200
     );
 
-  return request("GET /", {
-    headers: {
-      "user-agent": "funky boom boom pow",
-    },
-    request: {
-      fetch: mock,
-    },
-  });
+  await t.notThrowsAsync(() =>
+    request("GET /", {
+      headers: {
+        "user-agent": "funky boom boom pow",
+      },
+      request: {
+        fetch: mock,
+      },
+    })
+  );
 });
 
-test("passes node-fetch options to fetch only", () => {
+test("request.request() passes node-fetch options to fetch only", (t) => {
   const mock = (url, options) => {
-    assert.equal(url, "https://api.github.com/");
-    assert.equal(options.timeout, 100);
+    t.deepEqual(url, "https://api.github.com/");
+    t.deepEqual(options.timeout, 100);
     return Promise.reject(new Error("ok"));
   };
 
@@ -469,7 +466,7 @@ test("passes node-fetch options to fetch only", () => {
   });
 });
 
-test("422 error with details", () => {
+test("request.request() 422 error with details", (t) => {
   const mock = fetchMock
     .sandbox()
     .post("https://api.github.com/repos/octocat/hello-world/labels", {
@@ -499,19 +496,19 @@ test("422 error with details", () => {
       fetch: mock,
     },
   }).catch((error) => {
-    assert.equal(error.status, 422);
-    assert.equal(error.response.headers["x-foo"], "bar");
-    assert.equal(
+    t.deepEqual(error.status, 422);
+    t.deepEqual(error.response.headers["x-foo"], "bar");
+    t.deepEqual(
       error.response.data.documentation_url,
       "https://developer.github.com/v3/issues/labels/#create-a-label"
     );
-    assert.equal(error.response.data.errors, [
+    t.deepEqual(error.response.data.errors, [
       { resource: "Label", code: "invalid", field: "color" },
     ]);
   });
 });
 
-test("redacts credentials from error.request.headers.authorization", () => {
+test("request.request() redacts credentials from error.request.headers.authorization", (t) => {
   const mock = fetchMock.sandbox().get("https://api.github.com/", {
     status: 500,
   });
@@ -524,11 +521,11 @@ test("redacts credentials from error.request.headers.authorization", () => {
       fetch: mock,
     },
   }).catch((error) => {
-    assert.equal(error.request.headers.authorization, "token [REDACTED]");
+    t.deepEqual(error.request.headers.authorization, "token [REDACTED]");
   });
 });
 
-test("redacts credentials from error.request.url", () => {
+test("request.request() redacts credentials from error.request.url", (t) => {
   const mock = fetchMock
     .sandbox()
     .get("https://api.github.com/?client_id=123&client_secret=secret123", {
@@ -542,13 +539,13 @@ test("redacts credentials from error.request.url", () => {
       fetch: mock,
     },
   }).catch((error) => {
-    assert.equal(
+    t.deepEqual(
       error.request.url,
       "https://api.github.com/?client_id=123&client_secret=[REDACTED]"
     );
   });
 });
-test("Just URL", () => {
+test("request.request() Just URL", (t) => {
   const mock = fetchMock.sandbox().get("path:/", 200);
 
   return request("/", {
@@ -556,11 +553,11 @@ test("Just URL", () => {
       fetch: mock,
     },
   }).then(({ status }) => {
-    assert.equal(status, 200);
+    t.deepEqual(status, 200);
   });
 });
 
-test("options.request.signal is passed as option to fetch", function () {
+test("request.request() options.request.signal is passed as option to fetch", (t) => {
   return request("/", {
     request: {
       // We pass a value that is not an `AbortSignal`, and expect `fetch` to
@@ -575,11 +572,11 @@ test("options.request.signal is passed as option to fetch", function () {
     .catch((error) => {
       // We can't match on the entire string because the message differs between
       // Node versions.
-      assert.match(error.message, /AbortSignal/);
+      t.regex(error.message, /AbortSignal/);
     });
 });
 
-test("options.request.fetch", function () {
+test("request.request() options.request.fetch", (t) => {
   return request("/", {
     request: {
       fetch: () =>
@@ -595,11 +592,11 @@ test("options.request.fetch", function () {
         }),
     },
   }).then((result) => {
-    assert.equal(result.data, "funk");
+    t.deepEqual(result.data, "funk");
   });
 });
 
-test("options.request.hook", function () {
+test("request.request() options.request.hook", (t) => {
   const mock = fetchMock.sandbox().mock(
     "https://api.github.com/foo",
     { ok: true },
@@ -611,9 +608,15 @@ test("options.request.hook", function () {
   );
 
   const hook = (request, options) => {
-    assert.instance(request.endpoint, Function);
-    assert.instance(request.defaults, Function);
-    assert.equal(options, {
+    t.assert(
+      request.endpoint instanceof Function,
+      "request.endpoint, Function"
+    );
+    t.assert(
+      request.defaults instanceof Function,
+      "request.defaults, Function"
+    );
+    t.deepEqual(options, {
       baseUrl: "https://api.github.com",
       headers: {
         accept: "application/vnd.github.v3+json",
@@ -647,11 +650,11 @@ test("options.request.hook", function () {
       hook,
     },
   }).then((result) => {
-    assert.equal(result.data, { ok: true });
+    t.deepEqual(result.data, { ok: true });
   });
 });
 
-test("options.mediaType.format", function () {
+test("request.request() options.mediaType.format", (t) => {
   const mock = fetchMock
     .sandbox()
     .mock("https://api.github.com/repos/octokit/request.js/issues/1", "ok", {
@@ -676,11 +679,11 @@ test("options.mediaType.format", function () {
       fetch: mock,
     },
   }).then((response) => {
-    assert.equal(response.data, "ok");
+    t.deepEqual(response.data, "ok");
   });
 });
 
-test("options.mediaType.previews", function () {
+test("request.request() options.mediaType.previews", (t) => {
   const mock = fetchMock
     .sandbox()
     .mock("https://api.github.com/repos/octokit/request.js/issues/1", "ok", {
@@ -706,11 +709,11 @@ test("options.mediaType.previews", function () {
       fetch: mock,
     },
   }).then((response) => {
-    assert.equal(response.data, "ok");
+    t.deepEqual(response.data, "ok");
   });
 });
 
-test("octokit/octokit.js#1497", function () {
+test("request.request() octokit/octokit.js#1497", (t) => {
   const mock = fetchMock.sandbox().mock(
     "https://request-errors-test.com/repos/gr2m/sandbox/branches/gr2m-patch-1/protection",
     {
@@ -760,14 +763,14 @@ test("octokit/octokit.js#1497", function () {
       fail("This should return error.");
     })
     .catch((error) => {
-      assert.ok(
+      t.assert(
         "message" in error,
         `Validation failed: "Only organization repositories can have users and team restrictions", {"resource":"Search","field":"q","code":"invalid"}`
       );
     });
 });
 
-test("logs deprecation warning if `deprecation` header is present", function () {
+test("request.request() logs deprecation warning if `deprecation` header is present", (t) => {
   const mock = fetchMock.sandbox().mock(
     "https://api.github.com/teams/123",
     {
@@ -798,9 +801,9 @@ test("logs deprecation warning if `deprecation` header is present", function () 
     team_id: 123,
     request: { fetch: mock, log: { warn } },
   }).then((response) => {
-    assert.equal(response.data, { id: 123 });
-    assert.equal(warn.calledOnce, true);
-    assert.ok(
+    t.deepEqual(response.data, { id: 123 });
+    t.deepEqual(warn.calledOnce, true);
+    t.assert(
       warn.calledWith(
         '[@octokit/request] "GET https://api.github.com/teams/123" is deprecated. It is scheduled to be removed on Mon, 01 Feb 2021 00:00:00 GMT. See https://developer.github.com/changes/2020-01-21-moving-the-team-api-endpoints/'
       )
@@ -808,7 +811,7 @@ test("logs deprecation warning if `deprecation` header is present", function () 
   });
 });
 
-test("deprecation header without deprecation link", function () {
+test("request.request() deprecation header without deprecation link", (t) => {
   const mock = fetchMock.sandbox().mock(
     "https://api.github.com/teams/123",
     {
@@ -838,9 +841,9 @@ test("deprecation header without deprecation link", function () {
     team_id: 123,
     request: { fetch: mock, log: { warn } },
   }).then((response) => {
-    assert.equal(response.data, { id: 123 });
-    assert.equal(warn.calledOnce, true);
-    assert.ok(
+    t.deepEqual(response.data, { id: 123 });
+    t.deepEqual(warn.calledOnce, true);
+    t.assert(
       warn.calledWith(
         '[@octokit/request] "GET https://api.github.com/teams/123" is deprecated. It is scheduled to be removed on Mon, 01 Feb 2021 00:00:00 GMT'
       )
@@ -848,7 +851,7 @@ test("deprecation header without deprecation link", function () {
   });
 });
 
-test("404 not found", () => {
+test("request.request() 404 not found", (t) => {
   const mock = fetchMock
     .sandbox()
     .get("https://api.github.com/repos/octocat/unknown", {
@@ -866,16 +869,16 @@ test("404 not found", () => {
       fetch: mock,
     },
   }).catch((error) => {
-    assert.equal(error.status, 404);
-    assert.equal(error.response.data.message, "Not Found");
-    assert.equal(
+    t.deepEqual(error.status, 404);
+    t.deepEqual(error.response.data.message, "Not Found");
+    t.deepEqual(
       error.response.data.documentation_url,
       "https://docs.github.com/en/rest/reference/repos#get-a-repository"
     );
   });
 });
 
-test("Request timeout", () => {
+test("request.request() Request timeout", (t) => {
   const delay = (millis = 3000) => {
     return new Promise((resolve) => {
       setTimeout(resolve, millis);
@@ -883,8 +886,8 @@ test("Request timeout", () => {
   };
 
   const mock = (url, options) => {
-    assert.equal(url, "https://api.github.com/");
-    assert.equal(options.timeout, 100);
+    t.deepEqual(url, "https://api.github.com/");
+    t.deepEqual(options.timeout, 100);
     return delay().then(() => {
       return {
         status: 200,
@@ -906,12 +909,12 @@ test("Request timeout", () => {
       throw new Error("should not resolve");
     })
     .catch((error) => {
-      assert.equal(error.name, "HttpError");
-      assert.equal(error.status, 500);
+      t.deepEqual(error.name, "HttpError");
+      t.deepEqual(error.status, 500);
     });
 });
 
-test("validate request with readstream data", () => {
+test("request.request() validate request with readstream data", async (t) => {
   const currentFilePath = url.fileURLToPath(import.meta.url);
   const size = fs.statSync(currentFilePath).size;
   const mock = fetchMock
@@ -923,28 +926,34 @@ test("validate request with readstream data", () => {
       }
     );
 
-  return request("POST /repos/{owner}/{repo}/releases/{release_id}/assets", {
-    owner: "octokit-fixture-org",
-    repo: "release-assets",
-    release_id: "v1.0.0",
-    request: {
-      fetch: mock,
-    },
-    headers: {
-      "content-type": "text/json",
-      "content-length": size,
-    },
-    data: fs.createReadStream(currentFilePath),
-    name: "test-upload.txt",
-    label: "test",
-  }).then((response) => {
-    assert.equal(response.status, 200);
-    assert.instance(mock.lastOptions()?.body, stream.Readable);
-    assert.ok(mock.done());
-  });
+  const response = await request(
+    "POST /repos/{owner}/{repo}/releases/{release_id}/assets",
+    {
+      owner: "octokit-fixture-org",
+      repo: "release-assets",
+      release_id: "v1.0.0",
+      request: {
+        fetch: mock,
+      },
+      headers: {
+        "content-type": "text/json",
+        "content-length": size,
+      },
+      data: fs.createReadStream(currentFilePath),
+      name: "test-upload.txt",
+      label: "test",
+    }
+  );
+
+  t.deepEqual(response.status, 200);
+  t.assert(
+    mock.lastOptions()?.body instanceof stream.Readable,
+    "mock.lastOptions()?.body, stream.Readable"
+  );
+  t.assert(mock.done());
 });
 
-test("validate request with data set to Buffer type", () => {
+test("request.request() validate request with data set to Buffer type", (t) => {
   const mock = fetchMock
     .sandbox()
     .post(
@@ -968,13 +977,13 @@ test("validate request with data set to Buffer type", () => {
     name: "test-upload.txt",
     label: "test",
   }).then((response) => {
-    assert.equal(response.status, 200);
-    assert.equal(mock.lastOptions()?.body, Buffer.from("Hello, world!\n"));
-    assert.ok(mock.done());
+    t.deepEqual(response.status, 200);
+    t.deepEqual(mock.lastOptions()?.body, Buffer.from("Hello, world!\n"));
+    t.assert(mock.done());
   });
 });
 
-test("validate request with data set to ArrayBuffer type", () => {
+test("request.request() validate request with data set to ArrayBuffer type", (t) => {
   const mock = fetchMock
     .sandbox()
     .post(
@@ -998,16 +1007,16 @@ test("validate request with data set to ArrayBuffer type", () => {
     name: "test-upload.txt",
     label: "test",
   }).then((response) => {
-    assert.equal(response.status, 200);
-    assert.equal(
+    t.deepEqual(response.status, 200);
+    t.deepEqual(
       mock.lastOptions()?.body,
       stringToArrayBuffer("Hello, world!\n")
     );
-    assert.ok(mock.done());
+    t.assert(mock.done());
   });
 });
 
-test("bubbles up AbortError if the request is aborted", () => {
+test("request.request() bubbles up AbortError if the request is aborted", (t) => {
   // AbortSignal and AbortController do not exist on
   // Node < 15. The main parts of their API have been
   // reproduced in the mocks below.
@@ -1050,8 +1059,6 @@ test("bubbles up AbortError if the request is aborted", () => {
     name: "test-upload.txt",
     label: "test",
   }).catch((error) => {
-    assert.equal(error.name, "AbortError");
+    t.deepEqual(error.name, "AbortError");
   });
 });
-
-test.run();

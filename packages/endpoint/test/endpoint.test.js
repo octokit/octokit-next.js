@@ -1,7 +1,6 @@
-import { Agent } from "http";
+import { Agent } from "node:http";
 
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import { getUserAgent } from "universal-user-agent";
 
 import { endpoint } from "../index.js";
@@ -9,13 +8,11 @@ import { VERSION } from "../lib/version.js";
 
 const userAgent = `octokit-endpoint.js/${VERSION} ${getUserAgent()}`;
 
-const test = suite("endpoint()");
-
-test("is a function", () => {
-  assert.instance(endpoint, Function, "endpoint is a function");
+test("endpoint() is a function", (t) => {
+  t.assert(endpoint instanceof Function, "endpoint is a function");
 });
 
-test("README example", () => {
+test("endpoint() README example", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/orgs/{org}/repos",
@@ -23,7 +20,7 @@ test("README example", () => {
     type: "private",
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/orgs/octokit/repos?type=private",
     headers: {
@@ -33,13 +30,13 @@ test("README example", () => {
   });
 });
 
-test("Pass route string as first argument", () => {
+test("endpoint(route, options)", (t) => {
   const options = endpoint("GET /orgs/{org}/repos", {
     org: "octokit",
     type: "private",
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/orgs/octokit/repos?type=private",
     headers: {
@@ -49,10 +46,10 @@ test("Pass route string as first argument", () => {
   });
 });
 
-test("Pass route string as first argument without options", () => {
+test("endpoint(route)", (t) => {
   const options = endpoint("GET /");
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/",
     headers: {
@@ -62,7 +59,7 @@ test("Pass route string as first argument without options", () => {
   });
 });
 
-test("Custom user-agent header", () => {
+test("endpoint() with custom user-agent header", (t) => {
   const options = endpoint("GET /", {
     headers: {
       // also test that header keys GET lowercased
@@ -70,7 +67,7 @@ test("Custom user-agent header", () => {
     },
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/",
     headers: {
@@ -80,12 +77,12 @@ test("Custom user-agent header", () => {
   });
 });
 
-test("Full URL", () => {
+test("endpoint(route) using full URL", (t) => {
   const options = endpoint(
     "GET https://codeload.github.com/octokit/endpoint-abcde/legacy.tar.gz/master"
   );
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://codeload.github.com/octokit/endpoint-abcde/legacy.tar.gz/master",
     headers: {
@@ -95,21 +92,7 @@ test("Full URL", () => {
   });
 });
 
-test("Should properly handle either placeholder format on url", () => {
-  const { url: url1 } = endpoint("GET /repos/{owner}/{repo}/contents/{path}", {
-    owner: "owner",
-    repo: "repo",
-    path: "path/to/file.txt",
-  });
-  const { url: url2 } = endpoint("GET /repos/{owner}/{repo}/contents/{path}", {
-    owner: "owner",
-    repo: "repo",
-    path: "path/to/file.txt",
-  });
-  assert.equal(url1, url2);
-});
-
-test("Request body", () => {
+test("endpoint() request body", (t) => {
   const options = endpoint("POST /repos/{owner}/{repo}/issues", {
     owner: "octocat",
     repo: "hello-world",
@@ -123,7 +106,7 @@ test("Request body", () => {
     labels: ["bug"],
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "POST",
     url: "https://api.github.com/repos/octocat/hello-world/issues",
     headers: {
@@ -141,7 +124,7 @@ test("Request body", () => {
   });
 });
 
-test("Put without request body", () => {
+test("endpoint() PUT without request body", (t) => {
   const options = endpoint("PUT /user/starred/{owner}/{repo}", {
     headers: {
       authorization: `token 0000000000000000000000000000000000000001`,
@@ -150,7 +133,7 @@ test("Put without request body", () => {
     repo: "hello-world",
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "PUT",
     url: "https://api.github.com/user/starred/octocat/hello-world",
     headers: {
@@ -163,7 +146,7 @@ test("Put without request body", () => {
   });
 });
 
-test("Query parameter template", () => {
+test("endpoint() query parameter template", (t) => {
   const options = endpoint(
     "POST https://uploads.github.com/repos/octocat/Hello-World/releases/1/assets{?name,label}",
     {
@@ -178,7 +161,7 @@ test("Query parameter template", () => {
     }
   );
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "POST",
     url: "https://uploads.github.com/repos/octocat/Hello-World/releases/1/assets?name=example.zip&label=short%20description",
     headers: {
@@ -192,12 +175,12 @@ test("Query parameter template", () => {
   });
 });
 
-test("URL with query parameter and additional options", () => {
+test("endpoint(route, options) with query parameter as part of route", (t) => {
   const options = endpoint("GET /orgs/octokit/repos?access_token=abc4567", {
     type: "private",
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/orgs/octokit/repos?access_token=abc4567&type=private",
     headers: {
@@ -207,7 +190,7 @@ test("URL with query parameter and additional options", () => {
   });
 });
 
-test("Set request body directly", () => {
+test("endpoint(route, { data })", (t) => {
   const options = endpoint("POST /markdown/raw", {
     data: "Hello world github/linguist#1 **cool**, and #1!",
     headers: {
@@ -216,7 +199,7 @@ test("Set request body directly", () => {
     },
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "POST",
     url: "https://api.github.com/markdown/raw",
     headers: {
@@ -228,12 +211,12 @@ test("Set request body directly", () => {
   });
 });
 
-test("Encode q parameter", () => {
+test('endpoint("GET /search/issues", {q}) encoding', (t) => {
   const options = endpoint("GET /search/issues", {
     q: "location:Jyväskylä",
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/search/issues?q=location%3AJyv%C3%A4skyl%C3%A4",
     headers: {
@@ -243,14 +226,14 @@ test("Encode q parameter", () => {
   });
 });
 
-test("request parameter", () => {
+test("endpoint() request parameter", (t) => {
   const options = endpoint("GET /", {
     request: {
       timeout: 100,
     },
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/",
     headers: {
@@ -263,26 +246,26 @@ test("request parameter", () => {
   });
 });
 
-test("request.agent", () => {
+test("endpoint() request.agent", (t) => {
   const options = endpoint("GET /", {
     request: {
       agent: new Agent(),
     },
   });
 
-  assert.instance(options.request.agent, Agent);
+  t.assert(options.request.agent instanceof Agent);
 });
 
-test("Just URL", () => {
-  assert.equal(endpoint("/").url, "https://api.github.com/");
-  assert.equal(endpoint("/").method, "GET");
-  assert.equal(
+test("endpoint() Just URL", (t) => {
+  t.deepEqual(endpoint("/").url, "https://api.github.com/");
+  t.deepEqual(endpoint("/").method, "GET");
+  t.deepEqual(
     endpoint("https://github.acme-inc/api/v3/").url,
     "https://github.acme-inc/api/v3/"
   );
 });
 
-test("options.mediaType.format", () => {
+test("endpoint() options.mediaType.format", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/repos/{owner}/{repo}/issues/{number}",
@@ -294,7 +277,7 @@ test("options.mediaType.format", () => {
     number: 123,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/repos/octokit/endpoint.js/issues/123",
     headers: {
@@ -304,7 +287,7 @@ test("options.mediaType.format", () => {
   });
 });
 
-test("options.mediaType.previews", () => {
+test("endpoint() options.mediaType.previews", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/repos/{owner}/{repo}/issues/{number}",
@@ -316,7 +299,7 @@ test("options.mediaType.previews", () => {
     number: 123,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/repos/octokit/endpoint.js/issues/123",
     headers: {
@@ -326,7 +309,7 @@ test("options.mediaType.previews", () => {
   });
 });
 
-test("options.mediaType.previews with -preview suffix", () => {
+test("endpoint() options.mediaType.previews with -preview suffix", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/repos/{owner}/{repo}/issues/{number}",
@@ -338,7 +321,7 @@ test("options.mediaType.previews with -preview suffix", () => {
     number: 123,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/repos/octokit/endpoint.js/issues/123",
     headers: {
@@ -349,7 +332,7 @@ test("options.mediaType.previews with -preview suffix", () => {
   });
 });
 
-test("options.mediaType.format + options.mediaType.previews", () => {
+test("endpoint() options.mediaType.format + options.mediaType.previews", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/repos/{owner}/{repo}/issues/{number}",
@@ -362,7 +345,7 @@ test("options.mediaType.format + options.mediaType.previews", () => {
     number: 123,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/repos/octokit/endpoint.js/issues/123",
     headers: {
@@ -372,7 +355,7 @@ test("options.mediaType.format + options.mediaType.previews", () => {
   });
 });
 
-test("options.mediaType.format + options.mediaType.previews + accept header", () => {
+test("endpoint() options.mediaType.format + options.mediaType.previews + accept header", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/repos/{owner}/{repo}/issues/{number}",
@@ -388,7 +371,7 @@ test("options.mediaType.format + options.mediaType.previews + accept header", ()
     number: 123,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/repos/octokit/endpoint.js/issues/123",
     headers: {
@@ -399,7 +382,7 @@ test("options.mediaType.format + options.mediaType.previews + accept header", ()
   });
 });
 
-test("application/octet-stream accept header + previews", () => {
+test("endpoint() application/octet-stream accept header + previews", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/repos/{owner}/{repo}/releases/assets/{asset_id}",
@@ -414,7 +397,7 @@ test("application/octet-stream accept header + previews", () => {
     asset_id: 123,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/repos/octokit/endpoint.js/releases/assets/123",
     headers: {
@@ -424,14 +407,14 @@ test("application/octet-stream accept header + previews", () => {
   });
 });
 
-test("Undefined query parameter", () => {
+test("endpoint() undefined query parameter", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/notifications",
     before: undefined,
   });
 
-  assert.equal(options, {
+  t.deepEqual(options, {
     method: "GET",
     url: "https://api.github.com/notifications",
     headers: {
@@ -441,7 +424,7 @@ test("Undefined query parameter", () => {
   });
 });
 
-test("Undefined header value", () => {
+test("endpoint() undefined header value", (t) => {
   const options = endpoint({
     method: "GET",
     url: "/notifications",
@@ -450,7 +433,8 @@ test("Undefined header value", () => {
     },
   });
 
-  assert.not("if-modified-since" in options.headers);
+  t.not(
+    "if-modified-since" in options.headers,
+    "options.headers['if-modified-since'] is not set"
+  );
 });
-
-test.run();

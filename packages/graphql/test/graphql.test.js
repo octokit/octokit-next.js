@@ -1,5 +1,4 @@
-import { suite } from "uvu";
-import * as assert from "uvu/assert";
+import test from "ava";
 import fetchMock from "fetch-mock";
 import { getUserAgent } from "universal-user-agent";
 
@@ -8,13 +7,11 @@ import { VERSION } from "../version.js";
 
 const userAgent = `octokit-graphql.js/${VERSION} ${getUserAgent()}`;
 
-const test = suite("graphql()");
-
-test("is a function", () => {
-  assert.instance(graphql, Function);
+test("graphql() is a function", (t) => {
+  t.assert(graphql instanceof Function);
 });
 
-test("README simple query example", () => {
+test("graphql() README simple query example", (t) => {
   const mockData = {
     repository: {
       issues: {
@@ -72,11 +69,11 @@ test("README simple query example", () => {
       },
     }
   ).then((result) => {
-    assert.equal(result, mockData);
+    t.deepEqual(result, mockData);
   });
 });
 
-test("Variables", () => {
+test("graphql() Variables", (t) => {
   const query = `query lastIssues($owner: String!, $repo: String!, $num: Int = 3) {
       repository(owner:$owner, name:$repo) {
         issues(last:$num) {
@@ -100,8 +97,8 @@ test("Variables", () => {
         .sandbox()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
-          assert.equal(body.query, query);
-          assert.equal(body.variables, {
+          t.deepEqual(body.query, query);
+          t.deepEqual(body.variables, {
             owner: "octokit",
             repo: "graphql.js",
           });
@@ -112,7 +109,7 @@ test("Variables", () => {
   });
 });
 
-test("Pass headers together with variables as 2nd argument", () => {
+test("graphql() Pass headers together with variables as 2nd argument", (t) => {
   const query = `query lastIssues($owner: String!, $repo: String!, $num: Int = 3) {
       repository(owner:$owner, name:$repo) {
         issues(last:$num) {
@@ -137,13 +134,13 @@ test("Pass headers together with variables as 2nd argument", () => {
         .sandbox()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
-          assert.equal(body.query, query);
-          assert.equal(body.variables, {
+          t.deepEqual(body.query, query);
+          t.deepEqual(body.variables, {
             owner: "octokit",
             repo: "graphql.js",
           });
-          assert.equal(options.headers["authorization"], "token secret123");
-          assert.equal(options.headers["x-custom"], "value");
+          t.deepEqual(options.headers["authorization"], "token secret123");
+          t.deepEqual(options.headers["x-custom"], "value");
 
           return { data: {} };
         }),
@@ -153,7 +150,7 @@ test("Pass headers together with variables as 2nd argument", () => {
   return graphql(query, options);
 });
 
-test("Pass query together with headers and variables", () => {
+test("graphql() Pass query together with headers and variables", (t) => {
   const query = `query lastIssues($owner: String!, $repo: String!, $num: Int = 3) {
       repository(owner:$owner, name:$repo) {
         issues(last:$num) {
@@ -178,8 +175,8 @@ test("Pass query together with headers and variables", () => {
         .sandbox()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
-          assert.equal(body.query, query);
-          assert.equal(body.variables, {
+          t.deepEqual(body.query, query);
+          t.deepEqual(body.variables, {
             owner: "octokit",
             repo: "graphql.js",
           });
@@ -192,7 +189,7 @@ test("Pass query together with headers and variables", () => {
   return graphql(options);
 });
 
-test("Don’t send empty variables object", () => {
+test("graphql() Don’t send empty variables object", (t) => {
   const query = "{ viewer { login } }";
 
   return graphql(query, {
@@ -204,8 +201,8 @@ test("Don’t send empty variables object", () => {
         .sandbox()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
-          assert.equal(body.query, query);
-          assert.equal(body.variables, undefined);
+          t.deepEqual(body.query, query);
+          t.deepEqual(body.variables, undefined);
 
           return { data: {} };
         }),
@@ -213,7 +210,7 @@ test("Don’t send empty variables object", () => {
   });
 });
 
-test("MediaType previews are added to header", () => {
+test("graphql() MediaType previews are added to header", (t) => {
   const query = `{ viewer { login } }`;
 
   return graphql(query, {
@@ -227,15 +224,15 @@ test("MediaType previews are added to header", () => {
       fetch: fetchMock
         .sandbox()
         .post("https://api.github.com/graphql", (url, options) => {
-          assert.match(options.headers.accept, /antiope-preview/);
-          assert.match(options.headers.accept, /testpkg-preview/);
+          t.regex(options.headers.accept, /antiope-preview/);
+          t.regex(options.headers.accept, /testpkg-preview/);
           return { data: {} };
         }),
     },
   });
 });
 
-test("query variable (#166)", () => {
+test("graphql() query variable (#166)", (t) => {
   const query = `query search($query: String!) {
       search(query: $query, first: 10, type: ISSUE) {
         edges {
@@ -255,17 +252,17 @@ test("query variable (#166)", () => {
     query: "test",
   })
     .then(() => {
-      assert.unreachable("should not resolve");
+      t.fail("should not resolve");
     })
     .catch((error) => {
-      assert.equal(
+      t.deepEqual(
         error.message,
         `[@octokit/graphql] "query" cannot be used as variable name`
       );
     });
 });
 
-test("url variable (#264)", () => {
+test("graphql() url variable (#264)", (t) => {
   const query = `query GetCommitStatus($url: URI!) {
       resource(url: $url) {
         ... on Commit {
@@ -280,17 +277,17 @@ test("url variable (#264)", () => {
     url: "https://example.com",
   })
     .then(() => {
-      assert.unreachable("should not resolve");
+      t.fail("should not resolve");
     })
     .catch((error) => {
-      assert.equal(
+      t.deepEqual(
         error.message,
         `[@octokit/graphql] "url" cannot be used as variable name`
       );
     });
 });
 
-test("method variable", () => {
+test("graphql() method variable", (t) => {
   const query = `query($method:String!){
       search(query:$method,type:ISSUE) {
         codeCount
@@ -301,14 +298,12 @@ test("method variable", () => {
     method: "test",
   })
     .then(() => {
-      assert.unreachable("should not resolve");
+      t.fail("should not resolve");
     })
     .catch((error) => {
-      assert.equal(
+      t.deepEqual(
         error.message,
         `[@octokit/graphql] "method" cannot be used as variable name`
       );
     });
 });
-
-test.run();
