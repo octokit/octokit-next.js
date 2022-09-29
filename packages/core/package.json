@@ -14,11 +14,28 @@
     "directory": "packages/core"
   },
   "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/core#readme",
+  "keywords": [
+    "octokit",
+    "github",
+    "api"
+  ],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
+  "scripts": {
+    "test": "npm run test:code && npm run test:types",
+    "test:code": "c8 ava test",
+    "test:types": "tsd"
+  },
   "dependencies": {
     "@octokit-next/auth-token": "0.0.0-development",
-    "@octokit-next/request": "0.0.0-development",
-    "@octokit-next/types": "0.0.0-development"
+    "@octokit-next/types": "0.0.0-development",
+    "@octokit-next/request": "0.0.0-development"
+  },
+  "c8": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100,
+    "statements": 100
   }
 }
