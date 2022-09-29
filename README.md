@@ -54,6 +54,10 @@ A list of breaking changes compared to latest `@octokit/*` modules
   const result = await request("GET /", { request: { fetch } });
   ```
 
+- `Octokit.defaults` is now `Octokit.withDefaults`
+
+- `Octokit.plugin` is now `Octokit.withPlugins`. Instead of accepting one argument per plugin, the method now accepts a single array argument with all plugins to be applied.
+
 - `@octokit/openapi-types` will be renamed to `@octokit/types-openapi` to be consistents with the `@octokit/types-*` prefixed packages that only contain types
 
 - `@octokit/auth-token`: `createTokenAuth()` no longer accepts a `token` string argument, but requires `options.token`.

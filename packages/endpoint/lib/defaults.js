@@ -2,7 +2,7 @@ import { getUserAgent } from "universal-user-agent";
 
 import { VERSION } from "./version.js";
 
-const userAgent = `octokit-endpoint.js/${VERSION} ${getUserAgent()}`;
+const userAgent = `octokit-next-endpoint.js/${VERSION} ${getUserAgent()}`;
 
 // DEFAULTS has all properties set that EndpointOptions has, except url.
 // So we use RequestParameters and add method as additional required property.

@@ -1,1 +1,1 @@
-export { Octokit } from "@octokit-next/types";
+export * from "@octokit-next/types";

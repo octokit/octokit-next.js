@@ -1,6 +1,6 @@
 import { expectType } from "tsd";
 
-import { Octokit, Plugin } from "@octokit-next/core";
+import { Octokit, OctokitPlugin } from "@octokit-next/core";
 
 export async function test() {
   const octokit = new Octokit();
@@ -8,7 +8,7 @@ export async function test() {
   // @ts-expect-error - unknown properties cannot be used
   octokit.unknown;
 
-  expectType<Plugin[]>(Octokit.plugins);
+  expectType<OctokitPlugin[]>(Octokit.plugins);
 
   const unknownResponse = await octokit.request("GET /");
   expectType<number>(unknownResponse.status);

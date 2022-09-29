@@ -9,7 +9,7 @@ import sinon from "sinon";
 
 import { request } from "../index.js";
 
-const userAgent = `octokit-request.js/0.0.0-development ${getUserAgent()}`;
+const userAgent = `octokit-next-request.js/0.0.0-development ${getUserAgent()}`;
 import stringToArrayBuffer from "string-to-arraybuffer";
 
 test("request.request() is a function", (t) => {

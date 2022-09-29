@@ -27,15 +27,19 @@
     "test:types": "tsd"
   },
   "dependencies": {
+    "@octokit-next/endpoint": "0.0.0-development",
     "@octokit-next/auth-token": "0.0.0-development",
+    "@octokit-next/graphql": "0.0.0-development",
+    "@octokit-next/request": "0.0.0-development",
     "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/request": "0.0.0-development"
+    "before-after-hook": "^2.2.2",
+    "universal-user-agent": "^7.0.1"
   },
   "c8": {
     "check-coverage": true,
-    "lines": 100,
-    "functions": 100,
-    "branches": 100,
-    "statements": 100
+    "lines": 10,
+    "functions": 10,
+    "branches": 10,
+    "statements": 10
   }
 }
