@@ -1,9 +1,10 @@
 import { request } from "@octokit-next/request";
 import { getUserAgent } from "universal-user-agent";
 
-import { VERSION } from "./version.js";
+import { VERSION } from "./lib/version.js";
+export { VERSION } from "./lib/version.js";
 
-import { withDefaults } from "./with-defaults.js";
+import { withDefaults } from "./lib/with-defaults.js";
 
 export const graphql = withDefaults(request, {
   headers: {
@@ -13,7 +14,7 @@ export const graphql = withDefaults(request, {
   url: "/graphql",
 });
 
-export { GraphqlResponseError } from "./error.js";
+export { GraphqlResponseError } from "./lib/error.js";
 
 export function withCustomRequest(customRequest) {
   return withDefaults(customRequest, {

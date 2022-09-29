@@ -2,8 +2,7 @@ import test from "ava";
 import fetchMock from "fetch-mock";
 import { getUserAgent } from "universal-user-agent";
 
-import { graphql } from "../index.js";
-import { VERSION } from "../version.js";
+import { graphql, VERSION } from "../index.js";
 
 const userAgent = `octokit-graphql.js/${VERSION} ${getUserAgent()}`;
 
