@@ -1,5 +1,5 @@
 {
-  "name": "@octokit/graphql",
+  "name": "@octokit-next/graphql",
   "version": "0.0.0-development",
   "publishConfig": {
     "access": "public"
