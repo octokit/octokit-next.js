@@ -62,6 +62,11 @@ A list of breaking changes compared to latest `@octokit/*` modules
 
 - `@octokit/auth-token`: `createTokenAuth()` no longer accepts a `token` string argument, but requires `options.token`.
 
+## Notes for later
+
+- replace `request.defaults()` and `endpoint.defaults()` with `request.withDefaults()` and `endpoint.withDefaults()`
+- remove `options.previews` from `new Octokit(options)`
+
 ## Known issues
 
 - Constructor option Types (`options.auth`) are not set correctly when `authStrategy` is set via `.withDefaults({ authStrategy })` ([#20](https://github.com/octokit/octokit-next.js/issues/20))
