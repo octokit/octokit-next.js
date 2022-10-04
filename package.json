@@ -41,6 +41,12 @@
       [
         "@semantic-release/npm",
         {
+          "pkgRoot": "packages/auth-token"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
           "pkgRoot": "packages/core"
         }
       ],
