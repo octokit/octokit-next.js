@@ -17,7 +17,8 @@
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
-    "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/request": "0.0.0-development"
+    "@octokit-next/auth-token": "0.0.0-development",
+    "@octokit-next/request": "0.0.0-development",
+    "@octokit-next/types": "0.0.0-development"
   }
 }
