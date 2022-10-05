@@ -56,6 +56,8 @@ A list of breaking changes compared to latest `@octokit/*` modules
 
 - `@octokit/openapi-types` will be renamed to `@octokit/types-openapi` to be consistents with the `@octokit/types-*` prefixed packages that only contain types
 
+- `@octokit/auth-token`: `createTokenAuth()` no longer accepts a `token` string argument, but requires `options.token`.
+
 ## Known issues
 
 - Constructor option Types (`options.auth`) are not set correctly when `authStrategy` is set via `.withDefaults({ authStrategy })` ([#20](https://github.com/octokit/octokit-next.js/issues/20))

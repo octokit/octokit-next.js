@@ -1,0 +1,40 @@
+{
+  "name": "@octokit-next/auth-token",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "version": "0.0.0-development",
+  "description": "Core SDK module for upcoming Octokit",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/auth-token"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/auth-token#readme",
+  "keywords": [
+    "octokit",
+    "github",
+    "api"
+  ],
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development",
+    "@octokit-next/request": "0.0.0-development"
+  },
+  "scripts": {
+    "test": "npm run test:code && npm run test:types",
+    "test:code": "c8 ava test",
+    "test:types": "tsd"
+  },
+  "c8": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100,
+    "statements": 100
+  }
+}

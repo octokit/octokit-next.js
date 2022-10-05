@@ -1,22 +1,22 @@
-export { EndpointInterface, KnownEndpointParameters } from "./endpoint";
 import { RequestInterface } from "./request";
-export { RequestInterface } from "./request";
+import {
+  AuthAbstractSrategyInterface,
+  AuthInterface,
+  AuthTokenConfig,
+} from "./auth";
 
-interface AuthStrategyInterface {
-  (options?: any): AuthInterface;
-}
-interface AuthInterface {
-  (options?: any): Promise<unknown>;
-}
+export { EndpointInterface, KnownEndpointParameters } from "./endpoint";
+export { RequestInterface } from "./request";
+export * from "./auth";
 
 type AuthStrategyAndOptions<
-  AuthStrategy extends AuthStrategyInterface | undefined = undefined
-> = AuthStrategy extends undefined
+  TAuthStrategy extends AuthAbstractSrategyInterface | undefined = undefined
+> = TAuthStrategy extends undefined
   ? { auth?: string }
-  : AuthStrategy extends AuthStrategyInterface
+  : TAuthStrategy extends AuthAbstractSrategyInterface
   ? {
-      authStrategy: AuthStrategy;
-      auth: Parameters<AuthStrategy>[0];
+      authStrategy: TAuthStrategy;
+      auth: Parameters<TAuthStrategy>[0];
     }
   : never;
 
@@ -26,7 +26,7 @@ type AuthStrategyAndOptions<
 export namespace Octokit {
   interface Options<
     TVersion extends keyof Octokit.ApiVersions = "github.com",
-    TAuthStrategy extends AuthStrategyInterface | undefined = undefined
+    TAuthStrategy extends AuthAbstractSrategyInterface | undefined = undefined
   > {
     /**
      * API version. Defaults to `"github.com"`.
@@ -64,7 +64,7 @@ export namespace Octokit {
      */
     auth?: TAuthStrategy extends undefined
       ? string
-      : TAuthStrategy extends AuthStrategyInterface
+      : TAuthStrategy extends AuthAbstractSrategyInterface
       ? Parameters<TAuthStrategy>[0]
       : never;
 
@@ -268,7 +268,7 @@ export namespace Octokit {
 
 export declare class Octokit<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TAuthStrategy extends AuthStrategyInterface | undefined = undefined,
+  TAuthStrategy extends AuthAbstractSrategyInterface | undefined = undefined,
   TOptions extends Octokit.Options<TVersion, TAuthStrategy> = Octokit.Options<
     TVersion,
     TAuthStrategy
@@ -330,7 +330,7 @@ export declare class Octokit<
     > &
       ClassWithPlugins,
     TVersion extends keyof Octokit.ApiVersions = "github.com",
-    TAuthStrategy extends AuthStrategyInterface | undefined = undefined
+    TAuthStrategy extends AuthAbstractSrategyInterface | undefined = undefined
   >(
     this: ClassOne,
     defaults: PredefinedOptionsOne & {
@@ -406,6 +406,13 @@ export declare class Octokit<
    * Send a request, with type support for GitHub's REST API.
    */
   request: RequestInterface<TVersion>;
+
+  /**
+   * Authenticate based on used strategy.
+   */
+  auth: TAuthStrategy extends AuthAbstractSrategyInterface
+    ? ReturnType<TAuthStrategy>
+    : AuthInterface<AuthTokenConfig>;
 }
 
 /**
@@ -479,7 +486,7 @@ type RemainingRequirements<
   PredefinedOptions extends { version?: keyof Octokit.ApiVersions }
 > = "authStrategy" extends keyof PredefinedOptions
   ? // if authStrategy is set and it's a valid auth strategy
-    PredefinedOptions["authStrategy"] extends AuthStrategyInterface
+    PredefinedOptions["authStrategy"] extends AuthAbstractSrategyInterface
     ? // then `options.auth` is required to be set to the strategy options
       {
         auth: Parameters<PredefinedOptions["authStrategy"]>[0];
