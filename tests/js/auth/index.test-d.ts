@@ -1,17 +1,12 @@
 import { expectType } from "tsd";
 
+import { AuthStrategyInterface } from "@octokit-next/types";
 import { Octokit } from "./index.js";
 
-type CallbackStrategyOptions = {
-  callback: () => string | Promise<string>;
-};
-interface CallbackAuth {
-  (options?: Record<string, unknown>): Promise<unknown>;
-}
-
-declare function createCallbackAuth(
-  options: CallbackStrategyOptions
-): CallbackAuth;
+declare const createCallbackAuth: AuthStrategyInterface<{
+  StrategyOptions: { callback: () => string | Promise<string> };
+  Authentication: { token: string; source: "callback" };
+}>;
 
 export async function test() {
   // set auth to access token
@@ -24,7 +19,7 @@ export async function test() {
     authStrategy: createCallbackAuth,
   });
 
-  new Octokit({
+  const octokit = new Octokit({
     authStrategy: createCallbackAuth,
     auth: {
       callback() {
@@ -32,6 +27,8 @@ export async function test() {
       },
     },
   });
+  const result = await octokit.auth();
+  expectType<"callback">(result.source);
 
   new Octokit({
     authStrategy: createCallbackAuth,
