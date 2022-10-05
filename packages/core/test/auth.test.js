@@ -5,7 +5,7 @@ import sinon from "sinon";
 
 import { Octokit } from "../index.js";
 
-const userAgent = `octokit-core.js/0.0.0-development ${getUserAgent()}`;
+const userAgent = `octokit-next-core.js/0.0.0-development ${getUserAgent()}`;
 
 test("new Octokit({ auth: 'secret123' })", async (t) => {
   const mock = fetchMock.sandbox().getOnce(
@@ -121,51 +121,48 @@ test("octokit.auth() with options.auth = secret", async (t) => {
 
 // TOOD: implement the tests below
 
-// test("auth = createOAuthAppAuth()", async (t) => {
-//   const CLIENT_ID = "0123";
-//   const CLIENT_SECRET = "0123secret";
-//   const CODE = "code123";
-//   const STATE = "state123";
+test.only("auth = createTestAuth()", async (t) => {
+  const testAuth = async (strategyOptions, authOptions) => {
+    return { type: "test", strategyOptions, authOptions };
+  };
+  const createTestAuth = (strategyOptions) =>
+    testAuth.bind(null, strategyOptions);
 
-//   const mock = fetchMock.sandbox().postOnce(
-//     "https://github.com/login/oauth/access_token",
-//     {
-//       access_token: "token123",
-//       scope: "",
-//       token_type: "bearer",
-//     },
-//     {
-//       body: {
-//         client_id: CLIENT_ID,
-//         client_secret: CLIENT_SECRET,
-//         code: CODE,
-//         state: STATE,
-//       },
-//     }
-//   );
+  const mock = fetchMock.sandbox().getOnce(
+    "https://api.github.com/",
+    { ok: true },
+    {
+      headers: {
+        accept: "application/vnd.github.v3+json",
+        "user-agent": userAgent,
+      },
+    }
+  );
 
-//   const MyOctokit = Octokit.defaults({
-//     authStrategy: createOAuthAppAuth,
-//     request: {
-//       fetch: mock,
-//     },
-//   });
+  const MyOctokit = Octokit.withDefaults({
+    authStrategy: createTestAuth,
+    request: {
+      fetch: mock,
+    },
+  });
 
-//   const octokit = new MyOctokit({
-//     auth: {
-//       clientId: CLIENT_ID,
-//       clientSecret: CLIENT_SECRET,
-//     },
-//   });
+  const octokit = new MyOctokit({
+    auth: {
+      strategy: 1,
+    },
+  });
 
-//   await octokit.auth({
-//     type: "oauth-user",
-//     code: CODE,
-//     state: STATE,
-//   });
+  const result = await octokit.auth({
+    auth: 2,
+  });
 
-//   t.is(mock.done(), true);
-// });
+  console.log(`result`);
+  console.log(result);
+
+  await octokit.request("GET /");
+
+  t.is(mock.done(), true);
+});
 
 // test("auth = createAppAuth()", async (t) => {
 //   const mock = fetchMock

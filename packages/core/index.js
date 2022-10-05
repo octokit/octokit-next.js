@@ -1,5 +1,6 @@
 import { endpoint } from "@octokit-next/endpoint";
 import { request } from "@octokit-next/request";
+import { createTokenAuth } from "@octokit-next/auth-token";
 import { withCustomRequest } from "@octokit-next/graphql";
 import { getUserAgent } from "universal-user-agent";
 import { Collection } from "before-after-hook";
@@ -107,7 +108,7 @@ export class Octokit {
         });
       } else {
         // (2)
-        const auth = createTokenAuth(options.auth);
+        const auth = createTokenAuth({ token: options.auth });
         hook.wrap("request", auth.hook);
         this.auth = auth;
       }
