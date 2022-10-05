@@ -79,4 +79,8 @@ export async function test() {
       },
     },
   });
+
+  const auth = createCallbackAuth({ callback: () => "token" });
+  expectType<Function>(auth);
+  expectType<Function>(auth.hook);
 }

@@ -1,3 +1,6 @@
+import { RequestInterface } from "./request";
+import { Octokit } from "./index.js";
+
 export type AuthAbstractConfig = {
   StrategyOptions?: Record<string, unknown>;
   AuthOptions?: Record<string, unknown>;
@@ -24,6 +27,18 @@ export interface AuthInterface<
   (
     ...args: "AuthOptions" extends keyof TConfig ? [TConfig["AuthOptions"]] : []
   ): Promise<TConfig["Authentication"]>;
+
+  hook: {
+    /**
+     * Use the `request` instance and the endpoint options to hook into the request lifecycle as needed.
+     *
+     * @param {RequestInterface} request
+     * @param {Octokit.EndpointOptions} options
+     */
+    (request: RequestInterface, options: Octokit.EndpointOptions): Promise<
+      Octokit.Response<unknown, number>
+    >;
+  };
 }
 
 // token auth is built into @octokit-next/core so we define it as part of @octokit-next/types
