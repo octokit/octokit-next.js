@@ -45,7 +45,7 @@ export async function test() {
     authStrategy: createCallbackAuth,
     auth: {
       callback() {
-        return "secret";
+        return { token: "secret" };
       },
     },
   });
@@ -67,7 +67,7 @@ export async function test() {
   new Octokit({
     authStrategy: createCallbackAuth,
     auth: {
-      callback: () => "token",
+      callback: () => ({ token: "secret" }),
     },
   });
 
@@ -78,7 +78,7 @@ export async function test() {
   new OctokitWithCallbackAuth({
     auth: {
       callback() {
-        return "";
+        return { token: "" };
       },
     },
   });
