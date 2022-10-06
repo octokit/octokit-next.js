@@ -24,22 +24,45 @@ export class Octokit {
   }
 
   static withDefaults(defaults) {
+    const newDefaultUserAgent = [defaults?.userAgent, this.DEFAULTS.userAgent]
+      .filter(Boolean)
+      .join(" ");
+
+    const newDefaults = {
+      ...this.DEFAULTS,
+      ...defaults,
+      userAgent: newDefaultUserAgent,
+      request: {
+        ...this.DEFAULTS.request,
+        ...defaults?.request,
+      },
+    };
+
     return class extends this {
       constructor(options) {
-        super({
-          ...defaults,
-          ...options,
-        });
+        if (typeof defaults === "function") {
+          super(defaults(options, newDefaults));
+          return;
+        }
+
+        super(options);
       }
 
-      static defaults = { ...defaults, ...this.defaults };
+      static DEFAULTS = newDefaults;
     };
   }
 
   static plugins = [];
 
   constructor(options = {}) {
-    this.options = { ...this.constructor.DEFAULTS, ...options };
+    this.options = {
+      ...this.constructor.DEFAULTS,
+      ...options,
+      request: {
+        ...this.constructor.DEFAULTS.request,
+        ...options?.request,
+      },
+    };
 
     const hook = new Collection();
 
@@ -47,7 +70,7 @@ export class Octokit {
       baseUrl: this.options.baseUrl,
       headers: {},
       request: {
-        ...options.request,
+        ...this.options.request,
         hook: hook.bind(null, "request"),
       },
       mediaType: {
@@ -57,28 +80,23 @@ export class Octokit {
     };
 
     // prepend default user agent with `options.userAgent` if set
-    requestDefaults.headers["user-agent"] = [
-      options.userAgent,
-      this.constructor.DEFAULTS.userAgent,
-    ]
+    const userAgent = [options?.userAgent, this.constructor.DEFAULTS.userAgent]
       .filter(Boolean)
       .join(" ");
 
-    if (options.baseUrl) {
-      requestDefaults.baseUrl = options.baseUrl;
+    requestDefaults.headers["user-agent"] = userAgent;
+
+    if (this.options.previews) {
+      requestDefaults.mediaType.previews = this.options.previews;
     }
 
-    if (options.previews) {
-      requestDefaults.mediaType.previews = options.previews;
-    }
-
-    if (options.timeZone) {
-      requestDefaults.headers["time-zone"] = options.timeZone;
+    if (this.options.timeZone) {
+      requestDefaults.headers["time-zone"] = this.options.timeZone;
     }
 
     // Apply plugins
     this.constructor.plugins.forEach((plugin) => {
-      Object.assign(this, plugin(this, options));
+      Object.assign(this, plugin(this, this.options));
     });
 
     // API
@@ -91,7 +109,7 @@ export class Octokit {
         warn: console.warn.bind(console),
         error: console.error.bind(console),
       },
-      options.log
+      this.options.log
     );
     this.hook = hook;
 
@@ -100,21 +118,21 @@ export class Octokit {
     //     is unauthenticated. The `this.auth()` method is a no-op and no request hook is registered.
     // (2) If only `options.auth` is set, use the default token authentication strategy.
     // (3) If `options.authStrategy` is set then use it and pass in `options.auth`. Always pass own request as many strategies accept a custom request instance.
-    if (!options.authStrategy) {
-      if (!options.auth) {
+    if (!this.options.authStrategy) {
+      if (!this.options.auth) {
         // (1)
         this.auth = async () => ({
           type: "unauthenticated",
         });
       } else {
         // (2)
-        const auth = createTokenAuth({ token: options.auth });
+        const auth = createTokenAuth({ token: this.options.auth });
         hook.wrap("request", auth.hook);
         this.auth = auth;
       }
     } else {
       // (3)
-      const { authStrategy, ...otherOptions } = options;
+      const { authStrategy, ...otherOptions } = this.options;
       const auth = authStrategy(
         Object.assign(
           {
@@ -128,7 +146,7 @@ export class Octokit {
             octokit: this,
             octokitOptions: otherOptions,
           },
-          options.auth
+          this.options.auth
         )
       );
       hook.wrap("request", auth.hook);

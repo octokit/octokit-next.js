@@ -62,6 +62,11 @@ A list of breaking changes compared to latest `@octokit/*` modules
 
 - `@octokit/auth-token`: `createTokenAuth()` no longer accepts a `token` string argument, but requires `options.token`.
 
+## Features
+
+- `Octokit.DEFAULTS`
+- `octokit.options`
+
 ## Notes for later
 
 - replace `request.defaults()` and `endpoint.defaults()` with `request.withDefaults()` and `endpoint.withDefaults()`
