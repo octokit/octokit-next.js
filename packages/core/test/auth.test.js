@@ -7,6 +7,21 @@ import { Octokit } from "../index.js";
 
 const userAgent = `octokit-next-core.js/0.0.0-development ${getUserAgent()}`;
 
+const testAuth = Object.assign(
+  async (strategyOptions, authOptions) => {
+    return { type: "test", strategyOptions, authOptions };
+  },
+  {
+    async hook(request, route, parameters) {
+      return request(route, parameters);
+    },
+  }
+);
+const createTestAuth = (strategyOptions) =>
+  Object.assign(testAuth.bind(null, strategyOptions), {
+    hook: testAuth.hook,
+  });
+
 test("new Octokit({ auth: 'secret123' })", async (t) => {
   const mock = fetchMock.sandbox().getOnce(
     "https://api.github.com/",
@@ -119,15 +134,7 @@ test("octokit.auth() with options.auth = secret", async (t) => {
   });
 });
 
-// TOOD: implement the tests below
-
-test.only("auth = createTestAuth()", async (t) => {
-  const testAuth = async (strategyOptions, authOptions) => {
-    return { type: "test", strategyOptions, authOptions };
-  };
-  const createTestAuth = (strategyOptions) =>
-    testAuth.bind(null, strategyOptions);
-
+test("auth = createTestAuth()", async (t) => {
   const mock = fetchMock.sandbox().getOnce(
     "https://api.github.com/",
     { ok: true },
@@ -152,104 +159,69 @@ test.only("auth = createTestAuth()", async (t) => {
     },
   });
 
-  const result = await octokit.auth({
-    auth: 2,
-  });
-
-  console.log(`result`);
-  console.log(result);
-
   await octokit.request("GET /");
 
   t.is(mock.done(), true);
 });
 
-// test("auth = createAppAuth()", async (t) => {
-//   const mock = fetchMock
-//     .sandbox()
-//     .postOnce("https://api.github.com/app/installations/123/access_tokens", {
-//       token: "secret123",
-//       expires_at: "1970-01-01T01:00:00.000Z",
-//       permissions: {
-//         metadata: "read",
-//       },
-//       repository_selection: "all",
-//     })
-//     .get(
-//       "https://api.github.com/repos/octocat/hello-world",
-//       { id: 123 },
-//       {
-//         headers: {
-//           authorization: "token secret123",
-//         },
-//         repeat: 2,
-//       }
-//     )
-//     .getOnce(
-//       "https://api.github.com/app",
-//       { id: 123 },
-//       {
-//         headers: {
-//           accept: "application/vnd.github.machine-man-preview+json",
-//           "user-agent": userAgent,
-//           authorization: `bearer ${BEARER}`,
-//         },
-//       }
-//     );
+test("auth = createAppAuth()", async (t) => {
+  const mock = fetchMock
+    .sandbox()
+    .postOnce("https://api.github.com/app/installations/123/access_tokens", {
+      token: "secret123",
+      expires_at: "1970-01-01T01:00:00.000Z",
+      permissions: {
+        metadata: "read",
+      },
+      repository_selection: "all",
+    })
+    .get(
+      "https://api.github.com/repos/octocat/hello-world",
+      { id: 123 },
+      {
+        headers: {
+          authorization: "token secret123",
+        },
+        repeat: 2,
+      }
+    )
+    .getOnce(
+      "https://api.github.com/app",
+      { id: 123 },
+      {
+        headers: {
+          accept: "application/vnd.github.machine-man-preview+json",
+          "user-agent": userAgent,
+          authorization: `bearer ${BEARER}`,
+        },
+      }
+    );
 
-//   const octokit = new Octokit({
-//     authStrategy: createAppAuth,
-//     auth: {
-//       appId: APP_ID,
-//       privateKey: PRIVATE_KEY,
-//       installationId: 123,
-//     },
-//     request: {
-//       fetch: mock,
-//     },
-//   });
+  const octokit = new Octokit({
+    authStrategy: createAppAuth,
+    auth: {
+      appId: APP_ID,
+      privateKey: PRIVATE_KEY,
+      installationId: 123,
+    },
+    request: {
+      fetch: mock,
+    },
+  });
 
-//   await octokit.request("GET /repos/octocat/hello-world");
-//   await octokit.request("GET /repos/octocat/hello-world");
+  await octokit.request("GET /repos/octocat/hello-world");
+  await octokit.request("GET /repos/octocat/hello-world");
 
-//   await octokit.request("GET /app", {
-//     mediaType: {
-//       previews: ["machine-man"],
-//     },
-//   });
+  await octokit.request("GET /app", {
+    mediaType: {
+      previews: ["machine-man"],
+    },
+  });
 
-//   t.is(mock.done(), true);
-// });
+  t.is(mock.done(), true);
+});
 
-// test("auth = createActionAuth()", async (t) => {
-//   const mock = fetchMock.sandbox().getOnce(
-//     "https://api.github.com/app",
-//     { id: 123 },
-//     {
-//       headers: {
-//         accept: "application/vnd.github.v3+json",
-//         authorization: `token githubtoken123`,
-//         "user-agent": userAgent,
-//       },
-//     }
-//   );
-//   const currentEnv = process.env;
-//   process.env = {
-//     GITHUB_ACTION: "1",
-//     GITHUB_TOKEN: "githubtoken123",
-//   };
-
-//   const octokit = new Octokit({
-//     authStrategy: createActionAuth,
-//     request: {
-//       fetch: mock,
-//     },
-//   });
-
-//   await octokit.request("/app");
-//   process.env = currentEnv;
-// });
-
+// TODO: enable once `createAppAuth` is ESM-ified.
 // test("createAppAuth with GraphQL + GHES (probot/probot#1386)", async (t) => {
 //   const mock = fetchMock
 //     .sandbox()
@@ -296,74 +268,48 @@ test.only("auth = createTestAuth()", async (t) => {
 //   t.is(mock.done(), true);
 // });
 
-// test("should pass through the logger (#1277)", async (t) => {
-//   const mock = fetchMock
-//     .sandbox()
-//     .postOnce("https://api.github.com/app/installations/2/access_tokens", {
-//       token: "installation-token-123",
-//       permissions: {},
-//     })
-//     .getOnce("https://api.github.com/repos/octokit/core.js", 401)
-//     .getOnce(
-//       "https://api.github.com/repos/octokit/core.js",
-//       { ok: true },
-//       { overwriteRoutes: false }
-//     );
+test("should pass through the logger (#1277)", async (t) => {
+  const myLog = {
+    debug: sinon.stub(),
+    info: sinon.stub(),
+    warn: sinon.stub(),
+    error: sinon.stub(),
+  };
 
-//   const mockWarnLogger = jest.fn();
+  const octokit = new Octokit({
+    log: myLog,
+    authStrategy: createTestAuth,
+    auth: {
+      foo: "bar",
+    },
+  });
 
-//   const octokit = new Octokit({
-//     log: {
-//       debug: jest.fn(),
-//       info: jest.fn(),
-//       warn: mockWarnLogger,
-//       error: jest.fn(),
-//     },
-//     authStrategy: createAppAuth,
-//     auth: {
-//       appId: 1,
-//       privateKey: PRIVATE_KEY,
-//       installationId: 2,
-//     },
-//     request: {
-//       fetch: mock,
-//     },
-//   });
+  const authentication = await octokit.auth();
+  t.deepEqual(authentication.strategyOptions.log, myLog);
+});
 
-//   await octokit.request("GET /repos/octokit/core.js");
+test.only("should pass octokit and octokitOptions if a custom authStrategy was set", async (t) => {
+  const octokit = new Octokit({
+    authStrategy: createTestAuth,
+    auth: {
+      foo: "bar",
+    },
+    someUnrelatedOption: "value",
+  });
 
-//   t.is(mockWarnLogger.mock.calls.length, 1);
-//   t.is(
-//     mockWarnLogger.mock.calls[0][0],
-//     "[@octokit/auth-app] Retrying after 401 response to account for token replication delay (retry: 1, wait: 1s)"
-//   );
-// });
+  const authentication = await octokit.auth();
 
-// test("should pass octokit and octokitOptions if a custom authStrategy was set", async (t) => {
-//   const authStrategy = jest.fn().mockReturnValue({
-//     hook() {},
-//   });
-//   new Octokit({
-//     authStrategy,
-//     auth: {
-//       secret: "123",
-//     },
-//     someUnrelatedOption: "value",
-//   });
-
-//   const strategyOptions = authStrategy.mock.calls[0][0];
-
-//   t.deepEqual(Object.keys(strategyOptions).sort(), [
-//     "log",
-//     "octokit",
-//     "octokitOptions",
-//     "request",
-//     "secret",
-//   ]);
-//   t.deepEqual(strategyOptions.octokitOptions, {
-//     auth: {
-//       secret: "123",
-//     },
-//     someUnrelatedOption: "value",
-//   });
-// });
+  t.deepEqual(Object.keys(authentication.strategyOptions).sort(), [
+    "foo",
+    "log",
+    "octokit",
+    "octokitOptions",
+    "request",
+  ]);
+  t.deepEqual(authentication.strategyOptions.octokitOptions, {
+    auth: {
+      foo: "bar",
+    },
+    someUnrelatedOption: "value",
+  });
+});
