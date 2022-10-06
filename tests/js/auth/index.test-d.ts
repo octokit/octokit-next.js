@@ -79,4 +79,18 @@ export async function test() {
       },
     },
   });
+
+  const auth = createCallbackAuth({ callback: () => "token" });
+
+  const result2 = await auth();
+  expectType<"callback">(result2.source);
+  const response = await auth.hook(octokit.request, {
+    method: "GET",
+    url: "/",
+    headers: {},
+  });
+
+  expectType<Octokit.Response<unknown, number, Octokit.ResponseHeaders>>(
+    response
+  );
 }

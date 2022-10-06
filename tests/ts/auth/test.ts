@@ -1,14 +1,28 @@
 import { Octokit } from "@octokit-next/core";
+import { AuthStrategyInterface } from "@octokit-next/types";
 
+type CallbackAuthentication = {
+  token: string;
+};
 type CallbackStrategyOptions = {
-  callback: () => string | Promise<string>;
+  callback: () => CallbackAuthentication | Promise<CallbackAuthentication>;
 };
 
-function createCallbackAuth(options: CallbackStrategyOptions) {
-  return async function auth() {
-    return options.callback();
-  };
-}
+const createCallbackAuth: AuthStrategyInterface<{
+  StrategyOptions: CallbackStrategyOptions;
+  Authentication: CallbackAuthentication;
+}> = (options: CallbackStrategyOptions) => {
+  return Object.assign(
+    async function auth() {
+      return options.callback();
+    },
+    {
+      async hook(request: any, options: any) {
+        return request(options);
+      },
+    }
+  );
+};
 
 const OctokitWithCallbackAuth = Octokit.withDefaults({
   authStrategy: createCallbackAuth,
@@ -31,7 +45,7 @@ export async function test() {
     authStrategy: createCallbackAuth,
     auth: {
       callback() {
-        return "secret";
+        return { token: "secret" };
       },
     },
   });
@@ -53,7 +67,7 @@ export async function test() {
   new Octokit({
     authStrategy: createCallbackAuth,
     auth: {
-      callback: () => "token",
+      callback: () => ({ token: "secret" }),
     },
   });
 
@@ -64,7 +78,7 @@ export async function test() {
   new OctokitWithCallbackAuth({
     auth: {
       callback() {
-        return "";
+        return { token: "" };
       },
     },
   });
