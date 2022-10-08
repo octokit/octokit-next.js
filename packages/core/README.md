@@ -235,7 +235,7 @@ const octokit = new Octokit({
 You can create a new Octokit class with customized default options.
 
 ```js
-const MyOctokit = Octokit.defaults({
+const MyOctokit = Octokit.withDefaults({
   auth: "personal-access-token123",
   baseUrl: "https://github.acme-inc.com/api/v3",
   userAgent: "my-app/v1.2.3",
@@ -247,7 +247,7 @@ const octokit2 = new MyOctokit();
 If you pass additional options to your new constructor, the options will be merged shallowly.
 
 ```js
-const MyOctokit = Octokit.defaults({
+const MyOctokit = Octokit.withDefaults({
   foo: {
     opt1: 1,
   },
@@ -263,7 +263,7 @@ const octokit = new MyOctokit({
 If you need a deep or conditional merge, you can pass a function instead.
 
 ```js
-const MyOctokit = Octokit.defaults((options) => {
+const MyOctokit = Octokit.withDefaults((options) => {
   return {
     foo: Object.assign({}, options.foo, { opt1: 1 }),
   };
@@ -274,7 +274,7 @@ const octokit = new MyOctokit({
 // options will be { foo: { opt1: 1, opt2: 1 }}
 ```
 
-Be careful about mutating the `options` object in the `Octokit.defaults` callback, as it can have unforeseen consequences.
+Be careful about mutating the `options` object in the `Octokit.withDefaults` callback, as it can have unforeseen consequences.
 
 ## Authentication
 
@@ -369,7 +369,7 @@ See [before-after-hook](https://github.com/gr2m/before-after-hook#readme) for 
 
 ## Plugins
 
-Octokit’s functionality can be extended using plugins. The `Octokit.plugin()` method accepts a plugin (or many) and returns a new constructor.
+Octokit’s functionality can be extended using plugins. The `Octokit.withPlugins()` method accepts a plugin (or many) and returns a new constructor.
 
 A plugin is a function which gets two arguments:
 
@@ -381,9 +381,10 @@ In order to extend `octokit`'s API, the plugin must return an object with the ne
 ```js
 // index.js
 const { Octokit } = require("@octokit-next/core")
-const MyOctokit = Octokit.plugin(
+const MyOctokit = Octokit.withPlugins([
   require("./lib/my-plugin"),
   require("octokit-plugin-example")
+]
 );
 
 const octokit = new MyOctokit({ greeting: "Moin moin" });
@@ -416,11 +417,11 @@ You can build your own Octokit class with preset default options and plugins. In
 
 ```js
 const { Octokit } = require("@octokit-next/core");
-const MyActionOctokit = Octokit.plugin(
+const MyActionOctokit = Octokit.withPlugins([
   require("@octokit-next/plugin-paginate-rest").paginateRest,
   require("@octokit-next/plugin-throttling").throttling,
-  require("@octokit-next/plugin-retry").retry
-).defaults({
+  require("@octokit-next/plugin-retry").retry,
+]).withDefaults({
   throttle: {
     onAbuseLimit: (retryAfter, options) => {
       /* ... */
