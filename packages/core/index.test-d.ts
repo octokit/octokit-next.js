@@ -1,4 +1,4 @@
-import { expectType } from "tsd";
+import { expectType, expectNotType } from "tsd";
 
 import { Octokit } from "./index.js";
 
@@ -67,10 +67,57 @@ export async function readmeExample() {
   expectType<Octokit.ResponseHeaders>(response.headers);
 }
 
-// TODO: add more type tests for `@octokit-next/core` here
-
 export function hookTest() {
   const octokit = new Octokit();
 
   octokit.hook.before("request", () => {});
+}
+
+export function pluginsTest() {
+  // `octokit` instance does not permit unknown keys
+  const octokit = new Octokit();
+
+  // @ts-expect-error Property 'unknown' does not exist on type 'Octokit'.(2339)
+  octokit.unknown;
+
+  const OctokitWithDefaults = Octokit.withDefaults({});
+  const octokitWithDefaults = new OctokitWithDefaults();
+
+  // Error: `octokitWithDefaults` does permit unknown keys
+  // @ts-expect-error `.unknown` should not be typed as `any`
+  octokitWithDefaults.unknown;
+
+  const OctokitWithPlugin = Octokit.withPlugins([() => ({})]);
+  const octokitWithPlugin = new OctokitWithPlugin();
+
+  // Error: `octokitWithPlugin` does permit unknown keys
+  // @ts-expect-error `.unknown` should not be typed as `any`
+  octokitWithPlugin.unknown;
+
+  const OctokitWithPluginAndDefaults = Octokit.withPlugins([
+    () => ({
+      foo: 42,
+    }),
+  ]).withDefaults({
+    baz: "daz",
+  });
+
+  const octokitWithPluginAndDefaults = new OctokitWithPluginAndDefaults();
+
+  octokitWithPluginAndDefaults.foo;
+  // @ts-expect-error `.unknown` should not be typed as `any`
+  octokitWithPluginAndDefaults.unknown;
+
+  // https://github.com/octokit/octokit.js/issues/2115
+  const OctokitWithVoidAndNonVoidPlugins = Octokit.withPlugins([
+    () => ({ foo: "foo" }),
+    () => {},
+    () => ({ bar: "bar" }),
+  ]);
+  const octokitWithVoidAndNonVoidPlugins =
+    new OctokitWithVoidAndNonVoidPlugins();
+
+  expectNotType<void>(octokitWithVoidAndNonVoidPlugins);
+  expectType<string>(octokitWithVoidAndNonVoidPlugins.foo);
+  expectType<string>(octokitWithVoidAndNonVoidPlugins.bar);
 }
