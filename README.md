@@ -62,6 +62,8 @@ A list of breaking changes compared to latest `@octokit/*` modules
 
 - `@octokit/auth-token`: `createTokenAuth()` no longer accepts a `token` string argument, but requires `options.token`.
 
+- plugins now receive all options passed to the `Octokit` constructor as well as its defaults. Previously only the options passed to the constructor were passed
+
 ## Features
 
 - `Octokit.DEFAULTS`
