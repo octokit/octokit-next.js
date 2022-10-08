@@ -1,4 +1,7 @@
 import test from "ava";
+import { getUserAgent } from "universal-user-agent";
+
+const defaultUserAgent = `octokit-next-core.js/0.0.0-development ${getUserAgent()}`;
 
 import { Octokit } from "../index.js";
 
@@ -36,7 +39,9 @@ test("Octokit.with-plugins() does not override plugins of original constructor",
 test("Octokit.with-plugins() receives client options", (t) => {
   const MyOctokit = Octokit.withPlugins([
     (octokit, options) => {
-      t.snapshot(options);
+      const { userAgent, ...remainingOptions } = options;
+      t.is(userAgent, defaultUserAgent);
+      t.snapshot(remainingOptions);
     },
   ]);
   new MyOctokit({ foo: "bar" });
