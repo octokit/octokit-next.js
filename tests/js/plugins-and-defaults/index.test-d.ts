@@ -45,8 +45,11 @@ export async function test() {
     {
       defaultOne: string;
       required: string;
-    } & { baseUrl: string }
-  >(OctokitLevelOne.defaults);
+    } & {
+      baseUrl: string;
+      userAgent: string;
+    }
+  >(OctokitLevelOne.DEFAULTS);
 
   const octokitLevelOne = new OctokitLevelOne({
     optionOne: "value",
@@ -64,10 +67,11 @@ export async function test() {
 
   expectType<{
     baseUrl: string;
+    userAgent: string;
     defaultOne: string;
     defaultTwo: number;
     required: string;
-  }>({ ...OctokitLevelTwo.defaults });
+  }>({ ...OctokitLevelTwo.DEFAULTS });
 
   // Because 'required' is already provided, this needs no argument
   new OctokitLevelTwo();
@@ -95,11 +99,12 @@ export async function test() {
 
   expectType<{
     baseUrl: string;
+    userAgent: string;
     defaultOne: string;
     defaultTwo: number;
     defaultThree: string[];
     required: string;
-  }>({ ...OctokitLevelThree.defaults });
+  }>({ ...OctokitLevelThree.DEFAULTS });
 
   // Because 'required' is already provided, this needs no argument
   new OctokitLevelThree();
@@ -175,12 +180,13 @@ export async function test() {
 
   expectType<{
     baseUrl: string;
+    userAgent: string;
     required: string;
     defaultOne: string;
     defaultTwo: number;
     defaultThree: string[];
     defaultFour: number;
-  }>({ ...OctokitLevelFour.defaults });
+  }>({ ...OctokitLevelFour.DEFAULTS });
 
   const octokitLevelFour = new OctokitLevelFour();
 
@@ -231,10 +237,11 @@ export async function test() {
 
   expectType<{
     baseUrl: string;
+    userAgent: string;
     defaultOne: string;
     defaultTwo: number;
     defaultThree: string[];
-  }>({ ...OctokitWithManyChainedDefaultsAndPlugins.defaults });
+  }>({ ...OctokitWithManyChainedDefaultsAndPlugins.DEFAULTS });
 
   const octokitWithManyChainedDefaultsAndPlugins =
     new OctokitWithManyChainedDefaultsAndPlugins({

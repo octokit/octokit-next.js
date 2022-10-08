@@ -338,14 +338,14 @@ export declare class Octokit<
     TAuthStrategy extends AuthAbstractSrategyInterface | undefined = undefined
   >(
     this: ClassOne,
-    defaults: PredefinedOptionsOne & {
+    DEFAULTS: PredefinedOptionsOne & {
       version?: TVersion;
       authStrategy?: TAuthStrategy;
     }
   ): ConstructorRequiringOptionsIfNeeded<ClassOne, PredefinedOptionsOne> & {
     withDefaults<PredefinedOptionsTwo, ClassTwo>(
       this: ClassTwo,
-      defaults: PredefinedOptionsTwo & {
+      DEFAULTS: PredefinedOptionsTwo & {
         version?: TVersion;
         authStrategy?: TAuthStrategy;
       }
@@ -355,7 +355,7 @@ export declare class Octokit<
     > & {
       withDefaults<PredefinedOptionsThree, ClassThree>(
         this: ClassThree,
-        defaults: PredefinedOptionsThree & {
+        DEFAULTS: PredefinedOptionsThree & {
           version?: TVersion;
           authStrategy?: TAuthStrategy;
         }
@@ -381,7 +381,6 @@ export declare class Octokit<
   static DEFAULTS: {
     baseUrl: string;
     userAgent: string;
-    [key: string]: unknown;
   };
 
   /**
@@ -473,7 +472,7 @@ export type ExtendOctokitWith<
     OctokitClass["options"]["version"]
   > &
   ApplyPlugins<OctokitExtensions["plugins"]> & {
-    defaults: OrObject<OctokitExtensions["defaults"], undefined>;
+    DEFAULTS: OrObject<OctokitExtensions["defaults"], undefined>;
   };
 
 export declare type OctokitPlugin = (
@@ -550,7 +549,7 @@ type ConstructorRequiringOptionsIfNeeded<
     ? PredefinedOptions["version"]
     : "github.com"
 > = {
-  defaults: PredefinedOptions;
+  DEFAULTS: PredefinedOptions;
 } & {
   new <NowProvided>(
     ...options: RequiredIfRemaining<PredefinedOptions, NowProvided>

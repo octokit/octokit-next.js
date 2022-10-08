@@ -1,5 +1,6 @@
 import test from "ava";
 import fetchMock from "fetch-mock";
+import { getUserAgent } from "universal-user-agent";
 
 import { Octokit } from "../index.js";
 
@@ -71,4 +72,11 @@ test("new Octokit({ request })", async (t) => {
   const response = await octokit.request("/");
 
   t.is(response.data.ok, true);
+});
+
+test("Octokit.DEFAULTS", (t) => {
+  t.deepEqual(Octokit.DEFAULTS, {
+    baseUrl: "https://api.github.com",
+    userAgent: `octokit-next-core.js/0.0.0-development ${getUserAgent()}`,
+  });
 });
