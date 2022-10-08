@@ -1,7 +1,8 @@
 import test from "ava";
-import { getUserAgent } from "universal-user-agent";
 
-const defaultUserAgent = `octokit-next-core.js/0.0.0-development ${getUserAgent()}`;
+// overide default user agent for testing
+Octokit.DEFAULTS.userAgent = "<TESTING>";
+const defaultUserAgent = `<TESTING>`;
 
 import { Octokit } from "../index.js";
 

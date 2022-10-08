@@ -1,10 +1,11 @@
 import test from "ava";
-import { getUserAgent } from "universal-user-agent";
 import fetchMock from "fetch-mock";
 
 import { Octokit } from "../index.js";
 
-const userAgent = `octokit-next-core.js/0.0.0-development ${getUserAgent()}`;
+// overide default user agent for testing
+Octokit.DEFAULTS.userAgent = "<TESTING>";
+const userAgent = `<TESTING>`;
 
 test("octokit.request() is a function", async (t) => {
   const octokit = new Octokit();
@@ -149,18 +150,7 @@ test('octokit.request.endpoint("GET /")', (t) => {
   const octokit = new Octokit();
   const requestOptions = octokit.request.endpoint("GET /");
 
-  t.deepEqual(requestOptions, {
-    headers: {
-      accept: "application/vnd.github.v3+json",
-      "user-agent":
-        "octokit-next-core.js/0.0.0-development Node.js/18.10.0 (darwin; arm64)",
-    },
-    method: "GET",
-    request: {
-      hook: requestOptions.request.hook,
-    },
-    url: "https://api.github.com/",
-  });
+  t.snapshot(requestOptions);
 });
 
 test("sends null values (octokit/rest.js#765)", async (t) => {

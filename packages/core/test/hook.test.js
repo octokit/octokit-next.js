@@ -1,9 +1,11 @@
 import test from "ava";
 import fetchMock from "fetch-mock";
-import { getUserAgent } from "universal-user-agent";
 
 import { Octokit } from "../index.js";
-const userAgent = `octokit-next-core.js/0.0.0-development ${getUserAgent()}`;
+
+// overide default user agent for testing
+Octokit.DEFAULTS.userAgent = "<TESTING>";
+const userAgent = `<TESTING>`;
 
 test.only("octokit.hook is a function", (t) => {
   const octokit = new Octokit();

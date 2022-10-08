@@ -378,8 +378,10 @@ export declare class Octokit<
   /**
    * Default options that will be applied to all instances
    */
-  static defaults: {
+  static DEFAULTS: {
     baseUrl: string;
+    userAgent: string;
+    [key: string]: unknown;
   };
 
   /**
