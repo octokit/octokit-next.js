@@ -74,7 +74,7 @@ Deno
 Load <code>@octokit-next/request</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>, including types.
 
 ```js
-import { request } from "https://cdn.skypack.dev/octokit?dts";
+import { request } from "https://cdn.skypack.dev/@octokit-next/request?dts";
 ```
 
 </td></tr>

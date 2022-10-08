@@ -32,8 +32,18 @@ Node
 Install with <code>npm install @octokit-next/core</code>
 
 ```js
-const { Octokit } = require("@octokit-next/core");
-// or: import { Octokit } from "@octokit-next/core";
+import { Octokit } from "@octokit-next/core";
+```
+
+</td></tr>
+<tr><th>
+Deno
+</th><td>
+
+Load <code>@octokit-next/core</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>, including types.
+
+```js
+import { Octokit } from "https://cdn.skypack.dev/@octokit-next/core?dts";
 ```
 
 </td></tr>
