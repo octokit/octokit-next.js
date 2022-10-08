@@ -1,3 +1,6 @@
+import { HookCollection } from "before-after-hook";
+import { RequestError } from "@octokit-next/request-error";
+
 import { RequestInterface } from "./request";
 import {
   AuthAbstractSrategyInterface,
@@ -420,6 +423,22 @@ export declare class Octokit<
   auth: TAuthStrategy extends AuthAbstractSrategyInterface
     ? ReturnType<TAuthStrategy>
     : AuthInterface<AuthTokenConfig>;
+
+  /**
+   * Hook API
+   */
+  hook: HookCollection<{
+    request: {
+      Options: Required<Octokit.EndpointOptions>;
+      Result: Octokit.Response<unknown, number>;
+      Error: RequestError | Error;
+    };
+    [key: string]: {
+      Options: unknown;
+      Result: unknown;
+      Error: unknown;
+    };
+  }>;
 }
 
 /**

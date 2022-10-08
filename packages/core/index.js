@@ -3,7 +3,7 @@ import { request } from "@octokit-next/request";
 import { createTokenAuth } from "@octokit-next/auth-token";
 import { withCustomRequest } from "@octokit-next/graphql";
 import { getUserAgent } from "universal-user-agent";
-import { Collection } from "before-after-hook";
+import Hook from "before-after-hook";
 
 import { VERSION } from "./lib/version.js";
 
@@ -64,7 +64,7 @@ export class Octokit {
       },
     };
 
-    const hook = new Collection();
+    const hook = new Hook.Collection();
 
     const requestDefaults = {
       baseUrl: this.options.baseUrl,

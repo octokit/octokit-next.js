@@ -14,5 +14,10 @@
   },
   "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types#readme",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@octokit-next/request-error": "^0.0.0-development",
+    "before-after-hook": "^3.0.2",
+    "type-fest": "^3.0.0"
+  }
 }

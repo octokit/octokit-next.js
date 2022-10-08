@@ -68,3 +68,9 @@ export async function readmeExample() {
 }
 
 // TODO: add more type tests for `@octokit-next/core` here
+
+export function hookTest() {
+  const octokit = new Octokit();
+
+  octokit.hook.before("request", () => {});
+}

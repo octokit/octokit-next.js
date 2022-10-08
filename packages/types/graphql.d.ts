@@ -1,11 +1,10 @@
-import { Octokit } from "@octokit-next/types";
-import { endpoint } from "@octokit-next/endpoint";
 import {
+  Octokit,
   EndpointInterface,
   KnownEndpointParameters,
-} from "@octokit-next/types";
+} from "./index.js";
 
-type GLOBAL_ENDPOINT_DEFAULTS = typeof endpoint.DEFAULTS;
+type GLOBAL_ENDPOINT_DEFAULTS = EndpointInterface["defaults"];
 type GRAPHQL_DEFAULTS = Omit<GLOBAL_ENDPOINT_DEFAULTS, "method"> & {
   method: "POST";
   url: "/graphql";
