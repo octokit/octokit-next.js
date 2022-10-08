@@ -13,7 +13,7 @@ export type KnownEndpointParameters<
   Omit<Octokit.EndpointOptions, "request">
 >;
 
-export type GLOBAL_DEFAULTS = {
+export type OCTOKIT_ENDPOINT_DEFAULTS = {
   method: "GET";
   baseUrl: "https://api.github.com";
   headers: {
@@ -40,7 +40,7 @@ export type GLOBAL_DEFAULTS = {
  */
 export interface EndpointInterface<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TDefaults extends KnownEndpointParameters<TVersion> = GLOBAL_DEFAULTS
+  TDefaults extends KnownEndpointParameters<TVersion> = OCTOKIT_ENDPOINT_DEFAULTS
 > {
   /**
    * Send a request to a known endpoint for the version specified in `request.version`.

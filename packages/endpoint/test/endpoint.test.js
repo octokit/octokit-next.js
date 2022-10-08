@@ -6,7 +6,7 @@ import { getUserAgent } from "universal-user-agent";
 import { endpoint } from "../index.js";
 import { VERSION } from "../lib/version.js";
 
-const userAgent = `octokit-endpoint.js/${VERSION} ${getUserAgent()}`;
+const userAgent = `octokit-next-endpoint.js/${VERSION} ${getUserAgent()}`;
 
 test("endpoint() is a function", (t) => {
   t.assert(endpoint instanceof Function, "endpoint is a function");

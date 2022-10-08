@@ -1,7 +1,7 @@
 import { Octokit } from "./index.js";
 import {
   KnownEndpointParameters,
-  GLOBAL_DEFAULTS,
+  OCTOKIT_ENDPOINT_DEFAULTS,
   EndpointInterface,
 } from "./endpoint.js";
 
@@ -46,7 +46,7 @@ type UnknownResponse = {
  */
 export interface RequestInterface<
   TVersion extends keyof Octokit.ApiVersions = "github.com",
-  TDefaults extends KnownEndpointParameters<TVersion> = GLOBAL_DEFAULTS
+  TDefaults extends KnownEndpointParameters<TVersion> = OCTOKIT_ENDPOINT_DEFAULTS
 > {
   /**
    * Send a request to a known endpoint for the version specified in `request.version`.

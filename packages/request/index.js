@@ -8,6 +8,6 @@ import withDefaults from "./lib/with-defaults.js";
 
 export const request = withDefaults(endpoint, {
   headers: {
-    "user-agent": `octokit-request.js/${VERSION} ${getUserAgent()}`,
+    "user-agent": `octokit-next-request.js/${VERSION} ${getUserAgent()}`,
   },
 });

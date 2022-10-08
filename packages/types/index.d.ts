@@ -1,12 +1,17 @@
+import { HookCollection } from "before-after-hook";
+import { RequestError } from "@octokit-next/request-error";
+
 import { RequestInterface } from "./request";
 import {
   AuthAbstractSrategyInterface,
   AuthInterface,
   AuthTokenConfig,
 } from "./auth";
+import { GraphqlInterface } from "./graphql";
 
 export { EndpointInterface, KnownEndpointParameters } from "./endpoint";
 export { RequestInterface } from "./request";
+export { GraphqlInterface, GraphQlQueryResponseData } from "./graphql";
 export * from "./auth";
 
 type AuthStrategyAndOptions<
@@ -295,12 +300,12 @@ export declare class Octokit<
    */
   static withPlugins<
     Class extends ClassWithPlugins,
-    Plugins extends [Plugin, ...Plugin[]]
+    Plugins extends [OctokitPlugin, ...OctokitPlugin[]]
   >(
     this: Class,
-    plugins: Plugins
+    PLUGINS: Plugins
   ): Class & {
-    plugins: [...Class["plugins"], ...Plugins];
+    PLUGINS: [...Class["PLUGINS"], ...Plugins];
   } & Constructor<UnionToIntersection<ReturnTypeOf<Plugins>>>;
 
   /**
@@ -333,14 +338,14 @@ export declare class Octokit<
     TAuthStrategy extends AuthAbstractSrategyInterface | undefined = undefined
   >(
     this: ClassOne,
-    defaults: PredefinedOptionsOne & {
+    DEFAULTS: PredefinedOptionsOne & {
       version?: TVersion;
       authStrategy?: TAuthStrategy;
     }
   ): ConstructorRequiringOptionsIfNeeded<ClassOne, PredefinedOptionsOne> & {
     withDefaults<PredefinedOptionsTwo, ClassTwo>(
       this: ClassTwo,
-      defaults: PredefinedOptionsTwo & {
+      DEFAULTS: PredefinedOptionsTwo & {
         version?: TVersion;
         authStrategy?: TAuthStrategy;
       }
@@ -350,7 +355,7 @@ export declare class Octokit<
     > & {
       withDefaults<PredefinedOptionsThree, ClassThree>(
         this: ClassThree,
-        defaults: PredefinedOptionsThree & {
+        DEFAULTS: PredefinedOptionsThree & {
           version?: TVersion;
           authStrategy?: TAuthStrategy;
         }
@@ -368,13 +373,14 @@ export declare class Octokit<
   /**
    * List of plugins that will be applied to all instances
    */
-  static plugins: Plugin[];
+  static PLUGINS: OctokitPlugin[];
 
   /**
    * Default options that will be applied to all instances
    */
-  static defaults: {
+  static DEFAULTS: {
     baseUrl: string;
+    userAgent: string;
   };
 
   /**
@@ -408,11 +414,32 @@ export declare class Octokit<
   request: RequestInterface<TVersion>;
 
   /**
+   * Send a GraphQL query
+   */
+  graphql: GraphqlInterface<TVersion>;
+
+  /**
    * Authenticate based on used strategy.
    */
   auth: TAuthStrategy extends AuthAbstractSrategyInterface
     ? ReturnType<TAuthStrategy>
     : AuthInterface<AuthTokenConfig>;
+
+  /**
+   * Hook API
+   */
+  hook: HookCollection<{
+    request: {
+      Options: Required<Octokit.EndpointOptions>;
+      Result: Octokit.Response<unknown, number>;
+      Error: RequestError | Error;
+    };
+    [key: string]: {
+      Options: unknown;
+      Result: unknown;
+      Error: unknown;
+    };
+  }>;
 }
 
 /**
@@ -445,10 +472,10 @@ export type ExtendOctokitWith<
     OctokitClass["options"]["version"]
   > &
   ApplyPlugins<OctokitExtensions["plugins"]> & {
-    defaults: OrObject<OctokitExtensions["defaults"], undefined>;
+    DEFAULTS: OrObject<OctokitExtensions["defaults"], undefined>;
   };
 
-export declare type Plugin = (
+export declare type OctokitPlugin = (
   instance: Octokit,
   options: Octokit.Options
 ) => ApiExtension | void;
@@ -479,7 +506,7 @@ declare type ReturnTypeOf<T extends AnyFunction | AnyFunction[]> =
     : never;
 
 type ClassWithPlugins = Constructor<any> & {
-  plugins: Plugin[];
+  PLUGINS: OctokitPlugin[];
 };
 
 type RemainingRequirements<
@@ -522,7 +549,7 @@ type ConstructorRequiringOptionsIfNeeded<
     ? PredefinedOptions["version"]
     : "github.com"
 > = {
-  defaults: PredefinedOptions;
+  DEFAULTS: PredefinedOptions;
 } & {
   new <NowProvided>(
     ...options: RequiredIfRemaining<PredefinedOptions, NowProvided>
@@ -534,13 +561,13 @@ type ConstructorRequiringOptionsIfNeeded<
 
 type Extensions = {
   defaults?: {};
-  plugins?: Plugin[];
+  plugins?: OctokitPlugin[];
 };
 
 type OrObject<T, Extender> = T extends Extender ? {} : T;
 
-type ApplyPlugins<Plugins extends Plugin[] | undefined> =
-  Plugins extends Plugin[]
+type ApplyPlugins<Plugins extends OctokitPlugin[] | undefined> =
+  Plugins extends OctokitPlugin[]
     ? UnionToIntersection<ReturnType<Plugins[number]>>
     : {};
 

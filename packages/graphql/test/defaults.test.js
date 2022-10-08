@@ -5,7 +5,7 @@ import { getUserAgent } from "universal-user-agent";
 
 import { graphql, VERSION } from "../index.js";
 
-const userAgent = `octokit-graphql.js/${VERSION} ${getUserAgent()}`;
+const userAgent = `octokit-next-graphql.js/${VERSION} ${getUserAgent()}`;
 
 test("graphql.defaults() is a function", (t) => {
   t.assert(graphql.defaults instanceof Function);

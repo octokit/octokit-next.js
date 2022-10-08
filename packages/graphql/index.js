@@ -8,7 +8,7 @@ import { withDefaults } from "./lib/with-defaults.js";
 
 export const graphql = withDefaults(request, {
   headers: {
-    "user-agent": `octokit-graphql.js/${VERSION} ${getUserAgent()}`,
+    "user-agent": `octokit-next-graphql.js/${VERSION} ${getUserAgent()}`,
   },
   method: "POST",
   url: "/graphql",
