@@ -149,7 +149,18 @@ test('octokit.request.endpoint("GET /")', (t) => {
   const octokit = new Octokit();
   const requestOptions = octokit.request.endpoint("GET /");
 
-  t.snapshot(requestOptions);
+  t.deepEqual(requestOptions, {
+    headers: {
+      accept: "application/vnd.github.v3+json",
+      "user-agent":
+        "octokit-next-core.js/0.0.0-development Node.js/18.10.0 (darwin; arm64)",
+    },
+    method: "GET",
+    request: {
+      hook: requestOptions.request.hook,
+    },
+    url: "https://api.github.com/",
+  });
 });
 
 test("sends null values (octokit/rest.js#765)", async (t) => {
