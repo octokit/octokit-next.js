@@ -15,9 +15,9 @@ export class Octokit {
   };
 
   static withPlugins(newPlugins) {
-    const currentPlugins = this.plugins;
+    const currentPlugins = this.PLUGINS;
     return class extends this {
-      static plugins = currentPlugins.concat(
+      static PLUGINS = currentPlugins.concat(
         newPlugins.filter((plugin) => !currentPlugins.includes(plugin))
       );
     };
@@ -52,7 +52,7 @@ export class Octokit {
     };
   }
 
-  static plugins = [];
+  static PLUGINS = [];
 
   constructor(options = {}) {
     this.options = {
@@ -95,7 +95,7 @@ export class Octokit {
     }
 
     // Apply plugins
-    this.constructor.plugins.forEach((plugin) => {
+    this.constructor.PLUGINS.forEach((plugin) => {
       Object.assign(this, plugin(this, this.options));
     });
 

@@ -303,9 +303,9 @@ export declare class Octokit<
     Plugins extends [OctokitPlugin, ...OctokitPlugin[]]
   >(
     this: Class,
-    plugins: Plugins
+    PLUGINS: Plugins
   ): Class & {
-    plugins: [...Class["plugins"], ...Plugins];
+    PLUGINS: [...Class["PLUGINS"], ...Plugins];
   } & Constructor<UnionToIntersection<ReturnTypeOf<Plugins>>>;
 
   /**
@@ -373,7 +373,7 @@ export declare class Octokit<
   /**
    * List of plugins that will be applied to all instances
    */
-  static plugins: OctokitPlugin[];
+  static PLUGINS: OctokitPlugin[];
 
   /**
    * Default options that will be applied to all instances
@@ -506,7 +506,7 @@ declare type ReturnTypeOf<T extends AnyFunction | AnyFunction[]> =
     : never;
 
 type ClassWithPlugins = Constructor<any> & {
-  plugins: OctokitPlugin[];
+  PLUGINS: OctokitPlugin[];
 };
 
 type RemainingRequirements<

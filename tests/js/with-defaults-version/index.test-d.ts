@@ -20,7 +20,7 @@ export async function test() {
   const OctokitGHES31 = Octokit.withDefaults({
     version: "ghes-3.1",
   });
-  expectType<"ghes-3.1">(OctokitGHES31.defaults.version);
+  expectType<"ghes-3.1">(OctokitGHES31.DEFAULTS.version);
   const octokitGhes31 = new OctokitGHES31();
   expectType<"ghes-3.1">(octokitGhes31.options.version);
 

@@ -8,7 +8,7 @@ export async function test() {
   // @ts-expect-error - unknown properties cannot be used
   octokit.unknown;
 
-  expectType<OctokitPlugin[]>(Octokit.plugins);
+  expectType<OctokitPlugin[]>(Octokit.PLUGINS);
 
   const unknownResponse = await octokit.request("GET /");
   expectType<number>(unknownResponse.status);

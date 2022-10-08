@@ -80,3 +80,7 @@ test("Octokit.DEFAULTS", (t) => {
     userAgent: `octokit-next-core.js/0.0.0-development ${getUserAgent()}`,
   });
 });
+
+test("Octokit.PLUGINS", (t) => {
+  t.deepEqual(Octokit.PLUGINS, []);
+});

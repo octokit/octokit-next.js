@@ -45,7 +45,7 @@ export async function test() {
       defaultOne: string;
       required: string;
     } & { baseUrl: string }
-  >(OctokitLevelOne.defaults);
+  >(OctokitLevelOne.DEFAULTS);
 
   const octokitLevelOne = new OctokitLevelOne({
     optionOne: "value",
@@ -66,7 +66,7 @@ export async function test() {
     defaultOne: string;
     defaultTwo: number;
     required: string;
-  }>({ ...OctokitLevelTwo.defaults });
+  }>({ ...OctokitLevelTwo.DEFAULTS });
 
   // Because 'required' is already provided, this needs no argument
   new OctokitLevelTwo();
@@ -98,7 +98,7 @@ export async function test() {
     defaultTwo: number;
     defaultThree: string[];
     required: string;
-  }>({ ...OctokitLevelThree.defaults });
+  }>({ ...OctokitLevelThree.DEFAULTS });
 
   // Because 'required' is already provided, this needs no argument
   new OctokitLevelThree();
@@ -179,7 +179,7 @@ export async function test() {
     defaultTwo: number;
     defaultThree: string[];
     defaultFour: number;
-  }>({ ...OctokitLevelFour.defaults });
+  }>({ ...OctokitLevelFour.DEFAULTS });
 
   const octokitLevelFour = new OctokitLevelFour();
 
@@ -233,7 +233,7 @@ export async function test() {
     defaultOne: string;
     defaultTwo: number;
     defaultThree: string[];
-  }>({ ...OctokitWithManyChainedDefaultsAndPlugins.defaults });
+  }>({ ...OctokitWithManyChainedDefaultsAndPlugins.DEFAULTS });
 
   const octokitWithManyChainedDefaultsAndPlugins =
     new OctokitWithManyChainedDefaultsAndPlugins({
