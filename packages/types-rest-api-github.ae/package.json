@@ -1,23 +1,24 @@
 {
+  "name": "@octokit-next/types-rest-api-github.ae",
+  "version": "0.0.0-development",
+  "publishConfig": { "access": "public" },
+  "type": "module",
+  "description": "Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com",
+  "exoprts": "./index.js",
+  "types": "index.d.ts",
+  "repository": {
+    "directory": "packages/types-rest-api-github.ae",
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-github.ae#readme",
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
     "@octokit-next/types-openapi-github.ae": "0.0.0-development",
     "@octokit-next/types-rest-api": "0.0.0-development",
     "type-fest": "^3.0.0"
   },
-  "description": "Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com",
-  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-github.ae#readme",
-  "license": "MIT",
-  "name": "@octokit-next/types-rest-api-github.ae",
-  "octokit": { "openapi-version": "5.2.2" },
-  "publishConfig": { "access": "public" },
-  "repository": {
-    "directory": "packages/types-rest-api-github.ae",
-    "type": "git",
-    "url": "https://github.com/octokit/octokit-next.js.git"
-  },
-  "type": "module",
-  "types": "index.d.ts",
-  "version": "0.0.0-development"
+  "octokit": { "openapi-version": "5.2.2" }
 }

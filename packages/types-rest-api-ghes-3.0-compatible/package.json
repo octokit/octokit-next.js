@@ -1,21 +1,22 @@
 {
-  "author": "Gregor Martynus (https://twitter.com/gr2m)",
-  "dependencies": {
-    "@octokit-next/types": "0.0.0-development",
-    "@octokit-next/types-openapi-ghes-3.0": "0.0.0-development"
-  },
-  "description": "Types for GHES 3.0 (compatible) REST API requests and responses",
-  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.0-compatible#readme",
-  "license": "MIT",
   "name": "@octokit-next/types-rest-api-ghes-3.0-compatible",
-  "octokit": { "openapi-version": "5.2.2" },
+  "version": "0.0.0-development",
   "publishConfig": { "access": "public" },
+  "type": "module",
+  "description": "Types for GHES 3.0 (compatible) REST API requests and responses",
+  "exoprts": "./index.js",
+  "types": "index.d.ts",
   "repository": {
     "directory": "packages/types-rest-api-ghes-3.0-compatible",
     "type": "git",
     "url": "https://github.com/octokit/octokit-next.js.git"
   },
-  "type": "module",
-  "types": "index.d.ts",
-  "version": "0.0.0-development"
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.0-compatible#readme",
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit-next/types": "0.0.0-development",
+    "@octokit-next/types-openapi-ghes-3.0": "0.0.0-development"
+  },
+  "octokit": { "openapi-version": "5.2.2" }
 }
