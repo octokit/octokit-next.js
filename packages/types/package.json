@@ -1,11 +1,10 @@
 {
   "name": "@octokit-next/types",
-  "publishConfig": {
-    "access": "public"
-  },
-  "type": "module",
   "version": "0.0.0-development",
+  "publishConfig": { "access": "public" },
+  "type": "module",
   "description": "Shared TypeScript definitions for upcoming Octokit SDK",
+  "exoprts": "./index.js",
   "types": "./index.d.ts",
   "repository": {
     "type": "git",
