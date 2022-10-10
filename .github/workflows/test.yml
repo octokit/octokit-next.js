@@ -7,7 +7,7 @@ on:
     types: [opened, synchronize]
 
 jobs:
-  test:
+  node:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,3 +17,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+  deno: # deno test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - run: deno test --unstable --no-check tests/deno/
