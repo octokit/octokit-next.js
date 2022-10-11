@@ -1,8 +1,8 @@
-const { writeFileSync } = require("fs");
-const { resolve } = require("path");
+import { writeFileSync } from "fs";
+import { resolve } from "path";
 
-const graphql = require("github-openapi-graphql-query");
-const prettier = require("prettier");
+import graphql from "github-openapi-graphql-query";
+import prettier from "prettier";
 
 if (!process.env.OCTOKIT_OPENAPI_VERSION) {
   throw new Error(`OCTOKIT_OPENAPI_VERSION environment variable must be set`);
