@@ -44,7 +44,7 @@ jobs:
         run: |
           # openapi types
           node scripts/types-openapi/download.js
-          node scripts/types-openapi/update.cjs
+          node scripts/types-openapi/update.js
           # rest api types for github.com
           node scripts/types-rest-api/download.cjs
           node scripts/types-rest-api/update.cjs
