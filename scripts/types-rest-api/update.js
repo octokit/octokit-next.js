@@ -1,18 +1,16 @@
-const { readFileSync, writeFileSync } = require("fs");
-const { resolve } = require("path");
+import { readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
-const Handlebars = require("handlebars");
-const prettier = require("prettier");
-const sortKeys = require("sort-keys");
+import Handlebars from "handlebars";
+import prettier from "prettier";
+import sortKeys from "sort-keys";
 
-const ENDPOINTS = require("../../cache/types-rest-api/endpoints.json");
-const DECLARATIONS_PATH = resolve(
-  __dirname,
-  "../../packages/types-rest-api/index.d.ts"
+const ENDPOINTS = JSON.parse(
+  readFileSync("cache/types-rest-api/endpoints.json", "utf-8")
 );
+const DECLARATIONS_PATH = resolve("packages/types-rest-api/index.d.ts");
 const DECLARATIONS_TEMPLATE_PATH = resolve(
-  __dirname,
-  "templates/index.d.ts.template"
+  "scripts/types-rest-api/templates/index.d.ts.template"
 );
 
 const template = Handlebars.compile(
@@ -69,7 +67,7 @@ async function run() {
 function toOpenApiUrl(endpoint) {
   return (
     endpoint.url
-      // stecial case for "Upload a release asset": remove ":origin" prefix
+      // special case for "Upload a release asset": remove ":origin" prefix
       .replace(/^\{origin\}/, "")
       // remove query parameters
       .replace(/\{?\?.*$/, "")
