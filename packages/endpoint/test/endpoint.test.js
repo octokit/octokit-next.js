@@ -139,7 +139,6 @@ test("endpoint() PUT without request body", (t) => {
     headers: {
       authorization: `token 0000000000000000000000000000000000000001`,
       accept: "application/vnd.github.v3+json",
-      "content-length": 0,
       "user-agent": userAgent,
     },
     body: "",
@@ -437,4 +436,61 @@ test("endpoint() undefined header value", (t) => {
     "if-modified-since" in options.headers,
     "options.headers['if-modified-since'] is not set"
   );
+});
+
+test("DELETE without request body", (t) => {
+  const options = endpoint("DELETE /user/following/{username}", {
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+    },
+    username: "octocat",
+  });
+
+  t.deepEqual(options, {
+    method: "DELETE",
+    url: "https://api.github.com/user/following/octocat",
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+      accept: "application/vnd.github.v3+json",
+      "user-agent": userAgent,
+    },
+  });
+});
+
+test("POST without request body", (t) => {
+  const options = endpoint("POST /widgets", {
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+    },
+  });
+
+  t.deepEqual(options, {
+    method: "POST",
+    url: "https://api.github.com/widgets",
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+      accept: "application/vnd.github.v3+json",
+      "user-agent": userAgent,
+    },
+  });
+});
+
+test("PATCH without request body", (t) => {
+  const options = endpoint("PATCH /widgets/{id}", {
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+    },
+    id: "my-widget",
+  });
+
+  t.deepEqual(options, {
+    body: "",
+    method: "PATCH",
+    url: "https://api.github.com/widgets/my-widget",
+    headers: {
+      authorization: `token 0000000000000000000000000000000000000001`,
+      accept: "application/vnd.github.v3+json",
+      "user-agent": userAgent,
+    },
+  });
 });
