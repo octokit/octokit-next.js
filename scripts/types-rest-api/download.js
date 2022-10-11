@@ -38,7 +38,7 @@ async function main() {
     data: { endpoints },
   } = await graphql(QUERY, {
     version,
-    ignoreChangesBefore: "2020-06-10",
+    ignoreChangesBefore: "2022-10-10",
   });
 
   writeFileSync(

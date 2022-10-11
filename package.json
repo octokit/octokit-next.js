@@ -188,7 +188,7 @@
     "ava": "^4.3.3",
     "c8": "^7.7.3",
     "fetch-mock": "npm:@gr2m/fetch-mock@9.11.0-pull-request-644.1",
-    "github-openapi-graphql-query": "^2.0.0",
+    "github-openapi-graphql-query": "github:gr2m/github-openapi-graphql-query#81-add-compatibility-mode-for-ghec",
     "handlebars": "^4.7.7",
     "openapi-typescript": "^5.0.0",
     "prettier": "^2.3.2",
