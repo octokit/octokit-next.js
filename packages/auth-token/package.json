@@ -27,14 +27,7 @@
   },
   "scripts": {
     "test": "npm run test:code && npm run test:types",
-    "test:code": "c8 ava test",
+    "test:code": "c8 --100 ava test",
     "test:types": "tsd"
-  },
-  "c8": {
-    "check-coverage": true,
-    "lines": 100,
-    "functions": 100,
-    "branches": 100,
-    "statements": 100
   }
 }
