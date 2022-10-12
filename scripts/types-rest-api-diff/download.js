@@ -1,6 +1,6 @@
-import { get } from "https";
-import { createWriteStream } from "fs";
-import { mkdir, rm } from "fs/promises";
+import { get } from "node:https";
+import { createWriteStream } from "node:fs";
+import { mkdir, rm } from "node:fs/promises";
 
 if (!process.env.OCTOKIT_OPENAPI_VERSION) {
   throw new Error("OCTOKIT_OPENAPI_VERSION is not set");

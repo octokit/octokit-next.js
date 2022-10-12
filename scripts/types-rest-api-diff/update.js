@@ -1,6 +1,6 @@
-const { readFileSync } = require("fs");
-const { readdir, mkdir, rm, writeFile } = require("fs/promises");
-const { resolve } = require("path");
+import { readFileSync } from "node:fs";
+import { readdir, mkdir, rm, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 
 const Handlebars = require("handlebars");
 const prettier = require("prettier");
@@ -75,7 +75,7 @@ async function run() {
           sortKeys(
             {
               name: `@octokit-next/${packageName}`,
-              description: `Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com`,
+              description: `Generated TypeScript definitions based on GitHub's OpenAPI spec for ${currentVersionName}`,
               repository: {
                 type: "git",
                 url: "https://github.com/octokit/octokit-next.js.git",
