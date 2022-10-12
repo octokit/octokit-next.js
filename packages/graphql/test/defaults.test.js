@@ -199,6 +199,7 @@ test("graphql.defaults() set defaults on .endpoint", (t) => {
   const { request: _request, ...requestOptions } =
     // @ts-expect-error - TODO: expects to set { url } but it really shouldn't
     authenticatedGraphql.endpoint();
+
   t.deepEqual(requestOptions, {
     method: "POST",
     url: "https://api.github.com/graphql",
@@ -206,7 +207,6 @@ test("graphql.defaults() set defaults on .endpoint", (t) => {
       accept: "application/vnd.github.v3+json",
       authorization: "token secret123",
       "user-agent": userAgent,
-      "content-length": 0,
     },
   });
 });
