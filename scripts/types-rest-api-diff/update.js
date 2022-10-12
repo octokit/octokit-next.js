@@ -2,23 +2,25 @@ import { readFileSync } from "node:fs";
 import { readdir, mkdir, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const Handlebars = require("handlebars");
-const prettier = require("prettier");
-const sortKeys = require("sort-keys");
+import Handlebars from "handlebars";
+import prettier from "prettier";
+import sortKeys from "sort-keys";
 
 if (!process.env.OCTOKIT_OPENAPI_VERSION) {
   throw new Error("OCTOKIT_OPENAPI_VERSION is not set");
 }
 
-const DIFF_TO_DOTCOM_TEMPLATE_PATH = resolve(
-  __dirname,
-  "templates/diff-to-github.com.d.ts.template"
-);
-const DIFF_TO_GHES_TEMPLATE_PATH = resolve(
-  __dirname,
-  "templates/diff-to-ghes.d.ts.template"
-);
-const pkg = require(resolve(process.cwd(), "package.json"));
+const DIFF_TO_DOTCOM_TEMPLATE_PATH = new URL(
+  "templates/diff-to-github.com.d.ts.template",
+  import.meta.url
+).pathname;
+
+const DIFF_TO_GHES_TEMPLATE_PATH = new URL(
+  "templates/diff-to-ghes.d.ts.template",
+  import.meta.url
+).pathname;
+
+const pkg = JSON.parse(readFileSync(resolve(process.cwd(), "package.json")));
 
 const templateDiffToDotcom = Handlebars.compile(
   readFileSync(DIFF_TO_DOTCOM_TEMPLATE_PATH, "utf8")
@@ -34,6 +36,8 @@ const packageDefaults = {
   },
   version: "0.0.0-development",
   types: "index.d.ts",
+  // Add workaround for https://github.com/ije/esm.sh/issues/433
+  exports: "./index.js",
   author: "Gregor Martynus (https://twitter.com/gr2m)",
   license: "MIT",
   octokit: {
@@ -76,6 +80,7 @@ async function run() {
             {
               name: `@octokit-next/${packageName}`,
               description: `Generated TypeScript definitions based on GitHub's OpenAPI spec for ${currentVersionName}`,
+              ...packageDefaults,
               repository: {
                 type: "git",
                 url: "https://github.com/octokit/octokit-next.js.git",
@@ -90,7 +95,6 @@ async function run() {
                 [`@octokit-next/${diffPackageName}`]: "0.0.0-development",
                 "type-fest": pkg.devDependencies["type-fest"],
               },
-              ...packageDefaults,
             },
             { deep: true }
           )
@@ -175,6 +179,14 @@ async function run() {
       prettier.format(result, { parser: "typescript" })
     );
     console.log(`${declarationsPath} updated.`);
+
+    // Add workaround for https://github.com/ije/esm.sh/issues/433
+    const indexPath = resolve(`${packagePath}/index.js`);
+    await writeFile(
+      indexPath,
+      'export default "Workaround for https://github.com/ije/esm.sh/issues/433";\n'
+    );
+    console.log(`${indexPath} updated.`);
 
     // create *-compatible package
     const packageCompatibleName = `types-rest-api-${currentVersion}-compatible`;
@@ -310,6 +322,14 @@ declare module "@octokit-next/types" {
       )
     );
     console.log(`${declarationsCompatiblePath} updated.`);
+
+    // Add workaround for https://github.com/ije/esm.sh/issues/433
+    const compatibleIndexPath = resolve(`${packageCompatiblePath}/index.js`);
+    await writeFile(
+      compatibleIndexPath,
+      'export default "Workaround for https://github.com/ije/esm.sh/issues/433";\n'
+    );
+    console.log(`${compatibleIndexPath} updated.`);
   }
 }
 
