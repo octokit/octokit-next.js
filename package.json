@@ -137,6 +137,30 @@
       [
         "@semantic-release/npm",
         {
+          "pkgRoot": "packages/types-rest-api-ghec"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghec-compatible"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-github.ae"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-github.ae-compatible"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
           "pkgRoot": "packages/types-rest-api-ghes-3.0"
         }
       ],
@@ -173,13 +197,49 @@
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-rest-api-github.ae"
+          "pkgRoot": "packages/types-rest-api-ghes-3.3"
         }
       ],
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-rest-api-github.ae-compatible"
+          "pkgRoot": "packages/types-rest-api-ghes-3.3-compatible"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.4"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.4-compatible"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.5"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.5-compatible"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.6"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-rest-api-ghes-3.6-compatible"
         }
       ]
     ]
