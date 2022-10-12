@@ -14,9 +14,6 @@ export async function test() {
 
   const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
   });
   expectType<number | undefined>(ghesOnlyResponse.data.id);
   expectType<string>(ghesOnlyResponse.headers["x-github-enterprise-version"]);

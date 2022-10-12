@@ -25,14 +25,6 @@ declare module "@octokit-next/types" {
         "/app/installations/{installation_id}/suspended"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#delete-a-grant
-       */
-      "DELETE /applications/grants/{grant_id}": Operation<
-        paths,
-        "delete",
-        "/applications/grants/{grant_id}"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/apps#delete-an-app-authorization
        */
       "DELETE /applications/{client_id}/grant": Operation<
@@ -49,15 +41,7 @@ declare module "@octokit-next/types" {
         "/applications/{client_id}/token"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#delete-an-authorization
-       */
-      "DELETE /authorizations/{authorization_id}": Operation<
-        paths,
-        "delete",
-        "/authorizations/{authorization_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#disable-a-selected-organization-for-github-actions-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#disable-a-selected-organization-for-github-actions-in-an-enterprise
        */
       "DELETE /enterprises/{enterprise}/actions/permissions/organizations/{org_id}": Operation<
         paths,
@@ -65,7 +49,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions/organizations/{org_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#delete-a-self-hosted-runner-group-from-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#delete-a-self-hosted-runner-group-from-an-enterprise
        */
       "DELETE /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}": Operation<
         paths,
@@ -73,7 +57,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#remove-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#remove-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
        */
       "DELETE /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations/{org_id}": Operation<
         paths,
@@ -81,7 +65,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations/{org_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#remove-a-self-hosted-runner-from-a-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#remove-a-self-hosted-runner-from-a-group-for-an-enterprise
        */
       "DELETE /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners/{runner_id}": Operation<
         paths,
@@ -89,12 +73,28 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners/{runner_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#delete-self-hosted-runner-from-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#delete-self-hosted-runner-from-an-enterprise
        */
       "DELETE /enterprises/{enterprise}/actions/runners/{runner_id}": Operation<
         paths,
         "delete",
         "/enterprises/{enterprise}/actions/runners/{runner_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#remove-all-custom-labels-from-a-self-hosted-runner-for-an-enterprise
+       */
+      "DELETE /enterprises/{enterprise}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "delete",
+        "/enterprises/{enterprise}/actions/runners/{runner_id}/labels"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#remove-a-custom-label-from-a-self-hosted-runner-for-an-enterprise
+       */
+      "DELETE /enterprises/{enterprise}/actions/runners/{runner_id}/labels/{name}": Operation<
+        paths,
+        "delete",
+        "/enterprises/{enterprise}/actions/runners/{runner_id}/labels/{name}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/gists#delete-a-gist
@@ -131,6 +131,22 @@ declare module "@octokit-next/types" {
         paths,
         "delete",
         "/notifications/threads/{thread_id}/subscription"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#delete-an-organization-secret
+       */
+      "DELETE /organizations/{org}/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "delete",
+        "/organizations/{org}/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#remove-selected-repository-from-an-organization-secret
+       */
+      "DELETE /organizations/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}": Operation<
+        paths,
+        "delete",
+        "/organizations/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#disable-a-selected-repository-for-github-actions-in-an-organization
@@ -173,6 +189,22 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/actions/runners/{runner_id}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#remove-all-custom-labels-from-a-self-hosted-runner-for-an-organization
+       */
+      "DELETE /orgs/{org}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "delete",
+        "/orgs/{org}/actions/runners/{runner_id}/labels"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#remove-a-custom-label-from-a-self-hosted-runner-for-an-organization
+       */
+      "DELETE /orgs/{org}/actions/runners/{runner_id}/labels/{name}": Operation<
+        paths,
+        "delete",
+        "/orgs/{org}/actions/runners/{runner_id}/labels/{name}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#delete-an-organization-secret
        */
       "DELETE /orgs/{org}/actions/secrets/{secret_name}": Operation<
@@ -197,12 +229,28 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/blocks/{username}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/orgs#remove-a-saml-sso-authorization-for-an-organization
+       * @see https://docs.github.com/rest/reference/orgs#delete-a-custom-role
        */
-      "DELETE /orgs/{org}/credential-authorizations/{credential_id}": Operation<
+      "DELETE /orgs/{org}/custom_roles/{role_id}": Operation<
         paths,
         "delete",
-        "/orgs/{org}/credential-authorizations/{credential_id}"
+        "/orgs/{org}/custom_roles/{role_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#delete-an-organization-secret
+       */
+      "DELETE /orgs/{org}/dependabot/secrets/{secret_name}": Operation<
+        paths,
+        "delete",
+        "/orgs/{org}/dependabot/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#remove-selected-repository-from-an-organization-secret
+       */
+      "DELETE /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}": Operation<
+        paths,
+        "delete",
+        "/orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#delete-an-organization-webhook
@@ -237,6 +285,14 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/members/{username}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/codespaces
+       */
+      "DELETE /orgs/{org}/members/{username}/codespaces/{codespace_name}": Operation<
+        paths,
+        "delete",
+        "/orgs/{org}/members/{username}/codespaces/{codespace_name}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/orgs#remove-organization-membership-for-a-user
        */
       "DELETE /orgs/{org}/memberships/{username}": Operation<
@@ -250,8 +306,7 @@ declare module "@octokit-next/types" {
       "DELETE /orgs/{org}/migrations/{migration_id}/archive": Operation<
         paths,
         "delete",
-        "/orgs/{org}/migrations/{migration_id}/archive",
-        "wyandotte"
+        "/orgs/{org}/migrations/{migration_id}/archive"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#unlock-an-organization-repository
@@ -259,8 +314,7 @@ declare module "@octokit-next/types" {
       "DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock": Operation<
         paths,
         "delete",
-        "/orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock",
-        "wyandotte"
+        "/orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#remove-outside-collaborator-from-an-organization
@@ -295,6 +349,14 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/public_members/{username}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/orgs#remove-a-security-manager-team
+       */
+      "DELETE /orgs/{org}/security-managers/teams/{team_slug}": Operation<
+        paths,
+        "delete",
+        "/orgs/{org}/security-managers/teams/{team_slug}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/teams#delete-a-team
        */
       "DELETE /orgs/{org}/teams/{team_slug}": Operation<
@@ -324,8 +386,7 @@ declare module "@octokit-next/types" {
       "DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}": Operation<
         paths,
         "delete",
-        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/reactions#delete-team-discussion-reaction
@@ -333,8 +394,7 @@ declare module "@octokit-next/types" {
       "DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}": Operation<
         paths,
         "delete",
-        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/teams#remove-team-membership-for-a-user
@@ -366,8 +426,7 @@ declare module "@octokit-next/types" {
       "DELETE /projects/columns/cards/{card_id}": Operation<
         paths,
         "delete",
-        "/projects/columns/cards/{card_id}",
-        "inertia"
+        "/projects/columns/cards/{card_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#delete-a-project-column
@@ -375,8 +434,7 @@ declare module "@octokit-next/types" {
       "DELETE /projects/columns/{column_id}": Operation<
         paths,
         "delete",
-        "/projects/columns/{column_id}",
-        "inertia"
+        "/projects/columns/{column_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#delete-a-project
@@ -384,8 +442,7 @@ declare module "@octokit-next/types" {
       "DELETE /projects/{project_id}": Operation<
         paths,
         "delete",
-        "/projects/{project_id}",
-        "inertia"
+        "/projects/{project_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#remove-project-collaborator
@@ -393,17 +450,7 @@ declare module "@octokit-next/types" {
       "DELETE /projects/{project_id}/collaborators/{username}": Operation<
         paths,
         "delete",
-        "/projects/{project_id}/collaborators/{username}",
-        "inertia"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/reactions/#delete-a-reaction-legacy
-       */
-      "DELETE /reactions/{reaction_id}": Operation<
-        paths,
-        "delete",
-        "/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/projects/{project_id}/collaborators/{username}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#delete-a-repository
@@ -422,12 +469,44 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}"
       >;
       /**
+       * @see https://docs.github.com/rest/actions/cache#delete-a-github-actions-cache-for-a-repository-using-a-cache-id
+       */
+      "DELETE /repos/{owner}/{repo}/actions/caches/{cache_id}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/actions/caches/{cache_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/actions/cache#delete-github-actions-caches-for-a-repository-using-a-cache-key
+       */
+      "DELETE /repos/{owner}/{repo}/actions/caches{?key,ref}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/actions/caches"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#delete-a-self-hosted-runner-from-a-repository
        */
       "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}": Operation<
         paths,
         "delete",
         "/repos/{owner}/{repo}/actions/runners/{runner_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#remove-all-custom-labels-from-a-self-hosted-runner-for-a-repository
+       */
+      "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#remove-a-custom-label-from-a-self-hosted-runner-for-a-repository
+       */
+      "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#delete-a-workflow-run
@@ -467,8 +546,7 @@ declare module "@octokit-next/types" {
       "DELETE /repos/{owner}/{repo}/automated-security-fixes": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/automated-security-fixes",
-        "london"
+        "/repos/{owner}/{repo}/automated-security-fixes"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#delete-branch-protection
@@ -500,8 +578,7 @@ declare module "@octokit-next/types" {
       "DELETE /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
-        "zzzax"
+        "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#remove-status-check-protection
@@ -560,7 +637,15 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#remove-a-repository-collaborator
+       * @see https://docs.github.com/rest/reference/codespaces#delete-a-repository-secret
+       */
+      "DELETE /repos/{owner}/{repo}/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/collaborators/collaborators#remove-a-repository-collaborator
        */
       "DELETE /repos/{owner}/{repo}/collaborators/{username}": Operation<
         paths,
@@ -568,7 +653,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/collaborators/{username}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#delete-a-commit-comment
+       * @see https://docs.github.com/rest/commits/comments#delete-a-commit-comment
        */
       "DELETE /repos/{owner}/{repo}/comments/{comment_id}": Operation<
         paths,
@@ -581,8 +666,7 @@ declare module "@octokit-next/types" {
       "DELETE /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#delete-a-file
@@ -591,6 +675,14 @@ declare module "@octokit-next/types" {
         paths,
         "delete",
         "/repos/{owner}/{repo}/contents/{path}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#delete-a-repository-secret
+       */
+      "DELETE /repos/{owner}/{repo}/dependabot/secrets/{secret_name}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#delete-a-deployment
@@ -609,6 +701,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/environments/{environment_name}"
       >;
       /**
+       * @see https://docs.github.com/rest/deployments/branch-policies#delete-deployment-branch-policy
+       */
+      "DELETE /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/git#delete-a-reference
        */
       "DELETE /repos/{owner}/{repo}/git/refs/{ref}": Operation<
@@ -617,7 +717,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/git/refs/{ref}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#delete-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repos#delete-a-repository-webhook
        */
       "DELETE /repos/{owner}/{repo}/hooks/{hook_id}": Operation<
         paths,
@@ -641,7 +741,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/interaction-limits"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#delete-a-repository-invitation
+       * @see https://docs.github.com/rest/collaborators/invitations#delete-a-repository-invitation
        */
       "DELETE /repos/{owner}/{repo}/invitations/{invitation_id}": Operation<
         paths,
@@ -662,8 +762,7 @@ declare module "@octokit-next/types" {
       "DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/issues#remove-assignees-from-an-issue
@@ -703,8 +802,7 @@ declare module "@octokit-next/types" {
       "DELETE /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#delete-a-deploy-key
@@ -723,6 +821,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/labels/{name}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/repos#disable-git-lfs-for-a-repository
+       */
+      "DELETE /repos/{owner}/{repo}/lfs": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/lfs"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/issues#delete-a-milestone
        */
       "DELETE /repos/{owner}/{repo}/milestones/{milestone_number}": Operation<
@@ -731,13 +837,12 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/milestones/{milestone_number}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#delete-a-github-pages-site
+       * @see https://docs.github.com/rest/pages#delete-a-github-pages-site
        */
       "DELETE /repos/{owner}/{repo}/pages": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/pages",
-        "switcheroo"
+        "/repos/{owner}/{repo}/pages"
       >;
       /**
        * @see https://docs.github.com/rest/reference/pulls#delete-a-review-comment-for-a-pull-request
@@ -753,8 +858,7 @@ declare module "@octokit-next/types" {
       "DELETE /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/pulls#remove-requested-reviewers-from-a-pull-request
@@ -789,6 +893,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/releases/{release_id}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/reactions/#delete-a-release-reaction
+       */
+      "DELETE /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/activity#delete-a-repository-subscription
        */
       "DELETE /repos/{owner}/{repo}/subscription": Operation<
@@ -797,13 +909,20 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/subscription"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/repos#delete-tag-protection-state-for-a-repository
+       */
+      "DELETE /repos/{owner}/{repo}/tags/protection/{tag_protection_id}": Operation<
+        paths,
+        "delete",
+        "/repos/{owner}/{repo}/tags/protection/{tag_protection_id}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/repos#disable-vulnerability-alerts
        */
       "DELETE /repos/{owner}/{repo}/vulnerability-alerts": Operation<
         paths,
         "delete",
-        "/repos/{owner}/{repo}/vulnerability-alerts",
-        "dorian"
+        "/repos/{owner}/{repo}/vulnerability-alerts"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#delete-an-environment-secret
@@ -814,88 +933,36 @@ declare module "@octokit-next/types" {
         "/repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#delete-a-scim-group-from-an-enterprise
-       */
-      "DELETE /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": Operation<
-        paths,
-        "delete",
-        "/scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#delete-a-scim-user-from-an-enterprise
-       */
-      "DELETE /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": Operation<
-        paths,
-        "delete",
-        "/scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/scim#delete-a-scim-user-from-an-organization
-       */
-      "DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}": Operation<
-        paths,
-        "delete",
-        "/scim/v2/organizations/{org}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#delete-a-team-legacy
-       */
-      "DELETE /teams/{team_id}": Operation<paths, "delete", "/teams/{team_id}">;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#delete-a-discussion-legacy
-       */
-      "DELETE /teams/{team_id}/discussions/{discussion_number}": Operation<
-        paths,
-        "delete",
-        "/teams/{team_id}/discussions/{discussion_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#delete-a-discussion-comment-legacy
-       */
-      "DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}": Operation<
-        paths,
-        "delete",
-        "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#remove-team-member-legacy
-       */
-      "DELETE /teams/{team_id}/members/{username}": Operation<
-        paths,
-        "delete",
-        "/teams/{team_id}/members/{username}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#remove-team-membership-for-a-user-legacy
-       */
-      "DELETE /teams/{team_id}/memberships/{username}": Operation<
-        paths,
-        "delete",
-        "/teams/{team_id}/memberships/{username}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#remove-a-project-from-a-team-legacy
-       */
-      "DELETE /teams/{team_id}/projects/{project_id}": Operation<
-        paths,
-        "delete",
-        "/teams/{team_id}/projects/{project_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#remove-a-repository-from-a-team-legacy
-       */
-      "DELETE /teams/{team_id}/repos/{owner}/{repo}": Operation<
-        paths,
-        "delete",
-        "/teams/{team_id}/repos/{owner}/{repo}"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/users#unblock-a-user
        */
       "DELETE /user/blocks/{username}": Operation<
         paths,
         "delete",
         "/user/blocks/{username}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#delete-a-secret-for-the-authenticated-user
+       */
+      "DELETE /user/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "delete",
+        "/user/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#remove-a-selected-repository-from-a-user-secret
+       */
+      "DELETE /user/codespaces/secrets/{secret_name}/repositories/{repository_id}": Operation<
+        paths,
+        "delete",
+        "/user/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#delete-a-codespace-for-the-authenticated-user
+       */
+      "DELETE /user/codespaces/{codespace_name}": Operation<
+        paths,
+        "delete",
+        "/user/codespaces/{codespace_name}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/users#delete-an-email-address-for-the-authenticated-user
@@ -947,8 +1014,7 @@ declare module "@octokit-next/types" {
       "DELETE /user/migrations/{migration_id}/archive": Operation<
         paths,
         "delete",
-        "/user/migrations/{migration_id}/archive",
-        "wyandotte"
+        "/user/migrations/{migration_id}/archive"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#unlock-a-user-repository
@@ -956,8 +1022,7 @@ declare module "@octokit-next/types" {
       "DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock": Operation<
         paths,
         "delete",
-        "/user/migrations/{migration_id}/repos/{repo_name}/lock",
-        "wyandotte"
+        "/user/migrations/{migration_id}/repos/{repo_name}/lock"
       >;
       /**
        * @see https://docs.github.com/rest/reference/packages#delete-a-package-for-the-authenticated-user
@@ -976,12 +1041,20 @@ declare module "@octokit-next/types" {
         "/user/packages/{package_type}/{package_name}/versions/{package_version_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#decline-a-repository-invitation
+       * @see https://docs.github.com/rest/collaborators/invitations#decline-a-repository-invitation
        */
       "DELETE /user/repository_invitations/{invitation_id}": Operation<
         paths,
         "delete",
         "/user/repository_invitations/{invitation_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/users#delete-a-ssh-signing-key-for-the-authenticated-user
+       */
+      "DELETE /user/ssh_signing_keys/{ssh_signing_key_id}": Operation<
+        paths,
+        "delete",
+        "/user/ssh_signing_keys/{ssh_signing_key_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#unstar-a-repository-for-the-authenticated-user
@@ -1048,37 +1121,9 @@ declare module "@octokit-next/types" {
         "/app/installations/{installation_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#list-your-grants
-       */
-      "GET /applications/grants": Operation<
-        paths,
-        "get",
-        "/applications/grants"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#get-a-single-grant
-       */
-      "GET /applications/grants/{grant_id}": Operation<
-        paths,
-        "get",
-        "/applications/grants/{grant_id}"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/apps/#get-an-app
        */
       "GET /apps/{app_slug}": Operation<paths, "get", "/apps/{app_slug}">;
-      /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#list-your-authorizations
-       */
-      "GET /authorizations": Operation<paths, "get", "/authorizations">;
-      /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#get-a-single-authorization
-       */
-      "GET /authorizations/{authorization_id}": Operation<
-        paths,
-        "get",
-        "/authorizations/{authorization_id}"
-      >;
       /**
        * @see https://docs.github.com/rest/reference/codes-of-conduct#get-all-codes-of-conduct
        */
@@ -1096,7 +1141,23 @@ declare module "@octokit-next/types" {
        */
       "GET /emojis": Operation<paths, "get", "/emojis">;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-github-actions-permissions-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/enterprise-admin#get-github-enterprise-server-statistics
+       */
+      "GET /enterprise-installation/{enterprise_or_org}/server-statistics": Operation<
+        paths,
+        "get",
+        "/enterprise-installation/{enterprise_or_org}/server-statistics"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#get-github-actions-cache-usage-for-an-enterprise
+       */
+      "GET /enterprises/{enterprise}/actions/cache/usage": Operation<
+        paths,
+        "get",
+        "/enterprises/{enterprise}/actions/cache/usage"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#get-github-actions-permissions-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/permissions": Operation<
         paths,
@@ -1104,7 +1165,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-selected-organizations-enabled-for-github-actions-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#list-selected-organizations-enabled-for-github-actions-in-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/permissions/organizations": Operation<
         paths,
@@ -1112,7 +1173,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions/organizations"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-allowed-actions-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#get-allowed-actions-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/permissions/selected-actions": Operation<
         paths,
@@ -1120,7 +1181,15 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions/selected-actions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-self-hosted-runner-groups-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#get-default-workflow-permissions-for-an-enterprise
+       */
+      "GET /enterprises/{enterprise}/actions/permissions/workflow": Operation<
+        paths,
+        "get",
+        "/enterprises/{enterprise}/actions/permissions/workflow"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#list-self-hosted-runner-groups-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runner-groups": Operation<
         paths,
@@ -1128,7 +1197,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-a-self-hosted-runner-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#get-a-self-hosted-runner-group-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}": Operation<
         paths,
@@ -1136,7 +1205,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-organization-access-to-a-self-hosted-runner-group-in-a-enterprise
+       * @see https://docs.github.com/rest/reference/actions#list-organization-access-to-a-self-hosted-runner-group-in-a-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations": Operation<
         paths,
@@ -1144,7 +1213,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-self-hosted-runners-in-a-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#list-self-hosted-runners-in-a-group-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners": Operation<
         paths,
@@ -1152,7 +1221,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-self-hosted-runners-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#list-self-hosted-runners-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runners": Operation<
         paths,
@@ -1160,7 +1229,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runners"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-runner-applications-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#list-runner-applications-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runners/downloads": Operation<
         paths,
@@ -1168,7 +1237,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runners/downloads"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-a-self-hosted-runner-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#get-a-self-hosted-runner-for-an-enterprise
        */
       "GET /enterprises/{enterprise}/actions/runners/{runner_id}": Operation<
         paths,
@@ -1176,36 +1245,36 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runners/{runner_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-the-audit-log-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#list-labels-for-a-self-hosted-runner-for-an-enterprise
        */
-      "GET /enterprises/{enterprise}/audit-log": Operation<
+      "GET /enterprises/{enterprise}/actions/runners/{runner_id}/labels": Operation<
         paths,
         "get",
-        "/enterprises/{enterprise}/audit-log"
+        "/enterprises/{enterprise}/actions/runners/{runner_id}/labels"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/billing#get-github-actions-billing-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/code-scanning#list-code-scanning-alerts-for-an-enterprise
        */
-      "GET /enterprises/{enterprise}/settings/billing/actions": Operation<
+      "GET /enterprises/{enterprise}/code-scanning/alerts": Operation<
         paths,
         "get",
-        "/enterprises/{enterprise}/settings/billing/actions"
+        "/enterprises/{enterprise}/code-scanning/alerts"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/billing#get-github-packages-billing-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/secret-scanning#list-secret-scanning-alerts-for-an-enterprise
        */
-      "GET /enterprises/{enterprise}/settings/billing/packages": Operation<
+      "GET /enterprises/{enterprise}/secret-scanning/alerts": Operation<
         paths,
         "get",
-        "/enterprises/{enterprise}/settings/billing/packages"
+        "/enterprises/{enterprise}/secret-scanning/alerts"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/billing#get-shared-storage-billing-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/billing#export-advanced-security-active-committers-data-for-enterprise
        */
-      "GET /enterprises/{enterprise}/settings/billing/shared-storage": Operation<
+      "GET /enterprises/{enterprise}/settings/billing/advanced-security": Operation<
         paths,
         "get",
-        "/enterprises/{enterprise}/settings/billing/shared-storage"
+        "/enterprises/{enterprise}/settings/billing/advanced-security"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#list-public-events
@@ -1404,9 +1473,65 @@ declare module "@octokit-next/types" {
        */
       "GET /organizations": Operation<paths, "get", "/organizations">;
       /**
+       * @see https://docs.github.com/rest/reference/orgs#list-custom-repository-roles-in-an-organization
+       */
+      "GET /organizations/{organization_id}/custom_roles": Operation<
+        paths,
+        "get",
+        "/organizations/{organization_id}/custom_roles"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-organization-secrets
+       */
+      "GET /organizations/{org}/codespaces/secrets": Operation<
+        paths,
+        "get",
+        "/organizations/{org}/codespaces/secrets"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-an-organization-public-key
+       */
+      "GET /organizations/{org}/codespaces/secrets/public-key": Operation<
+        paths,
+        "get",
+        "/organizations/{org}/codespaces/secrets/public-key"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-an-organization-secret
+       */
+      "GET /organizations/{org}/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "get",
+        "/organizations/{org}/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-selected-repositories-for-an-organization-secret
+       */
+      "GET /organizations/{org}/codespaces/secrets/{secret_name}/repositories": Operation<
+        paths,
+        "get",
+        "/organizations/{org}/codespaces/secrets/{secret_name}/repositories"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/orgs#get-an-organization
        */
       "GET /orgs/{org}": Operation<paths, "get", "/orgs/{org}">;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#get-github-actions-cache-usage-for-an-organization
+       */
+      "GET /orgs/{org}/actions/cache/usage": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/actions/cache/usage"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#list-repositories-with-github-actions-cache-usage-for-an-organization
+       */
+      "GET /orgs/{org}/actions/cache/usage-by-repository": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/actions/cache/usage-by-repository"
+      >;
       /**
        * @see https://docs.github.com/rest/reference/actions#get-github-actions-permissions-for-an-organization
        */
@@ -1430,6 +1555,14 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/orgs/{org}/actions/permissions/selected-actions"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#get-default-workflow-permissions
+       */
+      "GET /orgs/{org}/actions/permissions/workflow": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/actions/permissions/workflow"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#list-self-hosted-runner-groups-for-an-organization
@@ -1488,6 +1621,14 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/actions/runners/{runner_id}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#list-labels-for-a-self-hosted-runner-for-an-organization
+       */
+      "GET /orgs/{org}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/actions/runners/{runner_id}/labels"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#list-organization-secrets
        */
       "GET /orgs/{org}/actions/secrets": Operation<
@@ -1520,14 +1661,6 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/actions/secrets/{secret_name}/repositories"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/orgs#get-audit-log
-       */
-      "GET /orgs/{org}/audit-log": Operation<
-        paths,
-        "get",
-        "/orgs/{org}/audit-log"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/orgs#list-users-blocked-by-an-organization
        */
       "GET /orgs/{org}/blocks": Operation<paths, "get", "/orgs/{org}/blocks">;
@@ -1540,12 +1673,52 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/blocks/{username}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/orgs#list-saml-sso-authorizations-for-an-organization
+       * @see https://docs.github.com/rest/reference/code-scanning#list-code-scanning-alerts-by-organization
        */
-      "GET /orgs/{org}/credential-authorizations": Operation<
+      "GET /orgs/{org}/code-scanning/alerts": Operation<
         paths,
         "get",
-        "/orgs/{org}/credential-authorizations"
+        "/orgs/{org}/code-scanning/alerts"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-in-organization
+       */
+      "GET /orgs/{org}/codespaces": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/codespaces"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#list-organization-secrets
+       */
+      "GET /orgs/{org}/dependabot/secrets": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/dependabot/secrets"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#get-an-organization-public-key
+       */
+      "GET /orgs/{org}/dependabot/secrets/public-key": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/dependabot/secrets/public-key"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#get-an-organization-secret
+       */
+      "GET /orgs/{org}/dependabot/secrets/{secret_name}": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/dependabot/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#list-selected-repositories-for-an-organization-secret
+       */
+      "GET /orgs/{org}/dependabot/secrets/{secret_name}/repositories": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/dependabot/secrets/{secret_name}/repositories"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#list-public-organization-events
@@ -1558,6 +1731,14 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/orgs/{org}/failed_invitations"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/orgs#list-fine-grained-permissions-for-an-organization
+       */
+      "GET /orgs/{org}/fine_grained_permissions": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/fine_grained_permissions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#list-organization-webhooks
@@ -1665,8 +1846,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/migrations": Operation<
         paths,
         "get",
-        "/orgs/{org}/migrations",
-        "wyandotte"
+        "/orgs/{org}/migrations"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#get-an-organization-migration-status
@@ -1674,8 +1854,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/migrations/{migration_id}": Operation<
         paths,
         "get",
-        "/orgs/{org}/migrations/{migration_id}",
-        "wyandotte"
+        "/orgs/{org}/migrations/{migration_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#download-an-organization-migration-archive
@@ -1683,8 +1862,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/migrations/{migration_id}/archive": Operation<
         paths,
         "get",
-        "/orgs/{org}/migrations/{migration_id}/archive",
-        "wyandotte"
+        "/orgs/{org}/migrations/{migration_id}/archive"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#list-repositories-in-an-organization-migration
@@ -1692,8 +1870,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/migrations/{migration_id}/repositories": Operation<
         paths,
         "get",
-        "/orgs/{org}/migrations/{migration_id}/repositories",
-        "wyandotte"
+        "/orgs/{org}/migrations/{migration_id}/repositories"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#list-outside-collaborators-for-an-organization
@@ -1720,7 +1897,7 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/packages/{package_type}/{package_name}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/packages#get-all-package-versions-for-a-package-owned-by-an-organization
+       * @see https://docs.github.com/rest/packages#get-all-package-versions-for-a-package-owned-by-an-organization
        */
       "GET /orgs/{org}/packages/{package_type}/{package_name}/versions": Operation<
         paths,
@@ -1741,8 +1918,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/projects": Operation<
         paths,
         "get",
-        "/orgs/{org}/projects",
-        "inertia"
+        "/orgs/{org}/projects"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#list-public-organization-members
@@ -1765,12 +1941,20 @@ declare module "@octokit-next/types" {
        */
       "GET /orgs/{org}/repos": Operation<paths, "get", "/orgs/{org}/repos">;
       /**
-       * @see https://docs.github.com/rest/reference/secret-scanning#list-secret-scanning-alerts-by-organization
+       * @see https://docs.github.com/rest/reference/secret-scanning#list-secret-scanning-alerts-for-an-organization
        */
       "GET /orgs/{org}/secret-scanning/alerts": Operation<
         paths,
         "get",
         "/orgs/{org}/secret-scanning/alerts"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/orgs#list-security-manager-teams
+       */
+      "GET /orgs/{org}/security-managers": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/security-managers"
       >;
       /**
        * @see https://docs.github.com/rest/reference/billing#get-github-actions-billing-for-an-organization
@@ -1779,6 +1963,14 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/orgs/{org}/settings/billing/actions"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/billing#get-github-advanced-security-active-committers-for-an-organization
+       */
+      "GET /orgs/{org}/settings/billing/advanced-security": Operation<
+        paths,
+        "get",
+        "/orgs/{org}/settings/billing/advanced-security"
       >;
       /**
        * @see https://docs.github.com/rest/reference/billing#get-github-packages-billing-for-an-organization
@@ -1795,14 +1987,6 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/orgs/{org}/settings/billing/shared-storage"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#list-idp-groups-for-an-organization
-       */
-      "GET /orgs/{org}/team-sync/groups": Operation<
-        paths,
-        "get",
-        "/orgs/{org}/team-sync/groups"
       >;
       /**
        * @see https://docs.github.com/rest/reference/teams#list-teams
@@ -1854,8 +2038,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions": Operation<
         paths,
         "get",
-        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions",
-        "squirrel-girl"
+        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/reactions#list-reactions-for-a-team-discussion
@@ -1863,8 +2046,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions": Operation<
         paths,
         "get",
-        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions",
-        "squirrel-girl"
+        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/teams#list-pending-team-invitations
@@ -1896,8 +2078,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/teams/{team_slug}/projects": Operation<
         paths,
         "get",
-        "/orgs/{org}/teams/{team_slug}/projects",
-        "inertia"
+        "/orgs/{org}/teams/{team_slug}/projects"
       >;
       /**
        * @see https://docs.github.com/rest/reference/teams#check-team-permissions-for-a-project
@@ -1905,8 +2086,7 @@ declare module "@octokit-next/types" {
       "GET /orgs/{org}/teams/{team_slug}/projects/{project_id}": Operation<
         paths,
         "get",
-        "/orgs/{org}/teams/{team_slug}/projects/{project_id}",
-        "inertia"
+        "/orgs/{org}/teams/{team_slug}/projects/{project_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/teams#list-team-repositories
@@ -1925,14 +2105,6 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/teams#list-idp-groups-for-a-team
-       */
-      "GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings": Operation<
-        paths,
-        "get",
-        "/orgs/{org}/teams/{team_slug}/team-sync/group-mappings"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/teams#list-child-teams
        */
       "GET /orgs/{org}/teams/{team_slug}/teams": Operation<
@@ -1946,8 +2118,7 @@ declare module "@octokit-next/types" {
       "GET /projects/columns/cards/{card_id}": Operation<
         paths,
         "get",
-        "/projects/columns/cards/{card_id}",
-        "inertia"
+        "/projects/columns/cards/{card_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#get-a-project-column
@@ -1955,8 +2126,7 @@ declare module "@octokit-next/types" {
       "GET /projects/columns/{column_id}": Operation<
         paths,
         "get",
-        "/projects/columns/{column_id}",
-        "inertia"
+        "/projects/columns/{column_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#list-project-cards
@@ -1964,8 +2134,7 @@ declare module "@octokit-next/types" {
       "GET /projects/columns/{column_id}/cards": Operation<
         paths,
         "get",
-        "/projects/columns/{column_id}/cards",
-        "inertia"
+        "/projects/columns/{column_id}/cards"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#get-a-project
@@ -1973,8 +2142,7 @@ declare module "@octokit-next/types" {
       "GET /projects/{project_id}": Operation<
         paths,
         "get",
-        "/projects/{project_id}",
-        "inertia"
+        "/projects/{project_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#list-project-collaborators
@@ -1982,8 +2150,7 @@ declare module "@octokit-next/types" {
       "GET /projects/{project_id}/collaborators": Operation<
         paths,
         "get",
-        "/projects/{project_id}/collaborators",
-        "inertia"
+        "/projects/{project_id}/collaborators"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#get-project-permission-for-a-user
@@ -1991,8 +2158,7 @@ declare module "@octokit-next/types" {
       "GET /projects/{project_id}/collaborators/{username}/permission": Operation<
         paths,
         "get",
-        "/projects/{project_id}/collaborators/{username}/permission",
-        "inertia"
+        "/projects/{project_id}/collaborators/{username}/permission"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#list-project-columns
@@ -2000,8 +2166,7 @@ declare module "@octokit-next/types" {
       "GET /projects/{project_id}/columns": Operation<
         paths,
         "get",
-        "/projects/{project_id}/columns",
-        "inertia"
+        "/projects/{project_id}/columns"
       >;
       /**
        * @see https://docs.github.com/rest/reference/rate-limit#get-rate-limit-status-for-the-authenticated-user
@@ -2040,6 +2205,22 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#get-github-actions-cache-usage-for-a-repository
+       */
+      "GET /repos/{owner}/{repo}/actions/cache/usage": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/cache/usage"
+      >;
+      /**
+       * @see https://docs.github.com/rest/actions/cache#list-github-actions-caches-for-a-repository
+       */
+      "GET /repos/{owner}/{repo}/actions/caches": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/caches"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#get-a-job-for-a-workflow-run
        */
       "GET /repos/{owner}/{repo}/actions/jobs/{job_id}": Operation<
@@ -2064,12 +2245,28 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/actions/permissions"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#get-workflow-access-level-to-a-repository
+       */
+      "GET /repos/{owner}/{repo}/actions/permissions/access": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/permissions/access"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#get-allowed-actions-for-a-repository
        */
       "GET /repos/{owner}/{repo}/actions/permissions/selected-actions": Operation<
         paths,
         "get",
         "/repos/{owner}/{repo}/actions/permissions/selected-actions"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#get-default-workflow-permissions-for-a-repository
+       */
+      "GET /repos/{owner}/{repo}/actions/permissions/workflow": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/permissions/workflow"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#list-self-hosted-runners-for-a-repository
@@ -2094,6 +2291,14 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/repos/{owner}/{repo}/actions/runners/{runner_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#list-labels-for-a-self-hosted-runner-for-a-repository
+       */
+      "GET /repos/{owner}/{repo}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#list-workflow-runs-for-a-repository
@@ -2126,6 +2331,30 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#get-a-workflow-run-attempt
+       */
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#list-jobs-for-a-workflow-run-attempt
+       */
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#download-workflow-run-attempt-logs
+       */
+      "GET /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#list-jobs-for-a-workflow-run
@@ -2293,8 +2522,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
-        "zzzax"
+        "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#get-status-checks-protection
@@ -2386,15 +2614,6 @@ declare module "@octokit-next/types" {
       >;
       /**
        * @see https://docs.github.com/rest/reference/code-scanning#get-a-code-scanning-alert
-       * @deprecated "alert_id" is now "alert_number"
-       */
-      "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_id}": Operation<
-        paths,
-        "get",
-        "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/code-scanning#get-a-code-scanning-alert
        */
       "GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_number}": Operation<
         paths,
@@ -2426,6 +2645,22 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/code-scanning#list-codeql-databases
+       */
+      "GET /repos/{owner}/{repo}/code-scanning/codeql/databases": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/code-scanning/codeql/databases"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/code-scanning#get-codeql-database
+       */
+      "GET /repos/{owner}/{repo}/code-scanning/codeql/databases/{language}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/code-scanning/codeql/databases/{language}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/code-scanning#list-recent-code-scanning-analyses-for-a-repository
        */
       "GET /repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}": Operation<
@@ -2434,7 +2669,71 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-repository-collaborators
+       * @see https://docs.github.com/rest/reference/repos#list-codeowners-errors
+       */
+      "GET /repos/{owner}/{repo}/codeowners/errors": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codeowners/errors"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-codespaces-in-a-repository-for-the-authenticated-user
+       */
+      "GET /repos/{owner}/{repo}/codespaces": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-devcontainers-in-a-repository-for-the-authenticated-user
+       */
+      "GET /repos/{owner}/{repo}/codespaces/devcontainers": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces/devcontainers"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-available-machine-types-for-a-repository
+       */
+      "GET /repos/{owner}/{repo}/codespaces/machines": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces/machines"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#preview-attributes-for-a-new-codespace
+       */
+      "GET /repos/{owner}/{repo}/codespaces/new": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces/new"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-repository-secrets
+       */
+      "GET /repos/{owner}/{repo}/codespaces/secrets": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces/secrets"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-a-repository-public-key
+       */
+      "GET /repos/{owner}/{repo}/codespaces/secrets/public-key": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces/secrets/public-key"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-a-repository-secret
+       */
+      "GET /repos/{owner}/{repo}/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/collaborators/collaborators#list-repository-collaborators
        */
       "GET /repos/{owner}/{repo}/collaborators": Operation<
         paths,
@@ -2442,7 +2741,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/collaborators"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#check-if-a-user-is-a-repository-collaborator
+       * @see https://docs.github.com/rest/collaborators/collaborators#check-if-a-user-is-a-repository-collaborator
        */
       "GET /repos/{owner}/{repo}/collaborators/{username}": Operation<
         paths,
@@ -2450,7 +2749,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/collaborators/{username}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-repository-permissions-for-a-user
+       * @see https://docs.github.com/rest/collaborators/collaborators#get-repository-permissions-for-a-user
        */
       "GET /repos/{owner}/{repo}/collaborators/{username}/permission": Operation<
         paths,
@@ -2458,7 +2757,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/collaborators/{username}/permission"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-commit-comments-for-a-repository
+       * @see https://docs.github.com/rest/commits/comments#list-commit-comments-for-a-repository
        */
       "GET /repos/{owner}/{repo}/comments": Operation<
         paths,
@@ -2466,7 +2765,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/comments"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-commit-comment
+       * @see https://docs.github.com/rest/commits/comments#get-a-commit-comment
        */
       "GET /repos/{owner}/{repo}/comments/{comment_id}": Operation<
         paths,
@@ -2479,11 +2778,10 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/comments/{comment_id}/reactions": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/comments/{comment_id}/reactions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-commits
+       * @see https://docs.github.com/rest/commits/commits#list-commits
        */
       "GET /repos/{owner}/{repo}/commits": Operation<
         paths,
@@ -2491,16 +2789,15 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/commits"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-branches-for-head-commit
+       * @see https://docs.github.com/rest/commits/commits#list-branches-for-head-commit
        */
       "GET /repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head",
-        "groot"
+        "/repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-commit-comments
+       * @see https://docs.github.com/rest/commits/comments#list-commit-comments
        */
       "GET /repos/{owner}/{repo}/commits/{commit_sha}/comments": Operation<
         paths,
@@ -2508,16 +2805,15 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/commits/{commit_sha}/comments"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-pull-requests-associated-with-a-commit
+       * @see https://docs.github.com/rest/commits/commits#list-pull-requests-associated-with-a-commit
        */
       "GET /repos/{owner}/{repo}/commits/{commit_sha}/pulls": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/commits/{commit_sha}/pulls",
-        "groot"
+        "/repos/{owner}/{repo}/commits/{commit_sha}/pulls"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-commit
+       * @see https://docs.github.com/rest/commits/commits#get-a-commit
        */
       "GET /repos/{owner}/{repo}/commits/{ref}": Operation<
         paths,
@@ -2541,7 +2837,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/commits/{ref}/check-suites"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-the-combined-status-for-a-specific-reference
+       * @see https://docs.github.com/rest/commits/statuses#get-the-combined-status-for-a-specific-reference
        */
       "GET /repos/{owner}/{repo}/commits/{ref}/status": Operation<
         paths,
@@ -2549,7 +2845,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/commits/{ref}/status"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-commit-statuses-for-a-reference
+       * @see https://docs.github.com/rest/commits/statuses#list-commit-statuses-for-a-reference
        */
       "GET /repos/{owner}/{repo}/commits/{ref}/statuses": Operation<
         paths,
@@ -2557,16 +2853,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/commits/{ref}/statuses"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/codes-of-conduct#get-the-code-of-conduct-for-a-repository
-       */
-      "GET /repos/{owner}/{repo}/community/code_of_conduct": Operation<
-        paths,
-        "get",
-        "/repos/{owner}/{repo}/community/code_of_conduct",
-        "scarlet-witch"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/repos#get-community-profile-metrics
+       * @see https://docs.github.com/rest/metrics/community#get-community-profile-metrics
        */
       "GET /repos/{owner}/{repo}/community/profile": Operation<
         paths,
@@ -2574,7 +2861,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/community/profile"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#compare-two-commits
+       * @see https://docs.github.com/rest/commits/commits#compare-two-commits
        */
       "GET /repos/{owner}/{repo}/compare/{basehead}": Operation<
         paths,
@@ -2604,6 +2891,54 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/repos/{owner}/{repo}/contributors"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#list-dependabot-alerts-for-a-repository
+       */
+      "GET /repos/{owner}/{repo}/dependabot/alerts": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/dependabot/alerts"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#get-a-dependabot-alert
+       */
+      "GET /repos/{owner}/{repo}/dependabot/alerts/{alert_number}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/dependabot/alerts/{alert_number}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#list-repository-secrets
+       */
+      "GET /repos/{owner}/{repo}/dependabot/secrets": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/dependabot/secrets"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#get-a-repository-public-key
+       */
+      "GET /repos/{owner}/{repo}/dependabot/secrets/public-key": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/dependabot/secrets/public-key"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#get-a-repository-secret
+       */
+      "GET /repos/{owner}/{repo}/dependabot/secrets/{secret_name}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependency-graph#get-a-diff-of-the-dependencies-between-commits
+       */
+      "GET /repos/{owner}/{repo}/dependency-graph/compare/{basehead}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/dependency-graph/compare/{basehead}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#list-deployments
@@ -2638,7 +2973,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-all-environments
+       * @see https://docs.github.com/rest/deployments/environments#list-environments
        */
       "GET /repos/{owner}/{repo}/environments": Operation<
         paths,
@@ -2652,6 +2987,22 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/repos/{owner}/{repo}/environments/{environment_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/deployments/branch-policies#list-deployment-branch-policies
+       */
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies"
+      >;
+      /**
+       * @see https://docs.github.com/rest/deployments/branch-policies#get-deployment-branch-policy
+       */
+      "GET /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#list-repository-events
@@ -2718,7 +3069,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/git/trees/{tree_sha}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-repository-webhooks
+       * @see https://docs.github.com/rest/webhooks/repos#list-repository-webhooks
        */
       "GET /repos/{owner}/{repo}/hooks": Operation<
         paths,
@@ -2726,7 +3077,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repos#get-a-repository-webhook
        */
       "GET /repos/{owner}/{repo}/hooks/{hook_id}": Operation<
         paths,
@@ -2734,7 +3085,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks/{hook_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-webhook-configuration-for-a-repository
+       * @see https://docs.github.com/rest/webhooks/repo-config#get-a-webhook-configuration-for-a-repository
        */
       "GET /repos/{owner}/{repo}/hooks/{hook_id}/config": Operation<
         paths,
@@ -2742,7 +3093,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks/{hook_id}/config"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-deliveries-for-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repo-deliveries#list-deliveries-for-a-repository-webhook
        */
       "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries": Operation<
         paths,
@@ -2750,7 +3101,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks/{hook_id}/deliveries"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-delivery-for-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repo-deliveries#get-a-delivery-for-a-repository-webhook
        */
       "GET /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}": Operation<
         paths,
@@ -2798,7 +3149,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/interaction-limits"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-repository-invitations
+       * @see https://docs.github.com/rest/collaborators/invitations#list-repository-invitations
        */
       "GET /repos/{owner}/{repo}/invitations": Operation<
         paths,
@@ -2835,8 +3186,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/issues#list-issue-events-for-a-repository
@@ -2892,8 +3242,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/issues/{issue_number}/reactions": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/issues/{issue_number}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/issues#list-timeline-events-for-an-issue
@@ -2901,8 +3250,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/issues/{issue_number}/timeline",
-        "mockingbird"
+        "/repos/{owner}/{repo}/issues/{issue_number}/timeline"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#list-deploy-keys
@@ -2985,7 +3333,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/notifications"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-github-pages-site
+       * @see https://docs.github.com/rest/pages#get-a-github-pages-site
        */
       "GET /repos/{owner}/{repo}/pages": Operation<
         paths,
@@ -2993,7 +3341,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/pages"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-github-pages-builds
+       * @see https://docs.github.com/rest/pages#list-github-pages-builds
        */
       "GET /repos/{owner}/{repo}/pages/builds": Operation<
         paths,
@@ -3001,7 +3349,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/pages/builds"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-latest-pages-build
+       * @see https://docs.github.com/rest/pages#get-latest-pages-build
        */
       "GET /repos/{owner}/{repo}/pages/builds/latest": Operation<
         paths,
@@ -3009,7 +3357,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/pages/builds/latest"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-github-pages-build
+       * @see https://docs.github.com/rest/pages#get-github-pages-build
        */
       "GET /repos/{owner}/{repo}/pages/builds/{build_id}": Operation<
         paths,
@@ -3017,7 +3365,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/pages/builds/{build_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-a-dns-health-check-for-github-pages
+       * @see https://docs.github.com/rest/pages#get-a-dns-health-check-for-github-pages
        */
       "GET /repos/{owner}/{repo}/pages/health": Operation<
         paths,
@@ -3030,8 +3378,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/projects": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/projects",
-        "inertia"
+        "/repos/{owner}/{repo}/projects"
       >;
       /**
        * @see https://docs.github.com/rest/reference/pulls#list-pull-requests
@@ -3063,8 +3410,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/pulls#get-a-pull-request
@@ -3107,7 +3453,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/pulls/{pull_number}/merge"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/pulls#list-requested-reviewers-for-a-pull-request
+       * @see https://docs.github.com/rest/reference/pulls#get-all-requested-reviewers-for-a-pull-request
        */
       "GET /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers": Operation<
         paths,
@@ -3203,6 +3549,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/releases/{release_id}/assets"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/reactions/#list-reactions-for-a-release
+       */
+      "GET /repos/{owner}/{repo}/releases/{release_id}/reactions": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/releases/{release_id}/reactions"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/secret-scanning#list-secret-scanning-alerts-for-a-repository
        */
       "GET /repos/{owner}/{repo}/secret-scanning/alerts": Operation<
@@ -3219,6 +3573,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/secret-scanning#list-locations-for-a-secret-scanning-alert
+       */
+      "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/activity#list-stargazers
        */
       "GET /repos/{owner}/{repo}/stargazers": Operation<
@@ -3227,7 +3589,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/stargazers"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-the-weekly-commit-activity
+       * @see https://docs.github.com/rest/metrics/statistics#get-the-weekly-commit-activity
        */
       "GET /repos/{owner}/{repo}/stats/code_frequency": Operation<
         paths,
@@ -3235,7 +3597,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/stats/code_frequency"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-the-last-year-of-commit-activity
+       * @see https://docs.github.com/rest/metrics/statistics#get-the-last-year-of-commit-activity
        */
       "GET /repos/{owner}/{repo}/stats/commit_activity": Operation<
         paths,
@@ -3243,7 +3605,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/stats/commit_activity"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-all-contributor-commit-activity
+       * @see https://docs.github.com/rest/metrics/statistics#get-all-contributor-commit-activity
        */
       "GET /repos/{owner}/{repo}/stats/contributors": Operation<
         paths,
@@ -3251,7 +3613,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/stats/contributors"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-the-weekly-commit-count
+       * @see https://docs.github.com/rest/metrics/statistics#get-the-weekly-commit-count
        */
       "GET /repos/{owner}/{repo}/stats/participation": Operation<
         paths,
@@ -3259,7 +3621,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/stats/participation"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-the-hourly-commit-count-for-each-day
+       * @see https://docs.github.com/rest/statistics/repos#get-the-hourly-commit-count-for-each-day
        */
       "GET /repos/{owner}/{repo}/stats/punch_card": Operation<
         paths,
@@ -3291,6 +3653,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/tags"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/repos#list-tag-protection-state-of-a-repository
+       */
+      "GET /repos/{owner}/{repo}/tags/protection": Operation<
+        paths,
+        "get",
+        "/repos/{owner}/{repo}/tags/protection"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/repos#download-a-repository-archive
        */
       "GET /repos/{owner}/{repo}/tarball/{ref}": Operation<
@@ -3312,11 +3682,10 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/topics": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/topics",
-        "mercy"
+        "/repos/{owner}/{repo}/topics"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-repository-clones
+       * @see https://docs.github.com/rest/metrics/traffic#get-repository-clones
        */
       "GET /repos/{owner}/{repo}/traffic/clones": Operation<
         paths,
@@ -3324,7 +3693,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/traffic/clones"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-top-referral-paths
+       * @see https://docs.github.com/rest/metrics/traffic#get-top-referral-paths
        */
       "GET /repos/{owner}/{repo}/traffic/popular/paths": Operation<
         paths,
@@ -3332,7 +3701,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/traffic/popular/paths"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-top-referral-sources
+       * @see https://docs.github.com/rest/metrics/traffic#get-top-referral-sources
        */
       "GET /repos/{owner}/{repo}/traffic/popular/referrers": Operation<
         paths,
@@ -3340,7 +3709,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/traffic/popular/referrers"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#get-page-views
+       * @see https://docs.github.com/rest/metrics/traffic#get-page-views
        */
       "GET /repos/{owner}/{repo}/traffic/views": Operation<
         paths,
@@ -3353,8 +3722,7 @@ declare module "@octokit-next/types" {
       "GET /repos/{owner}/{repo}/vulnerability-alerts": Operation<
         paths,
         "get",
-        "/repos/{owner}/{repo}/vulnerability-alerts",
-        "dorian"
+        "/repos/{owner}/{repo}/vulnerability-alerts"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#download-a-repository-archive
@@ -3393,66 +3761,13 @@ declare module "@octokit-next/types" {
         "/repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-provisioned-scim-groups-for-an-enterprise
-       */
-      "GET /scim/v2/enterprises/{enterprise}/Groups": Operation<
-        paths,
-        "get",
-        "/scim/v2/enterprises/{enterprise}/Groups"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-scim-provisioning-information-for-an-enterprise-group
-       */
-      "GET /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": Operation<
-        paths,
-        "get",
-        "/scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#list-scim-provisioned-identities-for-an-enterprise
-       */
-      "GET /scim/v2/enterprises/{enterprise}/Users": Operation<
-        paths,
-        "get",
-        "/scim/v2/enterprises/{enterprise}/Users"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#get-scim-provisioning-information-for-an-enterprise-user
-       */
-      "GET /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": Operation<
-        paths,
-        "get",
-        "/scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/scim#list-scim-provisioned-identities
-       */
-      "GET /scim/v2/organizations/{org}/Users": Operation<
-        paths,
-        "get",
-        "/scim/v2/organizations/{org}/Users"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/scim#get-scim-provisioning-information-for-a-user
-       */
-      "GET /scim/v2/organizations/{org}/Users/{scim_user_id}": Operation<
-        paths,
-        "get",
-        "/scim/v2/organizations/{org}/Users/{scim_user_id}"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/search#search-code
        */
       "GET /search/code": Operation<paths, "get", "/search/code">;
       /**
        * @see https://docs.github.com/rest/reference/search#search-commits
        */
-      "GET /search/commits": Operation<
-        paths,
-        "get",
-        "/search/commits",
-        "cloak"
-      >;
+      "GET /search/commits": Operation<paths, "get", "/search/commits">;
       /**
        * @see https://docs.github.com/rest/reference/search#search-issues-and-pull-requests
        */
@@ -3472,147 +3787,11 @@ declare module "@octokit-next/types" {
       /**
        * @see https://docs.github.com/rest/reference/search#search-topics
        */
-      "GET /search/topics": Operation<paths, "get", "/search/topics", "mercy">;
+      "GET /search/topics": Operation<paths, "get", "/search/topics">;
       /**
        * @see https://docs.github.com/rest/reference/search#search-users
        */
       "GET /search/users": Operation<paths, "get", "/search/users">;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#get-a-team-legacy
-       */
-      "GET /teams/{team_id}": Operation<paths, "get", "/teams/{team_id}">;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#list-discussions-legacy
-       */
-      "GET /teams/{team_id}/discussions": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/discussions"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#get-a-discussion-legacy
-       */
-      "GET /teams/{team_id}/discussions/{discussion_number}": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/discussions/{discussion_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#list-discussion-comments-legacy
-       */
-      "GET /teams/{team_id}/discussions/{discussion_number}/comments": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/discussions/{discussion_number}/comments"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#get-a-discussion-comment-legacy
-       */
-      "GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/reactions/#list-reactions-for-a-team-discussion-comment-legacy
-       */
-      "GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions",
-        "squirrel-girl"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/reactions/#list-reactions-for-a-team-discussion-legacy
-       */
-      "GET /teams/{team_id}/discussions/{discussion_number}/reactions": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/discussions/{discussion_number}/reactions",
-        "squirrel-girl"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#list-pending-team-invitations-legacy
-       */
-      "GET /teams/{team_id}/invitations": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/invitations"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#list-team-members-legacy
-       */
-      "GET /teams/{team_id}/members": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/members"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#get-team-member-legacy
-       */
-      "GET /teams/{team_id}/members/{username}": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/members/{username}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#get-team-membership-for-a-user-legacy
-       */
-      "GET /teams/{team_id}/memberships/{username}": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/memberships/{username}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#list-team-projects-legacy
-       */
-      "GET /teams/{team_id}/projects": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/projects",
-        "inertia"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#check-team-permissions-for-a-project-legacy
-       */
-      "GET /teams/{team_id}/projects/{project_id}": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/projects/{project_id}",
-        "inertia"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#list-team-repositories-legacy
-       */
-      "GET /teams/{team_id}/repos": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/repos"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#check-team-permissions-for-a-repository-legacy
-       */
-      "GET /teams/{team_id}/repos/{owner}/{repo}": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/repos/{owner}/{repo}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#list-idp-groups-for-a-team-legacy
-       */
-      "GET /teams/{team_id}/team-sync/group-mappings": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/team-sync/group-mappings"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#list-child-teams-legacy
-       */
-      "GET /teams/{team_id}/teams": Operation<
-        paths,
-        "get",
-        "/teams/{team_id}/teams"
-      >;
       /**
        * @see https://docs.github.com/rest/reference/users#get-the-authenticated-user
        */
@@ -3628,6 +3807,66 @@ declare module "@octokit-next/types" {
         paths,
         "get",
         "/user/blocks/{username}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-codespaces-for-the-authenticated-user
+       */
+      "GET /user/codespaces": Operation<paths, "get", "/user/codespaces">;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-secrets-for-the-authenticated-user
+       */
+      "GET /user/codespaces/secrets": Operation<
+        paths,
+        "get",
+        "/user/codespaces/secrets"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-public-key-for-the-authenticated-user
+       */
+      "GET /user/codespaces/secrets/public-key": Operation<
+        paths,
+        "get",
+        "/user/codespaces/secrets/public-key"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-a-secret-for-the-authenticated-user
+       */
+      "GET /user/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "get",
+        "/user/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-selected-repositories-for-a-user-secret
+       */
+      "GET /user/codespaces/secrets/{secret_name}/repositories": Operation<
+        paths,
+        "get",
+        "/user/codespaces/secrets/{secret_name}/repositories"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#get-a-codespace-for-the-authenticated-user
+       */
+      "GET /user/codespaces/{codespace_name}": Operation<
+        paths,
+        "get",
+        "/user/codespaces/{codespace_name}"
+      >;
+      /**
+       * @see
+       */
+      "GET /user/codespaces/{codespace_name}/exports/{export_id}": Operation<
+        paths,
+        "get",
+        "/user/codespaces/{codespace_name}/exports/{export_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#list-machine-types-for-a-codespace
+       */
+      "GET /user/codespaces/{codespace_name}/machines": Operation<
+        paths,
+        "get",
+        "/user/codespaces/{codespace_name}/machines"
       >;
       /**
        * @see https://docs.github.com/rest/reference/users#list-email-addresses-for-the-authenticated-user
@@ -3728,20 +3967,14 @@ declare module "@octokit-next/types" {
       /**
        * @see https://docs.github.com/rest/reference/migrations#list-user-migrations
        */
-      "GET /user/migrations": Operation<
-        paths,
-        "get",
-        "/user/migrations",
-        "wyandotte"
-      >;
+      "GET /user/migrations": Operation<paths, "get", "/user/migrations">;
       /**
        * @see https://docs.github.com/rest/reference/migrations#get-a-user-migration-status
        */
       "GET /user/migrations/{migration_id}": Operation<
         paths,
         "get",
-        "/user/migrations/{migration_id}",
-        "wyandotte"
+        "/user/migrations/{migration_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#download-a-user-migration-archive
@@ -3749,8 +3982,7 @@ declare module "@octokit-next/types" {
       "GET /user/migrations/{migration_id}/archive": Operation<
         paths,
         "get",
-        "/user/migrations/{migration_id}/archive",
-        "wyandotte"
+        "/user/migrations/{migration_id}/archive"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#list-repositories-for-a-user-migration
@@ -3758,8 +3990,7 @@ declare module "@octokit-next/types" {
       "GET /user/migrations/{migration_id}/repositories": Operation<
         paths,
         "get",
-        "/user/migrations/{migration_id}/repositories",
-        "wyandotte"
+        "/user/migrations/{migration_id}/repositories"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#list-organizations-for-the-authenticated-user
@@ -3778,7 +4009,7 @@ declare module "@octokit-next/types" {
         "/user/packages/{package_type}/{package_name}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/packages#get-all-package-versions-for-a-package-owned-by-the-authenticated-user
+       * @see https://docs.github.com/rest/packages#get-all-package-versions-for-a-package-owned-by-the-authenticated-user
        */
       "GET /user/packages/{package_type}/{package_name}/versions": Operation<
         paths,
@@ -3802,12 +4033,28 @@ declare module "@octokit-next/types" {
        */
       "GET /user/repos": Operation<paths, "get", "/user/repos">;
       /**
-       * @see https://docs.github.com/rest/reference/repos#list-repository-invitations-for-the-authenticated-user
+       * @see https://docs.github.com/rest/collaborators/invitations#list-repository-invitations-for-the-authenticated-user
        */
       "GET /user/repository_invitations": Operation<
         paths,
         "get",
         "/user/repository_invitations"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/users#list-public-ssh-signing-keys-for-the-authenticated-user
+       */
+      "GET /user/ssh_signing_keys": Operation<
+        paths,
+        "get",
+        "/user/ssh_signing_keys"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/users#get-a-ssh-signing-key-for-the-authenticated-user
+       */
+      "GET /user/ssh_signing_keys/{ssh_signing_key_id}": Operation<
+        paths,
+        "get",
+        "/user/ssh_signing_keys/{ssh_signing_key_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#list-repositories-starred-by-the-authenticated-user
@@ -3829,14 +4076,6 @@ declare module "@octokit-next/types" {
        * @see https://docs.github.com/rest/reference/teams#list-teams-for-the-authenticated-user
        */
       "GET /user/teams": Operation<paths, "get", "/user/teams">;
-      /**
-       * @see https://docs.github.com/rest/reference/packages#list-packages-for-user
-       */
-      "GET /user/{username}/packages": Operation<
-        paths,
-        "get",
-        "/user/{username}/packages"
-      >;
       /**
        * @see https://docs.github.com/rest/reference/users#list-users
        */
@@ -3942,6 +4181,14 @@ declare module "@octokit-next/types" {
         "/users/{username}/orgs"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/packages#list-packages-for-user
+       */
+      "GET /users/{username}/packages": Operation<
+        paths,
+        "get",
+        "/users/{username}/packages"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/packages#get-a-package-for-a-user
        */
       "GET /users/{username}/packages/{package_type}/{package_name}": Operation<
@@ -3950,7 +4197,7 @@ declare module "@octokit-next/types" {
         "/users/{username}/packages/{package_type}/{package_name}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/packages#get-all-package-versions-for-a-package-owned-by-a-user
+       * @see https://docs.github.com/rest/packages#get-all-package-versions-for-a-package-owned-by-a-user
        */
       "GET /users/{username}/packages/{package_type}/{package_name}/versions": Operation<
         paths,
@@ -3971,8 +4218,7 @@ declare module "@octokit-next/types" {
       "GET /users/{username}/projects": Operation<
         paths,
         "get",
-        "/users/{username}/projects",
-        "inertia"
+        "/users/{username}/projects"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#list-events-received-by-the-authenticated-user
@@ -4023,6 +4269,14 @@ declare module "@octokit-next/types" {
         "/users/{username}/settings/billing/shared-storage"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/users#list-ssh-signing-keys-for-a-user
+       */
+      "GET /users/{username}/ssh_signing_keys": Operation<
+        paths,
+        "get",
+        "/users/{username}/ssh_signing_keys"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/activity#list-repositories-starred-by-a-user
        */
       "GET /users/{username}/starred": Operation<
@@ -4055,15 +4309,7 @@ declare module "@octokit-next/types" {
         "/applications/{client_id}/token"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#update-an-existing-authorization
-       */
-      "PATCH /authorizations/{authorization_id}": Operation<
-        paths,
-        "patch",
-        "/authorizations/{authorization_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#update-a-self-hosted-runner-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#update-a-self-hosted-runner-group-for-an-enterprise
        */
       "PATCH /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}": Operation<
         paths,
@@ -4101,6 +4347,14 @@ declare module "@octokit-next/types" {
         paths,
         "patch",
         "/orgs/{org}/actions/runner-groups/{runner_group_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/orgs#update-a-custom-role
+       */
+      "PATCH /orgs/{org}/custom_roles/{role_id}": Operation<
+        paths,
+        "patch",
+        "/orgs/{org}/custom_roles/{role_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/orgs#update-an-organization-webhook
@@ -4143,21 +4397,12 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/teams#create-or-update-idp-group-connections
-       */
-      "PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings": Operation<
-        paths,
-        "patch",
-        "/orgs/{org}/teams/{team_slug}/team-sync/group-mappings"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/projects#update-a-project-card
        */
       "PATCH /projects/columns/cards/{card_id}": Operation<
         paths,
         "patch",
-        "/projects/columns/cards/{card_id}",
-        "inertia"
+        "/projects/columns/cards/{card_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#update-a-project-column
@@ -4165,8 +4410,7 @@ declare module "@octokit-next/types" {
       "PATCH /projects/columns/{column_id}": Operation<
         paths,
         "patch",
-        "/projects/columns/{column_id}",
-        "inertia"
+        "/projects/columns/{column_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#update-a-project
@@ -4174,8 +4418,7 @@ declare module "@octokit-next/types" {
       "PATCH /projects/{project_id}": Operation<
         paths,
         "patch",
-        "/projects/{project_id}",
-        "inertia"
+        "/projects/{project_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos/#update-a-repository
@@ -4194,7 +4437,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#update-status-check-potection
+       * @see https://docs.github.com/rest/reference/repos#update-status-check-protection
        */
       "PATCH /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks": Operation<
         paths,
@@ -4226,12 +4469,20 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#update-a-commit-comment
+       * @see https://docs.github.com/rest/commits/comments#update-a-commit-comment
        */
       "PATCH /repos/{owner}/{repo}/comments/{comment_id}": Operation<
         paths,
         "patch",
         "/repos/{owner}/{repo}/comments/{comment_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#update-a-dependabot-alert
+       */
+      "PATCH /repos/{owner}/{repo}/dependabot/alerts/{alert_number}": Operation<
+        paths,
+        "patch",
+        "/repos/{owner}/{repo}/dependabot/alerts/{alert_number}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/git#update-a-reference
@@ -4242,7 +4493,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/git/refs/{ref}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#update-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repos#update-a-repository-webhook
        */
       "PATCH /repos/{owner}/{repo}/hooks/{hook_id}": Operation<
         paths,
@@ -4250,7 +4501,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks/{hook_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#update-a-webhook-configuration-for-a-repository
+       * @see https://docs.github.com/rest/webhooks/repo-config#update-a-webhook-configuration-for-a-repository
        */
       "PATCH /repos/{owner}/{repo}/hooks/{hook_id}/config": Operation<
         paths,
@@ -4282,7 +4533,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/import/lfs"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#update-a-repository-invitation
+       * @see https://docs.github.com/rest/collaborators/invitations#update-a-repository-invitation
        */
       "PATCH /repos/{owner}/{repo}/invitations/{invitation_id}": Operation<
         paths,
@@ -4362,61 +4613,17 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#update-an-attribute-for-a-scim-enterprise-group
-       */
-      "PATCH /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": Operation<
-        paths,
-        "patch",
-        "/scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#update-an-attribute-for-a-scim-enterprise-user
-       */
-      "PATCH /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": Operation<
-        paths,
-        "patch",
-        "/scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/scim#update-an-attribute-for-a-scim-user
-       */
-      "PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}": Operation<
-        paths,
-        "patch",
-        "/scim/v2/organizations/{org}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#update-a-team-legacy
-       */
-      "PATCH /teams/{team_id}": Operation<paths, "patch", "/teams/{team_id}">;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#update-a-discussion-legacy
-       */
-      "PATCH /teams/{team_id}/discussions/{discussion_number}": Operation<
-        paths,
-        "patch",
-        "/teams/{team_id}/discussions/{discussion_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#update-a-discussion-comment-legacy
-       */
-      "PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}": Operation<
-        paths,
-        "patch",
-        "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#create-or-update-idp-group-connections-legacy
-       */
-      "PATCH /teams/{team_id}/team-sync/group-mappings": Operation<
-        paths,
-        "patch",
-        "/teams/{team_id}/team-sync/group-mappings"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/users/#update-the-authenticated-user
        */
       "PATCH /user": Operation<paths, "patch", "/user">;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#update-a-codespace-for-the-authenticated-user
+       */
+      "PATCH /user/codespaces/{codespace_name}": Operation<
+        paths,
+        "patch",
+        "/user/codespaces/{codespace_name}"
+      >;
       /**
        * @see https://docs.github.com/rest/reference/users#set-primary-email-visibility-for-the-authenticated-user
        */
@@ -4434,7 +4641,7 @@ declare module "@octokit-next/types" {
         "/user/memberships/orgs/{org}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#accept-a-repository-invitation
+       * @see https://docs.github.com/rest/collaborators/invitations#accept-a-repository-invitation
        */
       "PATCH /user/repository_invitations/{invitation_id}": Operation<
         paths,
@@ -4482,20 +4689,7 @@ declare module "@octokit-next/types" {
         "/applications/{client_id}/token/scoped"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#create-a-new-authorization
-       */
-      "POST /authorizations": Operation<paths, "post", "/authorizations">;
-      /**
-       * @see https://docs.github.com/rest/reference/apps#create-a-content-attachment
-       */
-      "POST /content_references/{content_reference_id}/attachments": Operation<
-        paths,
-        "post",
-        "/content_references/{content_reference_id}/attachments",
-        "corsair"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#create-self-hosted-runner-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#create-self-hosted-runner-group-for-an-enterprise
        */
       "POST /enterprises/{enterprise}/actions/runner-groups": Operation<
         paths,
@@ -4503,7 +4697,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#create-a-registration-token-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#create-a-registration-token-for-an-enterprise
        */
       "POST /enterprises/{enterprise}/actions/runners/registration-token": Operation<
         paths,
@@ -4511,12 +4705,20 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runners/registration-token"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#create-a-remove-token-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#create-a-remove-token-for-an-enterprise
        */
       "POST /enterprises/{enterprise}/actions/runners/remove-token": Operation<
         paths,
         "post",
         "/enterprises/{enterprise}/actions/runners/remove-token"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#add-custom-labels-to-a-self-hosted-runner-for-an-enterprise
+       */
+      "POST /enterprises/{enterprise}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "post",
+        "/enterprises/{enterprise}/actions/runners/{runner_id}/labels"
       >;
       /**
        * @see https://docs.github.com/rest/reference/gists#create-a-gist
@@ -4571,6 +4773,22 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/actions/runners/remove-token"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#add-custom-labels-to-a-self-hosted-runner-for-an-organization
+       */
+      "POST /orgs/{org}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "post",
+        "/orgs/{org}/actions/runners/{runner_id}/labels"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/orgs#create-a-custom-role
+       */
+      "POST /orgs/{org}/custom_roles": Operation<
+        paths,
+        "post",
+        "/orgs/{org}/custom_roles"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/orgs#create-an-organization-webhook
        */
       "POST /orgs/{org}/hooks": Operation<paths, "post", "/orgs/{org}/hooks">;
@@ -4597,6 +4815,14 @@ declare module "@octokit-next/types" {
         paths,
         "post",
         "/orgs/{org}/invitations"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces
+       */
+      "POST /orgs/{org}/members/{username}/codespaces/{codespace_name}/stop": Operation<
+        paths,
+        "post",
+        "/orgs/{org}/members/{username}/codespaces/{codespace_name}/stop"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#start-an-organization-migration
@@ -4628,8 +4854,7 @@ declare module "@octokit-next/types" {
       "POST /orgs/{org}/projects": Operation<
         paths,
         "post",
-        "/orgs/{org}/projects",
-        "inertia"
+        "/orgs/{org}/projects"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#create-an-organization-repository
@@ -4661,8 +4886,7 @@ declare module "@octokit-next/types" {
       "POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions": Operation<
         paths,
         "post",
-        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions",
-        "squirrel-girl"
+        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/reactions#create-reaction-for-a-team-discussion
@@ -4670,8 +4894,15 @@ declare module "@octokit-next/types" {
       "POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions": Operation<
         paths,
         "post",
-        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions",
-        "squirrel-girl"
+        "/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/orgs#enable-or-disable-security-product-on-all-org-repos
+       */
+      "POST /orgs/{org}/{security_product}/{enablement}": Operation<
+        paths,
+        "post",
+        "/orgs/{org}/{security_product}/{enablement}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#move-a-project-card
@@ -4679,8 +4910,7 @@ declare module "@octokit-next/types" {
       "POST /projects/columns/cards/{card_id}/moves": Operation<
         paths,
         "post",
-        "/projects/columns/cards/{card_id}/moves",
-        "inertia"
+        "/projects/columns/cards/{card_id}/moves"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#create-a-project-card
@@ -4688,8 +4918,7 @@ declare module "@octokit-next/types" {
       "POST /projects/columns/{column_id}/cards": Operation<
         paths,
         "post",
-        "/projects/columns/{column_id}/cards",
-        "inertia"
+        "/projects/columns/{column_id}/cards"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#move-a-project-column
@@ -4697,8 +4926,7 @@ declare module "@octokit-next/types" {
       "POST /projects/columns/{column_id}/moves": Operation<
         paths,
         "post",
-        "/projects/columns/{column_id}/moves",
-        "inertia"
+        "/projects/columns/{column_id}/moves"
       >;
       /**
        * @see https://docs.github.com/rest/reference/projects#create-a-project-column
@@ -4706,8 +4934,15 @@ declare module "@octokit-next/types" {
       "POST /projects/{project_id}/columns": Operation<
         paths,
         "post",
-        "/projects/{project_id}/columns",
-        "inertia"
+        "/projects/{project_id}/columns"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#re-run-job-for-workflow-run
+       */
+      "POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/actions/jobs/{job_id}/rerun"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#create-a-registration-token-for-a-repository
@@ -4724,6 +4959,14 @@ declare module "@octokit-next/types" {
         paths,
         "post",
         "/repos/{owner}/{repo}/actions/runners/remove-token"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#add-custom-labels-to-a-self-hosted-runner-for-a-repository
+       */
+      "POST /repos/{owner}/{repo}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#approve-a-workflow-run-for-a-fork-pull-request
@@ -4758,6 +5001,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#re-run-workflow-failed-jobs
+       */
+      "POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#create-a-workflow-dispatch-event
        */
       "POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches": Operation<
@@ -4787,8 +5038,7 @@ declare module "@octokit-next/types" {
       "POST /repos/{owner}/{repo}/branches/{branch}/protection/required_signatures": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures",
-        "zzzax"
+        "/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#add-status-check-contexts
@@ -4839,6 +5089,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/check-runs"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/checks#rerequest-a-check-run
+       */
+      "POST /repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/checks#create-a-check-suite
        */
       "POST /repos/{owner}/{repo}/check-suites": Operation<
@@ -4863,16 +5121,23 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/code-scanning/sarifs"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/codespaces#create-a-codespace-in-a-repository
+       */
+      "POST /repos/{owner}/{repo}/codespaces": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/codespaces"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/reactions#create-reaction-for-a-commit-comment
        */
       "POST /repos/{owner}/{repo}/comments/{comment_id}/reactions": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/comments/{comment_id}/reactions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#create-a-commit-comment
+       * @see https://docs.github.com/rest/commits/comments#create-a-commit-comment
        */
       "POST /repos/{owner}/{repo}/commits/{commit_sha}/comments": Operation<
         paths,
@@ -4880,13 +5145,12 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/commits/{commit_sha}/comments"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/apps#create-a-content-attachment
+       * @see https://docs.github.com/rest/reference/dependency-graph#create-a-snapshot-of-dependencies-for-a-repository
        */
-      "POST /repos/{owner}/{repo}/content_references/{content_reference_id}/attachments": Operation<
+      "POST /repos/{owner}/{repo}/dependency-graph/snapshots": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/content_references/{content_reference_id}/attachments",
-        "corsair"
+        "/repos/{owner}/{repo}/dependency-graph/snapshots"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#create-a-deployment
@@ -4911,6 +5175,14 @@ declare module "@octokit-next/types" {
         paths,
         "post",
         "/repos/{owner}/{repo}/dispatches"
+      >;
+      /**
+       * @see https://docs.github.com/rest/deployments/branch-policies#create-deployment-branch-policy
+       */
+      "POST /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#create-a-fork
@@ -4961,7 +5233,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/git/trees"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#create-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repos#create-a-repository-webhook
        */
       "POST /repos/{owner}/{repo}/hooks": Operation<
         paths,
@@ -4969,7 +5241,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#redeliver-a-delivery-for-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repo-deliveries#redeliver-a-delivery-for-a-repository-webhook
        */
       "POST /repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts": Operation<
         paths,
@@ -4977,7 +5249,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#ping-a-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repos#ping-a-repository-webhook
        */
       "POST /repos/{owner}/{repo}/hooks/{hook_id}/pings": Operation<
         paths,
@@ -4985,7 +5257,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/hooks/{hook_id}/pings"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#test-the-push-repository-webhook
+       * @see https://docs.github.com/rest/webhooks/repos#test-the-push-repository-webhook
        */
       "POST /repos/{owner}/{repo}/hooks/{hook_id}/tests": Operation<
         paths,
@@ -5006,8 +5278,7 @@ declare module "@octokit-next/types" {
       "POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/issues#add-assignees-to-an-issue
@@ -5039,8 +5310,7 @@ declare module "@octokit-next/types" {
       "POST /repos/{owner}/{repo}/issues/{issue_number}/reactions": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/issues/{issue_number}/reactions"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#create-a-deploy-key
@@ -5083,16 +5353,15 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/milestones"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#create-a-github-pages-site
+       * @see https://docs.github.com/rest/pages#create-a-github-pages-site
        */
       "POST /repos/{owner}/{repo}/pages": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/pages",
-        "switcheroo"
+        "/repos/{owner}/{repo}/pages"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#request-a-github-pages-build
+       * @see https://docs.github.com/rest/pages#request-a-github-pages-build
        */
       "POST /repos/{owner}/{repo}/pages/builds": Operation<
         paths,
@@ -5100,13 +5369,20 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/pages/builds"
       >;
       /**
+       * @see https://docs.github.com/rest/pages#create-a-github-pages-deployment
+       */
+      "POST /repos/{owner}/{repo}/pages/deployment": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/pages/deployment"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/projects#create-a-repository-project
        */
       "POST /repos/{owner}/{repo}/projects": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/projects",
-        "inertia"
+        "/repos/{owner}/{repo}/projects"
       >;
       /**
        * @see https://docs.github.com/rest/reference/pulls#create-a-pull-request
@@ -5122,8 +5398,15 @@ declare module "@octokit-next/types" {
       "POST /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#create-a-codespace-from-a-pull-request
+       */
+      "POST /repos/{owner}/{repo}/pulls/{pull_number}/codespaces": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/pulls/{pull_number}/codespaces"
       >;
       /**
        * @see https://docs.github.com/rest/reference/pulls#create-a-review-comment-for-a-pull-request
@@ -5174,21 +5457,36 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/releases"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/repos#generate-release-notes
+       */
+      "POST /repos/{owner}/{repo}/releases/generate-notes": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/releases/generate-notes"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/reactions/#create-reaction-for-a-release
        */
       "POST /repos/{owner}/{repo}/releases/{release_id}/reactions": Operation<
         paths,
         "post",
-        "/repos/{owner}/{repo}/releases/{release_id}/reactions",
-        "squirrel-girl"
+        "/repos/{owner}/{repo}/releases/{release_id}/reactions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#create-a-commit-status
+       * @see https://docs.github.com/rest/commits/statuses#create-a-commit-status
        */
       "POST /repos/{owner}/{repo}/statuses/{sha}": Operation<
         paths,
         "post",
         "/repos/{owner}/{repo}/statuses/{sha}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/repos#create-tag-protection-state-for-a-repository
+       */
+      "POST /repos/{owner}/{repo}/tags/protection": Operation<
+        paths,
+        "post",
+        "/repos/{owner}/{repo}/tags/protection"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#transfer-a-repository
@@ -5204,66 +5502,35 @@ declare module "@octokit-next/types" {
       "POST /repos/{template_owner}/{template_repo}/generate": Operation<
         paths,
         "post",
-        "/repos/{template_owner}/{template_repo}/generate",
-        "baptiste"
+        "/repos/{template_owner}/{template_repo}/generate"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#provision-a-scim-enterprise-group-and-invite-users
+       * @see https://docs.github.com/rest/reference/codespaces#create-a-codespace-for-the-authenticated-user
        */
-      "POST /scim/v2/enterprises/{enterprise}/Groups": Operation<
+      "POST /user/codespaces": Operation<paths, "post", "/user/codespaces">;
+      /**
+       * @see
+       */
+      "POST /user/codespaces/{codespace_name}/exports": Operation<
         paths,
         "post",
-        "/scim/v2/enterprises/{enterprise}/Groups"
+        "/user/codespaces/{codespace_name}/exports"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#provision-and-invite-a-scim-enterprise-user
+       * @see https://docs.github.com/rest/reference/codespaces#start-a-codespace-for-the-authenticated-user
        */
-      "POST /scim/v2/enterprises/{enterprise}/Users": Operation<
+      "POST /user/codespaces/{codespace_name}/start": Operation<
         paths,
         "post",
-        "/scim/v2/enterprises/{enterprise}/Users"
+        "/user/codespaces/{codespace_name}/start"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/scim#provision-and-invite-a-scim-user
+       * @see https://docs.github.com/rest/reference/codespaces#stop-a-codespace-for-the-authenticated-user
        */
-      "POST /scim/v2/organizations/{org}/Users": Operation<
+      "POST /user/codespaces/{codespace_name}/stop": Operation<
         paths,
         "post",
-        "/scim/v2/organizations/{org}/Users"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#create-a-discussion-legacy
-       */
-      "POST /teams/{team_id}/discussions": Operation<
-        paths,
-        "post",
-        "/teams/{team_id}/discussions"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#create-a-discussion-comment-legacy
-       */
-      "POST /teams/{team_id}/discussions/{discussion_number}/comments": Operation<
-        paths,
-        "post",
-        "/teams/{team_id}/discussions/{discussion_number}/comments"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/reactions/#create-reaction-for-a-team-discussion-comment-legacy
-       */
-      "POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions": Operation<
-        paths,
-        "post",
-        "/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions",
-        "squirrel-girl"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/reactions/#create-reaction-for-a-team-discussion-legacy
-       */
-      "POST /teams/{team_id}/discussions/{discussion_number}/reactions": Operation<
-        paths,
-        "post",
-        "/teams/{team_id}/discussions/{discussion_number}/reactions",
-        "squirrel-girl"
+        "/user/codespaces/{codespace_name}/stop"
       >;
       /**
        * @see https://docs.github.com/rest/reference/users#add-an-email-address-for-the-authenticated-user
@@ -5300,16 +5567,19 @@ declare module "@octokit-next/types" {
       /**
        * @see https://docs.github.com/rest/reference/projects#create-a-user-project
        */
-      "POST /user/projects": Operation<
-        paths,
-        "post",
-        "/user/projects",
-        "inertia"
-      >;
+      "POST /user/projects": Operation<paths, "post", "/user/projects">;
       /**
        * @see https://docs.github.com/rest/reference/repos#create-a-repository-for-the-authenticated-user
        */
       "POST /user/repos": Operation<paths, "post", "/user/repos">;
+      /**
+       * @see https://docs.github.com/rest/reference/users#create-an-ssh-signing-key-for-the-authenticated-user
+       */
+      "POST /user/ssh_signing_keys": Operation<
+        paths,
+        "post",
+        "/user/ssh_signing_keys"
+      >;
       /**
        * @see https://docs.github.com/rest/reference/packages#restore-a-package-for-a-user
        */
@@ -5343,23 +5613,7 @@ declare module "@octokit-next/types" {
         "/app/installations/{installation_id}/suspended"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#get-or-create-an-authorization-for-a-specific-app
-       */
-      "PUT /authorizations/clients/{client_id}": Operation<
-        paths,
-        "put",
-        "/authorizations/clients/{client_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/oauth-authorizations#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
-       */
-      "PUT /authorizations/clients/{client_id}/{fingerprint}": Operation<
-        paths,
-        "put",
-        "/authorizations/clients/{client_id}/{fingerprint}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-github-actions-permissions-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#set-github-actions-permissions-for-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/permissions": Operation<
         paths,
@@ -5367,7 +5621,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-selected-organizations-enabled-for-github-actions-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#set-selected-organizations-enabled-for-github-actions-in-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/permissions/organizations": Operation<
         paths,
@@ -5375,7 +5629,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions/organizations"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#enable-a-selected-organization-for-github-actions-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#enable-a-selected-organization-for-github-actions-in-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/permissions/organizations/{org_id}": Operation<
         paths,
@@ -5383,7 +5637,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions/organizations/{org_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-allowed-actions-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#set-allowed-actions-for-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/permissions/selected-actions": Operation<
         paths,
@@ -5391,7 +5645,15 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/permissions/selected-actions"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#set-default-workflow-permissions-for-an-enterprise
+       */
+      "PUT /enterprises/{enterprise}/actions/permissions/workflow": Operation<
+        paths,
+        "put",
+        "/enterprises/{enterprise}/actions/permissions/workflow"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#set-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations": Operation<
         paths,
@@ -5399,7 +5661,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#add-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#add-organization-access-to-a-self-hosted-runner-group-in-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations/{org_id}": Operation<
         paths,
@@ -5407,7 +5669,7 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations/{org_id}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-self-hosted-runners-in-a-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#set-self-hosted-runners-in-a-group-for-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners": Operation<
         paths,
@@ -5415,12 +5677,20 @@ declare module "@octokit-next/types" {
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#add-a-self-hosted-runner-to-a-group-for-an-enterprise
+       * @see https://docs.github.com/rest/reference/actions#add-a-self-hosted-runner-to-a-group-for-an-enterprise
        */
       "PUT /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners/{runner_id}": Operation<
         paths,
         "put",
         "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/runners/{runner_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#set-custom-labels-for-a-self-hosted-runner-for-an-enterprise
+       */
+      "PUT /enterprises/{enterprise}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "put",
+        "/enterprises/{enterprise}/actions/runners/{runner_id}/labels"
       >;
       /**
        * @see https://docs.github.com/rest/reference/gists#star-a-gist
@@ -5441,6 +5711,30 @@ declare module "@octokit-next/types" {
         paths,
         "put",
         "/notifications/threads/{thread_id}/subscription"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#create-or-update-an-organization-secret
+       */
+      "PUT /organizations/{org}/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "put",
+        "/organizations/{org}/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#set-selected-repositories-for-an-organization-secret
+       */
+      "PUT /organizations/{org}/codespaces/secrets/{secret_name}/repositories": Operation<
+        paths,
+        "put",
+        "/organizations/{org}/codespaces/secrets/{secret_name}/repositories"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#add-selected-repository-to-an-organization-secret
+       */
+      "PUT /organizations/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}": Operation<
+        paths,
+        "put",
+        "/organizations/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#set-github-actions-permissions-for-an-organization
@@ -5475,20 +5769,20 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/actions/permissions/selected-actions"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#set-default-workflow-permissions
+       */
+      "PUT /orgs/{org}/actions/permissions/workflow": Operation<
+        paths,
+        "put",
+        "/orgs/{org}/actions/permissions/workflow"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#set-repository-access-to-a-self-hosted-runner-group-in-an-organization
        */
       "PUT /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories": Operation<
         paths,
         "put",
         "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/actions#add-repository-acess-to-a-self-hosted-runner-group-in-an-organization
-       */
-      "PUT /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}": Operation<
-        paths,
-        "put",
-        "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#set-self-hosted-runners-in-a-group-for-an-organization
@@ -5505,6 +5799,14 @@ declare module "@octokit-next/types" {
         paths,
         "put",
         "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#set-custom-labels-for-a-self-hosted-runner-for-an-organization
+       */
+      "PUT /orgs/{org}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "put",
+        "/orgs/{org}/actions/runners/{runner_id}/labels"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#create-or-update-an-organization-secret
@@ -5539,6 +5841,30 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/blocks/{username}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/dependabot#create-or-update-an-organization-secret
+       */
+      "PUT /orgs/{org}/dependabot/secrets/{secret_name}": Operation<
+        paths,
+        "put",
+        "/orgs/{org}/dependabot/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#set-selected-repositories-for-an-organization-secret
+       */
+      "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories": Operation<
+        paths,
+        "put",
+        "/orgs/{org}/dependabot/secrets/{secret_name}/repositories"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/dependabot#add-selected-repository-to-an-organization-secret
+       */
+      "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}": Operation<
+        paths,
+        "put",
+        "/orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/interactions#set-interaction-restrictions-for-an-organization
        */
       "PUT /orgs/{org}/interaction-limits": Operation<
@@ -5571,6 +5897,14 @@ declare module "@octokit-next/types" {
         "/orgs/{org}/public_members/{username}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/orgs#add-a-security-manager-team
+       */
+      "PUT /orgs/{org}/security-managers/teams/{team_slug}": Operation<
+        paths,
+        "put",
+        "/orgs/{org}/security-managers/teams/{team_slug}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/teams#add-or-update-team-membership-for-a-user
        */
       "PUT /orgs/{org}/teams/{team_slug}/memberships/{username}": Operation<
@@ -5584,8 +5918,7 @@ declare module "@octokit-next/types" {
       "PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}": Operation<
         paths,
         "put",
-        "/orgs/{org}/teams/{team_slug}/projects/{project_id}",
-        "inertia"
+        "/orgs/{org}/teams/{team_slug}/projects/{project_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/teams/#add-or-update-team-repository-permissions
@@ -5601,8 +5934,7 @@ declare module "@octokit-next/types" {
       "PUT /projects/{project_id}/collaborators/{username}": Operation<
         paths,
         "put",
-        "/projects/{project_id}/collaborators/{username}",
-        "inertia"
+        "/projects/{project_id}/collaborators/{username}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#set-github-actions-permissions-for-a-repository
@@ -5613,12 +5945,36 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/actions/permissions"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/actions#set-workflow-access-to-a-repository
+       */
+      "PUT /repos/{owner}/{repo}/actions/permissions/access": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/actions/permissions/access"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/actions#set-allowed-actions-for-a-repository
        */
       "PUT /repos/{owner}/{repo}/actions/permissions/selected-actions": Operation<
         paths,
         "put",
         "/repos/{owner}/{repo}/actions/permissions/selected-actions"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#set-default-workflow-permissions-for-a-repository
+       */
+      "PUT /repos/{owner}/{repo}/actions/permissions/workflow": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/actions/permissions/workflow"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/actions#set-custom-labels-for-a-self-hosted-runner-for-a-repository
+       */
+      "PUT /repos/{owner}/{repo}/actions/runners/{runner_id}/labels": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#create-or-update-a-repository-secret
@@ -5650,8 +6006,7 @@ declare module "@octokit-next/types" {
       "PUT /repos/{owner}/{repo}/automated-security-fixes": Operation<
         paths,
         "put",
-        "/repos/{owner}/{repo}/automated-security-fixes",
-        "london"
+        "/repos/{owner}/{repo}/automated-security-fixes"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#update-branch-protection
@@ -5694,7 +6049,15 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#add-a-repository-collaborator
+       * @see https://docs.github.com/rest/reference/codespaces#create-or-update-a-repository-secret
+       */
+      "PUT /repos/{owner}/{repo}/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/collaborators/collaborators#add-a-repository-collaborator
        */
       "PUT /repos/{owner}/{repo}/collaborators/{username}": Operation<
         paths,
@@ -5710,12 +6073,28 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/contents/{path}"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/dependabot#create-or-update-a-repository-secret
+       */
+      "PUT /repos/{owner}/{repo}/dependabot/secrets/{secret_name}": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/repos#create-or-update-an-environment
        */
       "PUT /repos/{owner}/{repo}/environments/{environment_name}": Operation<
         paths,
         "put",
         "/repos/{owner}/{repo}/environments/{environment_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/deployments/branch-policies#update-deployment-branch-policy
+       */
+      "PUT /repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/migrations#start-an-import
@@ -5750,6 +6129,14 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/issues/{issue_number}/lock"
       >;
       /**
+       * @see https://docs.github.com/rest/reference/repos#enable-git-lfs-for-a-repository
+       */
+      "PUT /repos/{owner}/{repo}/lfs": Operation<
+        paths,
+        "put",
+        "/repos/{owner}/{repo}/lfs"
+      >;
+      /**
        * @see https://docs.github.com/rest/reference/activity#mark-repository-notifications-as-read
        */
       "PUT /repos/{owner}/{repo}/notifications": Operation<
@@ -5758,7 +6145,7 @@ declare module "@octokit-next/types" {
         "/repos/{owner}/{repo}/notifications"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/repos#update-information-about-a-github-pages-site
+       * @see https://docs.github.com/rest/pages#update-information-about-a-github-pages-site
        */
       "PUT /repos/{owner}/{repo}/pages": Operation<
         paths,
@@ -5795,8 +6182,7 @@ declare module "@octokit-next/types" {
       "PUT /repos/{owner}/{repo}/pulls/{pull_number}/update-branch": Operation<
         paths,
         "put",
-        "/repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
-        "lydian"
+        "/repos/{owner}/{repo}/pulls/{pull_number}/update-branch"
       >;
       /**
        * @see https://docs.github.com/rest/reference/activity#set-a-repository-subscription
@@ -5812,8 +6198,7 @@ declare module "@octokit-next/types" {
       "PUT /repos/{owner}/{repo}/topics": Operation<
         paths,
         "put",
-        "/repos/{owner}/{repo}/topics",
-        "mercy"
+        "/repos/{owner}/{repo}/topics"
       >;
       /**
        * @see https://docs.github.com/rest/reference/repos#enable-vulnerability-alerts
@@ -5821,8 +6206,7 @@ declare module "@octokit-next/types" {
       "PUT /repos/{owner}/{repo}/vulnerability-alerts": Operation<
         paths,
         "put",
-        "/repos/{owner}/{repo}/vulnerability-alerts",
-        "dorian"
+        "/repos/{owner}/{repo}/vulnerability-alerts"
       >;
       /**
        * @see https://docs.github.com/rest/reference/actions#create-or-update-an-environment-secret
@@ -5833,69 +6217,36 @@ declare module "@octokit-next/types" {
         "/repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
       >;
       /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-scim-information-for-a-provisioned-enterprise-group
-       */
-      "PUT /scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}": Operation<
-        paths,
-        "put",
-        "/scim/v2/enterprises/{enterprise}/Groups/{scim_group_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/enterprise-admin#set-scim-information-for-a-provisioned-enterprise-user
-       */
-      "PUT /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}": Operation<
-        paths,
-        "put",
-        "/scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/scim#set-scim-information-for-a-provisioned-user
-       */
-      "PUT /scim/v2/organizations/{org}/Users/{scim_user_id}": Operation<
-        paths,
-        "put",
-        "/scim/v2/organizations/{org}/Users/{scim_user_id}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#add-team-member-legacy
-       */
-      "PUT /teams/{team_id}/members/{username}": Operation<
-        paths,
-        "put",
-        "/teams/{team_id}/members/{username}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams#add-or-update-team-membership-for-a-user-legacy
-       */
-      "PUT /teams/{team_id}/memberships/{username}": Operation<
-        paths,
-        "put",
-        "/teams/{team_id}/memberships/{username}"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#add-or-update-team-project-permissions-legacy
-       */
-      "PUT /teams/{team_id}/projects/{project_id}": Operation<
-        paths,
-        "put",
-        "/teams/{team_id}/projects/{project_id}",
-        "inertia"
-      >;
-      /**
-       * @see https://docs.github.com/rest/reference/teams/#add-or-update-team-repository-permissions-legacy
-       */
-      "PUT /teams/{team_id}/repos/{owner}/{repo}": Operation<
-        paths,
-        "put",
-        "/teams/{team_id}/repos/{owner}/{repo}"
-      >;
-      /**
        * @see https://docs.github.com/rest/reference/users#block-a-user
        */
       "PUT /user/blocks/{username}": Operation<
         paths,
         "put",
         "/user/blocks/{username}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#create-or-update-a-secret-for-the-authenticated-user
+       */
+      "PUT /user/codespaces/secrets/{secret_name}": Operation<
+        paths,
+        "put",
+        "/user/codespaces/secrets/{secret_name}"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#set-selected-repositories-for-a-user-secret
+       */
+      "PUT /user/codespaces/secrets/{secret_name}/repositories": Operation<
+        paths,
+        "put",
+        "/user/codespaces/secrets/{secret_name}/repositories"
+      >;
+      /**
+       * @see https://docs.github.com/rest/reference/codespaces#add-a-selected-repository-to-a-user-secret
+       */
+      "PUT /user/codespaces/secrets/{secret_name}/repositories/{repository_id}": Operation<
+        paths,
+        "put",
+        "/user/codespaces/secrets/{secret_name}/repositories/{repository_id}"
       >;
       /**
        * @see https://docs.github.com/rest/reference/users#follow-a-user

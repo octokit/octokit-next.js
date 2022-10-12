@@ -21,8 +21,7 @@ export type AddedEndpoints = {
   "DELETE /admin/hooks/{hook_id}": Operation<
     paths,
     "delete",
-    "/admin/hooks/{hook_id}",
-    "superpro"
+    "/admin/hooks/{hook_id}"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#delete-a-public-key
@@ -38,8 +37,7 @@ export type AddedEndpoints = {
   "DELETE /admin/pre-receive-environments/{pre_receive_environment_id}": Operation<
     paths,
     "delete",
-    "/admin/pre-receive-environments/{pre_receive_environment_id}",
-    "eye-scream"
+    "/admin/pre-receive-environments/{pre_receive_environment_id}"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#delete-a-personal-access-token
@@ -66,22 +64,6 @@ export type AddedEndpoints = {
     "/admin/users/{username}/authorizations"
   >;
   /**
-   * @see https://docs.github.com/github-ae@latest/rest/reference/apps#revoke-a-grant-for-an-application
-   */
-  "DELETE /applications/{client_id}/grants/{access_token}": Operation<
-    paths,
-    "delete",
-    "/applications/{client_id}/grants/{access_token}"
-  >;
-  /**
-   * @see https://docs.github.com/github-ae@latest/rest/reference/apps#revoke-an-authorization-for-an-application
-   */
-  "DELETE /applications/{client_id}/tokens/{access_token}": Operation<
-    paths,
-    "delete",
-    "/applications/{client_id}/tokens/{access_token}"
-  >;
-  /**
    * @see
    */
   "DELETE /enterprise/announcement": Operation<
@@ -90,12 +72,12 @@ export type AddedEndpoints = {
     "/enterprise/announcement"
   >;
   /**
-   * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#disable-git-lfs-for-a-repository
+   * @see https://docs.github.com/github-ae@latest/rest/reference/teams#unlink-external-idp-group-team-connection
    */
-  "DELETE /repos/{owner}/{repo}/lfs": Operation<
+  "DELETE /orgs/{org}/teams/{team_slug}/external-groups": Operation<
     paths,
     "delete",
-    "/repos/{owner}/{repo}/lfs"
+    "/orgs/{org}/teams/{team_slug}/external-groups"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#unsuspend-a-user
@@ -108,15 +90,14 @@ export type AddedEndpoints = {
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#list-global-webhooks
    */
-  "GET /admin/hooks": Operation<paths, "get", "/admin/hooks", "superpro">;
+  "GET /admin/hooks": Operation<paths, "get", "/admin/hooks">;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#get-a-global-webhook
    */
   "GET /admin/hooks/{hook_id}": Operation<
     paths,
     "get",
-    "/admin/hooks/{hook_id}",
-    "superpro"
+    "/admin/hooks/{hook_id}"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#list-public-keys
@@ -128,8 +109,7 @@ export type AddedEndpoints = {
   "GET /admin/pre-receive-environments": Operation<
     paths,
     "get",
-    "/admin/pre-receive-environments",
-    "eye-scream"
+    "/admin/pre-receive-environments"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#get-a-pre-receive-environment
@@ -137,8 +117,7 @@ export type AddedEndpoints = {
   "GET /admin/pre-receive-environments/{pre_receive_environment_id}": Operation<
     paths,
     "get",
-    "/admin/pre-receive-environments/{pre_receive_environment_id}",
-    "eye-scream"
+    "/admin/pre-receive-environments/{pre_receive_environment_id}"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#get-the-download-status-for-a-pre-receive-environment
@@ -146,21 +125,12 @@ export type AddedEndpoints = {
   "GET /admin/pre-receive-environments/{pre_receive_environment_id}/downloads/latest": Operation<
     paths,
     "get",
-    "/admin/pre-receive-environments/{pre_receive_environment_id}/downloads/latest",
-    "eye-scream"
+    "/admin/pre-receive-environments/{pre_receive_environment_id}/downloads/latest"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#list-personal-access-tokens
    */
   "GET /admin/tokens": Operation<paths, "get", "/admin/tokens">;
-  /**
-   * @see https://docs.github.com/github-ae@latest/rest/reference/apps#check-an-authorization
-   */
-  "GET /applications/{client_id}/tokens/{access_token}": Operation<
-    paths,
-    "get",
-    "/applications/{client_id}/tokens/{access_token}"
-  >;
   /**
    * @see
    */
@@ -262,13 +232,40 @@ export type AddedEndpoints = {
     "/enterprise/stats/users"
   >;
   /**
+   * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#get-the-audit-log-for-an-enterprise
+   */
+  "GET /enterprises/{enterprise}/audit-log": Operation<
+    paths,
+    "get",
+    "/enterprises/{enterprise}/audit-log"
+  >;
+  /**
+   * @see https://docs.github.com/github-ae@latest/rest/reference/orgs#get-audit-log
+   */
+  "GET /orgs/{org}/audit-log": Operation<paths, "get", "/orgs/{org}/audit-log">;
+  /**
+   * @see https://docs.github.com/github-ae@latest/rest/reference/teams#external-idp-group-info-for-an-organization
+   */
+  "GET /orgs/{org}/external-group/{group_id}": Operation<
+    paths,
+    "get",
+    "/orgs/{org}/external-group/{group_id}"
+  >;
+  /**
+   * @see https://docs.github.com/github-ae@latest/rest/reference/teams#list-external-idp-groups-for-an-organization
+   */
+  "GET /orgs/{org}/external-groups": Operation<
+    paths,
+    "get",
+    "/orgs/{org}/external-groups"
+  >;
+  /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#update-a-global-webhook
    */
   "PATCH /admin/hooks/{hook_id}": Operation<
     paths,
     "patch",
-    "/admin/hooks/{hook_id}",
-    "superpro"
+    "/admin/hooks/{hook_id}"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#update-an-organization-name
@@ -284,8 +281,7 @@ export type AddedEndpoints = {
   "PATCH /admin/pre-receive-environments/{pre_receive_environment_id}": Operation<
     paths,
     "patch",
-    "/admin/pre-receive-environments/{pre_receive_environment_id}",
-    "eye-scream"
+    "/admin/pre-receive-environments/{pre_receive_environment_id}"
   >;
   /**
    * @see
@@ -296,17 +292,24 @@ export type AddedEndpoints = {
     "/enterprise/announcement"
   >;
   /**
+   * @see https://docs.github.com/github-ae@latest/rest/reference/teams#link-external-idp-group-team-connection
+   */
+  "PATCH /orgs/{org}/teams/{team_slug}/external-groups": Operation<
+    paths,
+    "patch",
+    "/orgs/{org}/teams/{team_slug}/external-groups"
+  >;
+  /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#create-a-global-webhook
    */
-  "POST /admin/hooks": Operation<paths, "post", "/admin/hooks", "superpro">;
+  "POST /admin/hooks": Operation<paths, "post", "/admin/hooks">;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#ping-a-global-webhook
    */
   "POST /admin/hooks/{hook_id}/pings": Operation<
     paths,
     "post",
-    "/admin/hooks/{hook_id}/pings",
-    "superpro"
+    "/admin/hooks/{hook_id}/pings"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#create-an-organization
@@ -318,8 +321,7 @@ export type AddedEndpoints = {
   "POST /admin/pre-receive-environments": Operation<
     paths,
     "post",
-    "/admin/pre-receive-environments",
-    "eye-scream"
+    "/admin/pre-receive-environments"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#start-a-pre-receive-environment-download
@@ -327,8 +329,7 @@ export type AddedEndpoints = {
   "POST /admin/pre-receive-environments/{pre_receive_environment_id}/downloads": Operation<
     paths,
     "post",
-    "/admin/pre-receive-environments/{pre_receive_environment_id}/downloads",
-    "eye-scream"
+    "/admin/pre-receive-environments/{pre_receive_environment_id}/downloads"
   >;
   /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#create-an-impersonation-oauth-token
@@ -347,14 +348,6 @@ export type AddedEndpoints = {
     "/applications/{client_id}/tokens/{access_token}"
   >;
   /**
-   * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#enable-git-lfs-for-a-repository
-   */
-  "PUT /repos/{owner}/{repo}/lfs": Operation<
-    paths,
-    "put",
-    "/repos/{owner}/{repo}/lfs"
-  >;
-  /**
    * @see https://docs.github.com/github-ae@latest/rest/reference/enterprise-admin#suspend-a-user
    */
   "PUT /users/{username}/suspended": Operation<
@@ -365,47 +358,60 @@ export type AddedEndpoints = {
 };
 
 export type RemovedRoutes =
-  | "DELETE /applications/grants/{grant_id}"
-  | "DELETE /authorizations/{authorization_id}"
+  | never
   | "DELETE /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations/{org_id}"
+  | "DELETE /enterprises/{enterprise}/actions/runners/{runner_id}/labels"
+  | "DELETE /enterprises/{enterprise}/actions/runners/{runner_id}/labels/{name}"
+  | "DELETE /organizations/{org}/codespaces/secrets/{secret_name}"
+  | "DELETE /organizations/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}"
   | "DELETE /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}"
-  | "DELETE /orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}"
+  | "DELETE /orgs/{org}/actions/runners/{runner_id}/labels"
+  | "DELETE /orgs/{org}/actions/runners/{runner_id}/labels/{name}"
   | "DELETE /orgs/{org}/blocks/{username}"
-  | "DELETE /orgs/{org}/credential-authorizations/{credential_id}"
+  | "DELETE /orgs/{org}/custom_roles/{role_id}"
+  | "DELETE /orgs/{org}/dependabot/secrets/{secret_name}"
+  | "DELETE /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
   | "DELETE /orgs/{org}/interaction-limits"
   | "DELETE /orgs/{org}/invitations/{invitation_id}"
+  | "DELETE /orgs/{org}/members/{username}/codespaces/{codespace_name}"
   | "DELETE /orgs/{org}/migrations/{migration_id}/archive"
   | "DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock"
   | "DELETE /orgs/{org}/packages/{package_type}/{package_name}"
   | "DELETE /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}"
   | "DELETE /orgs/{org}/public_members/{username}"
+  | "DELETE /orgs/{org}/security-managers/teams/{team_slug}"
+  | "DELETE /repos/{owner}/{repo}/actions/caches"
+  | "DELETE /repos/{owner}/{repo}/actions/caches/{cache_id}"
+  | "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
+  | "DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}"
   | "DELETE /repos/{owner}/{repo}/automated-security-fixes"
-  | "DELETE /repos/{owner}/{repo}/environments/{environment_name}"
+  | "DELETE /repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+  | "DELETE /repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
   | "DELETE /repos/{owner}/{repo}/import"
   | "DELETE /repos/{owner}/{repo}/interaction-limits"
+  | "DELETE /repos/{owner}/{repo}/tags/protection/{tag_protection_id}"
   | "DELETE /repos/{owner}/{repo}/vulnerability-alerts"
   | "DELETE /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
-  | "DELETE /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-  | "DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}"
   | "DELETE /user/blocks/{username}"
+  | "DELETE /user/codespaces/secrets/{secret_name}"
+  | "DELETE /user/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+  | "DELETE /user/codespaces/{codespace_name}"
   | "DELETE /user/emails"
   | "DELETE /user/interaction-limits"
-  | "DELETE /user/migrations/{migration_id}/archive"
   | "DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock"
   | "DELETE /user/packages/{package_type}/{package_name}"
   | "DELETE /user/packages/{package_type}/{package_name}/versions/{package_version_id}"
+  | "DELETE /user/ssh_signing_keys/{ssh_signing_key_id}"
   | "DELETE /users/{username}/packages/{package_type}/{package_name}"
   | "DELETE /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
-  | "GET /applications/grants"
-  | "GET /applications/grants/{grant_id}"
-  | "GET /authorizations"
-  | "GET /authorizations/{authorization_id}"
+  | "GET /enterprise-installation/{enterprise_or_org}/server-statistics"
+  | "GET /enterprises/{enterprise}/actions/cache/usage"
+  | "GET /enterprises/{enterprise}/actions/permissions/workflow"
   | "GET /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations"
-  | "GET /enterprises/{enterprise}/actions/runners/downloads"
-  | "GET /enterprises/{enterprise}/audit-log"
-  | "GET /enterprises/{enterprise}/settings/billing/actions"
-  | "GET /enterprises/{enterprise}/settings/billing/packages"
-  | "GET /enterprises/{enterprise}/settings/billing/shared-storage"
+  | "GET /enterprises/{enterprise}/actions/runners/{runner_id}/labels"
+  | "GET /enterprises/{enterprise}/code-scanning/alerts"
+  | "GET /enterprises/{enterprise}/secret-scanning/alerts"
+  | "GET /enterprises/{enterprise}/settings/billing/advanced-security"
   | "GET /events"
   | "GET /marketplace_listing/accounts/{account_id}"
   | "GET /marketplace_listing/plans"
@@ -414,22 +420,31 @@ export type RemovedRoutes =
   | "GET /marketplace_listing/stubbed/plans"
   | "GET /marketplace_listing/stubbed/plans/{plan_id}/accounts"
   | "GET /networks/{owner}/{repo}/events"
+  | "GET /organizations/{organization_id}/custom_roles"
+  | "GET /organizations/{org}/codespaces/secrets"
+  | "GET /organizations/{org}/codespaces/secrets/public-key"
+  | "GET /organizations/{org}/codespaces/secrets/{secret_name}"
+  | "GET /organizations/{org}/codespaces/secrets/{secret_name}/repositories"
+  | "GET /orgs/{org}/actions/cache/usage"
+  | "GET /orgs/{org}/actions/cache/usage-by-repository"
+  | "GET /orgs/{org}/actions/permissions/workflow"
   | "GET /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories"
   | "GET /orgs/{org}/actions/runner-groups/{runner_group_id}/runners"
-  | "GET /orgs/{org}/actions/runners"
-  | "GET /orgs/{org}/actions/runners/downloads"
-  | "GET /orgs/{org}/audit-log"
+  | "GET /orgs/{org}/actions/runners/{runner_id}/labels"
   | "GET /orgs/{org}/blocks"
   | "GET /orgs/{org}/blocks/{username}"
-  | "GET /orgs/{org}/credential-authorizations"
+  | "GET /orgs/{org}/code-scanning/alerts"
+  | "GET /orgs/{org}/codespaces"
+  | "GET /orgs/{org}/dependabot/secrets"
+  | "GET /orgs/{org}/dependabot/secrets/public-key"
+  | "GET /orgs/{org}/dependabot/secrets/{secret_name}"
+  | "GET /orgs/{org}/dependabot/secrets/{secret_name}/repositories"
   | "GET /orgs/{org}/events"
   | "GET /orgs/{org}/failed_invitations"
-  | "GET /orgs/{org}/hooks/{hook_id}/deliveries"
+  | "GET /orgs/{org}/fine_grained_permissions"
   | "GET /orgs/{org}/interaction-limits"
   | "GET /orgs/{org}/invitations"
   | "GET /orgs/{org}/invitations/{invitation_id}/teams"
-  | "GET /orgs/{org}/migrations"
-  | "GET /orgs/{org}/migrations/{migration_id}"
   | "GET /orgs/{org}/migrations/{migration_id}/archive"
   | "GET /orgs/{org}/migrations/{migration_id}/repositories"
   | "GET /orgs/{org}/packages"
@@ -439,26 +454,42 @@ export type RemovedRoutes =
   | "GET /orgs/{org}/public_members"
   | "GET /orgs/{org}/public_members/{username}"
   | "GET /orgs/{org}/secret-scanning/alerts"
+  | "GET /orgs/{org}/security-managers"
   | "GET /orgs/{org}/settings/billing/actions"
+  | "GET /orgs/{org}/settings/billing/advanced-security"
   | "GET /orgs/{org}/settings/billing/packages"
   | "GET /orgs/{org}/settings/billing/shared-storage"
-  | "GET /orgs/{org}/team-sync/groups"
   | "GET /orgs/{org}/teams/{team_slug}/invitations"
-  | "GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings"
-  | "GET /repos/{owner}/{repo}/actions/runners/downloads"
+  | "GET /repos/{owner}/{repo}/actions/cache/usage"
+  | "GET /repos/{owner}/{repo}/actions/caches"
+  | "GET /repos/{owner}/{repo}/actions/permissions/access"
+  | "GET /repos/{owner}/{repo}/actions/permissions/workflow"
+  | "GET /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
   | "GET /repos/{owner}/{repo}/actions/runs/{run_id}/approvals"
   | "GET /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments"
-  | "GET /repos/{owner}/{repo}/community/code_of_conduct"
+  | "GET /repos/{owner}/{repo}/code-scanning/codeql/databases"
+  | "GET /repos/{owner}/{repo}/code-scanning/codeql/databases/{language}"
+  | "GET /repos/{owner}/{repo}/codespaces"
+  | "GET /repos/{owner}/{repo}/codespaces/devcontainers"
+  | "GET /repos/{owner}/{repo}/codespaces/machines"
+  | "GET /repos/{owner}/{repo}/codespaces/new"
+  | "GET /repos/{owner}/{repo}/codespaces/secrets"
+  | "GET /repos/{owner}/{repo}/codespaces/secrets/public-key"
+  | "GET /repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
   | "GET /repos/{owner}/{repo}/community/profile"
-  | "GET /repos/{owner}/{repo}/environments"
-  | "GET /repos/{owner}/{repo}/environments/{environment_name}"
+  | "GET /repos/{owner}/{repo}/dependabot/alerts"
+  | "GET /repos/{owner}/{repo}/dependabot/alerts/{alert_number}"
+  | "GET /repos/{owner}/{repo}/dependabot/secrets"
+  | "GET /repos/{owner}/{repo}/dependabot/secrets/public-key"
+  | "GET /repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
+  | "GET /repos/{owner}/{repo}/dependency-graph/compare/{basehead}"
   | "GET /repos/{owner}/{repo}/import"
   | "GET /repos/{owner}/{repo}/import/authors"
   | "GET /repos/{owner}/{repo}/import/large_files"
   | "GET /repos/{owner}/{repo}/interaction-limits"
   | "GET /repos/{owner}/{repo}/pages/health"
-  | "GET /repos/{owner}/{repo}/secret-scanning/alerts"
-  | "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
+  | "GET /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations"
+  | "GET /repos/{owner}/{repo}/tags/protection"
   | "GET /repos/{owner}/{repo}/traffic/clones"
   | "GET /repos/{owner}/{repo}/traffic/popular/paths"
   | "GET /repos/{owner}/{repo}/traffic/popular/referrers"
@@ -468,29 +499,33 @@ export type RemovedRoutes =
   | "GET /repositories/{repository_id}/environments/{environment_name}/secrets"
   | "GET /repositories/{repository_id}/environments/{environment_name}/secrets/public-key"
   | "GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
-  | "GET /scim/v2/enterprises/{enterprise}/Users"
-  | "GET /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-  | "GET /scim/v2/organizations/{org}/Users"
-  | "GET /scim/v2/organizations/{org}/Users/{scim_user_id}"
+  | "GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions"
+  | "GET /teams/{team_id}/discussions/{discussion_number}/reactions"
   | "GET /teams/{team_id}/invitations"
-  | "GET /teams/{team_id}/team-sync/group-mappings"
   | "GET /user/blocks"
   | "GET /user/blocks/{username}"
+  | "GET /user/codespaces"
+  | "GET /user/codespaces/secrets"
+  | "GET /user/codespaces/secrets/public-key"
+  | "GET /user/codespaces/secrets/{secret_name}"
+  | "GET /user/codespaces/secrets/{secret_name}/repositories"
+  | "GET /user/codespaces/{codespace_name}"
+  | "GET /user/codespaces/{codespace_name}/exports/{export_id}"
+  | "GET /user/codespaces/{codespace_name}/machines"
   | "GET /user/emails"
   | "GET /user/interaction-limits"
   | "GET /user/marketplace_purchases"
   | "GET /user/marketplace_purchases/stubbed"
-  | "GET /user/migrations"
   | "GET /user/migrations/{migration_id}"
-  | "GET /user/migrations/{migration_id}/archive"
-  | "GET /user/migrations/{migration_id}/repositories"
   | "GET /user/packages"
   | "GET /user/packages/{package_type}/{package_name}"
   | "GET /user/packages/{package_type}/{package_name}/versions"
   | "GET /user/packages/{package_type}/{package_name}/versions/{package_version_id}"
   | "GET /user/public_emails"
-  | "GET /user/{username}/packages"
+  | "GET /user/ssh_signing_keys"
+  | "GET /user/ssh_signing_keys/{ssh_signing_key_id}"
   | "GET /users/{username}/events/public"
+  | "GET /users/{username}/packages"
   | "GET /users/{username}/packages/{package_type}/{package_name}"
   | "GET /users/{username}/packages/{package_type}/{package_name}/versions"
   | "GET /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}"
@@ -499,60 +534,79 @@ export type RemovedRoutes =
   | "GET /users/{username}/settings/billing/actions"
   | "GET /users/{username}/settings/billing/packages"
   | "GET /users/{username}/settings/billing/shared-storage"
-  | "PATCH /authorizations/{authorization_id}"
-  | "PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings"
+  | "GET /users/{username}/ssh_signing_keys"
+  | "PATCH /orgs/{org}/custom_roles/{role_id}"
+  | "PATCH /repos/{owner}/{repo}/dependabot/alerts/{alert_number}"
   | "PATCH /repos/{owner}/{repo}/import"
   | "PATCH /repos/{owner}/{repo}/import/authors/{author_id}"
   | "PATCH /repos/{owner}/{repo}/import/lfs"
-  | "PATCH /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}"
-  | "PATCH /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-  | "PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}"
-  | "PATCH /teams/{team_id}/team-sync/group-mappings"
+  | "PATCH /user/codespaces/{codespace_name}"
   | "PATCH /user/email/visibility"
   | "POST /applications/{client_id}/token/scoped"
-  | "POST /authorizations"
-  | "POST /enterprises/{enterprise}/actions/runners/registration-token"
-  | "POST /enterprises/{enterprise}/actions/runners/remove-token"
-  | "POST /orgs/{org}/actions/runners/registration-token"
-  | "POST /orgs/{org}/actions/runners/remove-token"
+  | "POST /enterprises/{enterprise}/actions/runners/{runner_id}/labels"
+  | "POST /orgs/{org}/actions/runners/{runner_id}/labels"
+  | "POST /orgs/{org}/custom_roles"
   | "POST /orgs/{org}/invitations"
-  | "POST /orgs/{org}/migrations"
+  | "POST /orgs/{org}/members/{username}/codespaces/{codespace_name}/stop"
   | "POST /orgs/{org}/packages/{package_type}/{package_name}/restore"
   | "POST /orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
-  | "POST /repos/{owner}/{repo}/actions/runners/registration-token"
-  | "POST /repos/{owner}/{repo}/actions/runners/remove-token"
+  | "POST /orgs/{org}/{security_product}/{enablement}"
+  | "POST /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun"
+  | "POST /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
   | "POST /repos/{owner}/{repo}/actions/runs/{run_id}/approve"
   | "POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments"
+  | "POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs"
   | "POST /repos/{owner}/{repo}/branches/{branch}/rename"
-  | "POST /repos/{owner}/{repo}/dispatches"
-  | "POST /scim/v2/enterprises/{enterprise}/Users"
-  | "POST /scim/v2/organizations/{org}/Users"
+  | "POST /repos/{owner}/{repo}/codespaces"
+  | "POST /repos/{owner}/{repo}/dependency-graph/snapshots"
+  | "POST /repos/{owner}/{repo}/pages/deployment"
+  | "POST /repos/{owner}/{repo}/pulls/{pull_number}/codespaces"
+  | "POST /repos/{owner}/{repo}/releases/generate-notes"
+  | "POST /repos/{owner}/{repo}/tags/protection"
+  | "POST /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions"
+  | "POST /teams/{team_id}/discussions/{discussion_number}/reactions"
+  | "POST /user/codespaces"
+  | "POST /user/codespaces/{codespace_name}/exports"
+  | "POST /user/codespaces/{codespace_name}/start"
+  | "POST /user/codespaces/{codespace_name}/stop"
   | "POST /user/emails"
-  | "POST /user/migrations"
   | "POST /user/packages/{package_type}/{package_name}/restore"
   | "POST /user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
+  | "POST /user/ssh_signing_keys"
   | "POST /users/{username}/packages/{package_type}/{package_name}/restore"
   | "POST /users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore"
-  | "PUT /authorizations/clients/{client_id}"
-  | "PUT /authorizations/clients/{client_id}/{fingerprint}"
+  | "PUT /enterprises/{enterprise}/actions/permissions/workflow"
   | "PUT /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations"
   | "PUT /enterprises/{enterprise}/actions/runner-groups/{runner_group_id}/organizations/{org_id}"
+  | "PUT /enterprises/{enterprise}/actions/runners/{runner_id}/labels"
+  | "PUT /organizations/{org}/codespaces/secrets/{secret_name}"
+  | "PUT /organizations/{org}/codespaces/secrets/{secret_name}/repositories"
+  | "PUT /organizations/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}"
+  | "PUT /orgs/{org}/actions/permissions/workflow"
   | "PUT /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories"
-  | "PUT /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}"
   | "PUT /orgs/{org}/actions/runner-groups/{runner_group_id}/runners"
-  | "PUT /orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}"
+  | "PUT /orgs/{org}/actions/runners/{runner_id}/labels"
   | "PUT /orgs/{org}/blocks/{username}"
+  | "PUT /orgs/{org}/dependabot/secrets/{secret_name}"
+  | "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories"
+  | "PUT /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}"
   | "PUT /orgs/{org}/interaction-limits"
   | "PUT /orgs/{org}/public_members/{username}"
+  | "PUT /orgs/{org}/security-managers/teams/{team_slug}"
+  | "PUT /repos/{owner}/{repo}/actions/permissions/access"
+  | "PUT /repos/{owner}/{repo}/actions/permissions/workflow"
+  | "PUT /repos/{owner}/{repo}/actions/runners/{runner_id}/labels"
   | "PUT /repos/{owner}/{repo}/automated-security-fixes"
-  | "PUT /repos/{owner}/{repo}/environments/{environment_name}"
+  | "PUT /repos/{owner}/{repo}/codespaces/secrets/{secret_name}"
+  | "PUT /repos/{owner}/{repo}/dependabot/secrets/{secret_name}"
   | "PUT /repos/{owner}/{repo}/import"
   | "PUT /repos/{owner}/{repo}/interaction-limits"
   | "PUT /repos/{owner}/{repo}/vulnerability-alerts"
   | "PUT /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}"
-  | "PUT /scim/v2/enterprises/{enterprise}/Users/{scim_user_id}"
-  | "PUT /scim/v2/organizations/{org}/Users/{scim_user_id}"
   | "PUT /user/blocks/{username}"
+  | "PUT /user/codespaces/secrets/{secret_name}"
+  | "PUT /user/codespaces/secrets/{secret_name}/repositories"
+  | "PUT /user/codespaces/secrets/{secret_name}/repositories/{repository_id}"
   | "PUT /user/interaction-limits";
 
 declare module "@octokit-next/types" {

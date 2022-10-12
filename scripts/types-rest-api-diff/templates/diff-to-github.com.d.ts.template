@@ -33,6 +33,7 @@ export type AddedEndpoints = {
 };
 
 export type RemovedRoutes = 
+  | never
   {{#each removedEndpointsByRoute}}
   | "{{@key}}"
   {{/each}}

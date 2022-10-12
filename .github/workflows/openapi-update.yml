@@ -44,12 +44,13 @@ jobs:
         run: |
           # openapi types
           node scripts/types-openapi/download.js
-          node scripts/types-openapi/update.cjs
+          node scripts/types-openapi/update.js
           # rest api types for github.com
-          node scripts/types-rest-api/download.cjs
-          node scripts/types-rest-api/update.cjs
+          node scripts/types-rest-api/download.js
+          node scripts/types-rest-api/update.js
           # rest api types for the ... rest
-          node scripts/types-rest-api-ghes/download.cjs
+          node scripts/types-rest-api-diff/download.js
+          node scripts/types-rest-api-diff/update.js
         if: github.event_name != 'push'
 
       # create/update pull request for dispatch event update

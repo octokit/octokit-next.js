@@ -24,9 +24,6 @@ export async function test() {
   // @ts-expect-error - `GET /admin/hooks/{hook_id}` is not available on github.com
   await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
   });
 
   // with versions set explicitly
@@ -42,9 +39,6 @@ export async function test() {
 
   const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
     request: {
       version: "ghes-3.0",
     },
