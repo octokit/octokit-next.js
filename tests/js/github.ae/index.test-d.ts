@@ -14,9 +14,6 @@ export async function test() {
 
   const getHookResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
   });
   expectType<number | undefined>(getHookResponse.data.id);
   expectType<string>(getHookResponse.headers["x-github-enterprise-version"]);

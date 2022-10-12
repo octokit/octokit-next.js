@@ -14,9 +14,6 @@ export async function test() {
 
   const ghesOnlyResponse = await request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
     request: {
       version: "ghes-3.1",
     },

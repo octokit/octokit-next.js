@@ -44,16 +44,10 @@ export async function test() {
   // @ts-expect-error - GET /admin/hooks/{hook_id} only exists on GHES
   await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
   });
 
   const ghesOnlyResponse = await octokit.request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
-    mediaType: {
-      previews: ["superpro"],
-    },
     request: {
       version: "ghes-3.1",
     },

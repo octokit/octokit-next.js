@@ -266,9 +266,6 @@ export async function test() {
     "GET /admin/hooks/{hook_id}",
     {
       hook_id: 1,
-      mediaType: {
-        previews: ["superpro"],
-      },
     }
   );
   expectType<number | undefined>(response.data.id);
