@@ -15,7 +15,7 @@ jobs:
           node-version: 16
           cache: npm
       - run: npm install -D semantic-release semantic-release-plugin-update-version-in-files
-      - run: npx semantic-release
+      - run: npx semantic-release --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.OCTOKITBOT_NPM_TOKEN }}
