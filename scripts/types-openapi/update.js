@@ -39,6 +39,8 @@ async function run() {
         ? "types-openapi"
         : sourceFilename.replace(/^(.*)\.json$/, "types-openapi-$1");
 
+    console.log({ sourceFilename, packageName });
+
     if (!packageName.startsWith("types-openapi")) continue;
 
     await mkdir(`packages/${packageName}`);
@@ -55,7 +57,7 @@ async function run() {
           },
           ...packageDefaults,
         }),
-        { parser: "json" }
+        { parser: "json-stringify" }
       )
     );
     await writeFile(

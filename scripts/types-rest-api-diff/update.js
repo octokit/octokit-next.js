@@ -60,6 +60,9 @@ async function run() {
       diffVersion === "github.com"
         ? `types-rest-api`
         : `types-rest-api-${diffVersion}`;
+    const diffToPackageName = `types-openapi-${currentVersion}-diff-to-${
+      diffVersion === "github.com" ? "api.github.com" : diffVersion
+    }`;
 
     const packagePath = `packages/${packageName}`;
 
@@ -93,13 +96,14 @@ async function run() {
                   "0.0.0-development",
                 "@octokit-next/types-rest-api": "0.0.0-development",
                 [`@octokit-next/${diffPackageName}`]: "0.0.0-development",
+                [`@octokit-next/${diffToPackageName}`]: "0.0.0-development",
                 "type-fest": pkg.devDependencies["type-fest"],
               },
             },
             { deep: true }
           )
         ),
-        { parser: "json" }
+        { parser: "json-stringify" }
       )
     );
     console.log("%s updated", `${packagePath}/package.json`);
@@ -157,6 +161,8 @@ async function run() {
         }
       }
     }
+    const hasAddedEndpointsByRoute =
+      Object.keys(addedEndpointsByRoute).length > 0;
 
     const template =
       diffVersion === "github.com" ? templateDiffToDotcom : templateDiffToGHES;
@@ -167,6 +173,7 @@ async function run() {
       addedEndpointsByRoute: sortKeys(addedEndpointsByRoute, {
         deep: true,
       }),
+      hasAddedEndpointsByRoute,
       removedEndpointsByRoute: sortKeys(removedEndpointsByRoute, {
         deep: true,
       }),
@@ -225,7 +232,7 @@ async function run() {
             { deep: true }
           )
         ),
-        { parser: "json" }
+        { parser: "json-stringify" }
       )
     );
     console.log("%s updated", `${packageCompatiblePath}/package.json`);

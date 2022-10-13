@@ -9,8 +9,12 @@
   "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.6-compatible#readme",
   "license": "MIT",
   "name": "@octokit-next/types-rest-api-ghes-3.6-compatible",
-  "octokit": { "openapi-version": "8.0.1" },
-  "publishConfig": { "access": "public" },
+  "octokit": {
+    "openapi-version": "8.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "directory": "packages/types-rest-api-ghes-3.6-compatible",
     "type": "git",

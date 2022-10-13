@@ -113,7 +113,55 @@
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "packages/types-openapi-ghes-3.2-diff-to-api.github.com"
+          "pkgRoot": "packages/types-openapi-ghes-3.3-diff-to-ghes-3.3"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.3"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.3-diff-to-ghes-3.4"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.4"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.4-diff-to-ghes-3.5"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.5"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.5-diff-to-ghes-3.6"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.6"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghes-3.6-diff-to-api.github.com"
         }
       ],
       [
@@ -126,6 +174,18 @@
         "@semantic-release/npm",
         {
           "pkgRoot": "packages/types-openapi-github.ae-diff-to-api.github.com"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghec"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/types-openapi-ghec-diff-to-api.github.com"
         }
       ],
       [
