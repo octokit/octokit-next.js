@@ -3,6 +3,7 @@
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
     "@octokit-next/types-openapi-ghes-3.3": "0.0.0-development",
+    "@octokit-next/types-openapi-ghes-3.3-diff-to-ghes-3.4": "0.0.0-development",
     "@octokit-next/types-rest-api": "0.0.0-development",
     "@octokit-next/types-rest-api-ghes-3.4": "0.0.0-development",
     "type-fest": "^3.0.0"
@@ -12,8 +13,12 @@
   "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/types-rest-api-ghes-3.3#readme",
   "license": "MIT",
   "name": "@octokit-next/types-rest-api-ghes-3.3",
-  "octokit": { "openapi-version": "8.0.1" },
-  "publishConfig": { "access": "public" },
+  "octokit": {
+    "openapi-version": "8.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "directory": "packages/types-rest-api-ghes-3.3",
     "type": "git",

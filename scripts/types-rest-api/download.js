@@ -44,7 +44,7 @@ async function main() {
   writeFileSync(
     resolve("cache/types-rest-api/endpoints.json"),
     prettier.format(JSON.stringify(endpoints), {
-      parser: "json",
+      parser: "json-stringify",
     })
   );
 }
