@@ -73,6 +73,8 @@ A list of breaking changes compared to latest `@octokit/*` modules
 
 - replace `request.defaults()` and `endpoint.defaults()` with `request.withDefaults()` and `endpoint.withDefaults()`
 - remove `options.previews` from `new Octokit(options)`
+- Add script to verify that `packages/*` folders and `release.plugins` configuration in `package.json` are in sync
+- `scripts/types-rest-api-diff/update.js` - remove all package folders before re-creating, so that obsolete packages get removed
 
 ## Known issues
 
