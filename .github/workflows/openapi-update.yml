@@ -41,6 +41,7 @@ jobs:
 
       # do not update cache for renovate update
       - name: Update & generate types
+        if: github.event_name != 'push'
         run: |
           # openapi types
           node scripts/types-openapi/download.js
@@ -51,7 +52,8 @@ jobs:
           # rest api types for the ... rest
           node scripts/types-rest-api-diff/download.js
           node scripts/types-rest-api-diff/update.js
-        if: github.event_name != 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.OCTOKITBOT_PAT }}
 
       # create/update pull request for dispatch event update
       - name: Create Pull Request
