@@ -1,7 +1,7 @@
 import { expectType } from "tsd";
 import { Octokit } from "@octokit-next/core";
 
-import "@octokit-next/types-rest-api-ghes-3.0";
+import "@octokit-next/types-rest-api-ghes-3.2";
 
 import { OctokitWithDefaultsAndPlugins } from "./index.js";
 import { fooPlugin } from "./plugins/foo/index.js";
@@ -257,12 +257,12 @@ export async function test() {
 
   // versions
 
-  const octokitCoreWithGhes31Version = new Octokit({
-    version: "ghes-3.1",
+  const octokitCoreWithGhes32Version = new Octokit({
+    version: "ghes-3.2",
     required: "",
   });
 
-  const response = await octokitCoreWithGhes31Version.request(
+  const response = await octokitCoreWithGhes32Version.request(
     "GET /admin/hooks/{hook_id}",
     {
       hook_id: 1,
@@ -270,59 +270,13 @@ export async function test() {
   );
   expectType<number | undefined>(response.data.id);
 
-  const OctokitGHES31 = Octokit.withDefaults({
-    version: "ghes-3.1",
+  const OctokitGHES32 = Octokit.withDefaults({
+    version: "ghes-3.2",
   });
-  const octokitGhes31 = new OctokitGHES31({
+  const octokitGhes31 = new OctokitGHES32({
     required: "",
   });
 
   // @ts-expect-error - `GET /marketplace_listing/plans` only exists on `github.com`
   await octokitGhes31.request("GET /marketplace_listing/plans");
-
-  // TODO: make changed properties work (#28)
-  // // The `api` key was removed for GHES versions, but
-  // // the `installed_version` key was added.
-  // expectType<string>(
-  //   (await octokitGhes31.request("GET /meta")).data.installed_version
-  // );
-  // expectType<never>((await octokitGhes31.request("GET /meta")).data.api);
-
-  const octokitGhes30ViaConstructorOptions = new OctokitGHES31({
-    version: "ghes-3.0",
-    required: "",
-  });
-
-  // @ts-expect-error - `GET /orgs/{org}/audit-log` was added in GHES 3.1
-  await octokitGhes30ViaConstructorOptions.request(
-    "GET /orgs/{org}/audit-log",
-    {
-      org: "",
-    }
-  );
-
-  // TODO: make changed properties work (#28)
-  // expectType<string>(
-  //   (await octokitGhes30ViaConstructorOptions.request("GET /meta")).data
-  //     .installed_version
-  // );
-  // expectType<never>(
-  //   (await octokitGhes30ViaConstructorOptions.request("GET /meta")).data.api
-  // );
-
-  const OctokitGHES30 = OctokitGHES31.withDefaults({
-    version: "ghes-3.0",
-  });
-  const octokitGhes30ViaChainedDefaults = new OctokitGHES30({
-    required: "",
-  });
-
-  // TODO: make changed properties work (#28)
-  // expectType<string>(
-  //   (await octokitGhes30ViaChainedDefaults.request("GET /meta")).data
-  //     .installed_version
-  // );
-  // expectType<never>(
-  //   (await octokitGhes30ViaChainedDefaults.request("GET /meta")).data.api
-  // );
 }

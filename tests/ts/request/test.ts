@@ -1,6 +1,6 @@
 import { request } from "@octokit-next/request";
 
-import "@octokit-next/types-rest-api-ghes-3.1";
+import "@octokit-next/types-rest-api-ghes-3.2";
 
 function expectType<T>(value: T): void {}
 
@@ -15,7 +15,7 @@ export async function test() {
   const ghesOnlyResponse = await request("GET /admin/hooks/{hook_id}", {
     hook_id: 1,
     request: {
-      version: "ghes-3.1",
+      version: "ghes-3.2",
     },
   });
   expectType<number | undefined>(ghesOnlyResponse.data.id);
