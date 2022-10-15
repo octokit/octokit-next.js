@@ -11,8 +11,8 @@
   "scripts": {
     "test": "npm run test:workspaces && npm run test:code && npm run test:dts && npm run test:ts",
     "test:code": "ava test.js",
-    "test:dts": "for d in tests/js/* ; do echo npx tsd $d; tsd $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
-    "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo npx tsc -p $d; tsc -p $d; if [ $? -eq 0 ]; then echo ok; else exit 1; fi; done",
+    "test:dts": "for d in tests/js/* ; do echo npx tsd $d; tsd $d; if [ $? -eq 0 ]; then echo ok; else echo \\n\nNOT ok\\n\\n\\n\\n; fi; done",
+    "test:ts": "for d in tests/ts/*/tsconfig.json ; do echo npx tsc -p $d; tsc -p $d; if [ $? -eq 0 ]; then echo ok; else echo \\n\nNOT ok\\n\\n\\n\\n; fi; done",
     "test:workspaces": "npm test --workspaces --if-present"
   },
   "release": {
