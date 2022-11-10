@@ -3,48 +3,53 @@
  * Do not make direct changes to the file.
  */
 
-
 /** Type helpers */
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
-type XOR<T, U> = (T | U) extends object ? (Without<T, U> & U) | (Without<U, T> & T) : T | U;
-type OneOf<T extends any[]> = T extends [infer Only] ? Only : T extends [infer A, infer B, ...infer Rest] ? OneOf<[XOR<A, B>, ...Rest]> : never;
+type XOR<T, U> = T | U extends object
+  ? (Without<T, U> & U) | (Without<U, T> & T)
+  : T | U;
+type OneOf<T extends any[]> = T extends [infer Only]
+  ? Only
+  : T extends [infer A, infer B, ...infer Rest]
+  ? OneOf<[XOR<A, B>, ...Rest]>
+  : never;
 
 export interface paths {
   "/enterprises/{enterprise}/actions/runner-groups": {
     /**
-     * List self-hosted runner groups for an enterprise 
+     * List self-hosted runner groups for an enterprise
      * @description Lists all self-hosted runner groups for an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     get: operations["enterprise-admin/list-self-hosted-runner-groups-for-enterprise"];
     /**
-     * Create a self-hosted runner group for an enterprise 
+     * Create a self-hosted runner group for an enterprise
      * @description Creates a new self-hosted runner group for an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     post: operations["enterprise-admin/create-self-hosted-runner-group-for-enterprise"];
   };
   "/enterprises/{enterprise}/actions/runner-groups/{runner_group_id}": {
     /**
-     * Get a self-hosted runner group for an enterprise 
+     * Get a self-hosted runner group for an enterprise
      * @description Gets a specific self-hosted runner group for an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     get: operations["enterprise-admin/get-self-hosted-runner-group-for-enterprise"];
     /**
-     * Update a self-hosted runner group for an enterprise 
+     * Update a self-hosted runner group for an enterprise
      * @description Updates the `name` and `visibility` of a self-hosted runner group in an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     patch: operations["enterprise-admin/update-self-hosted-runner-group-for-enterprise"];
   };
   "/enterprises/{enterprise}/secret-scanning/alerts": {
     /**
-     * List secret scanning alerts for an enterprise 
+     * List secret scanning alerts for an enterprise
      * @description Lists secret scanning alerts for eligible repositories in an enterprise, from newest to oldest.
      * To use this endpoint, you must be a member of the enterprise, and you must use an access token with the `repo` scope or `security_events` scope. Alerts are only returned for organizations in the enterprise for which you are an organization owner or a [security manager](https://docs.github.com/enterprise-server@3.4/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization).
      */
@@ -52,7 +57,7 @@ export interface paths {
   };
   "/notifications": {
     /**
-     * List notifications for the authenticated user 
+     * List notifications for the authenticated user
      * @description List all notifications for the current user, sorted by most recently updated.
      */
     get: operations["activity/list-notifications-for-authenticated-user"];
@@ -63,30 +68,30 @@ export interface paths {
   };
   "/orgs/{org}/actions/runner-groups": {
     /**
-     * List self-hosted runner groups for an organization 
+     * List self-hosted runner groups for an organization
      * @description Lists all self-hosted runner groups configured in an organization and inherited from an enterprise.
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
     get: operations["actions/list-self-hosted-runner-groups-for-org"];
     /**
-     * Create a self-hosted runner group for an organization 
+     * Create a self-hosted runner group for an organization
      * @description The self-hosted runner groups REST API is available with GitHub Enterprise Cloud and GitHub Enterprise Server. For more information, see "[GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products)."
-     * 
+     *
      * Creates a new self-hosted runner group for an organization.
-     * 
+     *
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
     post: operations["actions/create-self-hosted-runner-group-for-org"];
   };
   "/orgs/{org}/actions/runner-groups/{runner_group_id}": {
     /**
-     * Get a self-hosted runner group for an organization 
+     * Get a self-hosted runner group for an organization
      * @description Gets a specific self-hosted runner group for an organization.
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
     get: operations["actions/get-self-hosted-runner-group-for-org"];
     /**
-     * Update a self-hosted runner group for an organization 
+     * Update a self-hosted runner group for an organization
      * @description Updates the `name` and `visibility` of a self-hosted runner group in an organization.
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
@@ -94,136 +99,136 @@ export interface paths {
   };
   "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories": {
     /**
-     * List repository access to a self-hosted runner group in an organization 
+     * List repository access to a self-hosted runner group in an organization
      * @description The self-hosted runner groups REST API is available with GitHub Enterprise Cloud and GitHub Enterprise Server. For more information, see "[GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products)."
-     * 
+     *
      * Lists the repositories with access to a self-hosted runner group configured in an organization.
-     * 
+     *
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
     get: operations["actions/list-repo-access-to-self-hosted-runner-group-in-org"];
   };
   "/orgs/{org}/actions/secrets/{secret_name}/repositories": {
     /**
-     * List selected repositories for an organization secret 
+     * List selected repositories for an organization secret
      * @description Lists all repositories that have been selected when the `visibility` for repository access to a secret is set to `selected`. You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `secrets` organization permission to use this endpoint.
      */
     get: operations["actions/list-selected-repos-for-org-secret"];
   };
   "/orgs/{org}/dependabot/secrets/{secret_name}/repositories": {
     /**
-     * List selected repositories for an organization secret 
+     * List selected repositories for an organization secret
      * @description Lists all repositories that have been selected when the `visibility` for repository access to a secret is set to `selected`. You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `dependabot_secrets` organization permission to use this endpoint.
      */
     get: operations["dependabot/list-selected-repos-for-org-secret"];
   };
   "/orgs/{org}/repos": {
     /**
-     * List organization repositories 
+     * List organization repositories
      * @description Lists repositories for the specified organization.
      */
     get: operations["repos/list-for-org"];
   };
   "/orgs/{org}/secret-scanning/alerts": {
     /**
-     * List secret scanning alerts for an organization 
+     * List secret scanning alerts for an organization
      * @description Lists secret scanning alerts for eligible repositories in an organization, from newest to oldest.
      * To use this endpoint, you must be an administrator or security manager for the organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` read permission to use this endpoint.
      */
     get: operations["secret-scanning/list-alerts-for-org"];
   };
   "/orgs/{org}/teams/{team_slug}/repos": {
     /**
-     * List team repositories 
+     * List team repositories
      * @description Lists a team's repositories visible to the authenticated user.
-     * 
+     *
      * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos`.
      */
     get: operations["teams/list-repos-in-org"];
   };
   "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}": {
     /**
-     * Check team permissions for a repository 
+     * Check team permissions for a repository
      * @description Checks whether a team has `admin`, `push`, `maintain`, `triage`, or `pull` permission for a repository. Repositories inherited through a parent team will also be checked.
-     * 
+     *
      * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.4/rest/overview/media-types/) via the `application/vnd.github.v3.repository+json` accept header.
-     * 
+     *
      * If a team doesn't have permission for the repository, you will receive a `404 Not Found` response status.
-     * 
+     *
      * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos/{owner}/{repo}`.
      */
     get: operations["teams/check-permissions-for-repo-in-org"];
   };
   "/reactions/{reaction_id}": {
     /**
-     * Delete a reaction (Legacy) 
-     * @deprecated 
+     * Delete a reaction (Legacy)
+     * @deprecated
      * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Reactions API. We recommend migrating your existing code to use the new delete reactions endpoints. For more information, see this [blog post](https://developer.github.com/changes/2020-02-26-new-delete-reactions-endpoints/).
-     * 
+     *
      * OAuth access tokens require the `write:discussion` [scope](https://docs.github.com/enterprise-server@3.4/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), when deleting a [team discussion](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#discussions) or [team discussion comment](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#discussion-comments).
      */
     delete: operations["reactions/delete-legacy"];
   };
   "/repos/{owner}/{repo}/actions/runs": {
     /**
-     * List workflow runs for a repository 
+     * List workflow runs for a repository
      * @description Lists all workflow runs for a repository. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#parameters).
-     * 
+     *
      * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
      */
     get: operations["actions/list-workflow-runs-for-repo"];
   };
   "/repos/{owner}/{repo}/actions/runs/{run_id}": {
     /**
-     * Get a workflow run 
+     * Get a workflow run
      * @description Gets a specific workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
      */
     get: operations["actions/get-workflow-run"];
   };
   "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs": {
     /**
-     * List workflow runs for a workflow 
+     * List workflow runs for a workflow
      * @description List all workflow runs for a workflow. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#parameters).
-     * 
+     *
      * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope.
      */
     get: operations["actions/list-workflow-runs"];
   };
   "/repos/{owner}/{repo}/check-suites": {
     /**
-     * Create a check suite 
+     * Create a check suite
      * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     * 
+     *
      * By default, check suites are automatically created when you create a [check run](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#check-runs). You only need to use this endpoint for manually creating check suites when you've disabled automatic creation using "[Update repository preferences for check suites](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#update-repository-preferences-for-check-suites)". Your GitHub App must have the `checks:write` permission to create check suites.
      */
     post: operations["checks/create-suite"];
   };
   "/repos/{owner}/{repo}/check-suites/preferences": {
     /**
-     * Update repository preferences for check suites 
+     * Update repository preferences for check suites
      * @description Changes the default automatic flow when creating check suites. By default, a check suite is automatically created each time code is pushed to a repository. When you disable the automatic creation of check suites, you can manually [Create a check suite](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#create-a-check-suite). You must have admin permissions in the repository to set preferences for check suites.
      */
     patch: operations["checks/set-suites-preferences"];
   };
   "/repos/{owner}/{repo}/check-suites/{check_suite_id}": {
     /**
-     * Get a check suite 
+     * Get a check suite
      * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     * 
+     *
      * Gets a single check suite using its `id`. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to get check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
      */
     get: operations["checks/get-suite"];
   };
   "/repos/{owner}/{repo}/collaborators": {
     /**
-     * List repository collaborators 
+     * List repository collaborators
      * @description For organization-owned repositories, the list of collaborators includes outside collaborators, organization members that are direct collaborators, organization members with access through team memberships, organization members with access through default organization permissions, and organization owners.
      * Organization members with write, maintain, or admin privileges on the organization-owned repository can use this endpoint.
-     * 
+     *
      * Team members will include the members of child teams.
-     * 
+     *
      * You must authenticate using an access token with the `read:org` and `repo` scopes with push access to use this
      * endpoint. GitHub Apps must have the `members` organization permission and `metadata` repository permission to use this
      * endpoint.
@@ -232,53 +237,53 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/collaborators/{username}": {
     /**
-     * Add a repository collaborator 
+     * Add a repository collaborator
      * @description This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.4/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.4/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
-     * 
+     *
      * For more information on permission levels, see "[Repository permission levels for an organization](https://docs.github.com/enterprise-server@3.4/github/setting-up-and-managing-organizations-and-teams/repository-permission-levels-for-an-organization#permission-levels-for-repositories-owned-by-an-organization)". There are restrictions on which permissions can be granted to organization members when an organization base role is in place. In this case, the permission being given must be equal to or higher than the org base permission. Otherwise, the request will fail with:
-     * 
+     *
      * ```
      * Cannot assign {member} permission of {role name}
      * ```
-     * 
+     *
      * Note that, if you choose not to pass any parameters, you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see "[HTTP verbs](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#http-verbs)."
-     * 
+     *
      * The invitee will receive a notification that they have been invited to the repository, which they must accept or decline. They may do this via the notifications page, the email they receive, or by using the [repository invitations API endpoints](https://docs.github.com/enterprise-server@3.4/rest/reference/repos#invitations).
-     * 
+     *
      * **Updating an existing collaborator's permission level**
-     * 
+     *
      * The endpoint can also be used to change the permissions of an existing collaborator without first removing and re-adding the collaborator. To change the permissions, use the same endpoint and pass a different `permission` parameter. The response will be a `204`, with no other indication that the permission level changed.
-     * 
+     *
      * **Rate limits**
-     * 
+     *
      * You are limited to sending 50 invitations to a repository per 24 hour period. Note there is no limit if you are inviting organization members to an organization repository.
      */
     put: operations["repos/add-collaborator"];
   };
   "/repos/{owner}/{repo}/collaborators/{username}/permission": {
     /**
-     * Get repository permissions for a user 
+     * Get repository permissions for a user
      * @description Checks the repository permission of a collaborator. The possible repository permissions are `admin`, `write`, `read`, and `none`.
      */
     get: operations["repos/get-collaborator-permission-level"];
   };
   "/repos/{owner}/{repo}/commits/{ref}/check-suites": {
     /**
-     * List check suites for a Git reference 
+     * List check suites for a Git reference
      * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     * 
+     *
      * Lists check suites for a commit `ref`. The `ref` can be a SHA, branch name, or a tag name. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to list check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
      */
     get: operations["checks/list-suites-for-ref"];
   };
   "/repos/{owner}/{repo}/commits/{ref}/status": {
     /**
-     * Get the combined status for a specific reference 
+     * Get the combined status for a specific reference
      * @description Users with pull access in a repository can access a combined view of commit statuses for a given ref. The ref can be a SHA, a branch name, or a tag name.
-     * 
-     * 
+     *
+     *
      * Additionally, a combined `state` is returned. The `state` is one of:
-     * 
+     *
      * *   **failure** if any of the contexts report as `error` or `failure`
      * *   **pending** if there are no statuses or a context is `pending`
      * *   **success** if the latest status for all contexts is `success`
@@ -291,7 +296,7 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/invitations": {
     /**
-     * List repository invitations 
+     * List repository invitations
      * @description When authenticating as a user with admin rights to a repository, this endpoint will list all currently open repository invitations.
      */
     get: operations["repos/list-invitations"];
@@ -302,48 +307,48 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/notifications": {
     /**
-     * List repository notifications for the authenticated user 
+     * List repository notifications for the authenticated user
      * @description List all notifications for the current user.
      */
     get: operations["activity/list-repo-notifications-for-authenticated-user"];
   };
   "/repos/{owner}/{repo}/secret-scanning/alerts": {
     /**
-     * List secret scanning alerts for a repository 
+     * List secret scanning alerts for a repository
      * @description Lists secret scanning alerts for a private repository, from newest to oldest. To use this endpoint, you must be an administrator for the repository or organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` read permission to use this endpoint.
      */
     get: operations["secret-scanning/list-alerts-for-repo"];
   };
   "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}": {
     /**
-     * Get a secret scanning alert 
+     * Get a secret scanning alert
      * @description Gets a single secret scanning alert detected in a private repository. To use this endpoint, you must be an administrator for the repository or organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` read permission to use this endpoint.
      */
     get: operations["secret-scanning/get-alert"];
     /**
-     * Update a secret scanning alert 
+     * Update a secret scanning alert
      * @description Updates the status of a secret scanning alert in a private repository. To use this endpoint, you must be an administrator for the repository or organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` write permission to use this endpoint.
      */
     patch: operations["secret-scanning/update-alert"];
   };
   "/repos/{owner}/{repo}/transfer": {
     /**
-     * Transfer a repository 
+     * Transfer a repository
      * @description A transfer request will need to be accepted by the new owner when transferring a personal repository to another user. The response will contain the original `owner`, and the transfer will continue asynchronously. For more details on the requirements to transfer personal and organization-owned repositories, see [about repository transfers](https://docs.github.com/articles/about-repository-transfers/).
      */
     post: operations["repos/transfer"];
   };
   "/repositories": {
     /**
-     * List public repositories 
+     * List public repositories
      * @description Lists all public repositories in the order that they were created.
-     * 
+     *
      * Note:
      * - For GitHub Enterprise Server, this endpoint will only list repositories available to all users on the enterprise.
      * - Pagination is powered exclusively by the `since` parameter. Use the [Link header](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#link-header) to get the URL for the next page of repositories.
@@ -352,21 +357,21 @@ export interface paths {
   };
   "/search/code": {
     /**
-     * Search code 
+     * Search code
      * @description Searches for query terms inside of a file. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#pagination).
-     * 
+     *
      * When searching for code, you can get text match metadata for the file **content** and file **path** fields when you pass the `text-match` media type. For more details about how to receive highlighted search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.4/rest/reference/search#text-match-metadata).
-     * 
+     *
      * For example, if you want to find the definition of the `addClass` function inside [jQuery](https://github.com/jquery/jquery) repository, your query would look something like this:
-     * 
+     *
      * `q=addClass+in:file+language:js+repo:jquery/jquery`
-     * 
+     *
      * This query searches for the keyword `addClass` within a file's contents. The query limits the search to files where the language is JavaScript in the `jquery/jquery` repository.
-     * 
+     *
      * #### Considerations for code search
-     * 
+     *
      * Due to the complexity of searching code, there are a few restrictions on how searches are performed:
-     * 
+     *
      * *   Only the _default branch_ is considered. In most cases, this will be the `master` branch.
      * *   Only files smaller than 384 KB are searchable.
      * *   You must always include at least one search term when searching source code. For example, searching for [`language:go`](https://github.com/search?utf8=%E2%9C%93&q=language%3Ago&type=Code) is not valid, while [`amazing
@@ -376,69 +381,69 @@ export interface paths {
   };
   "/search/commits": {
     /**
-     * Search commits 
+     * Search commits
      * @description Find commits via various criteria on the default branch (usually `master`). This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#pagination).
-     * 
+     *
      * When searching for commits, you can get text match metadata for the **message** field when you provide the `text-match` media type. For more details about how to receive highlighted search results, see [Text match
      * metadata](https://docs.github.com/enterprise-server@3.4/rest/reference/search#text-match-metadata).
-     * 
+     *
      * For example, if you want to find commits related to CSS in the [octocat/Spoon-Knife](https://github.com/octocat/Spoon-Knife) repository. Your query would look something like this:
-     * 
+     *
      * `q=repo:octocat/Spoon-Knife+css`
      */
     get: operations["search/commits"];
   };
   "/teams/{team_id}/repos": {
     /**
-     * List team repositories (Legacy) 
-     * @deprecated 
+     * List team repositories (Legacy)
+     * @deprecated
      * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [List team repositories](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#list-team-repositories) endpoint.
      */
     get: operations["teams/list-repos-legacy"];
   };
   "/teams/{team_id}/repos/{owner}/{repo}": {
     /**
-     * Check team permissions for a repository (Legacy) 
-     * @deprecated 
+     * Check team permissions for a repository (Legacy)
+     * @deprecated
      * @description **Note**: Repositories inherited through a parent team will also be checked.
-     * 
+     *
      * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Check team permissions for a repository](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#check-team-permissions-for-a-repository) endpoint.
-     * 
+     *
      * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.4/rest/overview/media-types/) via the `Accept` header:
      */
     get: operations["teams/check-permissions-for-repo-legacy"];
   };
   "/user/migrations/{migration_id}/repositories": {
     /**
-     * List repositories for a user migration 
+     * List repositories for a user migration
      * @description Lists all the repositories for this user migration.
      */
     get: operations["migrations/list-repos-for-authenticated-user"];
   };
   "/user/repository_invitations": {
     /**
-     * List repository invitations for the authenticated user 
+     * List repository invitations for the authenticated user
      * @description When authenticating as a user, this endpoint will list all currently open repository invitations for that user.
      */
     get: operations["repos/list-invitations-for-authenticated-user"];
   };
   "/user/subscriptions": {
     /**
-     * List repositories watched by the authenticated user 
+     * List repositories watched by the authenticated user
      * @description Lists repositories the authenticated user is watching.
      */
     get: operations["activity/list-watched-repos-for-authenticated-user"];
   };
   "/users/{username}/repos": {
     /**
-     * List repositories for a user 
+     * List repositories for a user
      * @description Lists public repositories for the specified user. Note: For GitHub AE, this endpoint will list internal repositories for the specified user.
      */
     get: operations["repos/list-for-user"];
   };
   "/users/{username}/subscriptions": {
     /**
-     * List repositories watched by a user 
+     * List repositories watched by a user
      * @description Lists repositories a user is watching.
      */
     get: operations["activity/list-repos-watched-by-user"];
@@ -463,14 +468,14 @@ export interface components {
       url?: components["schemas"]["alert-url"];
       html_url?: components["schemas"]["alert-html-url"];
       /**
-       * Format: uri 
+       * Format: uri
        * @description The REST API URL of the code locations for this alert.
        */
       locations_url?: string;
       state?: components["schemas"]["secret-scanning-alert-state"];
       resolution?: components["schemas"]["secret-scanning-alert-resolution"];
       /**
-       * Format: date-time 
+       * Format: date-time
        * @description The time that the alert was resolved in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
        */
       resolved_at?: string;
@@ -482,7 +487,7 @@ export interface components {
       repository?: components["schemas"]["simple-repository"];
     };
     /**
-     * Thread 
+     * Thread
      * @description Thread
      */
     thread: {
@@ -515,7 +520,7 @@ export interface components {
       allows_public_repositories: boolean;
     };
     /**
-     * Minimal Repository 
+     * Minimal Repository
      * @description Minimal Repository
      */
     "minimal-repository": {
@@ -530,7 +535,7 @@ export interface components {
       owner: components["schemas"]["simple-user"];
       private: boolean;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat/Hello-World
        */
       html_url: string;
@@ -538,7 +543,7 @@ export interface components {
       description: string;
       fork: boolean;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/repos/octocat/Hello-World
        */
       url: string;
@@ -561,27 +566,27 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/contents/{+path} */
       contents_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/contributors
        */
       contributors_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/deployments
        */
       deployments_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/downloads
        */
       downloads_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/events
        */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/forks
        */
       forks_url: string;
@@ -603,12 +608,12 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/labels{/name} */
       labels_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/languages
        */
       languages_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/merges
        */
       merges_url: string;
@@ -622,29 +627,29 @@ export interface components {
       releases_url: string;
       ssh_url?: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/stargazers
        */
       stargazers_url: string;
       /** @example http://api.github.com/repos/octocat/Hello-World/statuses/{sha} */
       statuses_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/subscribers
        */
       subscribers_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/subscription
        */
       subscription_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/tags
        */
       tags_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/teams
        */
       teams_url: string;
@@ -653,7 +658,7 @@ export interface components {
       clone_url?: string;
       mirror_url?: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
        */
       hooks_url: string;
@@ -668,7 +673,7 @@ export interface components {
       default_branch?: string;
       open_issues_count?: number;
       is_template?: boolean;
-      topics?: (string)[];
+      topics?: string[];
       has_issues?: boolean;
       has_projects?: boolean;
       has_wiki?: boolean;
@@ -678,17 +683,17 @@ export interface components {
       disabled?: boolean;
       visibility?: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
       pushed_at?: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
       created_at?: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
       updated_at?: string;
@@ -721,19 +726,19 @@ export interface components {
       allow_forking?: boolean;
     };
     /**
-     * Team Repository 
+     * Team Repository
      * @description A team's access to a repository.
      */
     "team-repository": {
       /**
-       * @description Unique identifier of the repository 
+       * @description Unique identifier of the repository
        * @example 42
        */
       id: number;
       /** @example MDEwOlJlcG9zaXRvcnkxMjk2MjY5 */
       node_id: string;
       /**
-       * @description The name of the repository. 
+       * @description The name of the repository.
        * @example Team Environment
        */
       name: string;
@@ -750,12 +755,12 @@ export interface components {
       };
       owner: components["schemas"]["nullable-simple-user"];
       /**
-       * @description Whether the repository is private or public. 
+       * @description Whether the repository is private or public.
        * @default false
        */
       private: boolean;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat/Hello-World
        */
       html_url: string;
@@ -763,7 +768,7 @@ export interface components {
       description: string;
       fork: boolean;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/repos/octocat/Hello-World
        */
       url: string;
@@ -786,27 +791,27 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/contents/{+path} */
       contents_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/contributors
        */
       contributors_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/deployments
        */
       deployments_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/downloads
        */
       downloads_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/events
        */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/forks
        */
       forks_url: string;
@@ -829,12 +834,12 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/labels{/name} */
       labels_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/languages
        */
       languages_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/merges
        */
       merges_url: string;
@@ -849,29 +854,29 @@ export interface components {
       /** @example git@github.com:octocat/Hello-World.git */
       ssh_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/stargazers
        */
       stargazers_url: string;
       /** @example http://api.github.com/repos/octocat/Hello-World/statuses/{sha} */
       statuses_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/subscribers
        */
       subscribers_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/subscription
        */
       subscription_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/tags
        */
       tags_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/teams
        */
       teams_url: string;
@@ -880,22 +885,22 @@ export interface components {
       /** @example https://github.com/octocat/Hello-World.git */
       clone_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
       mirror_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
        */
       hooks_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://svn.github.com/octocat/Hello-World
        */
       svn_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com
        */
       homepage: string;
@@ -909,106 +914,106 @@ export interface components {
       /** @example 108 */
       size: number;
       /**
-       * @description The default branch of the repository. 
+       * @description The default branch of the repository.
        * @example master
        */
       default_branch: string;
       /** @example 0 */
       open_issues_count: number;
       /**
-       * @description Whether this repository acts as a template that can be used to generate new repositories. 
-       * @default false 
+       * @description Whether this repository acts as a template that can be used to generate new repositories.
+       * @default false
        * @example true
        */
       is_template?: boolean;
-      topics?: (string)[];
+      topics?: string[];
       /**
-       * @description Whether issues are enabled. 
-       * @default true 
+       * @description Whether issues are enabled.
+       * @default true
        * @example true
        */
       has_issues: boolean;
       /**
-       * @description Whether projects are enabled. 
-       * @default true 
+       * @description Whether projects are enabled.
+       * @default true
        * @example true
        */
       has_projects: boolean;
       /**
-       * @description Whether the wiki is enabled. 
-       * @default true 
+       * @description Whether the wiki is enabled.
+       * @default true
        * @example true
        */
       has_wiki: boolean;
       has_pages: boolean;
       /**
-       * @description Whether downloads are enabled. 
-       * @default true 
+       * @description Whether downloads are enabled.
+       * @default true
        * @example true
        */
       has_downloads: boolean;
       /**
-       * @description Whether the repository is archived. 
+       * @description Whether the repository is archived.
        * @default false
        */
       archived: boolean;
       /** @description Returns whether or not this repository disabled. */
       disabled: boolean;
       /**
-       * @description The repository visibility: public, private, or internal. 
+       * @description The repository visibility: public, private, or internal.
        * @default public
        */
       visibility?: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
       pushed_at: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
       created_at: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
       updated_at: string;
       /**
-       * @description Whether to allow rebase merges for pull requests. 
-       * @default true 
+       * @description Whether to allow rebase merges for pull requests.
+       * @default true
        * @example true
        */
       allow_rebase_merge?: boolean;
       template_repository?: components["schemas"]["nullable-repository"];
       temp_clone_token?: string;
       /**
-       * @description Whether to allow squash merges for pull requests. 
-       * @default true 
+       * @description Whether to allow squash merges for pull requests.
+       * @default true
        * @example true
        */
       allow_squash_merge?: boolean;
       /**
-       * @description Whether to allow Auto-merge to be used on pull requests. 
-       * @default false 
+       * @description Whether to allow Auto-merge to be used on pull requests.
+       * @default false
        * @example false
        */
       allow_auto_merge?: boolean;
       /**
-       * @description Whether to delete head branches when pull requests are merged 
-       * @default false 
+       * @description Whether to delete head branches when pull requests are merged
+       * @default false
        * @example false
        */
       delete_branch_on_merge?: boolean;
       /**
-       * @description Whether to allow merge commits for pull requests. 
-       * @default true 
+       * @description Whether to allow merge commits for pull requests.
+       * @default true
        * @example true
        */
       allow_merge_commit?: boolean;
       /**
-       * @description Whether to allow forking this repo 
-       * @default false 
+       * @description Whether to allow forking this repo
+       * @default false
        * @example false
        */
       allow_forking?: boolean;
@@ -1019,41 +1024,41 @@ export interface components {
       master_branch?: string;
     };
     /**
-     * Workflow Run 
+     * Workflow Run
      * @description An invocation of a workflow
      */
     "workflow-run": {
       /**
-       * @description The ID of the workflow run. 
+       * @description The ID of the workflow run.
        * @example 5
        */
       id: number;
       /**
-       * @description The name of the workflow run. 
+       * @description The name of the workflow run.
        * @example Build
        */
       name?: string;
       /** @example MDEwOkNoZWNrU3VpdGU1 */
       node_id: string;
       /**
-       * @description The ID of the associated check suite. 
+       * @description The ID of the associated check suite.
        * @example 42
        */
       check_suite_id?: number;
       /**
-       * @description The node ID of the associated check suite. 
+       * @description The node ID of the associated check suite.
        * @example MDEwOkNoZWNrU3VpdGU0Mg==
        */
       check_suite_node_id?: string;
       /** @example master */
       head_branch: string;
       /**
-       * @description The SHA of the head commit that points to the version of the workflow being run. 
+       * @description The SHA of the head commit that points to the version of the workflow being run.
        * @example 009b8a3a9ccbb128af87f9b1c0f4c62e8a304f6d
        */
       head_sha: string;
       /**
-       * @description The auto incrementing run number for the workflow run. 
+       * @description The auto incrementing run number for the workflow run.
        * @example 106
        */
       run_number: number;
@@ -1064,54 +1069,54 @@ export interface components {
       /** @example neutral */
       conclusion: string;
       /**
-       * @description The ID of the parent workflow. 
+       * @description The ID of the parent workflow.
        * @example 5
        */
       workflow_id: number;
       /**
-       * @description The URL to the workflow run. 
+       * @description The URL to the workflow run.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5
        */
       url: string;
       /** @example https://github.com/github/hello-world/suites/4 */
       html_url: string;
-      pull_requests: (components["schemas"]["pull-request-minimal"])[];
+      pull_requests: components["schemas"]["pull-request-minimal"][];
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
       updated_at: string;
       /**
-       * @description The URL to the jobs for the workflow run. 
+       * @description The URL to the jobs for the workflow run.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5/jobs
        */
       jobs_url: string;
       /**
-       * @description The URL to download the logs for the workflow run. 
+       * @description The URL to download the logs for the workflow run.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5/logs
        */
       logs_url: string;
       /**
-       * @description The URL to the associated check suite. 
+       * @description The URL to the associated check suite.
        * @example https://api.github.com/repos/github/hello-world/check-suites/12
        */
       check_suite_url: string;
       /**
-       * @description The URL to the artifacts for the workflow run. 
+       * @description The URL to the artifacts for the workflow run.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5/rerun/artifacts
        */
       artifacts_url: string;
       /**
-       * @description The URL to cancel the workflow run. 
+       * @description The URL to cancel the workflow run.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5/cancel
        */
       cancel_url: string;
       /**
-       * @description The URL to rerun the workflow run. 
+       * @description The URL to rerun the workflow run.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5/rerun
        */
       rerun_url: string;
       /**
-       * @description The URL to the workflow. 
+       * @description The URL to the workflow.
        * @example https://api.github.com/repos/github/hello-world/actions/workflows/main.yaml
        */
       workflow_url: string;
@@ -1122,7 +1127,7 @@ export interface components {
       head_repository_id?: number;
     };
     /**
-     * CheckSuite 
+     * CheckSuite
      * @description A suite of checks performed on the code of a given code change
      */
     "check-suite": {
@@ -1133,27 +1138,35 @@ export interface components {
       /** @example master */
       head_branch: string;
       /**
-       * @description The SHA of the head commit that is being checked. 
+       * @description The SHA of the head commit that is being checked.
        * @example 009b8a3a9ccbb128af87f9b1c0f4c62e8a304f6d
        */
       head_sha: string;
       /**
-       * @example completed 
+       * @example completed
        * @enum {string|null}
        */
       status: "queued" | "in_progress" | "completed" | null;
       /**
-       * @example neutral 
+       * @example neutral
        * @enum {string|null}
        */
-      conclusion: "success" | "failure" | "neutral" | "cancelled" | "skipped" | "timed_out" | "action_required" | null;
+      conclusion:
+        | "success"
+        | "failure"
+        | "neutral"
+        | "cancelled"
+        | "skipped"
+        | "timed_out"
+        | "action_required"
+        | null;
       /** @example https://api.github.com/repos/github/hello-world/check-suites/5 */
       url: string;
       /** @example 146e867f55c26428e5f9fade55a9bbf5e95a7912 */
       before: string;
       /** @example d6fde92930d4715a2b49857d24b940956b26d2d3 */
       after: string;
-      pull_requests: (components["schemas"]["pull-request-minimal"])[];
+      pull_requests: components["schemas"]["pull-request-minimal"][];
       app: components["schemas"]["nullable-integration"];
       repository: components["schemas"]["minimal-repository"];
       /** Format: date-time */
@@ -1167,20 +1180,20 @@ export interface components {
       runs_rerequestable?: boolean;
     };
     /**
-     * Check Suite Preference 
+     * Check Suite Preference
      * @description Check suite configuration preferences for a repository.
      */
     "check-suite-preference": {
       preferences: {
-        auto_trigger_checks?: ({
-            app_id: number;
-            setting: boolean;
-          })[];
+        auto_trigger_checks?: {
+          app_id: number;
+          setting: boolean;
+        }[];
       };
       repository: components["schemas"]["minimal-repository"];
     };
     /**
-     * Collaborator 
+     * Collaborator
      * @description Collaborator
      */
     collaborator: {
@@ -1193,24 +1206,24 @@ export interface components {
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/images/error/octocat_happy.gif
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
       gravatar_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat
        */
       url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat
        */
       html_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/followers
        */
       followers_url: string;
@@ -1221,24 +1234,24 @@ export interface components {
       /** @example https://api.github.com/users/octocat/starred{/owner}{/repo} */
       starred_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/subscriptions
        */
       subscriptions_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/orgs
        */
       organizations_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/repos
        */
       repos_url: string;
       /** @example https://api.github.com/users/octocat/events{/privacy} */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/received_events
        */
       received_events_url: string;
@@ -1254,12 +1267,12 @@ export interface components {
       };
     };
     /**
-     * Repository Invitation 
+     * Repository Invitation
      * @description Repository invitations let you manage who you collaborate with.
      */
     "repository-invitation": {
       /**
-       * @description Unique identifier of the repository invitation. 
+       * @description Unique identifier of the repository invitation.
        * @example 42
        */
       id: number;
@@ -1267,20 +1280,20 @@ export interface components {
       invitee: components["schemas"]["nullable-simple-user"];
       inviter: components["schemas"]["nullable-simple-user"];
       /**
-       * @description The permission associated with the invitation. 
-       * @example read 
+       * @description The permission associated with the invitation.
+       * @example read
        * @enum {string}
        */
       permissions: "read" | "write" | "admin" | "triage" | "maintain";
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2016-06-13T14:52:50-05:00
        */
       created_at: string;
       /** @description Whether or not the invitation has expired */
       expired?: boolean;
       /**
-       * @description URL for the repository invitation 
+       * @description URL for the repository invitation
        * @example https://api.github.com/user/repository-invitations/1
        */
       url: string;
@@ -1289,7 +1302,7 @@ export interface components {
       node_id: string;
     };
     /**
-     * Repository Collaborator Permission 
+     * Repository Collaborator Permission
      * @description Repository Collaborator Permission
      */
     "repository-collaborator-permission": {
@@ -1297,12 +1310,12 @@ export interface components {
       user: components["schemas"]["nullable-collaborator"];
     };
     /**
-     * Combined Commit Status 
+     * Combined Commit Status
      * @description Combined Commit Status
      */
     "combined-commit-status": {
       state: string;
-      statuses: (components["schemas"]["simple-commit-status"])[];
+      statuses: components["schemas"]["simple-commit-status"][];
       sha: string;
       total_count: number;
       repository: components["schemas"]["minimal-repository"];
@@ -1318,14 +1331,14 @@ export interface components {
       url?: components["schemas"]["alert-url"];
       html_url?: components["schemas"]["alert-html-url"];
       /**
-       * Format: uri 
+       * Format: uri
        * @description The REST API URL of the code locations for this alert.
        */
       locations_url?: string;
       state?: components["schemas"]["secret-scanning-alert-state"];
       resolution?: components["schemas"]["secret-scanning-alert-resolution"];
       /**
-       * Format: date-time 
+       * Format: date-time
        * @description The time that the alert was resolved in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
        */
       resolved_at?: string;
@@ -1336,17 +1349,23 @@ export interface components {
       secret?: string;
     };
     /**
-     * @description Sets the state of the secret scanning alert. You must provide `resolution` when you set the state to `resolved`. 
+     * @description Sets the state of the secret scanning alert. You must provide `resolution` when you set the state to `resolved`.
      * @enum {string}
      */
     "secret-scanning-alert-state": "open" | "resolved";
     /**
-     * @description **Required when the `state` is `resolved`.** The reason for resolving the alert. 
+     * @description **Required when the `state` is `resolved`.** The reason for resolving the alert.
      * @enum {string|null}
      */
-    "secret-scanning-alert-resolution": "" | "false_positive" | "wont_fix" | "revoked" | "used_in_tests" | null;
+    "secret-scanning-alert-resolution":
+      | ""
+      | "false_positive"
+      | "wont_fix"
+      | "revoked"
+      | "used_in_tests"
+      | null;
     /**
-     * Code Search Result Item 
+     * Code Search Result Item
      * @description Code Search Result Item
      */
     "code-search-result-item": {
@@ -1371,11 +1390,11 @@ export interface components {
        *   "77..78"
        * ]
        */
-      line_numbers?: (string)[];
+      line_numbers?: string[];
       text_matches?: components["schemas"]["search-result-text-matches"];
     };
     /**
-     * Commit Search Result Item 
+     * Commit Search Result Item
      * @description Commit Search Result Item
      */
     "commit-search-result-item": {
@@ -1407,11 +1426,11 @@ export interface components {
       };
       author: components["schemas"]["nullable-simple-user"];
       committer: components["schemas"]["nullable-git-user"];
-      parents: ({
-          url?: string;
-          html_url?: string;
-          sha?: string;
-        })[];
+      parents: {
+        url?: string;
+        html_url?: string;
+        sha?: string;
+      }[];
       repository: components["schemas"]["minimal-repository"];
       score: number;
       node_id: string;
@@ -1420,27 +1439,27 @@ export interface components {
     /** @description The security alert number. */
     readonly "alert-number": number;
     /**
-     * Format: date-time 
+     * Format: date-time
      * @description The time that the alert was created in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
     readonly "alert-created-at": string;
     /**
-     * Format: date-time 
+     * Format: date-time
      * @description The time that the alert was last updated in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
     readonly "nullable-alert-updated-at": string;
     /**
-     * Format: uri 
+     * Format: uri
      * @description The REST API URL of the alert resource.
      */
     readonly "alert-url": string;
     /**
-     * Format: uri 
+     * Format: uri
      * @description The GitHub URL of the alert resource.
      */
     readonly "alert-html-url": string;
     /**
-     * Simple User 
+     * Simple User
      * @description Simple User
      */
     "nullable-simple-user": {
@@ -1453,24 +1472,24 @@ export interface components {
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/images/error/octocat_happy.gif
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
       gravatar_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat
        */
       url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat
        */
       html_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/followers
        */
       followers_url: string;
@@ -1481,24 +1500,24 @@ export interface components {
       /** @example https://api.github.com/users/octocat/starred{/owner}{/repo} */
       starred_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/subscriptions
        */
       subscriptions_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/orgs
        */
       organizations_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/repos
        */
       repos_url: string;
       /** @example https://api.github.com/users/octocat/events{/privacy} */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/received_events
        */
       received_events_url: string;
@@ -1509,27 +1528,27 @@ export interface components {
       starred_at?: string;
     } | null;
     /**
-     * Simple Repository 
+     * Simple Repository
      * @description Simple Repository
      */
     "simple-repository": {
       /**
-       * @description A unique identifier of the repository. 
+       * @description A unique identifier of the repository.
        * @example 1296269
        */
       id: number;
       /**
-       * @description The GraphQL identifier of the repository. 
+       * @description The GraphQL identifier of the repository.
        * @example MDEwOlJlcG9zaXRvcnkxMjk2MjY5
        */
       node_id: string;
       /**
-       * @description The name of the repository. 
+       * @description The name of the repository.
        * @example Hello-World
        */
       name: string;
       /**
-       * @description The full, globally unique, name of the repository. 
+       * @description The full, globally unique, name of the repository.
        * @example octocat/Hello-World
        */
       full_name: string;
@@ -1537,220 +1556,220 @@ export interface components {
       /** @description Whether the repository is private. */
       private: boolean;
       /**
-       * Format: uri 
-       * @description The URL to view the repository on GitHub.com. 
+       * Format: uri
+       * @description The URL to view the repository on GitHub.com.
        * @example https://github.com/octocat/Hello-World
        */
       html_url: string;
       /**
-       * @description The repository description. 
+       * @description The repository description.
        * @example This your first repo!
        */
       description: string;
       /** @description Whether the repository is a fork. */
       fork: boolean;
       /**
-       * Format: uri 
-       * @description The URL to get more information about the repository from the GitHub API. 
+       * Format: uri
+       * @description The URL to get more information about the repository from the GitHub API.
        * @example https://api.github.com/repos/octocat/Hello-World
        */
       url: string;
       /**
-       * @description A template for the API URL to download the repository as an archive. 
+       * @description A template for the API URL to download the repository as an archive.
        * @example https://api.github.com/repos/octocat/Hello-World/{archive_format}{/ref}
        */
       archive_url: string;
       /**
-       * @description A template for the API URL to list the available assignees for issues in the repository. 
+       * @description A template for the API URL to list the available assignees for issues in the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/assignees{/user}
        */
       assignees_url: string;
       /**
-       * @description A template for the API URL to create or retrieve a raw Git blob in the repository. 
+       * @description A template for the API URL to create or retrieve a raw Git blob in the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/git/blobs{/sha}
        */
       blobs_url: string;
       /**
-       * @description A template for the API URL to get information about branches in the repository. 
+       * @description A template for the API URL to get information about branches in the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/branches{/branch}
        */
       branches_url: string;
       /**
-       * @description A template for the API URL to get information about collaborators of the repository. 
+       * @description A template for the API URL to get information about collaborators of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/collaborators{/collaborator}
        */
       collaborators_url: string;
       /**
-       * @description A template for the API URL to get information about comments on the repository. 
+       * @description A template for the API URL to get information about comments on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/comments{/number}
        */
       comments_url: string;
       /**
-       * @description A template for the API URL to get information about commits on the repository. 
+       * @description A template for the API URL to get information about commits on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/commits{/sha}
        */
       commits_url: string;
       /**
-       * @description A template for the API URL to compare two commits or refs. 
+       * @description A template for the API URL to compare two commits or refs.
        * @example https://api.github.com/repos/octocat/Hello-World/compare/{base}...{head}
        */
       compare_url: string;
       /**
-       * @description A template for the API URL to get the contents of the repository. 
+       * @description A template for the API URL to get the contents of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/contents/{+path}
        */
       contents_url: string;
       /**
-       * Format: uri 
-       * @description A template for the API URL to list the contributors to the repository. 
+       * Format: uri
+       * @description A template for the API URL to list the contributors to the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/contributors
        */
       contributors_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the deployments of the repository. 
+       * Format: uri
+       * @description The API URL to list the deployments of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/deployments
        */
       deployments_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the downloads on the repository. 
+       * Format: uri
+       * @description The API URL to list the downloads on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/downloads
        */
       downloads_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the events of the repository. 
+       * Format: uri
+       * @description The API URL to list the events of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/events
        */
       events_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the forks of the repository. 
+       * Format: uri
+       * @description The API URL to list the forks of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/forks
        */
       forks_url: string;
       /**
-       * @description A template for the API URL to get information about Git commits of the repository. 
+       * @description A template for the API URL to get information about Git commits of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/git/commits{/sha}
        */
       git_commits_url: string;
       /**
-       * @description A template for the API URL to get information about Git refs of the repository. 
+       * @description A template for the API URL to get information about Git refs of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/git/refs{/sha}
        */
       git_refs_url: string;
       /**
-       * @description A template for the API URL to get information about Git tags of the repository. 
+       * @description A template for the API URL to get information about Git tags of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/git/tags{/sha}
        */
       git_tags_url: string;
       /**
-       * @description A template for the API URL to get information about issue comments on the repository. 
+       * @description A template for the API URL to get information about issue comments on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/issues/comments{/number}
        */
       issue_comment_url: string;
       /**
-       * @description A template for the API URL to get information about issue events on the repository. 
+       * @description A template for the API URL to get information about issue events on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/issues/events{/number}
        */
       issue_events_url: string;
       /**
-       * @description A template for the API URL to get information about issues on the repository. 
+       * @description A template for the API URL to get information about issues on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/issues{/number}
        */
       issues_url: string;
       /**
-       * @description A template for the API URL to get information about deploy keys on the repository. 
+       * @description A template for the API URL to get information about deploy keys on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/keys{/key_id}
        */
       keys_url: string;
       /**
-       * @description A template for the API URL to get information about labels of the repository. 
+       * @description A template for the API URL to get information about labels of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/labels{/name}
        */
       labels_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to get information about the languages of the repository. 
+       * Format: uri
+       * @description The API URL to get information about the languages of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/languages
        */
       languages_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to merge branches in the repository. 
+       * Format: uri
+       * @description The API URL to merge branches in the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/merges
        */
       merges_url: string;
       /**
-       * @description A template for the API URL to get information about milestones of the repository. 
+       * @description A template for the API URL to get information about milestones of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/milestones{/number}
        */
       milestones_url: string;
       /**
-       * @description A template for the API URL to get information about notifications on the repository. 
+       * @description A template for the API URL to get information about notifications on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/notifications{?since,all,participating}
        */
       notifications_url: string;
       /**
-       * @description A template for the API URL to get information about pull requests on the repository. 
+       * @description A template for the API URL to get information about pull requests on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/pulls{/number}
        */
       pulls_url: string;
       /**
-       * @description A template for the API URL to get information about releases on the repository. 
+       * @description A template for the API URL to get information about releases on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/releases{/id}
        */
       releases_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the stargazers on the repository. 
+       * Format: uri
+       * @description The API URL to list the stargazers on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/stargazers
        */
       stargazers_url: string;
       /**
-       * @description A template for the API URL to get information about statuses of a commit. 
+       * @description A template for the API URL to get information about statuses of a commit.
        * @example https://api.github.com/repos/octocat/Hello-World/statuses/{sha}
        */
       statuses_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the subscribers on the repository. 
+       * Format: uri
+       * @description The API URL to list the subscribers on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/subscribers
        */
       subscribers_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to subscribe to notifications for this repository. 
+       * Format: uri
+       * @description The API URL to subscribe to notifications for this repository.
        * @example https://api.github.com/repos/octocat/Hello-World/subscription
        */
       subscription_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to get information about tags on the repository. 
+       * Format: uri
+       * @description The API URL to get information about tags on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/tags
        */
       tags_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the teams on the repository. 
+       * Format: uri
+       * @description The API URL to list the teams on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/teams
        */
       teams_url: string;
       /**
-       * @description A template for the API URL to create or retrieve a raw Git tree of the repository. 
+       * @description A template for the API URL to create or retrieve a raw Git tree of the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/git/trees{/sha}
        */
       trees_url: string;
       /**
-       * Format: uri 
-       * @description The API URL to list the hooks on the repository. 
+       * Format: uri
+       * @description The API URL to list the hooks on the repository.
        * @example https://api.github.com/repos/octocat/Hello-World/hooks
        */
       hooks_url: string;
     };
     /**
-     * Simple User 
+     * Simple User
      * @description Simple User
      */
     "simple-user": {
@@ -1763,24 +1782,24 @@ export interface components {
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/images/error/octocat_happy.gif
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
       gravatar_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat
        */
       url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat
        */
       html_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/followers
        */
       followers_url: string;
@@ -1791,24 +1810,24 @@ export interface components {
       /** @example https://api.github.com/users/octocat/starred{/owner}{/repo} */
       starred_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/subscriptions
        */
       subscriptions_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/orgs
        */
       organizations_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/repos
        */
       repos_url: string;
       /** @example https://api.github.com/users/octocat/events{/privacy} */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/received_events
        */
       received_events_url: string;
@@ -1819,7 +1838,7 @@ export interface components {
       starred_at?: string;
     };
     /**
-     * Basic Error 
+     * Basic Error
      * @description Basic Error
      */
     "basic-error": {
@@ -1829,35 +1848,35 @@ export interface components {
       status?: string;
     };
     /**
-     * Validation Error 
+     * Validation Error
      * @description Validation Error
      */
     "validation-error": {
       message: string;
       documentation_url: string;
-      errors?: ({
-          resource?: string;
-          field?: string;
-          message?: string;
-          code: string;
-          index?: number;
-          value?: string | number | (string)[];
-        })[];
+      errors?: {
+        resource?: string;
+        field?: string;
+        message?: string;
+        code: string;
+        index?: number;
+        value?: string | number | string[];
+      }[];
     };
     /**
-     * Repository 
+     * Repository
      * @description A git repository
      */
-    "nullable-repository": ({
+    "nullable-repository": {
       /**
-       * @description Unique identifier of the repository 
+       * @description Unique identifier of the repository
        * @example 42
        */
       id: number;
       /** @example MDEwOlJlcG9zaXRvcnkxMjk2MjY5 */
       node_id: string;
       /**
-       * @description The name of the repository. 
+       * @description The name of the repository.
        * @example Team Environment
        */
       name: string;
@@ -1875,12 +1894,12 @@ export interface components {
       };
       owner: components["schemas"]["simple-user"];
       /**
-       * @description Whether the repository is private or public. 
+       * @description Whether the repository is private or public.
        * @default false
        */
       private: boolean;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat/Hello-World
        */
       html_url: string;
@@ -1888,7 +1907,7 @@ export interface components {
       description: string;
       fork: boolean;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/repos/octocat/Hello-World
        */
       url: string;
@@ -1911,27 +1930,27 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/contents/{+path} */
       contents_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/contributors
        */
       contributors_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/deployments
        */
       deployments_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/downloads
        */
       downloads_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/events
        */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/forks
        */
       forks_url: string;
@@ -1954,12 +1973,12 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/labels{/name} */
       labels_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/languages
        */
       languages_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/merges
        */
       merges_url: string;
@@ -1974,29 +1993,29 @@ export interface components {
       /** @example git@github.com:octocat/Hello-World.git */
       ssh_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/stargazers
        */
       stargazers_url: string;
       /** @example http://api.github.com/repos/octocat/Hello-World/statuses/{sha} */
       statuses_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/subscribers
        */
       subscribers_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/subscription
        */
       subscription_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/tags
        */
       tags_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/teams
        */
       teams_url: string;
@@ -2005,22 +2024,22 @@ export interface components {
       /** @example https://github.com/octocat/Hello-World.git */
       clone_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
       mirror_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
        */
       hooks_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://svn.github.com/octocat/Hello-World
        */
       svn_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com
        */
       homepage: string;
@@ -2032,79 +2051,79 @@ export interface components {
       /** @example 80 */
       watchers_count: number;
       /**
-       * @description The size of the repository. Size is calculated hourly. When a repository is initially created, the size is 0. 
+       * @description The size of the repository. Size is calculated hourly. When a repository is initially created, the size is 0.
        * @example 108
        */
       size: number;
       /**
-       * @description The default branch of the repository. 
+       * @description The default branch of the repository.
        * @example master
        */
       default_branch: string;
       /** @example 0 */
       open_issues_count: number;
       /**
-       * @description Whether this repository acts as a template that can be used to generate new repositories. 
-       * @default false 
+       * @description Whether this repository acts as a template that can be used to generate new repositories.
+       * @default false
        * @example true
        */
       is_template?: boolean;
-      topics?: (string)[];
+      topics?: string[];
       /**
-       * @description Whether issues are enabled. 
-       * @default true 
+       * @description Whether issues are enabled.
+       * @default true
        * @example true
        */
       has_issues: boolean;
       /**
-       * @description Whether projects are enabled. 
-       * @default true 
+       * @description Whether projects are enabled.
+       * @default true
        * @example true
        */
       has_projects: boolean;
       /**
-       * @description Whether the wiki is enabled. 
-       * @default true 
+       * @description Whether the wiki is enabled.
+       * @default true
        * @example true
        */
       has_wiki: boolean;
       has_pages: boolean;
       /**
-       * @description Whether downloads are enabled. 
-       * @default true 
+       * @description Whether downloads are enabled.
+       * @default true
        * @example true
        */
       has_downloads: boolean;
       /**
-       * @description Whether the repository is archived. 
+       * @description Whether the repository is archived.
        * @default false
        */
       archived: boolean;
       /** @description Returns whether or not this repository disabled. */
       disabled: boolean;
       /**
-       * @description The repository visibility: public, private, or internal. 
+       * @description The repository visibility: public, private, or internal.
        * @default public
        */
       visibility?: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
       pushed_at: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
       created_at: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
       updated_at: string;
       /**
-       * @description Whether to allow rebase merges for pull requests. 
-       * @default true 
+       * @description Whether to allow rebase merges for pull requests.
+       * @default true
        * @example true
        */
       allow_rebase_merge?: boolean;
@@ -2188,7 +2207,7 @@ export interface components {
         default_branch?: string;
         open_issues_count?: number;
         is_template?: boolean;
-        topics?: (string)[];
+        topics?: string[];
         has_issues?: boolean;
         has_projects?: boolean;
         has_wiki?: boolean;
@@ -2219,32 +2238,32 @@ export interface components {
       } | null;
       temp_clone_token?: string;
       /**
-       * @description Whether to allow squash merges for pull requests. 
-       * @default true 
+       * @description Whether to allow squash merges for pull requests.
+       * @default true
        * @example true
        */
       allow_squash_merge?: boolean;
       /**
-       * @description Whether to allow Auto-merge to be used on pull requests. 
-       * @default false 
+       * @description Whether to allow Auto-merge to be used on pull requests.
+       * @default false
        * @example false
        */
       allow_auto_merge?: boolean;
       /**
-       * @description Whether to delete head branches when pull requests are merged 
-       * @default false 
+       * @description Whether to delete head branches when pull requests are merged
+       * @default false
        * @example false
        */
       delete_branch_on_merge?: boolean;
       /**
-       * @description Whether or not a pull request head branch that is behind its base branch can always be updated even if it is not required to be up to date before merging. 
-       * @default false 
+       * @description Whether or not a pull request head branch that is behind its base branch can always be updated even if it is not required to be up to date before merging.
+       * @default false
        * @example false
        */
       allow_update_branch?: boolean;
       /**
-       * @description Whether to allow merge commits for pull requests. 
-       * @default true 
+       * @description Whether to allow merge commits for pull requests.
+       * @default true
        * @example true
        */
       allow_merge_commit?: boolean;
@@ -2259,9 +2278,9 @@ export interface components {
       starred_at?: string;
       /** @description Whether anonymous git access is enabled for this repository */
       anonymous_access_enabled?: boolean;
-    }) | null;
+    } | null;
     /**
-     * License Simple 
+     * License Simple
      * @description License Simple
      */
     "nullable-license-simple": {
@@ -2270,7 +2289,7 @@ export interface components {
       /** @example MIT License */
       name: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/licenses/mit
        */
       url: string;
@@ -2282,7 +2301,7 @@ export interface components {
       html_url?: string;
     } | null;
     /**
-     * Code Of Conduct 
+     * Code Of Conduct
      * @description Code Of Conduct
      */
     "code-of-conduct": {
@@ -2291,57 +2310,57 @@ export interface components {
       /** @example Contributor Covenant */
       name: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/codes_of_conduct/contributor_covenant
        */
       url: string;
       /**
        * @example # Contributor Covenant Code of Conduct
-       * 
+       *
        * ## Our Pledge
-       * 
+       *
        * In the interest of fostering an open and welcoming environment, we as contributors and maintainers pledge to making participation in our project and our community a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
-       * 
+       *
        * ## Our Standards
-       * 
+       *
        * Examples of behavior that contributes to creating a positive environment include:
-       * 
+       *
        * * Using welcoming and inclusive language
        * * Being respectful of differing viewpoints and experiences
        * * Gracefully accepting constructive criticism
        * * Focusing on what is best for the community
        * * Showing empathy towards other community members
-       * 
+       *
        * Examples of unacceptable behavior by participants include:
-       * 
+       *
        * * The use of sexualized language or imagery and unwelcome sexual attention or advances
        * * Trolling, insulting/derogatory comments, and personal or political attacks
        * * Public or private harassment
        * * Publishing others' private information, such as a physical or electronic address, without explicit permission
        * * Other conduct which could reasonably be considered inappropriate in a professional setting
-       * 
+       *
        * ## Our Responsibilities
-       * 
+       *
        * Project maintainers are responsible for clarifying the standards of acceptable behavior and are expected to take appropriate and fair corrective action in response
        *                   to any instances of unacceptable behavior.
-       * 
+       *
        * Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
-       * 
+       *
        * ## Scope
-       * 
+       *
        * This Code of Conduct applies both within project spaces and in public spaces when an individual is representing the project or its community. Examples of representing a project or community include using an official project e-mail address,
        *                   posting via an official social media account, or acting as an appointed representative at an online or offline event. Representation of a project may be further defined and clarified by project maintainers.
-       * 
+       *
        * ## Enforcement
-       * 
+       *
        * Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by contacting the project team at [EMAIL]. The project team will review and investigate all complaints, and will respond in a way that it deems appropriate to the circumstances. The project team is obligated to maintain confidentiality with regard to the reporter of an incident. Further details of specific enforcement policies may be posted separately.
-       * 
+       *
        * Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project's leadership.
-       * 
+       *
        * ## Attribution
-       * 
+       *
        * This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4, available at [http://contributor-covenant.org/version/1/4][version]
-       * 
+       *
        * [homepage]: http://contributor-covenant.org
        * [version]: http://contributor-covenant.org/version/1/4/
        */
@@ -2374,10 +2393,10 @@ export interface components {
       };
     };
     /**
-     * Simple Commit 
+     * Simple Commit
      * @description Simple Commit
      */
-    "nullable-simple-commit": ({
+    "nullable-simple-commit": {
       id: string;
       tree_id: string;
       message: string;
@@ -2391,19 +2410,19 @@ export interface components {
         name: string;
         email: string;
       } | null;
-    }) | null;
+    } | null;
     /**
-     * GitHub app 
+     * GitHub app
      * @description GitHub apps are a new way to extend GitHub. They can be installed directly on organizations and user accounts and granted access to specific repositories. They come with granular permissions and built-in webhooks. GitHub apps are first class actors within GitHub.
      */
-    "nullable-integration": ({
+    "nullable-integration": {
       /**
-       * @description Unique identifier of the GitHub app 
+       * @description Unique identifier of the GitHub app
        * @example 37
        */
       id: number;
       /**
-       * @description The slug name of the GitHub app 
+       * @description The slug name of the GitHub app
        * @example probot-owners
        */
       slug?: string;
@@ -2411,34 +2430,34 @@ export interface components {
       node_id: string;
       owner: components["schemas"]["nullable-simple-user"];
       /**
-       * @description The name of the GitHub app 
+       * @description The name of the GitHub app
        * @example Probot Owners
        */
       name: string;
       /** @example The description of the app. */
       description: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://example.com
        */
       external_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/apps/super-ci
        */
       html_url: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2017-07-08T16:18:44-04:00
        */
       created_at: string;
       /**
-       * Format: date-time 
+       * Format: date-time
        * @example 2017-07-08T16:18:44-04:00
        */
       updated_at: string;
       /**
-       * @description The set of permissions for the GitHub app 
+       * @description The set of permissions for the GitHub app
        * @example {
        *   "issues": "read",
        *   "deployments": "write"
@@ -2453,15 +2472,15 @@ export interface components {
         [key: string]: string | undefined;
       };
       /**
-       * @description The list of events for the GitHub app 
+       * @description The list of events for the GitHub app
        * @example [
        *   "label",
        *   "deployment"
        * ]
        */
-      events: (string)[];
+      events: string[];
       /**
-       * @description The number of installations associated with the GitHub app 
+       * @description The number of installations associated with the GitHub app
        * @example 5
        */
       installations_count?: number;
@@ -2473,9 +2492,9 @@ export interface components {
       webhook_secret?: string;
       /** @example "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEArYxrNYD/iT5CZVpRJu4rBKmmze3PVmT/gCo2ATUvDvZTPTey\nxcGJ3vvrJXazKk06pN05TN29o98jrYz4cengG3YGsXPNEpKsIrEl8NhbnxapEnM9\nJCMRe0P5JcPsfZlX6hmiT7136GRWiGOUba2X9+HKh8QJVLG5rM007TBER9/z9mWm\nrJuNh+m5l320oBQY/Qq3A7wzdEfZw8qm/mIN0FCeoXH1L6B8xXWaAYBwhTEh6SSn\nZHlO1Xu1JWDmAvBCi0RO5aRSKM8q9QEkvvHP4yweAtK3N8+aAbZ7ovaDhyGz8r6r\nzhU1b8Uo0Z2ysf503WqzQgIajr7Fry7/kUwpgQIDAQABAoIBADwJp80Ko1xHPZDy\nfcCKBDfIuPvkmSW6KumbsLMaQv1aGdHDwwTGv3t0ixSay8CGlxMRtRDyZPib6SvQ\n6OH/lpfpbMdW2ErkksgtoIKBVrDilfrcAvrNZu7NxRNbhCSvN8q0s4ICecjbbVQh\nnueSdlA6vGXbW58BHMq68uRbHkP+k+mM9U0mDJ1HMch67wlg5GbayVRt63H7R2+r\nVxcna7B80J/lCEjIYZznawgiTvp3MSanTglqAYi+m1EcSsP14bJIB9vgaxS79kTu\noiSo93leJbBvuGo8QEiUqTwMw4tDksmkLsoqNKQ1q9P7LZ9DGcujtPy4EZsamSJT\ny8OJt0ECgYEA2lxOxJsQk2kI325JgKFjo92mQeUObIvPfSNWUIZQDTjniOI6Gv63\nGLWVFrZcvQBWjMEQraJA9xjPbblV8PtfO87MiJGLWCHFxmPz2dzoedN+2Coxom8m\nV95CLz8QUShuao6u/RYcvUaZEoYs5bHcTmy5sBK80JyEmafJPtCQVxMCgYEAy3ar\nZr3yv4xRPEPMat4rseswmuMooSaK3SKub19WFI5IAtB/e7qR1Rj9JhOGcZz+OQrl\nT78O2OFYlgOIkJPvRMrPpK5V9lslc7tz1FSh3BZMRGq5jSyD7ETSOQ0c8T2O/s7v\nbeEPbVbDe4mwvM24XByH0GnWveVxaDl51ABD65sCgYB3ZAspUkOA5egVCh8kNpnd\nSd6SnuQBE3ySRlT2WEnCwP9Ph6oPgn+oAfiPX4xbRqkL8q/k0BdHQ4h+zNwhk7+h\nWtPYRAP1Xxnc/F+jGjb+DVaIaKGU18MWPg7f+FI6nampl3Q0KvfxwX0GdNhtio8T\nTj1E+SnFwh56SRQuxSh2gwKBgHKjlIO5NtNSflsUYFM+hyQiPiqnHzddfhSG+/3o\nm5nNaSmczJesUYreH5San7/YEy2UxAugvP7aSY2MxB+iGsiJ9WD2kZzTUlDZJ7RV\nUzWsoqBR+eZfVJ2FUWWvy8TpSG6trh4dFxImNtKejCR1TREpSiTV3Zb1dmahK9GV\nrK9NAoGAbBxRLoC01xfxCTgt5BDiBcFVh4fp5yYKwavJPLzHSpuDOrrI9jDn1oKN\nonq5sDU1i391zfQvdrbX4Ova48BN+B7p63FocP/MK5tyyBoT8zQEk2+vWDOw7H/Z\nu5dTCPxTIsoIwUw1I+7yIxqJzLPFgR2gVBwY1ra/8iAqCj+zeBw=\n-----END RSA PRIVATE KEY-----\n" */
       pem?: string;
-    }) | null;
+    } | null;
     /**
-     * Simple Commit 
+     * Simple Commit
      * @description Simple Commit
      */
     "simple-commit": {
@@ -2494,7 +2513,7 @@ export interface components {
       } | null;
     };
     /**
-     * Collaborator 
+     * Collaborator
      * @description Collaborator
      */
     "nullable-collaborator": {
@@ -2507,24 +2526,24 @@ export interface components {
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/images/error/octocat_happy.gif
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
       gravatar_id: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat
        */
       url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://github.com/octocat
        */
       html_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/followers
        */
       followers_url: string;
@@ -2535,24 +2554,24 @@ export interface components {
       /** @example https://api.github.com/users/octocat/starred{/owner}{/repo} */
       starred_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/subscriptions
        */
       subscriptions_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/orgs
        */
       organizations_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/repos
        */
       repos_url: string;
       /** @example https://api.github.com/users/octocat/events{/privacy} */
       events_url: string;
       /**
-       * Format: uri 
+       * Format: uri
        * @example https://api.github.com/users/octocat/received_events
        */
       received_events_url: string;
@@ -2587,7 +2606,7 @@ export interface components {
       updated_at: string;
     };
     /**
-     * Scim Error 
+     * Scim Error
      * @description Scim Error
      */
     "scim-error": {
@@ -2596,26 +2615,26 @@ export interface components {
       detail?: string;
       status?: number;
       scimType?: string;
-      schemas?: (string)[];
+      schemas?: string[];
     };
     /**
-     * Format: date-time 
+     * Format: date-time
      * @description The time that the alert was last updated in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
     readonly "alert-updated-at": string;
     /** Search Result Text Matches */
-    "search-result-text-matches": ({
-        object_url?: string;
-        object_type?: string;
-        property?: string;
-        fragment?: string;
-        matches?: ({
-            text?: string;
-            indices?: (number)[];
-          })[];
-      })[];
+    "search-result-text-matches": {
+      object_url?: string;
+      object_type?: string;
+      property?: string;
+      fragment?: string;
+      matches?: {
+        text?: string;
+        indices?: number[];
+      }[];
+    }[];
     /**
-     * Git User 
+     * Git User
      * @description Metaproperties for Git author/committer information.
      */
     "nullable-git-user": {
@@ -2737,7 +2756,20 @@ export interface components {
     /** @description Returns workflow run triggered by the event you specify. For example, `push`, `pull_request` or `issue`. For more information, see "[Events that trigger workflows](https://docs.github.com/en/actions/automating-your-workflow-with-github-actions/events-that-trigger-workflows)." */
     event: string;
     /** @description Returns workflow runs with the check run `status` or `conclusion` that you specify. For example, a conclusion can be `success` or a status can be `in_progress`. Only GitHub can set a status of `waiting` or `requested`. */
-    "workflow-run-status": "completed" | "action_required" | "cancelled" | "failure" | "neutral" | "skipped" | "stale" | "success" | "timed_out" | "in_progress" | "queued" | "requested" | "waiting";
+    "workflow-run-status":
+      | "completed"
+      | "action_required"
+      | "cancelled"
+      | "failure"
+      | "neutral"
+      | "skipped"
+      | "stale"
+      | "success"
+      | "timed_out"
+      | "in_progress"
+      | "queued"
+      | "requested"
+      | "waiting";
     /** @description Returns workflow runs created within the given date-time range. For more information on the syntax, see "[Understanding the search syntax](https://docs.github.com/enterprise-server@3.4/search-github/getting-started-with-searching-on-github/understanding-the-search-syntax#query-for-dates)." */
     created: string;
     /** @description If `true` pull requests are omitted from the response (empty array). */
@@ -2776,12 +2808,11 @@ export interface components {
 export type external = Record<string, never>;
 
 export interface operations {
-
   "enterprise-admin/list-self-hosted-runner-groups-for-enterprise": {
     /**
-     * List self-hosted runner groups for an enterprise 
+     * List self-hosted runner groups for an enterprise
      * @description Lists all self-hosted runner groups for an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     responses: {
@@ -2790,7 +2821,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            runner_groups: (components["schemas"]["runner-groups-enterprise"])[];
+            runner_groups: components["schemas"]["runner-groups-enterprise"][];
           };
         };
       };
@@ -2798,9 +2829,9 @@ export interface operations {
   };
   "enterprise-admin/create-self-hosted-runner-group-for-enterprise": {
     /**
-     * Create a self-hosted runner group for an enterprise 
+     * Create a self-hosted runner group for an enterprise
      * @description Creates a new self-hosted runner group for an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     requestBody: {
@@ -2809,16 +2840,16 @@ export interface operations {
           /** @description Name of the runner group. */
           name: string;
           /**
-           * @description Visibility of a runner group. You can select all organizations or select individual organization. 
+           * @description Visibility of a runner group. You can select all organizations or select individual organization.
            * @enum {string}
            */
           visibility?: "selected" | "all";
           /** @description List of organization IDs that can access the runner group. */
-          selected_organization_ids?: (number)[];
+          selected_organization_ids?: number[];
           /** @description List of runner IDs to add to the runner group. */
-          runners?: (number)[];
+          runners?: number[];
           /**
-           * @description Whether the runner group can be used by `public` repositories. 
+           * @description Whether the runner group can be used by `public` repositories.
            * @default false
            */
           allows_public_repositories?: boolean;
@@ -2836,9 +2867,9 @@ export interface operations {
   };
   "enterprise-admin/get-self-hosted-runner-group-for-enterprise": {
     /**
-     * Get a self-hosted runner group for an enterprise 
+     * Get a self-hosted runner group for an enterprise
      * @description Gets a specific self-hosted runner group for an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     responses: {
@@ -2852,9 +2883,9 @@ export interface operations {
   };
   "enterprise-admin/update-self-hosted-runner-group-for-enterprise": {
     /**
-     * Update a self-hosted runner group for an enterprise 
+     * Update a self-hosted runner group for an enterprise
      * @description Updates the `name` and `visibility` of a self-hosted runner group in an enterprise.
-     * 
+     *
      * You must authenticate using an access token with the `manage_runners:enterprise` scope to use this endpoint.
      */
     requestBody?: {
@@ -2863,13 +2894,13 @@ export interface operations {
           /** @description Name of the runner group. */
           name?: string;
           /**
-           * @description Visibility of a runner group. You can select all organizations or select individual organizations. 
-           * @default all 
+           * @description Visibility of a runner group. You can select all organizations or select individual organizations.
+           * @default all
            * @enum {string}
            */
           visibility?: "selected" | "all";
           /**
-           * @description Whether the runner group can be used by `public` repositories. 
+           * @description Whether the runner group can be used by `public` repositories.
            * @default false
            */
           allows_public_repositories?: boolean;
@@ -2887,7 +2918,7 @@ export interface operations {
   };
   "secret-scanning/list-alerts-for-enterprise": {
     /**
-     * List secret scanning alerts for an enterprise 
+     * List secret scanning alerts for an enterprise
      * @description Lists secret scanning alerts for eligible repositories in an enterprise, from newest to oldest.
      * To use this endpoint, you must be a member of the enterprise, and you must use an access token with the `repo` scope or `security_events` scope. Alerts are only returned for organizations in the enterprise for which you are an organization owner or a [security manager](https://docs.github.com/enterprise-server@3.4/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization).
      */
@@ -2898,7 +2929,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["organization-secret-scanning-alert"])[];
+          "application/json": components["schemas"]["organization-secret-scanning-alert"][];
         };
       };
       404: components["responses"]["not_found"];
@@ -2907,11 +2938,11 @@ export interface operations {
   };
   "activity/list-notifications-for-authenticated-user": {
     /**
-     * List notifications for the authenticated user 
+     * List notifications for the authenticated user
      * @description List all notifications for the current user, sorted by most recently updated.
      */
     parameters?: {
-        /** @description The number of results per page (max 50). */
+      /** @description The number of results per page (max 50). */
       query?: {
         per_page?: number;
       };
@@ -2923,7 +2954,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["thread"])[];
+          "application/json": components["schemas"]["thread"][];
         };
       };
       304: components["responses"]["not_modified"];
@@ -2948,7 +2979,7 @@ export interface operations {
   };
   "actions/list-self-hosted-runner-groups-for-org": {
     /**
-     * List self-hosted runner groups for an organization 
+     * List self-hosted runner groups for an organization
      * @description Lists all self-hosted runner groups configured in an organization and inherited from an enterprise.
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
@@ -2958,7 +2989,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            runner_groups: (components["schemas"]["runner-groups-org"])[];
+            runner_groups: components["schemas"]["runner-groups-org"][];
           };
         };
       };
@@ -2966,11 +2997,11 @@ export interface operations {
   };
   "actions/create-self-hosted-runner-group-for-org": {
     /**
-     * Create a self-hosted runner group for an organization 
+     * Create a self-hosted runner group for an organization
      * @description The self-hosted runner groups REST API is available with GitHub Enterprise Cloud and GitHub Enterprise Server. For more information, see "[GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products)."
-     * 
+     *
      * Creates a new self-hosted runner group for an organization.
-     * 
+     *
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
     requestBody: {
@@ -2979,17 +3010,17 @@ export interface operations {
           /** @description Name of the runner group. */
           name: string;
           /**
-           * @description Visibility of a runner group. You can select all repositories, select individual repositories, or limit access to private repositories. 
-           * @default all 
+           * @description Visibility of a runner group. You can select all repositories, select individual repositories, or limit access to private repositories.
+           * @default all
            * @enum {string}
            */
           visibility?: "selected" | "all" | "private";
           /** @description List of repository IDs that can access the runner group. */
-          selected_repository_ids?: (number)[];
+          selected_repository_ids?: number[];
           /** @description List of runner IDs to add to the runner group. */
-          runners?: (number)[];
+          runners?: number[];
           /**
-           * @description Whether the runner group can be used by `public` repositories. 
+           * @description Whether the runner group can be used by `public` repositories.
            * @default false
            */
           allows_public_repositories?: boolean;
@@ -3007,7 +3038,7 @@ export interface operations {
   };
   "actions/get-self-hosted-runner-group-for-org": {
     /**
-     * Get a self-hosted runner group for an organization 
+     * Get a self-hosted runner group for an organization
      * @description Gets a specific self-hosted runner group for an organization.
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
@@ -3022,7 +3053,7 @@ export interface operations {
   };
   "actions/update-self-hosted-runner-group-for-org": {
     /**
-     * Update a self-hosted runner group for an organization 
+     * Update a self-hosted runner group for an organization
      * @description Updates the `name` and `visibility` of a self-hosted runner group in an organization.
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
@@ -3032,12 +3063,12 @@ export interface operations {
           /** @description Name of the runner group. */
           name: string;
           /**
-           * @description Visibility of a runner group. You can select all repositories, select individual repositories, or all private repositories. 
+           * @description Visibility of a runner group. You can select all repositories, select individual repositories, or all private repositories.
            * @enum {string}
            */
           visibility?: "selected" | "all" | "private";
           /**
-           * @description Whether the runner group can be used by `public` repositories. 
+           * @description Whether the runner group can be used by `public` repositories.
            * @default false
            */
           allows_public_repositories?: boolean;
@@ -3055,11 +3086,11 @@ export interface operations {
   };
   "actions/list-repo-access-to-self-hosted-runner-group-in-org": {
     /**
-     * List repository access to a self-hosted runner group in an organization 
+     * List repository access to a self-hosted runner group in an organization
      * @description The self-hosted runner groups REST API is available with GitHub Enterprise Cloud and GitHub Enterprise Server. For more information, see "[GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products)."
-     * 
+     *
      * Lists the repositories with access to a self-hosted runner group configured in an organization.
-     * 
+     *
      * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
      */
     responses: {
@@ -3068,7 +3099,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            repositories: (components["schemas"]["minimal-repository"])[];
+            repositories: components["schemas"]["minimal-repository"][];
           };
         };
       };
@@ -3076,7 +3107,7 @@ export interface operations {
   };
   "actions/list-selected-repos-for-org-secret": {
     /**
-     * List selected repositories for an organization secret 
+     * List selected repositories for an organization secret
      * @description Lists all repositories that have been selected when the `visibility` for repository access to a secret is set to `selected`. You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `secrets` organization permission to use this endpoint.
      */
     responses: {
@@ -3085,7 +3116,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            repositories: (components["schemas"]["minimal-repository"])[];
+            repositories: components["schemas"]["minimal-repository"][];
           };
         };
       };
@@ -3093,7 +3124,7 @@ export interface operations {
   };
   "dependabot/list-selected-repos-for-org-secret": {
     /**
-     * List selected repositories for an organization secret 
+     * List selected repositories for an organization secret
      * @description Lists all repositories that have been selected when the `visibility` for repository access to a secret is set to `selected`. You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `dependabot_secrets` organization permission to use this endpoint.
      */
     responses: {
@@ -3102,7 +3133,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            repositories: (components["schemas"]["minimal-repository"])[];
+            repositories: components["schemas"]["minimal-repository"][];
           };
         };
       };
@@ -3110,15 +3141,22 @@ export interface operations {
   };
   "repos/list-for-org": {
     /**
-     * List organization repositories 
+     * List organization repositories
      * @description Lists repositories for the specified organization.
      */
     parameters?: {
-        /** @description Specifies the types of repositories you want returned. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, `type` can also be `internal`. However, the `internal` value is not yet supported when a GitHub App calls this API with an installation access token. */
-        /** @description The property to sort the results by. */
-        /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
+      /** @description Specifies the types of repositories you want returned. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, `type` can also be `internal`. However, the `internal` value is not yet supported when a GitHub App calls this API with an installation access token. */
+      /** @description The property to sort the results by. */
+      /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
       query?: {
-        type?: "all" | "public" | "private" | "forks" | "sources" | "member" | "internal";
+        type?:
+          | "all"
+          | "public"
+          | "private"
+          | "forks"
+          | "sources"
+          | "member"
+          | "internal";
         sort?: "created" | "updated" | "pushed" | "full_name";
         direction?: "asc" | "desc";
       };
@@ -3130,17 +3168,17 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
     };
   };
   "secret-scanning/list-alerts-for-org": {
     /**
-     * List secret scanning alerts for an organization 
+     * List secret scanning alerts for an organization
      * @description Lists secret scanning alerts for eligible repositories in an organization, from newest to oldest.
      * To use this endpoint, you must be an administrator or security manager for the organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` read permission to use this endpoint.
      */
     responses: {
@@ -3150,7 +3188,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["organization-secret-scanning-alert"])[];
+          "application/json": components["schemas"]["organization-secret-scanning-alert"][];
         };
       };
       404: components["responses"]["not_found"];
@@ -3159,9 +3197,9 @@ export interface operations {
   };
   "teams/list-repos-in-org": {
     /**
-     * List team repositories 
+     * List team repositories
      * @description Lists a team's repositories visible to the authenticated user.
-     * 
+     *
      * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos`.
      */
     responses: {
@@ -3171,20 +3209,20 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
     };
   };
   "teams/check-permissions-for-repo-in-org": {
     /**
-     * Check team permissions for a repository 
+     * Check team permissions for a repository
      * @description Checks whether a team has `admin`, `push`, `maintain`, `triage`, or `pull` permission for a repository. Repositories inherited through a parent team will also be checked.
-     * 
+     *
      * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.4/rest/overview/media-types/) via the `application/vnd.github.v3.repository+json` accept header.
-     * 
+     *
      * If a team doesn't have permission for the repository, you will receive a `404 Not Found` response status.
-     * 
+     *
      * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos/{owner}/{repo}`.
      */
     responses: {
@@ -3202,10 +3240,10 @@ export interface operations {
   };
   "reactions/delete-legacy": {
     /**
-     * Delete a reaction (Legacy) 
-     * @deprecated 
+     * Delete a reaction (Legacy)
+     * @deprecated
      * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Reactions API. We recommend migrating your existing code to use the new delete reactions endpoints. For more information, see this [blog post](https://developer.github.com/changes/2020-02-26-new-delete-reactions-endpoints/).
-     * 
+     *
      * OAuth access tokens require the `write:discussion` [scope](https://docs.github.com/enterprise-server@3.4/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), when deleting a [team discussion](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#discussions) or [team discussion comment](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#discussion-comments).
      */
     responses: {
@@ -3219,9 +3257,9 @@ export interface operations {
   };
   "actions/list-workflow-runs-for-repo": {
     /**
-     * List workflow runs for a repository 
+     * List workflow runs for a repository
      * @description Lists all workflow runs for a repository. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#parameters).
-     * 
+     *
      * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
      */
     responses: {
@@ -3233,7 +3271,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            workflow_runs: (components["schemas"]["workflow-run"])[];
+            workflow_runs: components["schemas"]["workflow-run"][];
           };
         };
       };
@@ -3241,7 +3279,7 @@ export interface operations {
   };
   "actions/get-workflow-run": {
     /**
-     * Get a workflow run 
+     * Get a workflow run
      * @description Gets a specific workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
      */
     responses: {
@@ -3255,9 +3293,9 @@ export interface operations {
   };
   "actions/list-workflow-runs": {
     /**
-     * List workflow runs for a workflow 
+     * List workflow runs for a workflow
      * @description List all workflow runs for a workflow. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#parameters).
-     * 
+     *
      * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope.
      */
     responses: {
@@ -3269,7 +3307,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            workflow_runs: (components["schemas"]["workflow-run"])[];
+            workflow_runs: components["schemas"]["workflow-run"][];
           };
         };
       };
@@ -3277,9 +3315,9 @@ export interface operations {
   };
   "checks/create-suite": {
     /**
-     * Create a check suite 
+     * Create a check suite
      * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     * 
+     *
      * By default, check suites are automatically created when you create a [check run](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#check-runs). You only need to use this endpoint for manually creating check suites when you've disabled automatic creation using "[Update repository preferences for check suites](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#update-repository-preferences-for-check-suites)". Your GitHub App must have the `checks:write` permission to create check suites.
      */
     requestBody: {
@@ -3307,22 +3345,22 @@ export interface operations {
   };
   "checks/set-suites-preferences": {
     /**
-     * Update repository preferences for check suites 
+     * Update repository preferences for check suites
      * @description Changes the default automatic flow when creating check suites. By default, a check suite is automatically created each time code is pushed to a repository. When you disable the automatic creation of check suites, you can manually [Create a check suite](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#create-a-check-suite). You must have admin permissions in the repository to set preferences for check suites.
      */
     requestBody: {
       content: {
         "application/json": {
           /** @description Enables or disables automatic creation of CheckSuite events upon pushes to the repository. Enabled by default. See the [`auto_trigger_checks` object](https://docs.github.com/enterprise-server@3.4/rest/reference/checks#auto_trigger_checks-object) description for details. */
-          auto_trigger_checks?: ({
-              /** @description The `id` of the GitHub App. */
-              app_id: number;
-              /**
-               * @description Set to `true` to enable automatic creation of CheckSuite events upon pushes to the repository, or `false` to disable them. 
-               * @default true
-               */
-              setting: boolean;
-            })[];
+          auto_trigger_checks?: {
+            /** @description The `id` of the GitHub App. */
+            app_id: number;
+            /**
+             * @description Set to `true` to enable automatic creation of CheckSuite events upon pushes to the repository, or `false` to disable them.
+             * @default true
+             */
+            setting: boolean;
+          }[];
         };
       };
     };
@@ -3337,9 +3375,9 @@ export interface operations {
   };
   "checks/get-suite": {
     /**
-     * Get a check suite 
+     * Get a check suite
      * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     * 
+     *
      * Gets a single check suite using its `id`. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to get check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
      */
     responses: {
@@ -3353,19 +3391,19 @@ export interface operations {
   };
   "repos/list-collaborators": {
     /**
-     * List repository collaborators 
+     * List repository collaborators
      * @description For organization-owned repositories, the list of collaborators includes outside collaborators, organization members that are direct collaborators, organization members with access through team memberships, organization members with access through default organization permissions, and organization owners.
      * Organization members with write, maintain, or admin privileges on the organization-owned repository can use this endpoint.
-     * 
+     *
      * Team members will include the members of child teams.
-     * 
+     *
      * You must authenticate using an access token with the `read:org` and `repo` scopes with push access to use this
      * endpoint. GitHub Apps must have the `members` organization permission and `metadata` repository permission to use this
      * endpoint.
      */
     parameters?: {
-        /** @description Filter collaborators returned by their affiliation. `outside` means all outside collaborators of an organization-owned repository. `direct` means all collaborators with permissions to an organization-owned repository, regardless of organization membership status. `all` means all collaborators the authenticated user can see. */
-        /** @description Filter collaborators by the permissions they have on the repository. If not specified, all collaborators will be returned. */
+      /** @description Filter collaborators returned by their affiliation. `outside` means all outside collaborators of an organization-owned repository. `direct` means all collaborators with permissions to an organization-owned repository, regardless of organization membership status. `all` means all collaborators the authenticated user can see. */
+      /** @description Filter collaborators by the permissions they have on the repository. If not specified, all collaborators will be returned. */
       query?: {
         affiliation?: "outside" | "direct" | "all";
         permission?: "pull" | "triage" | "push" | "maintain" | "admin";
@@ -3378,7 +3416,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["collaborator"])[];
+          "application/json": components["schemas"]["collaborator"][];
         };
       };
       404: components["responses"]["not_found"];
@@ -3386,32 +3424,32 @@ export interface operations {
   };
   "repos/add-collaborator": {
     /**
-     * Add a repository collaborator 
+     * Add a repository collaborator
      * @description This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.4/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.4/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
-     * 
+     *
      * For more information on permission levels, see "[Repository permission levels for an organization](https://docs.github.com/enterprise-server@3.4/github/setting-up-and-managing-organizations-and-teams/repository-permission-levels-for-an-organization#permission-levels-for-repositories-owned-by-an-organization)". There are restrictions on which permissions can be granted to organization members when an organization base role is in place. In this case, the permission being given must be equal to or higher than the org base permission. Otherwise, the request will fail with:
-     * 
+     *
      * ```
      * Cannot assign {member} permission of {role name}
      * ```
-     * 
+     *
      * Note that, if you choose not to pass any parameters, you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see "[HTTP verbs](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#http-verbs)."
-     * 
+     *
      * The invitee will receive a notification that they have been invited to the repository, which they must accept or decline. They may do this via the notifications page, the email they receive, or by using the [repository invitations API endpoints](https://docs.github.com/enterprise-server@3.4/rest/reference/repos#invitations).
-     * 
+     *
      * **Updating an existing collaborator's permission level**
-     * 
+     *
      * The endpoint can also be used to change the permissions of an existing collaborator without first removing and re-adding the collaborator. To change the permissions, use the same endpoint and pass a different `permission` parameter. The response will be a `204`, with no other indication that the permission level changed.
-     * 
+     *
      * **Rate limits**
-     * 
+     *
      * You are limited to sending 50 invitations to a repository per 24 hour period. Note there is no limit if you are inviting organization members to an organization repository.
      */
     requestBody?: {
       content: {
         "application/json": {
           /**
-           * @description The permission to grant the collaborator. **Only valid on organization-owned repositories.** 
+           * @description The permission to grant the collaborator. **Only valid on organization-owned repositories.**
            * @default push
            */
           permission?: string;
@@ -3438,7 +3476,7 @@ export interface operations {
   };
   "repos/get-collaborator-permission-level": {
     /**
-     * Get repository permissions for a user 
+     * Get repository permissions for a user
      * @description Checks the repository permission of a collaborator. The possible repository permissions are `admin`, `write`, `read`, and `none`.
      */
     responses: {
@@ -3453,20 +3491,20 @@ export interface operations {
   };
   "checks/list-suites-for-ref": {
     /**
-     * List check suites for a Git reference 
+     * List check suites for a Git reference
      * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     * 
+     *
      * Lists check suites for a commit `ref`. The `ref` can be a SHA, branch name, or a tag name. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to list check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
      */
     parameters: {
-        /**
-         * @description Filters check suites by GitHub App `id`. 
-         * @example 1
-         */
+      /**
+       * @description Filters check suites by GitHub App `id`.
+       * @example 1
+       */
       query?: {
         app_id?: number;
       };
-        /** @description ref parameter */
+      /** @description ref parameter */
       path: {
         ref: string;
       };
@@ -3480,7 +3518,7 @@ export interface operations {
         content: {
           "application/json": {
             total_count: number;
-            check_suites: (components["schemas"]["check-suite"])[];
+            check_suites: components["schemas"]["check-suite"][];
           };
         };
       };
@@ -3488,18 +3526,18 @@ export interface operations {
   };
   "repos/get-combined-status-for-ref": {
     /**
-     * Get the combined status for a specific reference 
+     * Get the combined status for a specific reference
      * @description Users with pull access in a repository can access a combined view of commit statuses for a given ref. The ref can be a SHA, a branch name, or a tag name.
-     * 
-     * 
+     *
+     *
      * Additionally, a combined `state` is returned. The `state` is one of:
-     * 
+     *
      * *   **failure** if any of the contexts report as `error` or `failure`
      * *   **pending** if there are no statuses or a context is `pending`
      * *   **success** if the latest status for all contexts is `success`
      */
     parameters: {
-        /** @description ref parameter */
+      /** @description ref parameter */
       path: {
         ref: string;
       };
@@ -3517,7 +3555,7 @@ export interface operations {
   "repos/list-forks": {
     /** List forks */
     parameters?: {
-        /** @description The sort order. `stargazers` will sort by star count. */
+      /** @description The sort order. `stargazers` will sort by star count. */
       query?: {
         sort?: "newest" | "oldest" | "stargazers" | "watchers";
       };
@@ -3529,7 +3567,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
       400: components["responses"]["bad_request"];
@@ -3537,7 +3575,7 @@ export interface operations {
   };
   "repos/list-invitations": {
     /**
-     * List repository invitations 
+     * List repository invitations
      * @description When authenticating as a user with admin rights to a repository, this endpoint will list all currently open repository invitations.
      */
     responses: {
@@ -3547,7 +3585,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["repository-invitation"])[];
+          "application/json": components["schemas"]["repository-invitation"][];
         };
       };
     };
@@ -3558,7 +3596,7 @@ export interface operations {
       content: {
         "application/json": {
           /**
-           * @description The permissions that the associated user will have on the repository. Valid values are `read`, `write`, `maintain`, `triage`, and `admin`. 
+           * @description The permissions that the associated user will have on the repository. Valid values are `read`, `write`, `maintain`, `triage`, and `admin`.
            * @enum {string}
            */
           permissions?: "read" | "write" | "maintain" | "triage" | "admin";
@@ -3576,7 +3614,7 @@ export interface operations {
   };
   "activity/list-repo-notifications-for-authenticated-user": {
     /**
-     * List repository notifications for the authenticated user 
+     * List repository notifications for the authenticated user
      * @description List all notifications for the current user.
      */
     responses: {
@@ -3586,23 +3624,23 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["thread"])[];
+          "application/json": components["schemas"]["thread"][];
         };
       };
     };
   };
   "secret-scanning/list-alerts-for-repo": {
     /**
-     * List secret scanning alerts for a repository 
+     * List secret scanning alerts for a repository
      * @description Lists secret scanning alerts for a private repository, from newest to oldest. To use this endpoint, you must be an administrator for the repository or organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` read permission to use this endpoint.
      */
     responses: {
       /** @description Response */
       200: {
         content: {
-          "application/json": (components["schemas"]["secret-scanning-alert"])[];
+          "application/json": components["schemas"]["secret-scanning-alert"][];
         };
       };
       /** @description Repository is public or secret scanning is disabled for the repository */
@@ -3612,9 +3650,9 @@ export interface operations {
   };
   "secret-scanning/get-alert": {
     /**
-     * Get a secret scanning alert 
+     * Get a secret scanning alert
      * @description Gets a single secret scanning alert detected in a private repository. To use this endpoint, you must be an administrator for the repository or organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` read permission to use this endpoint.
      */
     responses: {
@@ -3632,9 +3670,9 @@ export interface operations {
   };
   "secret-scanning/update-alert": {
     /**
-     * Update a secret scanning alert 
+     * Update a secret scanning alert
      * @description Updates the status of a secret scanning alert in a private repository. To use this endpoint, you must be an administrator for the repository or organization, and you must use an access token with the `repo` scope or `security_events` scope.
-     * 
+     *
      * GitHub Apps must have the `secret_scanning_alerts` write permission to use this endpoint.
      */
     requestBody: {
@@ -3661,7 +3699,7 @@ export interface operations {
   };
   "repos/transfer": {
     /**
-     * Transfer a repository 
+     * Transfer a repository
      * @description A transfer request will need to be accepted by the new owner when transferring a personal repository to another user. The response will contain the original `owner`, and the transfer will continue asynchronously. For more details on the requirements to transfer personal and organization-owned repositories, see [about repository transfers](https://docs.github.com/articles/about-repository-transfers/).
      */
     requestBody: {
@@ -3670,7 +3708,7 @@ export interface operations {
           /** @description The username or organization name the repository will be transferred to. */
           new_owner: string;
           /** @description ID of the team or teams to add to the repository. Teams can only be added to organization-owned repositories. */
-          team_ids?: (number)[];
+          team_ids?: number[];
         };
       };
     };
@@ -3685,15 +3723,15 @@ export interface operations {
   };
   "repos/list-public": {
     /**
-     * List public repositories 
+     * List public repositories
      * @description Lists all public repositories in the order that they were created.
-     * 
+     *
      * Note:
      * - For GitHub Enterprise Server, this endpoint will only list repositories available to all users on the enterprise.
      * - Pagination is powered exclusively by the `since` parameter. Use the [Link header](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#link-header) to get the URL for the next page of repositories.
      */
     parameters?: {
-        /** @description Specifies the types of repositories to return. This endpoint will only list repositories available to all users on the enterprise. */
+      /** @description Specifies the types of repositories to return. This endpoint will only list repositories available to all users on the enterprise. */
       query?: {
         visibility?: "all" | "public";
       };
@@ -3706,7 +3744,7 @@ export interface operations {
           Link?: string;
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
       304: components["responses"]["not_modified"];
@@ -3715,29 +3753,29 @@ export interface operations {
   };
   "search/code": {
     /**
-     * Search code 
+     * Search code
      * @description Searches for query terms inside of a file. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#pagination).
-     * 
+     *
      * When searching for code, you can get text match metadata for the file **content** and file **path** fields when you pass the `text-match` media type. For more details about how to receive highlighted search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.4/rest/reference/search#text-match-metadata).
-     * 
+     *
      * For example, if you want to find the definition of the `addClass` function inside [jQuery](https://github.com/jquery/jquery) repository, your query would look something like this:
-     * 
+     *
      * `q=addClass+in:file+language:js+repo:jquery/jquery`
-     * 
+     *
      * This query searches for the keyword `addClass` within a file's contents. The query limits the search to files where the language is JavaScript in the `jquery/jquery` repository.
-     * 
+     *
      * #### Considerations for code search
-     * 
+     *
      * Due to the complexity of searching code, there are a few restrictions on how searches are performed:
-     * 
+     *
      * *   Only the _default branch_ is considered. In most cases, this will be the `master` branch.
      * *   Only files smaller than 384 KB are searchable.
      * *   You must always include at least one search term when searching source code. For example, searching for [`language:go`](https://github.com/search?utf8=%E2%9C%93&q=language%3Ago&type=Code) is not valid, while [`amazing
      * language:go`](https://github.com/search?utf8=%E2%9C%93&q=amazing+language%3Ago&type=Code) is.
      */
     parameters: {
-        /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.4/rest/reference/search#constructing-a-search-query). See "[Searching code](https://docs.github.com/enterprise-server@3.4/search-github/searching-on-github/searching-code)" for a detailed list of qualifiers. */
-        /** @description Sorts the results of your query. Can only be `indexed`, which indicates how recently a file has been indexed by the GitHub Enterprise Server search infrastructure. Default: [best match](https://docs.github.com/enterprise-server@3.4/rest/reference/search#ranking-search-results) */
+      /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.4/rest/reference/search#constructing-a-search-query). See "[Searching code](https://docs.github.com/enterprise-server@3.4/search-github/searching-on-github/searching-code)" for a detailed list of qualifiers. */
+      /** @description Sorts the results of your query. Can only be `indexed`, which indicates how recently a file has been indexed by the GitHub Enterprise Server search infrastructure. Default: [best match](https://docs.github.com/enterprise-server@3.4/rest/reference/search#ranking-search-results) */
       query: {
         q: string;
         sort?: "indexed";
@@ -3750,7 +3788,7 @@ export interface operations {
           "application/json": {
             total_count: number;
             incomplete_results: boolean;
-            items: (components["schemas"]["code-search-result-item"])[];
+            items: components["schemas"]["code-search-result-item"][];
           };
         };
       };
@@ -3762,19 +3800,19 @@ export interface operations {
   };
   "search/commits": {
     /**
-     * Search commits 
+     * Search commits
      * @description Find commits via various criteria on the default branch (usually `master`). This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.4/rest/overview/resources-in-the-rest-api#pagination).
-     * 
+     *
      * When searching for commits, you can get text match metadata for the **message** field when you provide the `text-match` media type. For more details about how to receive highlighted search results, see [Text match
      * metadata](https://docs.github.com/enterprise-server@3.4/rest/reference/search#text-match-metadata).
-     * 
+     *
      * For example, if you want to find commits related to CSS in the [octocat/Spoon-Knife](https://github.com/octocat/Spoon-Knife) repository. Your query would look something like this:
-     * 
+     *
      * `q=repo:octocat/Spoon-Knife+css`
      */
     parameters: {
-        /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.4/rest/reference/search#constructing-a-search-query). See "[Searching commits](https://docs.github.com/enterprise-server@3.4/search-github/searching-on-github/searching-commits)" for a detailed list of qualifiers. */
-        /** @description Sorts the results of your query by `author-date` or `committer-date`. Default: [best match](https://docs.github.com/enterprise-server@3.4/rest/reference/search#ranking-search-results) */
+      /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.4/rest/reference/search#constructing-a-search-query). See "[Searching commits](https://docs.github.com/enterprise-server@3.4/search-github/searching-on-github/searching-commits)" for a detailed list of qualifiers. */
+      /** @description Sorts the results of your query by `author-date` or `committer-date`. Default: [best match](https://docs.github.com/enterprise-server@3.4/rest/reference/search#ranking-search-results) */
       query: {
         q: string;
         sort?: "author-date" | "committer-date";
@@ -3787,7 +3825,7 @@ export interface operations {
           "application/json": {
             total_count: number;
             incomplete_results: boolean;
-            items: (components["schemas"]["commit-search-result-item"])[];
+            items: components["schemas"]["commit-search-result-item"][];
           };
         };
       };
@@ -3796,8 +3834,8 @@ export interface operations {
   };
   "teams/list-repos-legacy": {
     /**
-     * List team repositories (Legacy) 
-     * @deprecated 
+     * List team repositories (Legacy)
+     * @deprecated
      * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [List team repositories](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#list-team-repositories) endpoint.
      */
     responses: {
@@ -3807,7 +3845,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
       404: components["responses"]["not_found"];
@@ -3815,12 +3853,12 @@ export interface operations {
   };
   "teams/check-permissions-for-repo-legacy": {
     /**
-     * Check team permissions for a repository (Legacy) 
-     * @deprecated 
+     * Check team permissions for a repository (Legacy)
+     * @deprecated
      * @description **Note**: Repositories inherited through a parent team will also be checked.
-     * 
+     *
      * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Check team permissions for a repository](https://docs.github.com/enterprise-server@3.4/rest/reference/teams#check-team-permissions-for-a-repository) endpoint.
-     * 
+     *
      * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.4/rest/overview/media-types/) via the `Accept` header:
      */
     responses: {
@@ -3838,7 +3876,7 @@ export interface operations {
   };
   "migrations/list-repos-for-authenticated-user": {
     /**
-     * List repositories for a user migration 
+     * List repositories for a user migration
      * @description Lists all the repositories for this user migration.
      */
     responses: {
@@ -3848,7 +3886,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
       404: components["responses"]["not_found"];
@@ -3856,7 +3894,7 @@ export interface operations {
   };
   "repos/list-invitations-for-authenticated-user": {
     /**
-     * List repository invitations for the authenticated user 
+     * List repository invitations for the authenticated user
      * @description When authenticating as a user, this endpoint will list all currently open repository invitations for that user.
      */
     responses: {
@@ -3866,7 +3904,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["repository-invitation"])[];
+          "application/json": components["schemas"]["repository-invitation"][];
         };
       };
       304: components["responses"]["not_modified"];
@@ -3877,7 +3915,7 @@ export interface operations {
   };
   "activity/list-watched-repos-for-authenticated-user": {
     /**
-     * List repositories watched by the authenticated user 
+     * List repositories watched by the authenticated user
      * @description Lists repositories the authenticated user is watching.
      */
     responses: {
@@ -3887,7 +3925,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
       304: components["responses"]["not_modified"];
@@ -3897,13 +3935,13 @@ export interface operations {
   };
   "repos/list-for-user": {
     /**
-     * List repositories for a user 
+     * List repositories for a user
      * @description Lists public repositories for the specified user. Note: For GitHub AE, this endpoint will list internal repositories for the specified user.
      */
     parameters?: {
-        /** @description Limit results to repositories of the specified type. */
-        /** @description The property to sort the results by. */
-        /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
+      /** @description Limit results to repositories of the specified type. */
+      /** @description The property to sort the results by. */
+      /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
       query?: {
         type?: "all" | "owner" | "member";
         sort?: "created" | "updated" | "pushed" | "full_name";
@@ -3917,14 +3955,14 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
     };
   };
   "activity/list-repos-watched-by-user": {
     /**
-     * List repositories watched by a user 
+     * List repositories watched by a user
      * @description Lists repositories a user is watching.
      */
     responses: {
@@ -3934,7 +3972,7 @@ export interface operations {
           Link: components["headers"]["link"];
         };
         content: {
-          "application/json": (components["schemas"]["minimal-repository"])[];
+          "application/json": components["schemas"]["minimal-repository"][];
         };
       };
     };
