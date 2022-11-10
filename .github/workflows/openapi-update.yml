@@ -16,7 +16,6 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' || github.event.client_payload.action == 'published'
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -40,17 +39,23 @@ jobs:
           version: ${{ env.OCTOKIT_OPENAPI_VERSION }}
 
       # do not update cache for renovate update
-      - name: Update & generate types
+      - name: Update cache
         if: github.event_name != 'push'
         run: |
           # openapi types
           node scripts/types-openapi/download.js
-          node scripts/types-openapi/update.js
           # rest api types for github.com
           node scripts/types-rest-api/download.js
-          node scripts/types-rest-api/update.js
           # rest api types for the ... rest
           node scripts/types-rest-api-diff/download.js
+
+      - name: Generate types
+        run: |
+          # openapi types
+          node scripts/types-openapi/update.js
+          # rest api types for github.com
+          node scripts/types-rest-api/update.js
+          # rest api types for the ... rest
           node scripts/types-rest-api-diff/update.js
         env:
           GITHUB_TOKEN: ${{ secrets.OCTOKITBOT_PAT }}
