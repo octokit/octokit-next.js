@@ -7152,8 +7152,8 @@ export interface components {
     "public-key-full": {
       id: number;
       key: string;
-      user_id: number;
-      repository_id: number;
+      user_id: number | null;
+      repository_id: number | null;
       url: string;
       title: string;
       read_only: boolean;
@@ -7198,7 +7198,7 @@ export interface components {
       /** @example https://github.com/images/error/octocat_happy.gif */
       avatar_url: string;
       /** @example A great organization */
-      description: string;
+      description: string | null;
     };
     "pre-receive-environment": {
       id?: number;
@@ -7212,23 +7212,23 @@ export interface components {
       download?: {
         url?: string;
         state?: string;
-        downloaded_at?: string;
-        message?: string;
+        downloaded_at?: string | null;
+        message?: string | null;
       };
     };
     "pre-receive-environment-download-status": {
       url?: string;
       state?: string;
-      downloaded_at?: string;
-      message?: string;
+      downloaded_at?: string | null;
+      message?: string | null;
     };
     /**
      * Simple User
      * @description Simple User
      */
     "nullable-simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -7241,7 +7241,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -7458,8 +7458,8 @@ export interface components {
      * @description Simple User
      */
     "simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -7472,7 +7472,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -7531,7 +7531,7 @@ export interface components {
        */
       repository_selection: "all" | "selected";
       /** @example config.yaml */
-      single_file_name: string;
+      single_file_name: string | null;
       /** @example true */
       has_multiple_single_files?: boolean;
       /**
@@ -7557,28 +7557,28 @@ export interface components {
       /** Format: uri */
       url: string;
       /** @description A list of scopes that this authorization is in. */
-      scopes: string[];
+      scopes: string[] | null;
       token: string;
-      token_last_eight: string;
-      hashed_token: string;
+      token_last_eight: string | null;
+      hashed_token: string | null;
       app: {
         client_id: string;
         name: string;
         /** Format: uri */
         url: string;
       };
-      note: string;
+      note: string | null;
       /** Format: uri */
-      note_url: string;
+      note_url: string | null;
       /** Format: date-time */
       updated_at: string;
       /** Format: date-time */
       created_at: string;
-      fingerprint: string;
+      fingerprint: string | null;
       user?: components["schemas"]["nullable-simple-user"];
       installation?: components["schemas"]["nullable-scoped-installation"];
       /** Format: date-time */
-      expires_at: string;
+      expires_at: string | null;
     };
     /**
      * GitHub app
@@ -7604,7 +7604,7 @@ export interface components {
        */
       name: string;
       /** @example The description of the app. */
-      description: string;
+      description: string | null;
       /**
        * Format: uri
        * @example https://example.com
@@ -7658,7 +7658,7 @@ export interface components {
       /** @example "1d4b2097ac622ba702d19de498f005747a8b21d3" */
       client_secret?: string;
       /** @example "6fba8f2fc8a7e8f2cca5577eddd82ca7586b3b6b" */
-      webhook_secret?: string;
+      webhook_secret?: string | null;
       /** @example "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEArYxrNYD/iT5CZVpRJu4rBKmmze3PVmT/gCo2ATUvDvZTPTey\nxcGJ3vvrJXazKk06pN05TN29o98jrYz4cengG3YGsXPNEpKsIrEl8NhbnxapEnM9\nJCMRe0P5JcPsfZlX6hmiT7136GRWiGOUba2X9+HKh8QJVLG5rM007TBER9/z9mWm\nrJuNh+m5l320oBQY/Qq3A7wzdEfZw8qm/mIN0FCeoXH1L6B8xXWaAYBwhTEh6SSn\nZHlO1Xu1JWDmAvBCi0RO5aRSKM8q9QEkvvHP4yweAtK3N8+aAbZ7ovaDhyGz8r6r\nzhU1b8Uo0Z2ysf503WqzQgIajr7Fry7/kUwpgQIDAQABAoIBADwJp80Ko1xHPZDy\nfcCKBDfIuPvkmSW6KumbsLMaQv1aGdHDwwTGv3t0ixSay8CGlxMRtRDyZPib6SvQ\n6OH/lpfpbMdW2ErkksgtoIKBVrDilfrcAvrNZu7NxRNbhCSvN8q0s4ICecjbbVQh\nnueSdlA6vGXbW58BHMq68uRbHkP+k+mM9U0mDJ1HMch67wlg5GbayVRt63H7R2+r\nVxcna7B80J/lCEjIYZznawgiTvp3MSanTglqAYi+m1EcSsP14bJIB9vgaxS79kTu\noiSo93leJbBvuGo8QEiUqTwMw4tDksmkLsoqNKQ1q9P7LZ9DGcujtPy4EZsamSJT\ny8OJt0ECgYEA2lxOxJsQk2kI325JgKFjo92mQeUObIvPfSNWUIZQDTjniOI6Gv63\nGLWVFrZcvQBWjMEQraJA9xjPbblV8PtfO87MiJGLWCHFxmPz2dzoedN+2Coxom8m\nV95CLz8QUShuao6u/RYcvUaZEoYs5bHcTmy5sBK80JyEmafJPtCQVxMCgYEAy3ar\nZr3yv4xRPEPMat4rseswmuMooSaK3SKub19WFI5IAtB/e7qR1Rj9JhOGcZz+OQrl\nT78O2OFYlgOIkJPvRMrPpK5V9lslc7tz1FSh3BZMRGq5jSyD7ETSOQ0c8T2O/s7v\nbeEPbVbDe4mwvM24XByH0GnWveVxaDl51ABD65sCgYB3ZAspUkOA5egVCh8kNpnd\nSd6SnuQBE3ySRlT2WEnCwP9Ph6oPgn+oAfiPX4xbRqkL8q/k0BdHQ4h+zNwhk7+h\nWtPYRAP1Xxnc/F+jGjb+DVaIaKGU18MWPg7f+FI6nampl3Q0KvfxwX0GdNhtio8T\nTj1E+SnFwh56SRQuxSh2gwKBgHKjlIO5NtNSflsUYFM+hyQiPiqnHzddfhSG+/3o\nm5nNaSmczJesUYreH5San7/YEy2UxAugvP7aSY2MxB+iGsiJ9WD2kZzTUlDZJ7RV\nUzWsoqBR+eZfVJ2FUWWvy8TpSG6trh4dFxImNtKejCR1TREpSiTV3Zb1dmahK9GV\nrK9NAoGAbBxRLoC01xfxCTgt5BDiBcFVh4fp5yYKwavJPLzHSpuDOrrI9jDn1oKN\nonq5sDU1i391zfQvdrbX4Ova48BN+B7p63FocP/MK5tyyBoT8zQEk2+vWDOw7H/Z\nu5dTCPxTIsoIwUw1I+7yIxqJzLPFgR2gVBwY1ra/8iAqCj+zeBw=\n-----END RSA PRIVATE KEY-----\n" */
       pem?: string;
     };
@@ -7758,28 +7758,28 @@ export interface components {
        * @description The type of activity for the event that triggered the delivery.
        * @example opened
        */
-      action: string;
+      action: string | null;
       /**
        * @description The id of the GitHub App installation associated with this event.
        * @example 123
        */
-      installation_id: number;
+      installation_id: number | null;
       /**
        * @description The id of the repository associated with this event.
        * @example 123
        */
-      repository_id: number;
+      repository_id: number | null;
     };
     /**
      * Scim Error
      * @description Scim Error
      */
     "scim-error": {
-      message?: string;
-      documentation_url?: string;
-      detail?: string;
+      message?: string | null;
+      documentation_url?: string | null;
+      detail?: string | null;
       status?: number;
-      scimType?: string;
+      scimType?: string | null;
       schemas?: string[];
     };
     /**
@@ -7795,7 +7795,7 @@ export interface components {
         message?: string;
         code: string;
         index?: number;
-        value?: string | number | string[];
+        value?: (string | null) | (number | null) | (string[] | null);
       }[];
     };
     /**
@@ -7848,17 +7848,17 @@ export interface components {
        * @description The type of activity for the event that triggered the delivery.
        * @example opened
        */
-      action: string;
+      action: string | null;
       /**
        * @description The id of the GitHub App installation associated with this event.
        * @example 123
        */
-      installation_id: number;
+      installation_id: number | null;
       /**
        * @description The id of the repository associated with this event.
        * @example 123
        */
-      repository_id: number;
+      repository_id: number | null;
       /**
        * @description The URL target of the delivery.
        * @example https://www.example.com
@@ -7880,7 +7880,7 @@ export interface components {
           [key: string]: unknown | undefined;
         } | null;
         /** @description The response payload received. */
-        payload: string;
+        payload: string | null;
       };
     };
     /**
@@ -7889,7 +7889,7 @@ export interface components {
      */
     enterprise: {
       /** @description A short description of the enterprise. */
-      description?: string;
+      description?: string | null;
       /**
        * Format: uri
        * @example https://github.com/enterprises/octo-business
@@ -7899,7 +7899,7 @@ export interface components {
        * Format: uri
        * @description The enterprise's website URL.
        */
-      website_url?: string;
+      website_url?: string | null;
       /**
        * @description Unique identifier of the enterprise
        * @example 42
@@ -7921,12 +7921,12 @@ export interface components {
        * Format: date-time
        * @example 2019-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2019-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /** Format: uri */
       avatar_url: string;
     };
@@ -7979,7 +7979,7 @@ export interface components {
       /** Format: date-time */
       updated_at: string;
       /** @example config.yaml */
-      single_file_name: string;
+      single_file_name: string | null;
       /** @example true */
       has_multiple_single_files?: boolean;
       /**
@@ -7993,9 +7993,9 @@ export interface components {
       app_slug: string;
       suspended_by: components["schemas"]["nullable-simple-user"];
       /** Format: date-time */
-      suspended_at: string;
+      suspended_at: string | null;
       /** @example "test_13f1e99741e3e004@d7e1eb0bc0a1ba12.com" */
-      contact_email?: string;
+      contact_email?: string | null;
     };
     /**
      * License Simple
@@ -8010,9 +8010,9 @@ export interface components {
        * Format: uri
        * @example https://api.github.com/licenses/mit
        */
-      url: string;
+      url: string | null;
       /** @example MIT */
-      spdx_id: string;
+      spdx_id: string | null;
       /** @example MDc6TGljZW5zZW1pdA== */
       node_id: string;
       /** Format: uri */
@@ -8059,7 +8059,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -8182,7 +8182,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -8197,8 +8197,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -8265,17 +8265,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at: string;
+      pushed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /**
        * @description Whether to allow rebase merges for pull requests.
        * @default true
@@ -8528,7 +8528,7 @@ export interface components {
        */
       body?: string;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
     };
     /**
      * @description The announcement text in GitHub Flavored Markdown. For more information about GitHub Flavored Markdown, see "[Basic writing and formatting syntax](https://docs.github.com/github-ae@latest/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)."
@@ -8540,7 +8540,7 @@ export interface components {
      * @description The time at which the announcement expires. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. To set an announcement that never expires, omit this parameter, set it to `null`, or set it to an empty string.
      * @example "2021-01-01T00:00:00.000-07:00"
      */
-    "announcement-expiration": string;
+    "announcement-expiration": string | null;
     /**
      * Enterprise Announcement
      * @description Enterprise global announcement
@@ -8751,7 +8751,7 @@ export interface components {
       /** @description The repositories this token has access to */
       repositories?: components["schemas"]["repository"][];
       /** @example config.yaml */
-      single_file?: string;
+      single_file?: string | null;
       /**
        * @description Describe whether all repositories have been selected or there's a selection involved
        * @enum {string}
@@ -8896,7 +8896,7 @@ export interface components {
       created_at: string;
       /** Format: date-time */
       updated_at: string;
-      description: string;
+      description: string | null;
       comments: number;
       user: components["schemas"]["nullable-simple-user"];
       /** Format: uri */
@@ -8916,7 +8916,7 @@ export interface components {
       node_id: string;
       /** Format: uri */
       avatar_url: string;
-      gravatar_id: string;
+      gravatar_id: string | null;
       /** Format: uri */
       url: string;
       /** Format: uri */
@@ -8937,15 +8937,15 @@ export interface components {
       received_events_url: string;
       type: string;
       site_admin: boolean;
-      name: string;
-      company: string;
-      blog: string;
-      location: string;
+      name: string | null;
+      company: string | null;
+      blog: string | null;
+      location: string | null;
       /** Format: email */
-      email: string;
-      hireable: boolean;
-      bio: string;
-      twitter_username?: string;
+      email: string | null;
+      hireable: boolean | null;
+      bio: string | null;
+      twitter_username?: string | null;
       public_repos: number;
       public_gists: number;
       followers: number;
@@ -8961,7 +8961,7 @@ export interface components {
         private_repos: number;
       };
       /** Format: date-time */
-      suspended_at?: string;
+      suspended_at?: string | null;
       /** @example 1 */
       private_gists?: number;
       /** @example 2 */
@@ -8996,18 +8996,20 @@ export interface components {
      */
     "gist-simple": {
       /** @deprecated */
-      forks?: {
-        id?: string;
-        /** Format: uri */
-        url?: string;
-        user?: components["schemas"]["public-user"];
-        /** Format: date-time */
-        created_at?: string;
-        /** Format: date-time */
-        updated_at?: string;
-      }[];
+      forks?:
+        | {
+            id?: string;
+            /** Format: uri */
+            url?: string;
+            user?: components["schemas"]["public-user"];
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            updated_at?: string;
+          }[]
+        | null;
       /** @deprecated */
-      history?: components["schemas"]["gist-history"][];
+      history?: components["schemas"]["gist-history"][] | null;
       /**
        * Gist
        * @description Gist
@@ -9043,7 +9045,7 @@ export interface components {
         created_at: string;
         /** Format: date-time */
         updated_at: string;
-        description: string;
+        description: string | null;
         comments: number;
         user: components["schemas"]["nullable-simple-user"];
         /** Format: uri */
@@ -9077,9 +9079,9 @@ export interface components {
       public?: boolean;
       created_at?: string;
       updated_at?: string;
-      description?: string;
+      description?: string | null;
       comments?: number;
-      user?: string;
+      user?: string | null;
       comments_url?: string;
       owner?: components["schemas"]["simple-user"];
       truncated?: boolean;
@@ -9225,7 +9227,7 @@ export interface components {
        */
       title: string;
       /** @example Tracking milestone for version 1.0 */
-      description: string;
+      description: string | null;
       creator: components["schemas"]["nullable-simple-user"];
       /** @example 4 */
       open_issues: number;
@@ -9245,12 +9247,12 @@ export interface components {
        * Format: date-time
        * @example 2013-02-12T13:22:01Z
        */
-      closed_at: string;
+      closed_at: string | null;
       /**
        * Format: date-time
        * @example 2012-10-09T23:39:01Z
        */
-      due_on: string;
+      due_on: string | null;
     } | null;
     /**
      * GitHub app
@@ -9276,7 +9278,7 @@ export interface components {
        */
       name: string;
       /** @example The description of the app. */
-      description: string;
+      description: string | null;
       /**
        * Format: uri
        * @example https://example.com
@@ -9330,7 +9332,7 @@ export interface components {
       /** @example "1d4b2097ac622ba702d19de498f005747a8b21d3" */
       client_secret?: string;
       /** @example "6fba8f2fc8a7e8f2cca5577eddd82ca7586b3b6b" */
-      webhook_secret?: string;
+      webhook_secret?: string | null;
       /** @example "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEArYxrNYD/iT5CZVpRJu4rBKmmze3PVmT/gCo2ATUvDvZTPTey\nxcGJ3vvrJXazKk06pN05TN29o98jrYz4cengG3YGsXPNEpKsIrEl8NhbnxapEnM9\nJCMRe0P5JcPsfZlX6hmiT7136GRWiGOUba2X9+HKh8QJVLG5rM007TBER9/z9mWm\nrJuNh+m5l320oBQY/Qq3A7wzdEfZw8qm/mIN0FCeoXH1L6B8xXWaAYBwhTEh6SSn\nZHlO1Xu1JWDmAvBCi0RO5aRSKM8q9QEkvvHP4yweAtK3N8+aAbZ7ovaDhyGz8r6r\nzhU1b8Uo0Z2ysf503WqzQgIajr7Fry7/kUwpgQIDAQABAoIBADwJp80Ko1xHPZDy\nfcCKBDfIuPvkmSW6KumbsLMaQv1aGdHDwwTGv3t0ixSay8CGlxMRtRDyZPib6SvQ\n6OH/lpfpbMdW2ErkksgtoIKBVrDilfrcAvrNZu7NxRNbhCSvN8q0s4ICecjbbVQh\nnueSdlA6vGXbW58BHMq68uRbHkP+k+mM9U0mDJ1HMch67wlg5GbayVRt63H7R2+r\nVxcna7B80J/lCEjIYZznawgiTvp3MSanTglqAYi+m1EcSsP14bJIB9vgaxS79kTu\noiSo93leJbBvuGo8QEiUqTwMw4tDksmkLsoqNKQ1q9P7LZ9DGcujtPy4EZsamSJT\ny8OJt0ECgYEA2lxOxJsQk2kI325JgKFjo92mQeUObIvPfSNWUIZQDTjniOI6Gv63\nGLWVFrZcvQBWjMEQraJA9xjPbblV8PtfO87MiJGLWCHFxmPz2dzoedN+2Coxom8m\nV95CLz8QUShuao6u/RYcvUaZEoYs5bHcTmy5sBK80JyEmafJPtCQVxMCgYEAy3ar\nZr3yv4xRPEPMat4rseswmuMooSaK3SKub19WFI5IAtB/e7qR1Rj9JhOGcZz+OQrl\nT78O2OFYlgOIkJPvRMrPpK5V9lslc7tz1FSh3BZMRGq5jSyD7ETSOQ0c8T2O/s7v\nbeEPbVbDe4mwvM24XByH0GnWveVxaDl51ABD65sCgYB3ZAspUkOA5egVCh8kNpnd\nSd6SnuQBE3ySRlT2WEnCwP9Ph6oPgn+oAfiPX4xbRqkL8q/k0BdHQ4h+zNwhk7+h\nWtPYRAP1Xxnc/F+jGjb+DVaIaKGU18MWPg7f+FI6nampl3Q0KvfxwX0GdNhtio8T\nTj1E+SnFwh56SRQuxSh2gwKBgHKjlIO5NtNSflsUYFM+hyQiPiqnHzddfhSG+/3o\nm5nNaSmczJesUYreH5San7/YEy2UxAugvP7aSY2MxB+iGsiJ9WD2kZzTUlDZJ7RV\nUzWsoqBR+eZfVJ2FUWWvy8TpSG6trh4dFxImNtKejCR1TREpSiTV3Zb1dmahK9GV\nrK9NAoGAbBxRLoC01xfxCTgt5BDiBcFVh4fp5yYKwavJPLzHSpuDOrrI9jDn1oKN\nonq5sDU1i391zfQvdrbX4Ova48BN+B7p63FocP/MK5tyyBoT8zQEk2+vWDOw7H/Z\nu5dTCPxTIsoIwUw1I+7yIxqJzLPFgR2gVBwY1ra/8iAqCj+zeBw=\n-----END RSA PRIVATE KEY-----\n" */
       pem?: string;
     } | null;
@@ -9395,7 +9397,7 @@ export interface components {
        * @description Contents of the issue
        * @example It looks like the new widget form is broken on Safari. When I try and create the widget, Safari crashes. This is reproducible on 10.8, but not 10.9. Maybe a browser bug?
        */
-      body?: string;
+      body?: string | null;
       user: components["schemas"]["nullable-simple-user"];
       /**
        * @description Labels to associate with this issue; pass one or more label names to replace the set of labels on this issue; send an empty array to clear all labels from the issue; note that the labels are silently dropped for users without push access to the repository
@@ -9414,32 +9416,32 @@ export interface components {
             /** Format: uri */
             url?: string;
             name?: string;
-            description?: string;
-            color?: string;
+            description?: string | null;
+            color?: string | null;
             default?: boolean;
           }
         ]
       >[];
       assignee: components["schemas"]["nullable-simple-user"];
-      assignees?: components["schemas"]["simple-user"][];
+      assignees?: components["schemas"]["simple-user"][] | null;
       milestone: components["schemas"]["nullable-milestone"];
       locked: boolean;
-      active_lock_reason?: string;
+      active_lock_reason?: string | null;
       comments: number;
       pull_request?: {
         /** Format: date-time */
-        merged_at?: string;
+        merged_at?: string | null;
         /** Format: uri */
-        diff_url: string;
+        diff_url: string | null;
         /** Format: uri */
-        html_url: string;
+        html_url: string | null;
         /** Format: uri */
-        patch_url: string;
+        patch_url: string | null;
         /** Format: uri */
-        url: string;
+        url: string | null;
       };
       /** Format: date-time */
-      closed_at: string;
+      closed_at: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -9468,9 +9470,9 @@ export interface components {
        * Format: uri
        * @example https://api.github.com/licenses/mit
        */
-      url: string;
+      url: string | null;
       /** @example MIT */
-      spdx_id: string;
+      spdx_id: string | null;
       /** @example MDc6TGljZW5zZW1pdA== */
       node_id: string;
       /** Format: uri */
@@ -9486,12 +9488,12 @@ export interface components {
       /** @example MIT License */
       name: string;
       /** @example MIT */
-      spdx_id: string;
+      spdx_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/licenses/mit
        */
-      url: string;
+      url: string | null;
       /** @example MDc6TGljZW5zZW1pdA== */
       node_id: string;
       /**
@@ -9669,7 +9671,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -9792,7 +9794,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -9807,8 +9809,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -9875,17 +9877,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at: string;
+      pushed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /**
        * @description Whether to allow rebase merges for pull requests.
        * @default true
@@ -10070,7 +10072,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -10186,15 +10188,15 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/git/trees{/sha} */
       trees_url: string;
       clone_url?: string;
-      mirror_url?: string;
+      mirror_url?: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
        */
       hooks_url: string;
       svn_url?: string;
-      homepage?: string;
-      language?: string;
+      homepage?: string | null;
+      language?: string | null;
       forks_count?: number;
       stargazers_count?: number;
       watchers_count?: number;
@@ -10216,17 +10218,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at?: string;
+      pushed_at?: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at?: string;
+      created_at?: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at?: string;
+      updated_at?: string | null;
       permissions?: {
         admin?: boolean;
         maintain?: boolean;
@@ -10275,7 +10277,7 @@ export interface components {
       reason: string;
       unread: boolean;
       updated_at: string;
-      last_read_at: string;
+      last_read_at: string | null;
       url: string;
       /** @example https://api.github.com/notifications/threads/2/subscription */
       subscription_url: string;
@@ -10288,12 +10290,12 @@ export interface components {
       /** @example true */
       subscribed: boolean;
       ignored: boolean;
-      reason: string;
+      reason: string | null;
       /**
        * Format: date-time
        * @example 2012-10-06T21:34:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/notifications/threads/1/subscription
@@ -10347,7 +10349,7 @@ export interface components {
       /** @example https://github.com/images/error/octocat_happy.gif */
       avatar_url: string;
       /** @example A great organization */
-      description: string;
+      description: string | null;
       /** @example github */
       name?: string;
       /** @example GitHub */
@@ -10365,7 +10367,7 @@ export interface components {
        */
       email?: string;
       /** @example github */
-      twitter_username?: string;
+      twitter_username?: string | null;
       /** @example true */
       is_verified?: boolean;
       /** @example true */
@@ -10397,16 +10399,16 @@ export interface components {
       /** @example 100 */
       owned_private_repos?: number;
       /** @example 81 */
-      private_gists?: number;
+      private_gists?: number | null;
       /** @example 10000 */
-      disk_usage?: number;
+      disk_usage?: number | null;
       /** @example 8 */
-      collaborators?: number;
+      collaborators?: number | null;
       /**
        * Format: email
        * @example org@example.com
        */
-      billing_email?: string;
+      billing_email?: string | null;
       plan?: {
         name: string;
         space: number;
@@ -10414,11 +10416,11 @@ export interface components {
         filled_seats?: number;
         seats?: number;
       };
-      default_repository_permission?: string;
+      default_repository_permission?: string | null;
       /** @example true */
-      members_can_create_repositories?: boolean;
+      members_can_create_repositories?: boolean | null;
       /** @example true */
-      two_factor_requirement_enabled?: boolean;
+      two_factor_requirement_enabled?: boolean | null;
       /** @example all */
       members_allowed_repository_creation_type?: string;
       /** @example true */
@@ -10434,7 +10436,7 @@ export interface components {
       /** @example true */
       members_can_create_private_pages?: boolean;
       /** @example false */
-      members_can_fork_private_repositories?: boolean;
+      members_can_fork_private_repositories?: boolean | null;
       /** @example false */
       web_commit_signoff_required?: boolean;
       /** Format: date-time */
@@ -10855,7 +10857,7 @@ export interface components {
        * @description Body of the project
        * @example This project represents the sprint of the first week in January
        */
-      body: string;
+      body: string | null;
       /** @example 1 */
       number: number;
       /**
@@ -10911,7 +10913,7 @@ export interface components {
        * @description Description of the team
        * @example A great team.
        */
-      description: string;
+      description: string | null;
       /**
        * @description Permission that the team will have for its repositories
        * @example admin
@@ -10949,7 +10951,7 @@ export interface components {
       node_id: string;
       name: string;
       slug: string;
-      description: string;
+      description: string | null;
       privacy?: string;
       permission: string;
       permissions?: {
@@ -11008,7 +11010,7 @@ export interface components {
       /** @example https://github.com/images/error/octocat_happy.gif */
       avatar_url: string;
       /** @example A great organization */
-      description: string;
+      description: string | null;
       /** @example github */
       name?: string;
       /** @example GitHub */
@@ -11026,7 +11028,7 @@ export interface components {
        */
       email?: string;
       /** @example github */
-      twitter_username?: string;
+      twitter_username?: string | null;
       /** @example true */
       is_verified?: boolean;
       /** @example true */
@@ -11058,16 +11060,16 @@ export interface components {
       /** @example 100 */
       owned_private_repos?: number;
       /** @example 81 */
-      private_gists?: number;
+      private_gists?: number | null;
       /** @example 10000 */
-      disk_usage?: number;
+      disk_usage?: number | null;
       /** @example 8 */
-      collaborators?: number;
+      collaborators?: number | null;
       /**
        * Format: email
        * @example org@example.com
        */
-      billing_email?: string;
+      billing_email?: string | null;
       plan?: {
         name: string;
         space: number;
@@ -11075,11 +11077,11 @@ export interface components {
         filled_seats?: number;
         seats?: number;
       };
-      default_repository_permission?: string;
+      default_repository_permission?: string | null;
       /** @example true */
-      members_can_create_repositories?: boolean;
+      members_can_create_repositories?: boolean | null;
       /** @example true */
-      two_factor_requirement_enabled?: boolean;
+      two_factor_requirement_enabled?: boolean | null;
       /** @example all */
       members_allowed_repository_creation_type?: string;
       /** @example true */
@@ -11095,7 +11097,7 @@ export interface components {
       /** @example true */
       members_can_create_private_pages?: boolean;
       /** @example false */
-      members_can_fork_private_repositories?: boolean;
+      members_can_fork_private_repositories?: boolean | null;
       /** @example false */
       web_commit_signoff_required?: boolean;
       /** Format: date-time */
@@ -11132,7 +11134,7 @@ export interface components {
       /** @example justice-league */
       slug: string;
       /** @example A great team. */
-      description: string;
+      description: string | null;
       /**
        * @description The level of privacy this team should have
        * @example closed
@@ -11204,7 +11206,7 @@ export interface components {
        */
       created_at: string;
       /** Format: date-time */
-      last_edited_at: string;
+      last_edited_at: string | null;
       /**
        * Format: uri
        * @example https://github.com/orgs/github/teams/justice-league/discussions/1
@@ -11273,7 +11275,7 @@ export interface components {
        */
       created_at: string;
       /** Format: date-time */
-      last_edited_at: string;
+      last_edited_at: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/organizations/1/team/2403582/discussions/1
@@ -11365,7 +11367,7 @@ export interface components {
       id: number;
       node_id: string;
       name: string;
-      body: string;
+      body: string | null;
       number: number;
       state: string;
       creator: components["schemas"]["simple-user"];
@@ -11423,7 +11425,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -11546,7 +11548,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -11561,8 +11563,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -11626,17 +11628,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at: string;
+      pushed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /**
        * @description Whether to allow rebase merges for pull requests.
        * @default true
@@ -11705,7 +11707,7 @@ export interface components {
       /** @example MDExOlByb2plY3RDYXJkMTQ3OA== */
       node_id: string;
       /** @example Add payload for delete Project column */
-      note: string;
+      note: string | null;
       creator: components["schemas"]["nullable-simple-user"];
       /**
        * Format: date-time
@@ -11833,7 +11835,7 @@ export interface components {
        * Format: uri
        * @example https://github.com/github/docs/blob/main/CODE_OF_CONDUCT.md
        */
-      html_url: string;
+      html_url: string | null;
     };
     "security-and-analysis": {
       advanced_security?: {
@@ -11870,7 +11872,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -11993,7 +11995,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -12008,8 +12010,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -12078,7 +12080,7 @@ export interface components {
       /** @example true */
       allow_rebase_merge?: boolean;
       template_repository?: components["schemas"]["nullable-repository"];
-      temp_clone_token?: string;
+      temp_clone_token?: string | null;
       /** @example true */
       allow_squash_merge?: boolean;
       /** @example false */
@@ -12141,11 +12143,11 @@ export interface components {
       /** @description Whether or not the artifact has expired. */
       expired: boolean;
       /** Format: date-time */
-      created_at: string;
+      created_at: string | null;
       /** Format: date-time */
-      expires_at: string;
+      expires_at: string | null;
       /** Format: date-time */
-      updated_at: string;
+      updated_at: string | null;
       workflow_run?: {
         /** @example 10 */
         id?: number;
@@ -12191,7 +12193,7 @@ export interface components {
       /** @example https://api.github.com/repos/github/hello-world/actions/jobs/21 */
       url: string;
       /** @example https://github.com/github/hello-world/runs/4 */
-      html_url: string;
+      html_url: string | null;
       /**
        * @description The phase of the lifecycle that the job is currently in.
        * @example queued
@@ -12223,7 +12225,7 @@ export interface components {
        * @description The time that the job finished, in ISO 8601 format.
        * @example 2019-08-08T08:00:00-07:00
        */
-      completed_at: string;
+      completed_at: string | null;
       /**
        * @description The name of the job.
        * @example test-coverage
@@ -12241,7 +12243,7 @@ export interface components {
          * @description The outcome of the job.
          * @example success
          */
-        conclusion: string;
+        conclusion: string | null;
         /**
          * @description The name of the job.
          * @example test-coverage
@@ -12254,13 +12256,13 @@ export interface components {
          * @description The time that the step started, in ISO 8601 format.
          * @example 2019-08-08T08:00:00-07:00
          */
-        started_at?: string;
+        started_at?: string | null;
         /**
          * Format: date-time
          * @description The time that the job finished, in ISO 8601 format.
          * @example 2019-08-08T08:00:00-07:00
          */
-        completed_at?: string;
+        completed_at?: string | null;
       }[];
       /** @example https://api.github.com/repos/github/hello-world/check-runs/4 */
       check_run_url: string;
@@ -12277,22 +12279,22 @@ export interface components {
        * @description The ID of the runner to which this job has been assigned. (If a runner hasn't yet been assigned, this will be null.)
        * @example 1
        */
-      runner_id: number;
+      runner_id: number | null;
       /**
        * @description The name of the runner to which this job has been assigned. (If a runner hasn't yet been assigned, this will be null.)
        * @example my runner
        */
-      runner_name: string;
+      runner_name: string | null;
       /**
        * @description The ID of the runner group to which this job has been assigned. (If a runner hasn't yet been assigned, this will be null.)
        * @example 2
        */
-      runner_group_id: number;
+      runner_group_id: number | null;
       /**
        * @description The name of the runner group to which this job has been assigned. (If a runner hasn't yet been assigned, this will be null.)
        * @example my runner group
        */
-      runner_group_name: string;
+      runner_group_name: string | null;
     };
     /** @description Whether GitHub Actions is enabled on the repository. */
     "actions-enabled": boolean;
@@ -12367,7 +12369,7 @@ export interface components {
        * @description The name of the workflow run.
        * @example Build
        */
-      name?: string;
+      name?: string | null;
       /** @example MDEwOkNoZWNrU3VpdGU1 */
       node_id: string;
       /**
@@ -12381,7 +12383,7 @@ export interface components {
        */
       check_suite_node_id?: string;
       /** @example master */
-      head_branch: string;
+      head_branch: string | null;
       /**
        * @description The SHA of the head commit that points to the version of the workflow being run.
        * @example 009b8a3a9ccbb128af87f9b1c0f4c62e8a304f6d
@@ -12402,13 +12404,15 @@ export interface components {
        * @example 1
        */
       run_attempt?: number;
-      referenced_workflows?: components["schemas"]["referenced-workflow"][];
+      referenced_workflows?:
+        | components["schemas"]["referenced-workflow"][]
+        | null;
       /** @example push */
       event: string;
       /** @example completed */
-      status: string;
+      status: string | null;
       /** @example neutral */
-      conclusion: string;
+      conclusion: string | null;
       /**
        * @description The ID of the parent workflow.
        * @example 5
@@ -12421,7 +12425,7 @@ export interface components {
       url: string;
       /** @example https://github.com/github/hello-world/suites/4 */
       html_url: string;
-      pull_requests: components["schemas"]["pull-request-minimal"][];
+      pull_requests: components["schemas"]["pull-request-minimal"][] | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -12467,7 +12471,7 @@ export interface components {
        * @description The URL to the previous attempted run of this workflow, if one exists.
        * @example https://api.github.com/repos/github/hello-world/actions/runs/5/attempts/3
        */
-      previous_attempt_url?: string;
+      previous_attempt_url?: string | null;
       /**
        * @description The URL to the workflow.
        * @example https://api.github.com/repos/github/hello-world/actions/workflows/main.yaml
@@ -12622,7 +12626,7 @@ export interface components {
       contexts: string[];
       checks: {
         context: string;
-        app_id: number;
+        app_id: number | null;
       }[];
       contexts_url?: string;
       strict?: boolean;
@@ -12720,12 +12724,12 @@ export interface components {
         html_url?: string;
         name?: string;
         slug?: string;
-        description?: string;
+        description?: string | null;
         privacy?: string;
         permission?: string;
         members_url?: string;
         repositories_url?: string;
-        parent?: string;
+        parent?: string | null;
       }[];
       apps: {
         id?: number;
@@ -12854,8 +12858,8 @@ export interface components {
     verification: {
       verified: boolean;
       reason: string;
-      payload: string;
-      signature: string;
+      payload: string | null;
+      signature: string | null;
     };
     /**
      * Diff Entry
@@ -13016,7 +13020,7 @@ export interface components {
       checks: {
         /** @example continuous-integration/travis-ci */
         context: string;
-        app_id: number;
+        app_id: number | null;
       }[];
       /**
        * Format: uri
@@ -13116,7 +13120,7 @@ export interface components {
        */
       environment: string;
       /** @example Deploy request from hubot */
-      description: string;
+      description: string | null;
       /**
        * Format: date-time
        * @example 2012-07-20T01:19:13Z
@@ -13167,13 +13171,13 @@ export interface components {
       /** @example MDg6Q2hlY2tSdW40 */
       node_id: string;
       /** @example 42 */
-      external_id: string;
+      external_id: string | null;
       /** @example https://api.github.com/repos/github/hello-world/check-runs/4 */
       url: string;
       /** @example https://github.com/github/hello-world/runs/4 */
-      html_url: string;
+      html_url: string | null;
       /** @example https://example.com */
-      details_url: string;
+      details_url: string | null;
       /**
        * @description The phase of the lifecycle that the check is currently in.
        * @example queued
@@ -13197,16 +13201,16 @@ export interface components {
        * Format: date-time
        * @example 2018-05-04T01:14:52Z
        */
-      started_at: string;
+      started_at: string | null;
       /**
        * Format: date-time
        * @example 2018-05-04T01:14:52Z
        */
-      completed_at: string;
+      completed_at: string | null;
       output: {
-        title: string;
-        summary: string;
-        text: string;
+        title: string | null;
+        summary: string | null;
+        text: string | null;
         annotations_count: number;
         /** Format: uri */
         annotations_url: string;
@@ -13235,17 +13239,17 @@ export interface components {
       /** @example 2 */
       end_line: number;
       /** @example 5 */
-      start_column: number;
+      start_column: number | null;
       /** @example 10 */
-      end_column: number;
+      end_column: number | null;
       /** @example warning */
-      annotation_level: string;
+      annotation_level: string | null;
       /** @example Spell Checker */
-      title: string;
+      title: string | null;
       /** @example Check your spelling for 'banaas'. */
-      message: string;
+      message: string | null;
       /** @example Do you mean 'bananas' or 'banana'? */
-      raw_details: string;
+      raw_details: string | null;
       blob_href: string;
     };
     /**
@@ -13277,7 +13281,7 @@ export interface components {
       /** @example MDEwOkNoZWNrU3VpdGU1 */
       node_id: string;
       /** @example master */
-      head_branch: string;
+      head_branch: string | null;
       /**
        * @description The SHA of the head commit that is being checked.
        * @example 009b8a3a9ccbb128af87f9b1c0f4c62e8a304f6d
@@ -13302,18 +13306,18 @@ export interface components {
         | "action_required"
         | null;
       /** @example https://api.github.com/repos/github/hello-world/check-suites/5 */
-      url: string;
+      url: string | null;
       /** @example 146e867f55c26428e5f9fade55a9bbf5e95a7912 */
-      before: string;
+      before: string | null;
       /** @example d6fde92930d4715a2b49857d24b940956b26d2d3 */
-      after: string;
-      pull_requests: components["schemas"]["pull-request-minimal"][];
+      after: string | null;
+      pull_requests: components["schemas"]["pull-request-minimal"][] | null;
       app: components["schemas"]["nullable-integration"];
       repository: components["schemas"]["minimal-repository"];
       /** Format: date-time */
-      created_at: string;
+      created_at: string | null;
       /** Format: date-time */
-      updated_at: string;
+      updated_at: string | null;
       head_commit: components["schemas"]["simple-commit"];
       latest_check_runs_count: number;
       check_runs_url: string;
@@ -13336,7 +13340,7 @@ export interface components {
     /** @description The name of the tool used to generate the code scanning analysis. */
     "code-scanning-analysis-tool-name": string;
     /** @description The GUID of the tool used to generate the code scanning analysis, if provided in the uploaded SARIF data. */
-    "code-scanning-analysis-tool-guid": string;
+    "code-scanning-analysis-tool-guid": string | null;
     /**
      * @description The full Git reference, formatted as `refs/heads/<branch name>`,
      * `refs/pull/<number>/merge`, or `refs/pull/<number>/head`.
@@ -13373,7 +13377,7 @@ export interface components {
      * Format: date-time
      * @description The time that the alert was dismissed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    readonly "code-scanning-alert-dismissed-at": string;
+    readonly "code-scanning-alert-dismissed-at": string | null;
     /**
      * @description **Required when the state is dismissed.** The reason for dismissing or closing the alert.
      * @enum {string|null}
@@ -13386,7 +13390,7 @@ export interface components {
       | null;
     "code-scanning-alert-rule-summary": {
       /** @description A unique identifier for the rule used to detect the alert. */
-      id?: string;
+      id?: string | null;
       /** @description The name of the rule used to detect the alert. */
       name?: string;
       /**
@@ -13398,7 +13402,7 @@ export interface components {
       description?: string;
     };
     /** @description The version of the tool used to generate the code scanning analysis. */
-    "code-scanning-analysis-tool-version": string;
+    "code-scanning-analysis-tool-version": string | null;
     "code-scanning-analysis-tool": {
       name?: components["schemas"]["code-scanning-analysis-tool-name"];
       version?: components["schemas"]["code-scanning-analysis-tool-version"];
@@ -13462,7 +13466,7 @@ export interface components {
     };
     "code-scanning-alert-rule": {
       /** @description A unique identifier for the rule used to detect the alert. */
-      id?: string;
+      id?: string | null;
       /** @description The name of the rule used to detect the alert. */
       name?: string;
       /**
@@ -13480,11 +13484,11 @@ export interface components {
       /** @description description of the rule used to detect the alert. */
       full_description?: string;
       /** @description A set of tags applicable for the rule. */
-      tags?: string[];
+      tags?: string[] | null;
       /** @description Detailed documentation for the rule as GitHub Flavored Markdown. */
-      help?: string;
+      help?: string | null;
       /** @description A link to the documentation for the rule used to detect the alert. */
-      help_uri?: string;
+      help_uri?: string | null;
     };
     "code-scanning-alert": {
       number: components["schemas"]["alert-number"];
@@ -13558,12 +13562,12 @@ export interface components {
        * Format: uri
        * @description Next deletable analysis in chain, without last analysis deletion confirmation
        */
-      next_analysis_url: string;
+      next_analysis_url: string | null;
       /**
        * Format: uri
        * @description Next deletable analysis in chain, with last analysis deletion confirmation
        */
-      confirm_delete_url: string;
+      confirm_delete_url: string | null;
     };
     /** @description A Base64 string representing the SARIF file to upload. You must first compress your SARIF file using [`gzip`](http://www.gnu.org/software/gzip/manual/gzip.html) and then translate the contents of the file into a Base64 encoding string. For more information, see "[SARIF support for code scanning](https://docs.github.com/github-ae@latest/code-security/secure-coding/sarif-support-for-code-scanning)." */
     "code-scanning-analysis-sarif-file": string;
@@ -13585,9 +13589,9 @@ export interface components {
        * Format: uri
        * @description The REST API URL for getting the analyses associated with the upload.
        */
-      analyses_url?: string;
+      analyses_url?: string | null;
       /** @description Any errors that ocurred during processing of the delivery. */
-      errors?: readonly string[];
+      errors?: readonly string[] | null;
     };
     /**
      * CODEOWNERS errors
@@ -13619,7 +13623,7 @@ export interface components {
          * @description Suggested action to fix the error. This will usually be `null`, but is provided for some common errors.
          * @example The pattern `/` will never match anything, did you mean `*` instead?
          */
-        suggestion?: string;
+        suggestion?: string | null;
         /**
          * @description A human-readable description of the error, combining information from multiple fields, laid out for display in a monospaced typeface (for example, a command-line setting).
          * @example Invalid owner on line 7:
@@ -13644,8 +13648,8 @@ export interface components {
       login: string;
       /** @example 1 */
       id: number;
-      email?: string;
-      name?: string;
+      email?: string | null;
+      name?: string | null;
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
@@ -13654,7 +13658,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -13755,8 +13759,8 @@ export interface components {
       login: string;
       /** @example 1 */
       id: number;
-      email?: string;
-      name?: string;
+      email?: string | null;
+      name?: string | null;
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
@@ -13765,7 +13769,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -13844,9 +13848,9 @@ export interface components {
       id: number;
       node_id: string;
       body: string;
-      path: string;
-      position: number;
-      line: number;
+      path: string | null;
+      position: number | null;
+      line: number | null;
       commit_id: string;
       user: components["schemas"]["nullable-simple-user"];
       /** Format: date-time */
@@ -13957,7 +13961,7 @@ export interface components {
       title: string;
       user: components["schemas"]["nullable-simple-user"];
       /** @example Please pull these awesome changes */
-      body: string;
+      body: string | null;
       labels: {
         /** Format: int64 */
         id: number;
@@ -13970,7 +13974,7 @@ export interface components {
       }[];
       milestone: components["schemas"]["nullable-milestone"];
       /** @example too heated */
-      active_lock_reason?: string;
+      active_lock_reason?: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
@@ -13985,18 +13989,18 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      closed_at: string;
+      closed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      merged_at: string;
+      merged_at: string | null;
       /** @example e5bd3914e2e596debea16f433f57875b5b90bcd6 */
-      merge_commit_sha: string;
+      merge_commit_sha: string | null;
       assignee: components["schemas"]["nullable-simple-user"];
-      assignees?: components["schemas"]["simple-user"][];
-      requested_reviewers?: components["schemas"]["simple-user"][];
-      requested_teams?: components["schemas"]["team"][];
+      assignees?: components["schemas"]["simple-user"][] | null;
+      requested_reviewers?: components["schemas"]["simple-user"][] | null;
+      requested_teams?: components["schemas"]["team"][] | null;
       head: {
         label: string;
         ref: string;
@@ -14031,16 +14035,16 @@ export interface components {
     };
     /** Simple Commit Status */
     "simple-commit-status": {
-      description: string;
+      description: string | null;
       id: number;
       node_id: string;
       state: string;
       context: string;
       /** Format: uri */
-      target_url: string;
-      required?: boolean;
+      target_url: string | null;
+      required?: boolean | null;
       /** Format: uri */
-      avatar_url: string;
+      avatar_url: string | null;
       /** Format: uri */
       url: string;
       /** Format: date-time */
@@ -14069,12 +14073,12 @@ export interface components {
      */
     status: {
       url: string;
-      avatar_url: string;
+      avatar_url: string | null;
       id: number;
       node_id: string;
       state: string;
-      description: string;
-      target_url: string;
+      description: string | null;
+      target_url: string | null;
       context: string;
       created_at: string;
       updated_at: string;
@@ -14139,11 +14143,11 @@ export interface components {
       /** Format: uri */
       url: string;
       /** Format: uri */
-      git_url: string;
+      git_url: string | null;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
       /** Format: uri */
-      download_url: string;
+      download_url: string | null;
       entries?: {
         type: string;
         size: number;
@@ -14154,25 +14158,25 @@ export interface components {
         /** Format: uri */
         url: string;
         /** Format: uri */
-        git_url: string;
+        git_url: string | null;
         /** Format: uri */
-        html_url: string;
+        html_url: string | null;
         /** Format: uri */
-        download_url: string;
+        download_url: string | null;
         _links: {
           /** Format: uri */
-          git: string;
+          git: string | null;
           /** Format: uri */
-          html: string;
+          html: string | null;
           /** Format: uri */
           self: string;
         };
       }[];
       _links: {
         /** Format: uri */
-        git: string;
+        git: string | null;
         /** Format: uri */
-        html: string;
+        html: string | null;
         /** Format: uri */
         self: string;
       };
@@ -14192,16 +14196,16 @@ export interface components {
       /** Format: uri */
       url: string;
       /** Format: uri */
-      git_url: string;
+      git_url: string | null;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
       /** Format: uri */
-      download_url: string;
+      download_url: string | null;
       _links: {
         /** Format: uri */
-        git: string;
+        git: string | null;
         /** Format: uri */
-        html: string;
+        html: string | null;
         /** Format: uri */
         self: string;
       };
@@ -14222,16 +14226,16 @@ export interface components {
       /** Format: uri */
       url: string;
       /** Format: uri */
-      git_url: string;
+      git_url: string | null;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
       /** Format: uri */
-      download_url: string;
+      download_url: string | null;
       _links: {
         /** Format: uri */
-        git: string;
+        git: string | null;
         /** Format: uri */
-        html: string;
+        html: string | null;
         /** Format: uri */
         self: string;
       };
@@ -14255,16 +14259,16 @@ export interface components {
       /** Format: uri */
       url: string;
       /** Format: uri */
-      git_url: string;
+      git_url: string | null;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
       /** Format: uri */
-      download_url: string;
+      download_url: string | null;
       _links: {
         /** Format: uri */
-        git: string;
+        git: string | null;
         /** Format: uri */
-        html: string;
+        html: string | null;
         /** Format: uri */
         self: string;
       };
@@ -14285,16 +14289,16 @@ export interface components {
       /** Format: uri */
       url: string;
       /** Format: uri */
-      git_url: string;
+      git_url: string | null;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
       /** Format: uri */
-      download_url: string;
+      download_url: string | null;
       _links: {
         /** Format: uri */
-        git: string;
+        git: string | null;
         /** Format: uri */
-        html: string;
+        html: string | null;
         /** Format: uri */
         self: string;
       };
@@ -14348,8 +14352,8 @@ export interface components {
         verification?: {
           verified?: boolean;
           reason?: string;
-          signature?: string;
-          payload?: string;
+          signature?: string | null;
+          payload?: string | null;
         };
       };
     };
@@ -14363,7 +14367,7 @@ export interface components {
       node_id?: string;
       /** Format: uri */
       avatar_url?: string;
-      gravatar_id?: string;
+      gravatar_id?: string | null;
       /** Format: uri */
       url?: string;
       /** Format: uri */
@@ -14433,7 +14437,7 @@ export interface components {
        */
       environment: string;
       /** @example Deploy request from hubot */
-      description: string;
+      description: string | null;
       creator: components["schemas"]["nullable-simple-user"];
       /**
        * Format: date-time
@@ -14674,7 +14678,7 @@ export interface components {
       id: number;
       login: string;
       display_login?: string;
-      gravatar_id: string;
+      gravatar_id: string | null;
       /** Format: uri */
       url: string;
       /** Format: uri */
@@ -14729,7 +14733,7 @@ export interface components {
      */
     event: {
       id: string;
-      type: string;
+      type: string | null;
       actor: components["schemas"]["actor"];
       repo: {
         id: number;
@@ -14745,7 +14749,7 @@ export interface components {
         pages?: {
           page_name?: string;
           title?: string;
-          summary?: string;
+          summary?: string | null;
           action?: string;
           sha?: string;
           html_url?: string;
@@ -14753,7 +14757,7 @@ export interface components {
       };
       public: boolean;
       /** Format: date-time */
-      created_at: string;
+      created_at: string | null;
     };
     /**
      * Short Blob
@@ -14773,7 +14777,7 @@ export interface components {
       /** Format: uri */
       url: string;
       sha: string;
-      size: number;
+      size: number | null;
       node_id: string;
       highlighted_content?: string;
     };
@@ -14856,8 +14860,8 @@ export interface components {
       verification: {
         verified: boolean;
         reason: string;
-        signature: string;
-        payload: string;
+        signature: string | null;
+        payload: string | null;
       };
       /** Format: uri */
       html_url: string;
@@ -14987,9 +14991,9 @@ export interface components {
     };
     /** Hook Response */
     "hook-response": {
-      code: number;
-      status: string;
-      message: string;
+      code: number | null;
+      status: string | null;
+      message: string | null;
     };
     /**
      * Webhook
@@ -15117,7 +15121,7 @@ export interface components {
        * @description Contents of the issue
        * @example It looks like the new widget form is broken on Safari. When I try and create the widget, Safari crashes. This is reproducible on 10.8, but not 10.9. Maybe a browser bug?
        */
-      body?: string;
+      body?: string | null;
       user: components["schemas"]["nullable-simple-user"];
       /**
        * @description Labels to associate with this issue; pass one or more label names to replace the set of labels on this issue; send an empty array to clear all labels from the issue; note that the labels are silently dropped for users without push access to the repository
@@ -15136,32 +15140,32 @@ export interface components {
             /** Format: uri */
             url?: string;
             name?: string;
-            description?: string;
-            color?: string;
+            description?: string | null;
+            color?: string | null;
             default?: boolean;
           }
         ]
       >[];
       assignee: components["schemas"]["nullable-simple-user"];
-      assignees?: components["schemas"]["simple-user"][];
+      assignees?: components["schemas"]["simple-user"][] | null;
       milestone: components["schemas"]["nullable-milestone"];
       locked: boolean;
-      active_lock_reason?: string;
+      active_lock_reason?: string | null;
       comments: number;
       pull_request?: {
         /** Format: date-time */
-        merged_at?: string;
+        merged_at?: string | null;
         /** Format: uri */
-        diff_url: string;
+        diff_url: string | null;
         /** Format: uri */
-        html_url: string;
+        html_url: string | null;
         /** Format: uri */
-        patch_url: string;
+        patch_url: string | null;
         /** Format: uri */
-        url: string;
+        url: string | null;
       };
       /** Format: date-time */
-      closed_at: string;
+      closed_at: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -15182,15 +15186,15 @@ export interface components {
      * @description Issue Event Label
      */
     "issue-event-label": {
-      name: string;
-      color: string;
+      name: string | null;
+      color: string | null;
     };
     /** Issue Event Dismissed Review */
     "issue-event-dismissed-review": {
       state: string;
       review_id: number;
-      dismissal_message: string;
-      dismissal_commit_id?: string;
+      dismissal_message: string | null;
+      dismissal_commit_id?: string | null;
     };
     /**
      * Issue Event Milestone
@@ -15239,9 +15243,9 @@ export interface components {
       /** @example closed */
       event: string;
       /** @example 6dcb09b5b57875f334f61aebed695e2e4193db5e */
-      commit_id: string;
+      commit_id: string | null;
       /** @example https://api.github.com/repos/octocat/Hello-World/commits/6dcb09b5b57875f334f61aebed695e2e4193db5e */
-      commit_url: string;
+      commit_url: string | null;
       /**
        * Format: date-time
        * @example 2011-04-14T16:00:49Z
@@ -15259,7 +15263,7 @@ export interface components {
       project_card?: components["schemas"]["issue-event-project-card"];
       rename?: components["schemas"]["issue-event-rename"];
       author_association?: components["schemas"]["author-association"];
-      lock_reason?: string;
+      lock_reason?: string | null;
       performed_via_github_app?: components["schemas"]["nullable-integration"];
     };
     /**
@@ -15272,8 +15276,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       label: {
@@ -15291,8 +15295,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       label: {
@@ -15310,8 +15314,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["integration"];
       assignee: components["schemas"]["simple-user"];
@@ -15327,8 +15331,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       assignee: components["schemas"]["simple-user"];
@@ -15344,8 +15348,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       milestone: {
@@ -15362,8 +15366,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       milestone: {
@@ -15380,8 +15384,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       rename: {
@@ -15399,8 +15403,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       review_requester: components["schemas"]["simple-user"];
@@ -15417,8 +15421,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       review_requester: components["schemas"]["simple-user"];
@@ -15435,14 +15439,14 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       dismissed_review: {
         state: string;
         review_id: number;
-        dismissal_message: string;
+        dismissal_message: string | null;
         dismissal_commit_id?: string;
       };
     };
@@ -15456,12 +15460,12 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       /** @example "off-topic" */
-      lock_reason: string;
+      lock_reason: string | null;
     };
     /**
      * Added to Project Issue Event
@@ -15473,8 +15477,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       project_card?: {
@@ -15498,8 +15502,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       project_card?: {
@@ -15523,8 +15527,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       project_card?: {
@@ -15548,8 +15552,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["integration"];
       project_card?: {
@@ -15607,7 +15611,7 @@ export interface components {
        */
       name: string;
       /** @example Something isn't working */
-      description: string;
+      description: string | null;
       /**
        * @description 6-character hex code, without the leading #, identifying the color
        * @example FFFFFF
@@ -15757,8 +15761,8 @@ export interface components {
       verification: {
         verified: boolean;
         reason: string;
-        signature: string;
-        payload: string;
+        signature: string | null;
+        payload: string | null;
       };
       /** Format: uri */
       html_url: string;
@@ -15781,7 +15785,7 @@ export interface components {
        * @description The text of the review.
        * @example This looks great.
        */
-      body: string;
+      body: string | null;
       /** @example CHANGES_REQUESTED */
       state: string;
       /**
@@ -15827,7 +15831,7 @@ export interface components {
        * @description The ID of the pull request review to which the comment belongs.
        * @example 42
        */
-      pull_request_review_id: number;
+      pull_request_review_id: number | null;
       /**
        * @description The ID of the pull request review comment.
        * @example 1
@@ -15929,12 +15933,12 @@ export interface components {
        * @description The first line of the range for a multi-line comment.
        * @example 2
        */
-      start_line?: number;
+      start_line?: number | null;
       /**
        * @description The first line of the range for a multi-line comment.
        * @example 2
        */
-      original_start_line?: number;
+      original_start_line?: number | null;
       /**
        * @description The side of the first line of the range for a multi-line comment.
        * @default RIGHT
@@ -15992,8 +15996,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       assignee: components["schemas"]["simple-user"];
@@ -16008,8 +16012,8 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
       assignee: components["schemas"]["simple-user"];
@@ -16024,11 +16028,11 @@ export interface components {
       url: string;
       actor: components["schemas"]["simple-user"];
       event: string;
-      commit_id: string;
-      commit_url: string;
+      commit_id: string | null;
+      commit_url: string | null;
       created_at: string;
       performed_via_github_app: components["schemas"]["nullable-integration"];
-      state_reason?: string;
+      state_reason?: string | null;
     };
     /**
      * Timeline Event
@@ -16089,19 +16093,19 @@ export interface components {
       /** Format: uri */
       url: string;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
       /** Format: uri */
-      git_url: string;
+      git_url: string | null;
       /** Format: uri */
-      download_url: string;
+      download_url: string | null;
       type: string;
       content: string;
       encoding: string;
       _links: {
         /** Format: uri */
-        git: string;
+        git: string | null;
         /** Format: uri */
-        html: string;
+        html: string | null;
         /** Format: uri */
         self: string;
       };
@@ -16159,7 +16163,7 @@ export interface components {
        */
       title: string;
       /** @example Tracking milestone for version 1.0 */
-      description: string;
+      description: string | null;
       creator: components["schemas"]["nullable-simple-user"];
       /** @example 4 */
       open_issues: number;
@@ -16179,12 +16183,12 @@ export interface components {
        * Format: date-time
        * @example 2013-02-12T13:22:01Z
        */
-      closed_at: string;
+      closed_at: string | null;
       /**
        * Format: date-time
        * @example 2012-10-09T23:39:01Z
        */
-      due_on: string;
+      due_on: string | null;
     };
     /** Pages Source Hash */
     "pages-source-hash": {
@@ -16244,7 +16248,7 @@ export interface components {
        * @description The Pages site's custom domain
        * @example example.com
        */
-      cname: string;
+      cname: string | null;
       /**
        * @description The state if the domain is verified
        * @example pending
@@ -16255,7 +16259,7 @@ export interface components {
        * Format: date-time
        * @description The timestamp when a pending domain becomes unverified.
        */
-      pending_domain_unverified_at?: string;
+      pending_domain_unverified_at?: string | null;
       /**
        * @description Whether the Page has a custom 404 page.
        * @default false
@@ -16296,7 +16300,7 @@ export interface components {
       url: string;
       status: string;
       error: {
-        message: string;
+        message: string | null;
       };
       pusher: components["schemas"]["nullable-simple-user"];
       commit: string;
@@ -16348,7 +16352,7 @@ export interface components {
        * @description Description of the team
        * @example A great team.
        */
-      description: string;
+      description: string | null;
       /**
        * @description Permission that the team will have for its repositories
        * @example admin
@@ -16453,20 +16457,20 @@ export interface components {
       title: string;
       user: components["schemas"]["nullable-simple-user"];
       /** @example Please pull these awesome changes */
-      body: string;
+      body: string | null;
       labels: {
         /** Format: int64 */
         id: number;
         node_id: string;
         url: string;
         name: string;
-        description: string;
+        description: string | null;
         color: string;
         default: boolean;
       }[];
       milestone: components["schemas"]["nullable-milestone"];
       /** @example too heated */
-      active_lock_reason?: string;
+      active_lock_reason?: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
@@ -16481,18 +16485,18 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      closed_at: string;
+      closed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      merged_at: string;
+      merged_at: string | null;
       /** @example e5bd3914e2e596debea16f433f57875b5b90bcd6 */
-      merge_commit_sha: string;
+      merge_commit_sha: string | null;
       assignee: components["schemas"]["nullable-simple-user"];
-      assignees?: components["schemas"]["simple-user"][];
-      requested_reviewers?: components["schemas"]["simple-user"][];
-      requested_teams?: components["schemas"]["team-simple"][];
+      assignees?: components["schemas"]["simple-user"][] | null;
+      requested_reviewers?: components["schemas"]["simple-user"][] | null;
+      requested_teams?: components["schemas"]["team-simple"][] | null;
       head: {
         label: string;
         ref: string;
@@ -16510,7 +16514,7 @@ export interface components {
           contributors_url: string;
           /** Format: uri */
           deployments_url: string;
-          description: string;
+          description: string | null;
           /** Format: uri */
           downloads_url: string;
           /** Format: uri */
@@ -16548,7 +16552,7 @@ export interface components {
             followers_url: string;
             following_url: string;
             gists_url: string;
-            gravatar_id: string;
+            gravatar_id: string | null;
             /** Format: uri */
             html_url: string;
             id: number;
@@ -16596,15 +16600,15 @@ export interface components {
           has_wiki: boolean;
           has_pages: boolean;
           /** Format: uri */
-          homepage: string;
-          language: string;
+          homepage: string | null;
+          language: string | null;
           master_branch?: string;
           archived: boolean;
           disabled: boolean;
           /** @description The repository visibility: public, private, or internal. */
           visibility?: string;
           /** Format: uri */
-          mirror_url: string;
+          mirror_url: string | null;
           open_issues: number;
           open_issues_count: number;
           permissions?: {
@@ -16622,8 +16626,8 @@ export interface components {
             key: string;
             name: string;
             /** Format: uri */
-            url: string;
-            spdx_id: string;
+            url: string | null;
+            spdx_id: string | null;
             node_id: string;
           } | null;
           /** Format: date-time */
@@ -16653,7 +16657,7 @@ export interface components {
           followers_url: string;
           following_url: string;
           gists_url: string;
-          gravatar_id: string;
+          gravatar_id: string | null;
           /** Format: uri */
           html_url: string;
           id: number;
@@ -16691,7 +16695,7 @@ export interface components {
           contributors_url: string;
           /** Format: uri */
           deployments_url: string;
-          description: string;
+          description: string | null;
           /** Format: uri */
           downloads_url: string;
           /** Format: uri */
@@ -16730,7 +16734,7 @@ export interface components {
             followers_url: string;
             following_url: string;
             gists_url: string;
-            gravatar_id: string;
+            gravatar_id: string | null;
             /** Format: uri */
             html_url: string;
             id: number;
@@ -16778,15 +16782,15 @@ export interface components {
           has_wiki: boolean;
           has_pages: boolean;
           /** Format: uri */
-          homepage: string;
-          language: string;
+          homepage: string | null;
+          language: string | null;
           master_branch?: string;
           archived: boolean;
           disabled: boolean;
           /** @description The repository visibility: public, private, or internal. */
           visibility?: string;
           /** Format: uri */
-          mirror_url: string;
+          mirror_url: string | null;
           open_issues: number;
           open_issues_count: number;
           permissions?: {
@@ -16827,7 +16831,7 @@ export interface components {
           followers_url: string;
           following_url: string;
           gists_url: string;
-          gravatar_id: string;
+          gravatar_id: string | null;
           /** Format: uri */
           html_url: string;
           id: number;
@@ -16867,9 +16871,9 @@ export interface components {
       draft?: boolean;
       merged: boolean;
       /** @example true */
-      mergeable: boolean;
+      mergeable: boolean | null;
       /** @example true */
-      rebaseable?: boolean;
+      rebaseable?: boolean | null;
       /** @example clean */
       mergeable_state: string;
       merged_by: components["schemas"]["nullable-simple-user"];
@@ -16968,7 +16972,7 @@ export interface components {
        */
       url: string;
       /** @example 42 */
-      pull_request_review_id: number;
+      pull_request_review_id: number | null;
       /** @example 10 */
       id: number;
       /** @example MDI0OlB1bGxSZXF1ZXN0UmV2aWV3Q29tbWVudDEw */
@@ -16978,7 +16982,7 @@ export interface components {
       /** @example file1.txt */
       path: string;
       /** @example 1 */
-      position: number;
+      position: number | null;
       /** @example 4 */
       original_position: number;
       /** @example 6dcb09b5b57875f334f61aebed695e2e4193db5e */
@@ -17045,12 +17049,12 @@ export interface components {
        * @description The first line of the range for a multi-line comment.
        * @example 2
        */
-      start_line?: number;
+      start_line?: number | null;
       /**
        * @description The original first line of the range for a multi-line comment.
        * @example 2
        */
-      original_start_line?: number;
+      original_start_line?: number | null;
     };
     /**
      * Release Asset
@@ -17068,7 +17072,7 @@ export interface components {
        * @example Team Environment
        */
       name: string;
-      label: string;
+      label: string | null;
       /**
        * @description State of the release asset.
        * @enum {string}
@@ -17096,9 +17100,9 @@ export interface components {
       assets_url: string;
       upload_url: string;
       /** Format: uri */
-      tarball_url: string;
+      tarball_url: string | null;
       /** Format: uri */
-      zipball_url: string;
+      zipball_url: string | null;
       id: number;
       node_id: string;
       /**
@@ -17111,8 +17115,8 @@ export interface components {
        * @example master
        */
       target_commitish: string;
-      name: string;
-      body?: string;
+      name: string | null;
+      body?: string | null;
       /**
        * @description true to create a draft (unpublished) release, false to create a published one.
        * @example false
@@ -17126,7 +17130,7 @@ export interface components {
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
-      published_at: string;
+      published_at: string | null;
       author: components["schemas"]["simple-user"];
       assets: components["schemas"]["release-asset"][];
       body_html?: string;
@@ -17177,17 +17181,17 @@ export interface components {
        * Format: date-time
        * @description The time that the alert was resolved in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
        */
-      resolved_at?: string;
+      resolved_at?: string | null;
       resolved_by?: components["schemas"]["nullable-simple-user"];
       /** @description The type of secret that secret scanning detected. */
       secret_type?: string;
       /** @description The secret that was detected. */
       secret?: string;
       /** @description The comment that was optionally added when this alert was closed */
-      resolution_comment?: string;
+      resolution_comment?: string | null;
     };
     /** @description Sets an optional comment when closing an alert. Must be null when changing `state` to `open`. */
-    "secret-scanning-alert-resolution-comment": string;
+    "secret-scanning-alert-resolution-comment": string | null;
     /**
      * Stargazer
      * @description Stargazer
@@ -17266,7 +17270,7 @@ export interface components {
       subscribed: boolean;
       /** @description Determines if all notifications should be blocked from this repository. */
       ignored: boolean;
-      reason: string;
+      reason: string | null;
       /**
        * Format: date-time
        * @example 2012-10-06T21:34:12Z
@@ -17317,7 +17321,7 @@ export interface components {
     /** Search Result Text Matches */
     "search-result-text-matches": {
       object_url?: string;
-      object_type?: string;
+      object_type?: string | null;
       property?: string;
       fragment?: string;
       matches?: {
@@ -17342,7 +17346,7 @@ export interface components {
       repository: components["schemas"]["minimal-repository"];
       score: number;
       file_size?: number;
-      language?: string;
+      language?: string | null;
       /** Format: date-time */
       last_modified_at?: string;
       /**
@@ -17418,8 +17422,8 @@ export interface components {
       number: number;
       title: string;
       locked: boolean;
-      active_lock_reason?: string;
-      assignees?: components["schemas"]["simple-user"][];
+      active_lock_reason?: string | null;
+      assignees?: components["schemas"]["simple-user"][] | null;
       user: components["schemas"]["nullable-simple-user"];
       labels: {
         /** Format: int64 */
@@ -17429,10 +17433,10 @@ export interface components {
         name?: string;
         color?: string;
         default?: boolean;
-        description?: string;
+        description?: string | null;
       }[];
       state: string;
-      state_reason?: string;
+      state_reason?: string | null;
       assignee: components["schemas"]["nullable-simple-user"];
       milestone: components["schemas"]["nullable-milestone"];
       comments: number;
@@ -17441,19 +17445,19 @@ export interface components {
       /** Format: date-time */
       updated_at: string;
       /** Format: date-time */
-      closed_at: string;
+      closed_at: string | null;
       text_matches?: components["schemas"]["search-result-text-matches"];
       pull_request?: {
         /** Format: date-time */
-        merged_at?: string;
+        merged_at?: string | null;
         /** Format: uri */
-        diff_url: string;
+        diff_url: string | null;
         /** Format: uri */
-        html_url: string;
+        html_url: string | null;
         /** Format: uri */
-        patch_url: string;
+        patch_url: string | null;
         /** Format: uri */
-        url: string;
+        url: string | null;
       };
       body?: string;
       score: number;
@@ -17479,7 +17483,7 @@ export interface components {
       name: string;
       color: string;
       default: boolean;
-      description: string;
+      description: string | null;
       score: number;
       text_matches?: components["schemas"]["search-result-text-matches"];
     };
@@ -17496,7 +17500,7 @@ export interface components {
       private: boolean;
       /** Format: uri */
       html_url: string;
-      description: string;
+      description: string | null;
       fork: boolean;
       /** Format: uri */
       url: string;
@@ -17507,11 +17511,11 @@ export interface components {
       /** Format: date-time */
       pushed_at: string;
       /** Format: uri */
-      homepage: string;
+      homepage: string | null;
       size: number;
       stargazers_count: number;
       watchers_count: number;
-      language: string;
+      language: string | null;
       forks_count: number;
       open_issues_count: number;
       master_branch?: string;
@@ -17576,7 +17580,7 @@ export interface components {
       watchers: number;
       topics?: string[];
       /** Format: uri */
-      mirror_url: string;
+      mirror_url: string | null;
       has_issues: boolean;
       has_projects: boolean;
       has_pages: boolean;
@@ -17613,11 +17617,11 @@ export interface components {
      */
     "topic-search-result-item": {
       name: string;
-      display_name: string;
-      short_description: string;
-      description: string;
-      created_by: string;
-      released: string;
+      display_name: string | null;
+      short_description: string | null;
+      description: string | null;
+      created_by: string | null;
+      released: string | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -17625,26 +17629,30 @@ export interface components {
       featured: boolean;
       curated: boolean;
       score: number;
-      repository_count?: number;
+      repository_count?: number | null;
       /** Format: uri */
-      logo_url?: string;
+      logo_url?: string | null;
       text_matches?: components["schemas"]["search-result-text-matches"];
-      related?: {
-        topic_relation?: {
-          id?: number;
-          name?: string;
-          topic_id?: number;
-          relation_type?: string;
-        };
-      }[];
-      aliases?: {
-        topic_relation?: {
-          id?: number;
-          name?: string;
-          topic_id?: number;
-          relation_type?: string;
-        };
-      }[];
+      related?:
+        | {
+            topic_relation?: {
+              id?: number;
+              name?: string;
+              topic_id?: number;
+              relation_type?: string;
+            };
+          }[]
+        | null;
+      aliases?:
+        | {
+            topic_relation?: {
+              id?: number;
+              name?: string;
+              topic_id?: number;
+              relation_type?: string;
+            };
+          }[]
+        | null;
     };
     /**
      * User Search Result Item
@@ -17656,7 +17664,7 @@ export interface components {
       node_id: string;
       /** Format: uri */
       avatar_url: string;
-      gravatar_id: string;
+      gravatar_id: string | null;
       /** Format: uri */
       url: string;
       /** Format: uri */
@@ -17685,18 +17693,18 @@ export interface components {
       created_at?: string;
       /** Format: date-time */
       updated_at?: string;
-      name?: string;
-      bio?: string;
+      name?: string | null;
+      bio?: string | null;
       /** Format: email */
-      email?: string;
-      location?: string;
+      email?: string | null;
+      location?: string | null;
       site_admin: boolean;
-      hireable?: boolean;
+      hireable?: boolean | null;
       text_matches?: components["schemas"]["search-result-text-matches"];
-      blog?: string;
-      company?: string;
+      blog?: string | null;
+      company?: string | null;
       /** Format: date-time */
-      suspended_at?: string;
+      suspended_at?: string | null;
     };
     /**
      * Private User
@@ -17715,7 +17723,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -17763,23 +17771,23 @@ export interface components {
       type: string;
       site_admin: boolean;
       /** @example monalisa octocat */
-      name: string;
+      name: string | null;
       /** @example GitHub */
-      company: string;
+      company: string | null;
       /** @example https://github.com/blog */
-      blog: string;
+      blog: string | null;
       /** @example San Francisco */
-      location: string;
+      location: string | null;
       /**
        * Format: email
        * @example octocat@github.com
        */
-      email: string;
-      hireable: boolean;
+      email: string | null;
+      hireable: boolean | null;
       /** @example There once was... */
-      bio: string;
+      bio: string | null;
       /** @example monalisa */
-      twitter_username?: string;
+      twitter_username?: string | null;
       /** @example 2 */
       public_repos: number;
       /** @example 1 */
@@ -17817,7 +17825,7 @@ export interface components {
         private_repos: number;
       };
       /** Format: date-time */
-      suspended_at?: string;
+      suspended_at?: string | null;
       business_plus?: boolean;
       ldap_dn?: string;
     };
@@ -17828,7 +17836,7 @@ export interface components {
     "gpg-key": {
       /** @example 3 */
       id: number;
-      primary_key_id: number;
+      primary_key_id: number | null;
       /** @example 3262EFF25BA0D270 */
       key_id: string;
       /** @example xsBNBFayYZ... */
@@ -17875,8 +17883,8 @@ export interface components {
         can_encrypt_storage?: boolean;
         can_certify?: boolean;
         created_at?: string;
-        expires_at?: string;
-        raw_key?: string;
+        expires_at?: string | null;
+        raw_key?: string | null;
       }[];
       /** @example true */
       can_sign: boolean;
@@ -17890,8 +17898,8 @@ export interface components {
        */
       created_at: string;
       /** Format: date-time */
-      expires_at: string;
-      raw_key: string;
+      expires_at: string | null;
+      raw_key: string | null;
     };
     /**
      * Key
@@ -17988,7 +17996,7 @@ export interface components {
           block?: {
             reason?: string;
             created_at?: string;
-            html_url?: string;
+            html_url?: string | null;
           };
           message?: string;
           documentation_url?: string;
@@ -18746,7 +18754,7 @@ export interface operations {
           "application/json": components["schemas"]["integration"] & {
             client_id: string;
             client_secret: string;
-            webhook_secret: string;
+            webhook_secret: string | null;
             pem: string;
             [key: string]: unknown | undefined;
           };
@@ -19945,7 +19953,7 @@ export interface operations {
                           /** @description The new content of the file */
                           content?: string;
                           /** @description The new filename for the file */
-                          filename?: string;
+                          filename?: string | null;
                         } & (
                           | Record<string, never>
                           | Record<string, never>
@@ -22420,7 +22428,7 @@ export interface operations {
            */
           permission?: "pull" | "push" | "admin";
           /** @description The ID of a team to set as the parent team. */
-          parent_team_id?: number;
+          parent_team_id?: number | null;
         };
       };
     };
@@ -23194,7 +23202,7 @@ export interface operations {
            * @description The project card's note
            * @example Update all gems
            */
-          note?: string;
+          note?: string | null;
           /**
            * @description Whether or not the card is archived
            * @example false
@@ -23360,7 +23368,7 @@ export interface operations {
                * @description The project card's note
                * @example Update all gems
                */
-              note: string;
+              note: string | null;
             },
             {
               /**
@@ -23496,7 +23504,7 @@ export interface operations {
            * @description Body of the project
            * @example This project represents the sprint of the first week in January
            */
-          body?: string;
+          body?: string | null;
           /**
            * @description State of the project; either 'open' or 'closed'
            * @example open
@@ -24891,7 +24899,7 @@ export interface operations {
             }[];
           } | null;
           /** @description Enforce all configured restrictions for administrators. Set to `true` to enforce required status checks for repository administrators. Set to `null` to disable. */
-          enforce_admins: boolean;
+          enforce_admins: boolean | null;
           /** @description Require at least one approving review on a pull request, before merging. Set to `null` to disable. */
           required_pull_request_reviews: {
             /** @description Specify which users, teams, and apps can dismiss pull request reviews. Pass an empty `dismissal_restrictions` object to disable. User and team `dismissal_restrictions` are only available for organization-owned repositories. Omit this parameter for personal repositories. */
@@ -24931,7 +24939,7 @@ export interface operations {
           /** @description Enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch. Set to `true` to enforce a linear commit history. Set to `false` to disable a linear commit Git history. Your repository must allow squash merging or rebase merging before you can enable a linear commit history. Default: `false`. For more information, see "[Requiring a linear commit history](https://docs.github.com/github/administering-a-repository/requiring-a-linear-commit-history)" in the GitHub Help documentation. */
           required_linear_history?: boolean;
           /** @description Permits force pushes to the protected branch by anyone with write access to the repository. Set to `true` to allow force pushes. Set to `false` or `null` to block force pushes. Default: `false`. For more information, see "[Enabling force pushes to a protected branch](https://docs.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)" in the GitHub Help documentation." */
-          allow_force_pushes?: boolean;
+          allow_force_pushes?: boolean | null;
           /** @description Allows deletion of the protected branch by anyone with write access to the repository. Set to `false` to prevent deletion of the protected branch. Default: `false`. For more information, see "[Enabling force pushes to a protected branch](https://docs.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)" in the GitHub Help documentation. */
           allow_deletions?: boolean;
           /** @description If set to `true`, the `restrictions` branch protection settings which limits who can push will also block pushes which create new branches, unless the push is initiated by a user, team, or app which has the ability to push. Set to `true` to restrict new branch creation. Default: `false`. */
@@ -26210,7 +26218,7 @@ export interface operations {
     parameters: {
       /** @description Allow deletion if the specified analysis is the last in a set. If you attempt to delete the final analysis in a set without setting this parameter to `true`, you'll get a 400 response with the message: `Analysis is last of its type and deletion may result in the loss of historical alert data. Please specify confirm_delete.` */
       query?: {
-        confirm_delete?: string;
+        confirm_delete?: string | null;
       };
       /** @description The ID of the analysis, as returned from the `GET /repos/{owner}/{repo}/code-scanning/analyses` operation. */
       path: {
@@ -27229,7 +27237,7 @@ export interface operations {
         sha?: string;
         ref?: string;
         task?: string;
-        environment?: string;
+        environment?: string | null;
       };
     };
     responses: {
@@ -27327,7 +27335,7 @@ export interface operations {
            * @description Short description of the deployment.
            * @default
            */
-          description?: string;
+          description?: string | null;
           /**
            * @description Specifies if the given environment is specific to the deployment and will no longer exist at some point in the future. Default: `false`
            * @default false
@@ -27582,14 +27590,16 @@ export interface operations {
         "application/json": {
           wait_timer?: components["schemas"]["wait-timer"];
           /** @description The people or teams that may review jobs that reference the environment. You can list up to six users or teams as reviewers. The reviewers must have at least read access to the repository. Only one of the required reviewers needs to approve the job for it to proceed. */
-          reviewers?: {
-            type?: components["schemas"]["deployment-reviewer-type"];
-            /**
-             * @description The id of the user or team who can review the deployment
-             * @example 4532992
-             */
-            id?: number;
-          }[];
+          reviewers?:
+            | {
+                type?: components["schemas"]["deployment-reviewer-type"];
+                /**
+                 * @description The id of the user or team who can review the deployment
+                 * @example 4532992
+                 */
+                id?: number;
+              }[]
+            | null;
           deployment_branch_policy?: components["schemas"]["deployment-branch-policy-settings"];
         } | null;
       };
@@ -28249,7 +28259,7 @@ export interface operations {
              *
              * **Note:** Use either `tree.sha` or `content` to specify the contents of the entry. Using both `tree.sha` and `content` will return an error.
              */
-            sha?: string;
+            sha?: string | null;
             /**
              * @description The content you want this file to have. GitHub will write this blob out and use that SHA for this entry. Use either this, or `tree.sha`.
              *
@@ -28683,7 +28693,7 @@ export interface operations {
           /** @description The contents of the issue. */
           body?: string;
           /** @description Login for the user that this issue should be assigned to. _NOTE: Only users with push access can set the assignee for new issues. The assignee is silently dropped otherwise. **This field is deprecated.**_ */
-          assignee?: string;
+          assignee?: string | null;
           milestone?: string | number;
           /** @description Labels to associate with this issue. _NOTE: Only users with push access can set labels for new issues. Labels are silently dropped otherwise._ */
           labels?: OneOf<
@@ -28692,8 +28702,8 @@ export interface operations {
               {
                 id?: number;
                 name?: string;
-                description?: string;
-                color?: string;
+                description?: string | null;
+                color?: string | null;
               }
             ]
           >[];
@@ -28941,9 +28951,9 @@ export interface operations {
           /** @description The title of the issue. */
           title?: string | number;
           /** @description The contents of the issue. */
-          body?: string;
+          body?: string | null;
           /** @description Login for the user that this issue should be assigned to. **This field is deprecated.** */
-          assignee?: string;
+          assignee?: string | null;
           /**
            * @description State of the issue. Either `open` or `closed`.
            * @enum {string}
@@ -28963,8 +28973,8 @@ export interface operations {
               {
                 id?: number;
                 name?: string;
-                description?: string;
-                color?: string;
+                description?: string | null;
+                color?: string | null;
               }
             ]
           >[];
@@ -29833,7 +29843,7 @@ export interface operations {
       content: {
         "application/json": {
           /** @description Specify a custom domain for the repository. Sending a `null` value will remove the custom domain. For more about custom domains, see "[Using a custom domain with GitHub Pages](https://docs.github.com/articles/using-a-custom-domain-with-github-pages/)." */
-          cname?: string;
+          cname?: string | null;
           /** @description Specify whether HTTPS should be enforced for the repository. */
           https_enforced?: boolean;
           /** @description Configures access controls for the GitHub Pages site. If public is set to `true`, the site is accessible to anyone on the internet. If set to `false`, the site will only be accessible to users who have at least `read` access to the repository that published the site. This includes anyone in your Enterprise if the repository is set to `internal` visibility. This feature is only available to repositories in an organization on an Enterprise plan. */
@@ -31439,9 +31449,9 @@ export interface operations {
            * For example, if your continuous integration system is posting build status, you would want to provide the deep link for the build output for this specific SHA:
            * `http://ci.example.com/user/repo/build/sha`
            */
-          target_url?: string;
+          target_url?: string | null;
           /** @description A short description of the status. */
-          description?: string;
+          description?: string | null;
           /**
            * @description A string label to differentiate this status from the status of other systems. This field is case-insensitive.
            * @default default
@@ -32050,7 +32060,7 @@ export interface operations {
            */
           permission?: "pull" | "push" | "admin";
           /** @description The ID of a team to set as the parent team. */
-          parent_team_id?: number;
+          parent_team_id?: number | null;
         };
       };
     };
@@ -32704,7 +32714,7 @@ export interface operations {
            * @description The new Twitter username of the user.
            * @example therealomarj
            */
-          twitter_username?: string;
+          twitter_username?: string | null;
           /**
            * @description The new company of the user.
            * @example Acme corporation
@@ -33359,7 +33369,7 @@ export interface operations {
            * @description Body of the project
            * @example This project represents the sprint of the first week in January
            */
-          body?: string;
+          body?: string | null;
         };
       };
     };

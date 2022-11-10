@@ -397,24 +397,24 @@ export interface components {
       total_seats_purchased?: number;
       users?: {
         github_com_login?: string;
-        github_com_name?: string;
-        github_com_profile?: string;
+        github_com_name?: string | null;
+        github_com_profile?: string | null;
         license_type?: string;
         github_com_member_roles?: string[];
         /** @description Deprecated: The most permissive enterprise role for a user. */
-        github_com_enterprise_role?: string;
+        github_com_enterprise_role?: string | null;
         /** @description All enterprise roles for a user. */
         github_com_enterprise_roles?: string[];
         visual_studio_subscription_user?: boolean;
         github_com_verified_domain_emails?: string[];
-        github_com_saml_name_id?: string;
-        enterprise_server_user?: boolean;
+        github_com_saml_name_id?: string | null;
+        enterprise_server_user?: boolean | null;
         enterprise_server_emails?: string[];
         github_com_user?: boolean;
         total_user_accounts?: number;
         enterprise_server_user_ids?: string[];
         github_com_orgs_with_pending_invites?: string[];
-        visual_studio_subscription_email?: string;
+        visual_studio_subscription_email?: string | null;
       }[];
     };
     /**
@@ -547,24 +547,24 @@ export interface components {
        * @description Date when the credential was last accessed. May be null if it was never accessed
        * @example 2011-01-26T19:06:43Z
        */
-      credential_accessed_at: string;
+      credential_accessed_at: string | null;
       /** @example 12345678 */
-      authorized_credential_id: number;
+      authorized_credential_id: number | null;
       /**
        * @description The title given to the ssh key. This will only be present when the credential is an ssh key.
        * @example my ssh key
        */
-      authorized_credential_title?: string;
+      authorized_credential_title?: string | null;
       /**
        * @description The note given to the token. This will only be present when the credential is a token.
        * @example my token
        */
-      authorized_credential_note?: string;
+      authorized_credential_note?: string | null;
       /**
        * Format: date-time
        * @description The expiry for the token. This will only be present when the credential is a token.
        */
-      authorized_credential_expires_at?: string;
+      authorized_credential_expires_at?: string | null;
     };
     /**
      * ExternalGroup
@@ -734,7 +734,7 @@ export interface components {
          * @description the time of the last sync for this group-mapping
          * @example 2019-06-03 22:27:15:000 -700
          */
-        synced_at?: string;
+        synced_at?: string | null;
       }[];
     };
     /**
@@ -797,17 +797,17 @@ export interface components {
        * @description The ID of the User.
        * @example a7b0f98395
        */
-      externalId: string;
+      externalId: string | null;
       /**
        * @description Configured by the admin. Could be an email, login, or username
        * @example someone@example.com
        */
-      userName: string;
+      userName: string | null;
       /**
        * @description The name of the user, suitable for display to end-users
        * @example Jon Doe
        */
-      displayName?: string;
+      displayName?: string | null;
       /**
        * @example {
        *   "givenName": "Jane",
@@ -815,9 +815,9 @@ export interface components {
        * }
        */
       name: {
-        givenName: string;
-        familyName: string;
-        formatted?: string;
+        givenName: string | null;
+        familyName: string | null;
+        formatted?: string | null;
       };
       /**
        * @description user emails
@@ -900,11 +900,11 @@ export interface components {
      * @description Scim Error
      */
     "scim-error": {
-      message?: string;
-      documentation_url?: string;
-      detail?: string;
+      message?: string | null;
+      documentation_url?: string | null;
+      detail?: string | null;
       status?: number;
-      scimType?: string;
+      scimType?: string | null;
       schemas?: string[];
     };
     /**
@@ -919,7 +919,7 @@ export interface components {
     /** @description The name of the tool used to generate the code scanning analysis. */
     "code-scanning-analysis-tool-name": string;
     /** @description The GUID of the tool used to generate the code scanning analysis, if provided in the uploaded SARIF data. */
-    "code-scanning-analysis-tool-guid": string;
+    "code-scanning-analysis-tool-guid": string | null;
     /**
      * @description The full Git reference, formatted as `refs/heads/<branch name>`,
      * `refs/pull/<number>/merge`, or `refs/pull/<number>/head`.
@@ -956,14 +956,14 @@ export interface components {
      * Format: date-time
      * @description The time that the alert was no longer detected and was considered fixed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    readonly "code-scanning-alert-fixed-at": string;
+    readonly "code-scanning-alert-fixed-at": string | null;
     /**
      * Simple User
      * @description Simple User
      */
     "nullable-simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -976,7 +976,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -1030,7 +1030,7 @@ export interface components {
      * Format: date-time
      * @description The time that the alert was dismissed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    readonly "code-scanning-alert-dismissed-at": string;
+    readonly "code-scanning-alert-dismissed-at": string | null;
     /**
      * @description **Required when the state is dismissed.** The reason for dismissing or closing the alert.
      * @enum {string|null}
@@ -1042,14 +1042,14 @@ export interface components {
       | "used in tests"
       | null;
     /** @description The dismissal comment associated with the dismissal of the alert. */
-    "code-scanning-alert-dismissed-comment": string;
+    "code-scanning-alert-dismissed-comment": string | null;
     "code-scanning-alert-rule-summary": {
       /** @description A unique identifier for the rule used to detect the alert. */
-      id?: string;
+      id?: string | null;
       /** @description The name of the rule used to detect the alert. */
       name?: string;
       /** @description A set of tags applicable for the rule. */
-      tags?: string[];
+      tags?: string[] | null;
       /**
        * @description The severity of the alert.
        * @enum {string|null}
@@ -1064,7 +1064,7 @@ export interface components {
       guid?: components["schemas"]["code-scanning-analysis-tool-guid"];
     };
     /** @description The version of the tool used to generate the code scanning analysis. */
-    "code-scanning-analysis-tool-version": string;
+    "code-scanning-analysis-tool-version": string | null;
     "code-scanning-alert-instance": {
       ref?: components["schemas"]["code-scanning-ref"];
       analysis_key?: components["schemas"]["code-scanning-analysis-analysis-key"];
@@ -1120,7 +1120,7 @@ export interface components {
         message?: string;
         code: string;
         index?: number;
-        value?: string | number | string[];
+        value?: (string | null) | (number | null) | (string[] | null);
       }[];
     };
   };
@@ -2014,11 +2014,11 @@ export interface operations {
             value?: OneOf<
               [
                 {
-                  active?: boolean;
-                  userName?: string;
-                  externalId?: string;
-                  givenName?: string;
-                  familyName?: string;
+                  active?: boolean | null;
+                  userName?: string | null;
+                  externalId?: string | null;
+                  givenName?: string | null;
+                  familyName?: string | null;
                 },
                 {
                   value?: string;

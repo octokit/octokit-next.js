@@ -478,7 +478,7 @@ export interface components {
        * Format: date-time
        * @description The time that the alert was resolved in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
        */
-      resolved_at?: string;
+      resolved_at?: string | null;
       resolved_by?: components["schemas"]["nullable-simple-user"];
       /** @description The type of secret that secret scanning detected. */
       secret_type?: string;
@@ -502,7 +502,7 @@ export interface components {
       reason: string;
       unread: boolean;
       updated_at: string;
-      last_read_at: string;
+      last_read_at: string | null;
       url: string;
       /** @example https://api.github.com/notifications/threads/2/subscription */
       subscription_url: string;
@@ -540,7 +540,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -656,15 +656,15 @@ export interface components {
       /** @example http://api.github.com/repos/octocat/Hello-World/git/trees{/sha} */
       trees_url: string;
       clone_url?: string;
-      mirror_url?: string;
+      mirror_url?: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
        */
       hooks_url: string;
       svn_url?: string;
-      homepage?: string;
-      language?: string;
+      homepage?: string | null;
+      language?: string | null;
       forks_count?: number;
       stargazers_count?: number;
       watchers_count?: number;
@@ -686,17 +686,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at?: string;
+      pushed_at?: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at?: string;
+      created_at?: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at?: string;
+      updated_at?: string | null;
       permissions?: {
         admin?: boolean;
         maintain?: boolean;
@@ -765,7 +765,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -888,7 +888,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -903,8 +903,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -968,17 +968,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at: string;
+      pushed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /**
        * @description Whether to allow rebase merges for pull requests.
        * @default true
@@ -1037,7 +1037,7 @@ export interface components {
        * @description The name of the workflow run.
        * @example Build
        */
-      name?: string;
+      name?: string | null;
       /** @example MDEwOkNoZWNrU3VpdGU1 */
       node_id: string;
       /**
@@ -1051,7 +1051,7 @@ export interface components {
        */
       check_suite_node_id?: string;
       /** @example master */
-      head_branch: string;
+      head_branch: string | null;
       /**
        * @description The SHA of the head commit that points to the version of the workflow being run.
        * @example 009b8a3a9ccbb128af87f9b1c0f4c62e8a304f6d
@@ -1065,9 +1065,9 @@ export interface components {
       /** @example push */
       event: string;
       /** @example completed */
-      status: string;
+      status: string | null;
       /** @example neutral */
-      conclusion: string;
+      conclusion: string | null;
       /**
        * @description The ID of the parent workflow.
        * @example 5
@@ -1080,7 +1080,7 @@ export interface components {
       url: string;
       /** @example https://github.com/github/hello-world/suites/4 */
       html_url: string;
-      pull_requests: components["schemas"]["pull-request-minimal"][];
+      pull_requests: components["schemas"]["pull-request-minimal"][] | null;
       /** Format: date-time */
       created_at: string;
       /** Format: date-time */
@@ -1136,7 +1136,7 @@ export interface components {
       /** @example MDEwOkNoZWNrU3VpdGU1 */
       node_id: string;
       /** @example master */
-      head_branch: string;
+      head_branch: string | null;
       /**
        * @description The SHA of the head commit that is being checked.
        * @example 009b8a3a9ccbb128af87f9b1c0f4c62e8a304f6d
@@ -1161,18 +1161,18 @@ export interface components {
         | "action_required"
         | null;
       /** @example https://api.github.com/repos/github/hello-world/check-suites/5 */
-      url: string;
+      url: string | null;
       /** @example 146e867f55c26428e5f9fade55a9bbf5e95a7912 */
-      before: string;
+      before: string | null;
       /** @example d6fde92930d4715a2b49857d24b940956b26d2d3 */
-      after: string;
-      pull_requests: components["schemas"]["pull-request-minimal"][];
+      after: string | null;
+      pull_requests: components["schemas"]["pull-request-minimal"][] | null;
       app: components["schemas"]["nullable-integration"];
       repository: components["schemas"]["minimal-repository"];
       /** Format: date-time */
-      created_at: string;
+      created_at: string | null;
       /** Format: date-time */
-      updated_at: string;
+      updated_at: string | null;
       head_commit: components["schemas"]["simple-commit"];
       latest_check_runs_count: number;
       check_runs_url: string;
@@ -1201,8 +1201,8 @@ export interface components {
       login: string;
       /** @example 1 */
       id: number;
-      email?: string;
-      name?: string;
+      email?: string | null;
+      name?: string | null;
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
@@ -1211,7 +1211,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -1341,7 +1341,7 @@ export interface components {
        * Format: date-time
        * @description The time that the alert was resolved in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
        */
-      resolved_at?: string;
+      resolved_at?: string | null;
       resolved_by?: components["schemas"]["nullable-simple-user"];
       /** @description The type of secret that secret scanning detected. */
       secret_type?: string;
@@ -1381,7 +1381,7 @@ export interface components {
       repository: components["schemas"]["minimal-repository"];
       score: number;
       file_size?: number;
-      language?: string;
+      language?: string | null;
       /** Format: date-time */
       last_modified_at?: string;
       /**
@@ -1447,7 +1447,7 @@ export interface components {
      * Format: date-time
      * @description The time that the alert was last updated in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    readonly "nullable-alert-updated-at": string;
+    readonly "nullable-alert-updated-at": string | null;
     /**
      * Format: uri
      * @description The REST API URL of the alert resource.
@@ -1463,8 +1463,8 @@ export interface components {
      * @description Simple User
      */
     "nullable-simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -1477,7 +1477,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -1565,7 +1565,7 @@ export interface components {
        * @description The repository description.
        * @example This your first repo!
        */
-      description: string;
+      description: string | null;
       /** @description Whether the repository is a fork. */
       fork: boolean;
       /**
@@ -1773,8 +1773,8 @@ export interface components {
      * @description Simple User
      */
     "simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -1787,7 +1787,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -1860,7 +1860,7 @@ export interface components {
         message?: string;
         code: string;
         index?: number;
-        value?: string | number | string[];
+        value?: (string | null) | (number | null) | (string[] | null);
       }[];
     };
     /**
@@ -1904,7 +1904,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -2027,7 +2027,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -2042,8 +2042,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -2110,17 +2110,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at: string;
+      pushed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /**
        * @description Whether to allow rebase merges for pull requests.
        * @default true
@@ -2292,9 +2292,9 @@ export interface components {
        * Format: uri
        * @example https://api.github.com/licenses/mit
        */
-      url: string;
+      url: string | null;
       /** @example MIT */
-      spdx_id: string;
+      spdx_id: string | null;
       /** @example MDc6TGljZW5zZW1pdA== */
       node_id: string;
       /** Format: uri */
@@ -2366,7 +2366,7 @@ export interface components {
        */
       body?: string;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
     };
     /** Pull Request Minimal */
     "pull-request-minimal": {
@@ -2435,7 +2435,7 @@ export interface components {
        */
       name: string;
       /** @example The description of the app. */
-      description: string;
+      description: string | null;
       /**
        * Format: uri
        * @example https://example.com
@@ -2489,7 +2489,7 @@ export interface components {
       /** @example "1d4b2097ac622ba702d19de498f005747a8b21d3" */
       client_secret?: string;
       /** @example "6fba8f2fc8a7e8f2cca5577eddd82ca7586b3b6b" */
-      webhook_secret?: string;
+      webhook_secret?: string | null;
       /** @example "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEArYxrNYD/iT5CZVpRJu4rBKmmze3PVmT/gCo2ATUvDvZTPTey\nxcGJ3vvrJXazKk06pN05TN29o98jrYz4cengG3YGsXPNEpKsIrEl8NhbnxapEnM9\nJCMRe0P5JcPsfZlX6hmiT7136GRWiGOUba2X9+HKh8QJVLG5rM007TBER9/z9mWm\nrJuNh+m5l320oBQY/Qq3A7wzdEfZw8qm/mIN0FCeoXH1L6B8xXWaAYBwhTEh6SSn\nZHlO1Xu1JWDmAvBCi0RO5aRSKM8q9QEkvvHP4yweAtK3N8+aAbZ7ovaDhyGz8r6r\nzhU1b8Uo0Z2ysf503WqzQgIajr7Fry7/kUwpgQIDAQABAoIBADwJp80Ko1xHPZDy\nfcCKBDfIuPvkmSW6KumbsLMaQv1aGdHDwwTGv3t0ixSay8CGlxMRtRDyZPib6SvQ\n6OH/lpfpbMdW2ErkksgtoIKBVrDilfrcAvrNZu7NxRNbhCSvN8q0s4ICecjbbVQh\nnueSdlA6vGXbW58BHMq68uRbHkP+k+mM9U0mDJ1HMch67wlg5GbayVRt63H7R2+r\nVxcna7B80J/lCEjIYZznawgiTvp3MSanTglqAYi+m1EcSsP14bJIB9vgaxS79kTu\noiSo93leJbBvuGo8QEiUqTwMw4tDksmkLsoqNKQ1q9P7LZ9DGcujtPy4EZsamSJT\ny8OJt0ECgYEA2lxOxJsQk2kI325JgKFjo92mQeUObIvPfSNWUIZQDTjniOI6Gv63\nGLWVFrZcvQBWjMEQraJA9xjPbblV8PtfO87MiJGLWCHFxmPz2dzoedN+2Coxom8m\nV95CLz8QUShuao6u/RYcvUaZEoYs5bHcTmy5sBK80JyEmafJPtCQVxMCgYEAy3ar\nZr3yv4xRPEPMat4rseswmuMooSaK3SKub19WFI5IAtB/e7qR1Rj9JhOGcZz+OQrl\nT78O2OFYlgOIkJPvRMrPpK5V9lslc7tz1FSh3BZMRGq5jSyD7ETSOQ0c8T2O/s7v\nbeEPbVbDe4mwvM24XByH0GnWveVxaDl51ABD65sCgYB3ZAspUkOA5egVCh8kNpnd\nSd6SnuQBE3ySRlT2WEnCwP9Ph6oPgn+oAfiPX4xbRqkL8q/k0BdHQ4h+zNwhk7+h\nWtPYRAP1Xxnc/F+jGjb+DVaIaKGU18MWPg7f+FI6nampl3Q0KvfxwX0GdNhtio8T\nTj1E+SnFwh56SRQuxSh2gwKBgHKjlIO5NtNSflsUYFM+hyQiPiqnHzddfhSG+/3o\nm5nNaSmczJesUYreH5San7/YEy2UxAugvP7aSY2MxB+iGsiJ9WD2kZzTUlDZJ7RV\nUzWsoqBR+eZfVJ2FUWWvy8TpSG6trh4dFxImNtKejCR1TREpSiTV3Zb1dmahK9GV\nrK9NAoGAbBxRLoC01xfxCTgt5BDiBcFVh4fp5yYKwavJPLzHSpuDOrrI9jDn1oKN\nonq5sDU1i391zfQvdrbX4Ova48BN+B7p63FocP/MK5tyyBoT8zQEk2+vWDOw7H/Z\nu5dTCPxTIsoIwUw1I+7yIxqJzLPFgR2gVBwY1ra/8iAqCj+zeBw=\n-----END RSA PRIVATE KEY-----\n" */
       pem?: string;
     } | null;
@@ -2521,8 +2521,8 @@ export interface components {
       login: string;
       /** @example 1 */
       id: number;
-      email?: string;
-      name?: string;
+      email?: string | null;
+      name?: string | null;
       /** @example MDQ6VXNlcjE= */
       node_id: string;
       /**
@@ -2531,7 +2531,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -2588,16 +2588,16 @@ export interface components {
     } | null;
     /** Simple Commit Status */
     "simple-commit-status": {
-      description: string;
+      description: string | null;
       id: number;
       node_id: string;
       state: string;
       context: string;
       /** Format: uri */
-      target_url: string;
-      required?: boolean;
+      target_url: string | null;
+      required?: boolean | null;
       /** Format: uri */
-      avatar_url: string;
+      avatar_url: string | null;
       /** Format: uri */
       url: string;
       /** Format: date-time */
@@ -2610,11 +2610,11 @@ export interface components {
      * @description Scim Error
      */
     "scim-error": {
-      message?: string;
-      documentation_url?: string;
-      detail?: string;
+      message?: string | null;
+      documentation_url?: string | null;
+      detail?: string | null;
       status?: number;
-      scimType?: string;
+      scimType?: string | null;
       schemas?: string[];
     };
     /**
@@ -2625,7 +2625,7 @@ export interface components {
     /** Search Result Text Matches */
     "search-result-text-matches": {
       object_url?: string;
-      object_type?: string;
+      object_type?: string | null;
       property?: string;
       fragment?: string;
       matches?: {
@@ -2649,8 +2649,8 @@ export interface components {
     verification: {
       verified: boolean;
       reason: string;
-      payload: string;
-      signature: string;
+      payload: string | null;
+      signature: string | null;
     };
   };
   responses: {

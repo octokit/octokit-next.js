@@ -555,28 +555,28 @@ export interface components {
       /** Format: uri */
       url: string;
       /** @description A list of scopes that this authorization is in. */
-      scopes: string[];
+      scopes: string[] | null;
       token: string;
-      token_last_eight: string;
-      hashed_token: string;
+      token_last_eight: string | null;
+      hashed_token: string | null;
       app: {
         client_id: string;
         name: string;
         /** Format: uri */
         url: string;
       };
-      note: string;
+      note: string | null;
       /** Format: uri */
-      note_url: string;
+      note_url: string | null;
       /** Format: date-time */
       updated_at: string;
       /** Format: date-time */
       created_at: string;
-      fingerprint: string;
+      fingerprint: string | null;
       user?: components["schemas"]["nullable-simple-user"];
       installation?: components["schemas"]["nullable-scoped-installation"];
       /** Format: date-time */
-      expires_at: string;
+      expires_at: string | null;
     };
     /**
      * Installation
@@ -627,7 +627,7 @@ export interface components {
       /** Format: date-time */
       updated_at: string;
       /** @example config.yaml */
-      single_file_name: string;
+      single_file_name: string | null;
       /** @example true */
       has_multiple_single_files?: boolean;
       /**
@@ -641,9 +641,9 @@ export interface components {
       app_slug: string;
       suspended_by: components["schemas"]["nullable-simple-user"];
       /** Format: date-time */
-      suspended_at: string;
+      suspended_at: string | null;
       /** @example "test_13f1e99741e3e004@d7e1eb0bc0a1ba12.com" */
-      contact_email?: string;
+      contact_email?: string | null;
     };
     /**
      * App Permissions
@@ -844,28 +844,28 @@ export interface components {
       /** Format: uri */
       url: string;
       /** @description A list of scopes that this authorization is in. */
-      scopes: string[];
+      scopes: string[] | null;
       token: string;
-      token_last_eight: string;
-      hashed_token: string;
+      token_last_eight: string | null;
+      hashed_token: string | null;
       app: {
         client_id: string;
         name: string;
         /** Format: uri */
         url: string;
       };
-      note: string;
+      note: string | null;
       /** Format: uri */
-      note_url: string;
+      note_url: string | null;
       /** Format: date-time */
       updated_at: string;
       /** Format: date-time */
       created_at: string;
-      fingerprint: string;
+      fingerprint: string | null;
       user?: components["schemas"]["nullable-simple-user"];
       installation?: components["schemas"]["nullable-scoped-installation"];
       /** Format: date-time */
-      expires_at: string;
+      expires_at: string | null;
     } | null;
     "audit-log-event": {
       /** @description The time the audit log event occurred, given as a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time). */
@@ -963,7 +963,7 @@ export interface components {
       /** @example https://github.com/images/error/octocat_happy.gif */
       avatar_url: string;
       /** @example A great organization */
-      description: string;
+      description: string | null;
       /** @example github */
       name?: string;
       /** @example GitHub */
@@ -981,7 +981,7 @@ export interface components {
        */
       email?: string;
       /** @example github */
-      twitter_username?: string;
+      twitter_username?: string | null;
       /** @example true */
       is_verified?: boolean;
       /** @example true */
@@ -1013,16 +1013,16 @@ export interface components {
       /** @example 100 */
       owned_private_repos?: number;
       /** @example 81 */
-      private_gists?: number;
+      private_gists?: number | null;
       /** @example 10000 */
-      disk_usage?: number;
+      disk_usage?: number | null;
       /** @example 8 */
-      collaborators?: number;
+      collaborators?: number | null;
       /**
        * Format: email
        * @example org@example.com
        */
-      billing_email?: string;
+      billing_email?: string | null;
       plan?: {
         name: string;
         space: number;
@@ -1030,11 +1030,11 @@ export interface components {
         filled_seats?: number;
         seats?: number;
       };
-      default_repository_permission?: string;
+      default_repository_permission?: string | null;
       /** @example true */
-      members_can_create_repositories?: boolean;
+      members_can_create_repositories?: boolean | null;
       /** @example true */
-      two_factor_requirement_enabled?: boolean;
+      two_factor_requirement_enabled?: boolean | null;
       /** @example all */
       members_allowed_repository_creation_type?: string;
       /** @example true */
@@ -1065,7 +1065,7 @@ export interface components {
         message?: string;
         code: string;
         index?: number;
-        value?: string | number | string[];
+        value?: (string | null) | (number | null) | (string[] | null);
       }[];
     };
     /**
@@ -1113,7 +1113,7 @@ export interface components {
       /** @example justice-league */
       slug: string;
       /** @example A great team. */
-      description: string;
+      description: string | null;
       /**
        * @description The level of privacy this team should have
        * @example closed
@@ -1401,7 +1401,7 @@ export interface components {
        * Format: uri
        * @description The REST API URL for getting the analyses associated with the upload.
        */
-      analyses_url?: string;
+      analyses_url?: string | null;
     };
     /**
      * ContentReferenceAttachment
@@ -1495,15 +1495,15 @@ export interface components {
        */
       body?: string;
       /** Format: uri */
-      html_url: string;
+      html_url: string | null;
     };
     /**
      * Simple User
      * @description Simple User
      */
     "nullable-simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -1516,7 +1516,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -1575,7 +1575,7 @@ export interface components {
        */
       repository_selection: "all" | "selected";
       /** @example config.yaml */
-      single_file_name: string;
+      single_file_name: string | null;
       /** @example true */
       has_multiple_single_files?: boolean;
       /**
@@ -1597,8 +1597,8 @@ export interface components {
      * @description Simple User
      */
     "simple-user": {
-      name?: string;
-      email?: string;
+      name?: string | null;
+      email?: string | null;
       /** @example octocat */
       login: string;
       /** @example 1 */
@@ -1611,7 +1611,7 @@ export interface components {
        */
       avatar_url: string;
       /** @example 41d064eb2195891e12d0413f63227ea7 */
-      gravatar_id: string;
+      gravatar_id: string | null;
       /**
        * Format: uri
        * @example https://api.github.com/users/octocat
@@ -1667,7 +1667,7 @@ export interface components {
      */
     enterprise: {
       /** @description A short description of the enterprise. */
-      description?: string;
+      description?: string | null;
       /**
        * Format: uri
        * @example https://github.com/enterprises/octo-business
@@ -1677,7 +1677,7 @@ export interface components {
        * Format: uri
        * @description The enterprise's website URL.
        */
-      website_url?: string;
+      website_url?: string | null;
       /**
        * @description Unique identifier of the enterprise
        * @example 42
@@ -1699,12 +1699,12 @@ export interface components {
        * Format: date-time
        * @example 2019-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2019-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /** Format: uri */
       avatar_url: string;
     };
@@ -1759,7 +1759,7 @@ export interface components {
        */
       html_url: string;
       /** @example This your first repo! */
-      description: string;
+      description: string | null;
       fork: boolean;
       /**
        * Format: uri
@@ -1882,7 +1882,7 @@ export interface components {
        * Format: uri
        * @example git:git.example.com/octocat/Hello-World
        */
-      mirror_url: string;
+      mirror_url: string | null;
       /**
        * Format: uri
        * @example http://api.github.com/repos/octocat/Hello-World/hooks
@@ -1897,8 +1897,8 @@ export interface components {
        * Format: uri
        * @example https://github.com
        */
-      homepage: string;
-      language: string;
+      homepage: string | null;
+      language: string | null;
       /** @example 9 */
       forks_count: number;
       /** @example 80 */
@@ -1965,17 +1965,17 @@ export interface components {
        * Format: date-time
        * @example 2011-01-26T19:06:43Z
        */
-      pushed_at: string;
+      pushed_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:01:12Z
        */
-      created_at: string;
+      created_at: string | null;
       /**
        * Format: date-time
        * @example 2011-01-26T19:14:43Z
        */
-      updated_at: string;
+      updated_at: string | null;
       /**
        * @description Whether to allow rebase merges for pull requests.
        * @default true
@@ -2147,9 +2147,9 @@ export interface components {
        * Format: uri
        * @example https://api.github.com/licenses/mit
        */
-      url: string;
+      url: string | null;
       /** @example MIT */
-      spdx_id: string;
+      spdx_id: string | null;
       /** @example MDc6TGljZW5zZW1pdA== */
       node_id: string;
       /** Format: uri */
@@ -2184,7 +2184,7 @@ export interface components {
        * @description Description of the team
        * @example A great team.
        */
-      description: string;
+      description: string | null;
       /**
        * @description Permission that the team will have for its repositories
        * @example admin
@@ -2250,7 +2250,7 @@ export interface components {
       /** @example https://github.com/images/error/octocat_happy.gif */
       avatar_url: string;
       /** @example A great organization */
-      description: string;
+      description: string | null;
       /** @example github */
       name?: string;
       /** @example GitHub */
@@ -2268,7 +2268,7 @@ export interface components {
        */
       email?: string;
       /** @example github */
-      twitter_username?: string;
+      twitter_username?: string | null;
       /** @example true */
       is_verified?: boolean;
       /** @example true */
@@ -2300,16 +2300,16 @@ export interface components {
       /** @example 100 */
       owned_private_repos?: number;
       /** @example 81 */
-      private_gists?: number;
+      private_gists?: number | null;
       /** @example 10000 */
-      disk_usage?: number;
+      disk_usage?: number | null;
       /** @example 8 */
-      collaborators?: number;
+      collaborators?: number | null;
       /**
        * Format: email
        * @example org@example.com
        */
-      billing_email?: string;
+      billing_email?: string | null;
       plan?: {
         name: string;
         space: number;
@@ -2317,11 +2317,11 @@ export interface components {
         filled_seats?: number;
         seats?: number;
       };
-      default_repository_permission?: string;
+      default_repository_permission?: string | null;
       /** @example true */
-      members_can_create_repositories?: boolean;
+      members_can_create_repositories?: boolean | null;
       /** @example true */
-      two_factor_requirement_enabled?: boolean;
+      two_factor_requirement_enabled?: boolean | null;
       /** @example all */
       members_allowed_repository_creation_type?: string;
       /** @example true */
@@ -2425,8 +2425,8 @@ export interface components {
     verification: {
       verified: boolean;
       reason: string;
-      payload: string;
-      signature: string;
+      payload: string | null;
+      signature: string | null;
     };
     /**
      * Diff Entry
@@ -2539,12 +2539,12 @@ export interface components {
         html_url?: string;
         name?: string;
         slug?: string;
-        description?: string;
+        description?: string | null;
         privacy?: string;
         permission?: string;
         members_url?: string;
         repositories_url?: string;
-        parent?: string;
+        parent?: string | null;
       }[];
       apps: {
         id?: number;
@@ -2610,7 +2610,7 @@ export interface components {
       node_id: string;
       name: string;
       slug: string;
-      description: string;
+      description: string | null;
       privacy?: string;
       permission: string;
       permissions?: {
@@ -2656,7 +2656,7 @@ export interface components {
        */
       name: string;
       /** @example The description of the app. */
-      description: string;
+      description: string | null;
       /**
        * Format: uri
        * @example https://example.com
@@ -2710,14 +2710,14 @@ export interface components {
       /** @example "1d4b2097ac622ba702d19de498f005747a8b21d3" */
       client_secret?: string;
       /** @example "6fba8f2fc8a7e8f2cca5577eddd82ca7586b3b6b" */
-      webhook_secret?: string;
+      webhook_secret?: string | null;
       /** @example "-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEArYxrNYD/iT5CZVpRJu4rBKmmze3PVmT/gCo2ATUvDvZTPTey\nxcGJ3vvrJXazKk06pN05TN29o98jrYz4cengG3YGsXPNEpKsIrEl8NhbnxapEnM9\nJCMRe0P5JcPsfZlX6hmiT7136GRWiGOUba2X9+HKh8QJVLG5rM007TBER9/z9mWm\nrJuNh+m5l320oBQY/Qq3A7wzdEfZw8qm/mIN0FCeoXH1L6B8xXWaAYBwhTEh6SSn\nZHlO1Xu1JWDmAvBCi0RO5aRSKM8q9QEkvvHP4yweAtK3N8+aAbZ7ovaDhyGz8r6r\nzhU1b8Uo0Z2ysf503WqzQgIajr7Fry7/kUwpgQIDAQABAoIBADwJp80Ko1xHPZDy\nfcCKBDfIuPvkmSW6KumbsLMaQv1aGdHDwwTGv3t0ixSay8CGlxMRtRDyZPib6SvQ\n6OH/lpfpbMdW2ErkksgtoIKBVrDilfrcAvrNZu7NxRNbhCSvN8q0s4ICecjbbVQh\nnueSdlA6vGXbW58BHMq68uRbHkP+k+mM9U0mDJ1HMch67wlg5GbayVRt63H7R2+r\nVxcna7B80J/lCEjIYZznawgiTvp3MSanTglqAYi+m1EcSsP14bJIB9vgaxS79kTu\noiSo93leJbBvuGo8QEiUqTwMw4tDksmkLsoqNKQ1q9P7LZ9DGcujtPy4EZsamSJT\ny8OJt0ECgYEA2lxOxJsQk2kI325JgKFjo92mQeUObIvPfSNWUIZQDTjniOI6Gv63\nGLWVFrZcvQBWjMEQraJA9xjPbblV8PtfO87MiJGLWCHFxmPz2dzoedN+2Coxom8m\nV95CLz8QUShuao6u/RYcvUaZEoYs5bHcTmy5sBK80JyEmafJPtCQVxMCgYEAy3ar\nZr3yv4xRPEPMat4rseswmuMooSaK3SKub19WFI5IAtB/e7qR1Rj9JhOGcZz+OQrl\nT78O2OFYlgOIkJPvRMrPpK5V9lslc7tz1FSh3BZMRGq5jSyD7ETSOQ0c8T2O/s7v\nbeEPbVbDe4mwvM24XByH0GnWveVxaDl51ABD65sCgYB3ZAspUkOA5egVCh8kNpnd\nSd6SnuQBE3ySRlT2WEnCwP9Ph6oPgn+oAfiPX4xbRqkL8q/k0BdHQ4h+zNwhk7+h\nWtPYRAP1Xxnc/F+jGjb+DVaIaKGU18MWPg7f+FI6nampl3Q0KvfxwX0GdNhtio8T\nTj1E+SnFwh56SRQuxSh2gwKBgHKjlIO5NtNSflsUYFM+hyQiPiqnHzddfhSG+/3o\nm5nNaSmczJesUYreH5San7/YEy2UxAugvP7aSY2MxB+iGsiJ9WD2kZzTUlDZJ7RV\nUzWsoqBR+eZfVJ2FUWWvy8TpSG6trh4dFxImNtKejCR1TREpSiTV3Zb1dmahK9GV\nrK9NAoGAbBxRLoC01xfxCTgt5BDiBcFVh4fp5yYKwavJPLzHSpuDOrrI9jDn1oKN\nonq5sDU1i391zfQvdrbX4Ova48BN+B7p63FocP/MK5tyyBoT8zQEk2+vWDOw7H/Z\nu5dTCPxTIsoIwUw1I+7yIxqJzLPFgR2gVBwY1ra/8iAqCj+zeBw=\n-----END RSA PRIVATE KEY-----\n" */
       pem?: string;
     };
     /** @description The name of the tool used to generate the code scanning analysis. */
     "code-scanning-analysis-tool-name": string;
     /** @description The GUID of the tool used to generate the code scanning analysis, if provided in the uploaded SARIF data. */
-    "code-scanning-analysis-tool-guid": string;
+    "code-scanning-analysis-tool-guid": string | null;
     /**
      * @description The full Git reference, formatted as `refs/heads/<branch name>`,
      * `refs/pull/<number>/merge`, or `refs/pull/<number>/head`.
@@ -2749,10 +2749,10 @@ export interface components {
      * Format: date-time
      * @description The time that the alert was dismissed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    readonly "code-scanning-alert-dismissed-at": string;
+    readonly "code-scanning-alert-dismissed-at": string | null;
     "code-scanning-alert-rule-summary": {
       /** @description A unique identifier for the rule used to detect the alert. */
-      id?: string;
+      id?: string | null;
       /** @description The name of the rule used to detect the alert. */
       name?: string;
       /**
@@ -2769,7 +2769,7 @@ export interface components {
       guid?: components["schemas"]["code-scanning-analysis-tool-guid"];
     };
     /** @description The version of the tool used to generate the code scanning analysis. */
-    "code-scanning-analysis-tool-version": string;
+    "code-scanning-analysis-tool-version": string | null;
     "code-scanning-alert-instance": {
       ref?: components["schemas"]["code-scanning-ref"];
       analysis_key?: components["schemas"]["code-scanning-analysis-analysis-key"];
@@ -2814,7 +2814,7 @@ export interface components {
       | null;
     "code-scanning-alert-rule": {
       /** @description A unique identifier for the rule used to detect the alert. */
-      id?: string;
+      id?: string | null;
       /** @description The name of the rule used to detect the alert. */
       name?: string;
       /**
@@ -2832,11 +2832,11 @@ export interface components {
       /** @description description of the rule used to detect the alert. */
       full_description?: string;
       /** @description A set of tags applicable for the rule. */
-      tags?: string[];
+      tags?: string[] | null;
       /** @description Detailed documentation for the rule as GitHub Flavored Markdown. */
-      help?: string;
+      help?: string | null;
       /** @description A link to the documentation for the rule used to detect the alert. */
-      help_uri?: string;
+      help_uri?: string | null;
     };
   };
   responses: {
@@ -3320,7 +3320,7 @@ export interface operations {
            *   "user"
            * ]
            */
-          scopes?: string[];
+          scopes?: string[] | null;
           /**
            * @description A note to remind you what the OAuth token is for.
            * @example Update all gems
@@ -3381,7 +3381,7 @@ export interface operations {
            *   "user"
            * ]
            */
-          scopes?: string[];
+          scopes?: string[] | null;
           /**
            * @description A note to remind you what the OAuth token is for.
            * @example Update all gems
@@ -3450,7 +3450,7 @@ export interface operations {
            *   "user"
            * ]
            */
-          scopes?: string[];
+          scopes?: string[] | null;
           /**
            * @description A note to remind you what the OAuth token is for.
            * @example Update all gems
@@ -3523,7 +3523,7 @@ export interface operations {
            *   "user"
            * ]
            */
-          scopes?: string[];
+          scopes?: string[] | null;
           /** @description A list of scopes to add to this authorization. */
           add_scopes?: string[];
           /** @description A list of scopes to remove from this authorization. */
@@ -3925,7 +3925,7 @@ export interface operations {
            */
           permission?: "pull" | "push" | "admin";
           /** @description The ID of a team to set as the parent team. */
-          parent_team_id?: number;
+          parent_team_id?: number | null;
         };
       };
     };
@@ -4028,7 +4028,7 @@ export interface operations {
             }[];
           } | null;
           /** @description Enforce all configured restrictions for administrators. Set to `true` to enforce required status checks for repository administrators. Set to `null` to disable. */
-          enforce_admins: boolean;
+          enforce_admins: boolean | null;
           /** @description Require at least one approving review on a pull request, before merging. Set to `null` to disable. */
           required_pull_request_reviews: {
             /** @description Specify which users, teams, and apps can dismiss pull request reviews. Pass an empty `dismissal_restrictions` object to disable. User and team `dismissal_restrictions` are only available for organization-owned repositories. Omit this parameter for personal repositories. */
@@ -4059,7 +4059,7 @@ export interface operations {
           /** @description Enforces a linear commit Git history, which prevents anyone from pushing merge commits to a branch. Set to `true` to enforce a linear commit history. Set to `false` to disable a linear commit Git history. Your repository must allow squash merging or rebase merging before you can enable a linear commit history. Default: `false`. For more information, see "[Requiring a linear commit history](https://docs.github.com/github/administering-a-repository/requiring-a-linear-commit-history)" in the GitHub Help documentation. */
           required_linear_history?: boolean;
           /** @description Permits force pushes to the protected branch by anyone with write access to the repository. Set to `true` to allow force pushes. Set to `false` or `null` to block force pushes. Default: `false`. For more information, see "[Enabling force pushes to a protected branch](https://docs.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)" in the GitHub Help documentation." */
-          allow_force_pushes?: boolean;
+          allow_force_pushes?: boolean | null;
           /** @description Allows deletion of the protected branch by anyone with write access to the repository. Set to `false` to prevent deletion of the protected branch. Default: `false`. For more information, see "[Enabling force pushes to a protected branch](https://docs.github.com/en/github/administering-a-repository/enabling-force-pushes-to-a-protected-branch)" in the GitHub Help documentation. */
           allow_deletions?: boolean;
           /** @description If set to `true`, the `restrictions` branch protection settings which limits who can push will also block pushes which create new branches, unless the push is initiated by a user, team, or app which has the ability to push. Set to `true` to restrict new branch creation. Default: `false`. */
@@ -4440,7 +4440,7 @@ export interface operations {
            */
           permission?: "pull" | "push" | "admin";
           /** @description The ID of a team to set as the parent team. */
-          parent_team_id?: number;
+          parent_team_id?: number | null;
         };
       };
     };
