@@ -320,6 +320,8 @@ export interface paths {
   };
 }
 
+export type webhooks = Record<string, never>;
+
 export interface components {
   schemas: {
     "actions-oidc-custom-issuer-policy-for-enterprise": {
