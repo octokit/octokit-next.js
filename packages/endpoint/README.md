@@ -41,7 +41,7 @@ Deno
 Load <code>@octokit-next/endpoint</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>, including types.
 
 ```js
-import { endpoint } from "https://cdn.skypack.dev/octokit?dts";
+import { endpoint } from "https://cdn.skypack.dev/@octokit-next/endpoint?dts";
 ```
 
 </td></tr>

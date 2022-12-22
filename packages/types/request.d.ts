@@ -13,24 +13,7 @@ import {
   ResponseByVersionAndRoute,
 } from "./utils";
 
-type UnknownResponse = {
-  /**
-   * http response headers
-   */
-  headers: Record<string, unknown>;
-  /**
-   * http response code
-   */
-  status: number;
-  /**
-   * URL of response after all redirects
-   */
-  url: string;
-  /**
-   * Response data as documented in the REST API reference documentation at https://docs.github.com/rest/reference
-   */
-  data: unknown;
-};
+type UnknownResponse = Octokit.Response<unknown, number>;
 
 /**
  * The `RequestInterface` is used for both the standalone `@octokit-next/request` module

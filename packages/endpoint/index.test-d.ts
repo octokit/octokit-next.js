@@ -168,7 +168,6 @@ export function apiMerge() {
     org: "my-project",
   });
 
-  // @ts-expect-error - TODO: add types for endpoint.merge(). Compare https://github.com/octokit/types.ts/blob/7e5dd312188253e962fa209b16963f78113ba8c3/src/EndpointInterface.ts#L49-L88
   const options = myProjectEndpoint.merge("GET /orgs/{org}/repos", {
     headers: {
       authorization: `token 0000000000000000000000000000000000000001`,
@@ -177,18 +176,17 @@ export function apiMerge() {
     type: "private",
   });
 
-  // expectType<{
-  //   baseUrl: "https://github-enterprise.acme-inc.com/api/v3";
-  //   method: "GET";
-  //   url: "/orgs/{org}/repos";
-  //   headers: {
-  //     accept: "application/vnd.github.v3+json";
-  //     authorization: `token 0000000000000000000000000000000000000001`;
-  //     "user-agent": "myApp/1.2.3";
-  //   };
-  //   org: "my-secret-project";
-  //   type: "private";
-  // }>(options);
+  expectType<string>(options.baseUrl);
+  expectType<"GET">(options.method);
+  expectType<"/orgs/{org}/repos">(options.url);
+  expectType<string>(options.headers["user-agent"]);
+  expectType<string>(options.headers["authorization"]);
+  expectType<string>(options.org);
+  expectType<string>(options.type);
+  expectType<{
+    format: "";
+    previews: [];
+  }>(options.mediaType);
 }
 
 export function apiParse() {

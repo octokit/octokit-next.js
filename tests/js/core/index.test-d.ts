@@ -14,7 +14,7 @@ export async function test() {
   expectType<number>(unknownResponse.status);
   expectType<string>(unknownResponse.url);
   expectType<unknown>(unknownResponse.data);
-  expectType<Record<string, unknown>>(unknownResponse.headers);
+  expectType<Octokit.ResponseHeaders>(unknownResponse.headers);
 
   const OctokitWithEmptyDefaults = Octokit.withDefaults({
     // there should be no required options

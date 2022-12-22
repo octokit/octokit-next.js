@@ -40,7 +40,7 @@ Deno
 Load <code>@octokit-next/graphql</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>, including types.
 
 ```js
-import { graphql } from "https://cdn.skypack.dev/octokit?dts";
+import { graphql } from "https://cdn.skypack.dev/@octokit-next/graphql?dts";
 ```
 
 </td></tr>

@@ -1,0 +1,39 @@
+{
+  "name": "@octokit-next/oauth-methods",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "version": "0.0.0-development",
+  "description": "Set of stateless request methods to create, check, reset, refresh, and delete user access tokens for OAuth and GitHub Apps",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/oauth-methods"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/oauth-methods#readme",
+  "keywords": [
+    "github",
+    "api",
+    "sdk",
+    "toolkit",
+    "oauth"
+  ],
+  "author": "Gregor Martynus (https://dev.to/gr2m)",
+  "license": "MIT",
+  "scripts": {
+    "test": "npm run test:code && npm run test:types",
+    "test:code": "c8 --100 ava test",
+    "test:types": "tsd",
+    "coverage": "c8 report --reporter html",
+    "postcoverage": "open-cli coverage/index.html"
+  },
+  "dependencies": {
+    "@octokit-next/oauth-authorization-url": "0.0.0-development",
+    "@octokit-next/request": "0.0.0-development",
+    "@octokit-next/request-error": "0.0.0-development",
+    "@octokit-next/types": "0.0.0-development"
+  }
+}
