@@ -253,6 +253,12 @@
         {
           "pkgRoot": "packages/types-rest-api-ghes-3.6-compatible"
         }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "packages/oauth-methods"
+        }
       ]
     ]
   },
