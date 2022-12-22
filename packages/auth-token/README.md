@@ -43,7 +43,7 @@ Deno
 Load <code>@octokit-next/auth-token</code> directly from <a href="https://cdn.skypack.dev">cdn.skypack.dev</a>, including types.
 
 ```js
-import { endpoint } from "https://cdn.skypack.dev/octokit?dts";
+import { endpoint } from "https://cdn.skypack.dev/@octokit-next/auth-token?dts";
 ```
 
 </td></tr>
