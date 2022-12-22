@@ -1,0 +1,29 @@
+{
+  "name": "@octokit-next/oauth-authorization-url",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "version": "0.0.0-development",
+  "description": "Universal library to retrieve GitHubâs identity URL for the OAuth web flow",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/octokit-next.js.git",
+    "directory": "packages/oauth-authorization-url"
+  },
+  "homepage": "https://github.com/octokit/octokit-next.js/tree/main/packages/oauth-authorization-url#readme",
+  "keywords": [
+    "octokit",
+    "github",
+    "oauth"
+  ],
+  "author": "Gregor Martynus (https://github.com/gr2m)",
+  "license": "MIT",
+  "scripts": {
+    "test": "npm run test:code && npm run test:types",
+    "test:code": "c8 --100 ava test",
+    "test:types": "tsd"
+  }
+}
