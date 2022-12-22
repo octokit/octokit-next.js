@@ -116,6 +116,18 @@ export interface EndpointInterface<
   ): EndpointInterface<TVersion, Omit<TDefaults, keyof TOptions> & TOptions>;
 
   /**
+   * Get the defaulted endpoint options, but without parsing them into request options
+   */
+  merge<
+    TMethod extends string,
+    TRoute extends string,
+    TParameters extends KnownEndpointParameters<TVersion>
+  >(
+    route: `${TMethod} ${TRoute}`,
+    options?: TParameters
+  ): TDefaults & { method: TMethod; url: TRoute } & TParameters;
+
+  /**
    * The current default options
    *
    * @todo should have proper default values such as `https://api.github.com` and `GET`
