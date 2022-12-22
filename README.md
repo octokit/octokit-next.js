@@ -45,7 +45,7 @@ A list of breaking changes compared to latest `@octokit/*` modules
   const octokit = new Octokit({ request: { fetch } });
   ```
 
-  For the static `@ocotkit-next/request` method you can do this
+  For the static `@octokit-next/request` method you can do this
 
   ```js
   import { request } from "@octokit-next/request";
