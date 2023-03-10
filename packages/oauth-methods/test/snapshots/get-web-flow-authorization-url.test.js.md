@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/get-web-flow-authorization-url.test.js`
+# Snapshot report for `packages/oauth-methods/test/get-web-flow-authorization-url.test.js`
 
 The actual snapshot is saved in `get-web-flow-authorization-url.test.js.snap`.
 

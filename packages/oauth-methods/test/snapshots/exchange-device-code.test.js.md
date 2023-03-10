@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/exchange-device-code.test.js`
+# Snapshot report for `packages/oauth-methods/test/exchange-device-code.test.js`
 
 The actual snapshot is saved in `exchange-device-code.test.js.snap`.
 
