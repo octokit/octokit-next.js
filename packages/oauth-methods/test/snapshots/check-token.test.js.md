@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/check-token.test.js`
+# Snapshot report for `packages/oauth-methods/test/check-token.test.js`
 
 The actual snapshot is saved in `check-token.test.js.snap`.
 

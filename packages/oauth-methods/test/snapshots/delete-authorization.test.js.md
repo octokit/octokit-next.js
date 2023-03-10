@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/delete-authorization.test.js`
+# Snapshot report for `packages/oauth-methods/test/delete-authorization.test.js`
 
 The actual snapshot is saved in `delete-authorization.test.js.snap`.
 

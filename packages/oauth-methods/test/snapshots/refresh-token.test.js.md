@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/refresh-token.test.js`
+# Snapshot report for `packages/oauth-methods/test/refresh-token.test.js`
 
 The actual snapshot is saved in `refresh-token.test.js.snap`.
 

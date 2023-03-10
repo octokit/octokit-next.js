@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/delete-token.test.js`
+# Snapshot report for `packages/oauth-methods/test/delete-token.test.js`
 
 The actual snapshot is saved in `delete-token.test.js.snap`.
 
