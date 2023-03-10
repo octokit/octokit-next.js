@@ -1,4 +1,4 @@
-# Snapshot report for `test/scope-token.test.js`
+# Snapshot report for `packages/oauth-methods/test/scope-token.test.js`
 
 The actual snapshot is saved in `scope-token.test.js.snap`.
 

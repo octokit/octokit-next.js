@@ -1,4 +1,4 @@
-# Snapshot report for `packages/oauth-methods.js/test/exchange-web-flow-code.test.js`
+# Snapshot report for `packages/oauth-methods/test/exchange-web-flow-code.test.js`
 
 The actual snapshot is saved in `exchange-web-flow-code.test.js.snap`.
 
