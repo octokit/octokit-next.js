@@ -3,7 +3,7 @@
  * Do not make direct changes to the file.
  */
 
-/** Type helpers */
+/** OneOf type helpers */
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 type XOR<T, U> = T | U extends object
   ? (Without<T, U> & U) | (Without<U, T> & T)
@@ -5035,11 +5035,11 @@ export interface components {
 export type external = Record<string, never>;
 
 export interface operations {
+  /** Create a global webhook */
   "enterprise-admin/create-global-webhook": {
-    /** Create a global webhook */
     parameters: {
-      /** @description This API is under preview and subject to change. */
       header: {
+        /** @description This API is under preview and subject to change. */
         accept: string;
       };
     };
@@ -5078,12 +5078,15 @@ export interface operations {
       };
     };
   };
+  /** Get a global webhook */
   "enterprise-admin/get-global-webhook": {
-    /** Get a global webhook */
     parameters: {
-      /** @description This API is under preview and subject to change. */
       header: {
+        /** @description This API is under preview and subject to change. */
         accept: string;
+      };
+      path: {
+        hook_id: components["parameters"]["hook-id"];
       };
     };
     responses: {
@@ -5095,15 +5098,18 @@ export interface operations {
       };
     };
   };
+  /**
+   * Update a global webhook
+   * @description Parameters that are not provided will be overwritten with the default value or removed if no default exists.
+   */
   "enterprise-admin/update-global-webhook": {
-    /**
-     * Update a global webhook
-     * @description Parameters that are not provided will be overwritten with the default value or removed if no default exists.
-     */
     parameters: {
-      /** @description This API is under preview and subject to change. */
       header: {
+        /** @description This API is under preview and subject to change. */
         accept: string;
+      };
+      path: {
+        hook_id: components["parameters"]["hook-id"];
       };
     };
     requestBody?: {
@@ -5139,13 +5145,18 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create an installation access token for an app
+   * @description Creates an installation access token that enables a GitHub App to make authenticated API requests for the app's installation on an organization or individual account. Installation tokens expire one hour from the time you create them. Using an expired token produces a status code of `401 - Unauthorized`, and requires creating a new installation token. By default the installation token has access to all repositories that the installation can access. To restrict the access to specific repositories, you can provide the `repository_ids` when creating the token. When you omit `repository_ids`, the response does not contain the `repositories` key.
+   *
+   * You must use a [JWT](https://docs.github.com/enterprise-server@3.2/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
+   */
   "apps/create-installation-access-token": {
-    /**
-     * Create an installation access token for an app
-     * @description Creates an installation access token that enables a GitHub App to make authenticated API requests for the app's installation on an organization or individual account. Installation tokens expire one hour from the time you create them. Using an expired token produces a status code of `401 - Unauthorized`, and requires creating a new installation token. By default the installation token has access to all repositories that the installation can access. To restrict the access to specific repositories, you can provide the `repository_ids` when creating the token. When you omit `repository_ids`, the response does not contain the `repositories` key.
-     *
-     * You must use a [JWT](https://docs.github.com/enterprise-server@3.2/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
-     */
+    parameters: {
+      path: {
+        installation_id: components["parameters"]["installation-id"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -5175,21 +5186,26 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Create a registration token for an enterprise
+   * @description Returns a token that you can pass to the `config` script. The token expires after one hour.
+   *
+   * You must authenticate using an access token with the `admin:enterprise` scope to use this endpoint.
+   *
+   * #### Example using registration token
+   *
+   * Configure your self-hosted runner, replacing `TOKEN` with the registration token provided by this endpoint.
+   *
+   * ```
+   * ./config.sh --url https://github.com/enterprises/octo-enterprise --token TOKEN
+   * ```
+   */
   "enterprise-admin/create-registration-token-for-enterprise": {
-    /**
-     * Create a registration token for an enterprise
-     * @description Returns a token that you can pass to the `config` script. The token expires after one hour.
-     *
-     * You must authenticate using an access token with the `admin:enterprise` scope to use this endpoint.
-     *
-     * #### Example using registration token
-     *
-     * Configure your self-hosted runner, replacing `TOKEN` with the registration token provided by this endpoint.
-     *
-     * ```
-     * ./config.sh --url https://github.com/enterprises/octo-enterprise --token TOKEN
-     * ```
-     */
+    parameters: {
+      path: {
+        enterprise: components["parameters"]["enterprise"];
+      };
+    };
     responses: {
       /** @description Response */
       201: {
@@ -5199,22 +5215,27 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a remove token for an enterprise
+   * @description Returns a token that you can pass to the `config` script to remove a self-hosted runner from an enterprise. The token expires after one hour.
+   *
+   * You must authenticate using an access token with the `admin:enterprise` scope to use this endpoint.
+   *
+   * #### Example using remove token
+   *
+   * To remove your self-hosted runner from an enterprise, replace `TOKEN` with the remove token provided by this
+   * endpoint.
+   *
+   * ```
+   * ./config.sh remove --token TOKEN
+   * ```
+   */
   "enterprise-admin/create-remove-token-for-enterprise": {
-    /**
-     * Create a remove token for an enterprise
-     * @description Returns a token that you can pass to the `config` script to remove a self-hosted runner from an enterprise. The token expires after one hour.
-     *
-     * You must authenticate using an access token with the `admin:enterprise` scope to use this endpoint.
-     *
-     * #### Example using remove token
-     *
-     * To remove your self-hosted runner from an enterprise, replace `TOKEN` with the remove token provided by this
-     * endpoint.
-     *
-     * ```
-     * ./config.sh remove --token TOKEN
-     * ```
-     */
+    parameters: {
+      path: {
+        enterprise: components["parameters"]["enterprise"];
+      };
+    };
     responses: {
       /** @description Response */
       201: {
@@ -5224,11 +5245,17 @@ export interface operations {
       };
     };
   };
+  /**
+   * List public events
+   * @description We delay the public events feed by five minutes, which means the most recent event returned by the public events API actually occurred at least five minutes ago.
+   */
   "activity/list-public-events": {
-    /**
-     * List public events
-     * @description We delay the public events feed by five minutes, which means the most recent event returned by the public events API actually occurred at least five minutes ago.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5241,13 +5268,19 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * List repositories accessible to the app installation
+   * @description List repositories that an app installation can access.
+   *
+   * You must use an [installation access token](https://docs.github.com/enterprise-server@3.2/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-an-installation) to access this endpoint.
+   */
   "apps/list-repos-accessible-to-installation": {
-    /**
-     * List repositories accessible to the app installation
-     * @description List repositories that an app installation can access.
-     *
-     * You must use an [installation access token](https://docs.github.com/enterprise-server@3.2/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-an-installation) to access this endpoint.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5268,24 +5301,22 @@ export interface operations {
       403: components["responses"]["forbidden"];
     };
   };
+  /**
+   * List issues assigned to the authenticated user
+   * @description List issues assigned to the authenticated user across all visible repositories including owned repositories, member
+   * repositories, and organization repositories. You can use the `filter` query parameter to fetch issues that are not
+   * necessarily assigned to you.
+   *
+   *
+   * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
+   * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
+   * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
+   * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
+   */
   "issues/list": {
-    /**
-     * List issues assigned to the authenticated user
-     * @description List issues assigned to the authenticated user across all visible repositories including owned repositories, member
-     * repositories, and organization repositories. You can use the `filter` query parameter to fetch issues that are not
-     * necessarily assigned to you.
-     *
-     *
-     * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
-     * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
-     * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
-     * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
-     */
-    parameters?: {
-      /** @description Indicates which sorts of issues to return. `assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or `repos` means all issues you can see, regardless of participation or creation. */
-      /** @description Indicates the state of the issues to return. */
-      /** @description What to sort results by. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Indicates which sorts of issues to return. `assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or `repos` means all issues you can see, regardless of participation or creation. */
         filter?:
           | "assigned"
           | "created"
@@ -5293,12 +5324,19 @@ export interface operations {
           | "subscribed"
           | "repos"
           | "all";
+        /** @description Indicates the state of the issues to return. */
         state?: "open" | "closed" | "all";
+        labels?: components["parameters"]["labels"];
+        /** @description What to sort results by. */
         sort?: "created" | "updated" | "comments";
+        direction?: components["parameters"]["direction"];
+        since?: components["parameters"]["since"];
         collab?: boolean;
         orgs?: boolean;
         owned?: boolean;
         pulls?: boolean;
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
     };
     responses: {
@@ -5316,8 +5354,18 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /** List public events for a network of repositories */
   "activity/list-public-events-for-repo-network": {
-    /** List public events for a network of repositories */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5331,14 +5379,19 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * List notifications for the authenticated user
+   * @description List all notifications for the current user, sorted by most recently updated.
+   */
   "activity/list-notifications-for-authenticated-user": {
-    /**
-     * List notifications for the authenticated user
-     * @description List all notifications for the current user, sorted by most recently updated.
-     */
-    parameters?: {
-      /** @description The number of results per page (max 50). */
-      query?: {
+    parameters: {
+      query: {
+        all?: components["parameters"]["all"];
+        participating?: components["parameters"]["participating"];
+        since?: components["parameters"]["since"];
+        before?: components["parameters"]["before"];
+        page?: components["parameters"]["page"];
+        /** @description The number of results per page (max 50). */
         per_page?: number;
       };
     };
@@ -5358,8 +5411,13 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /** Get a thread */
   "activity/get-thread": {
-    /** Get a thread */
+    parameters: {
+      path: {
+        thread_id: components["parameters"]["thread-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5372,13 +5430,22 @@ export interface operations {
       403: components["responses"]["forbidden"];
     };
   };
+  /**
+   * List selected repositories enabled for GitHub Actions in an organization
+   * @description Lists the selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see "[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization)."
+   *
+   * You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `administration` organization permission to use this API.
+   */
   "actions/list-selected-repositories-enabled-github-actions-organization": {
-    /**
-     * List selected repositories enabled for GitHub Actions in an organization
-     * @description Lists the selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see "[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization)."
-     *
-     * You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `administration` organization permission to use this API.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5391,15 +5458,25 @@ export interface operations {
       };
     };
   };
+  /**
+   * List repository access to a self-hosted runner group in an organization
+   * @description The self-hosted runner groups REST API is available with GitHub Enterprise Cloud and GitHub Enterprise Server. For more information, see "[GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products)."
+   *
+   * Lists the repositories with access to a self-hosted runner group configured in an organization.
+   *
+   * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
+   */
   "actions/list-repo-access-to-self-hosted-runner-group-in-org": {
-    /**
-     * List repository access to a self-hosted runner group in an organization
-     * @description The self-hosted runner groups REST API is available with GitHub Enterprise Cloud and GitHub Enterprise Server. For more information, see "[GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products)."
-     *
-     * Lists the repositories with access to a self-hosted runner group configured in an organization.
-     *
-     * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
-     */
+    parameters: {
+      query: {
+        page?: components["parameters"]["page"];
+        per_page?: components["parameters"]["per-page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
+        runner_group_id: components["parameters"]["runner-group-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5412,21 +5489,26 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a registration token for an organization
+   * @description Returns a token that you can pass to the `config` script. The token expires after one hour.
+   *
+   * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
+   *
+   * #### Example using registration token
+   *
+   * Configure your self-hosted runner, replacing `TOKEN` with the registration token provided by this endpoint.
+   *
+   * ```
+   * ./config.sh --url https://github.com/octo-org --token TOKEN
+   * ```
+   */
   "actions/create-registration-token-for-org": {
-    /**
-     * Create a registration token for an organization
-     * @description Returns a token that you can pass to the `config` script. The token expires after one hour.
-     *
-     * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
-     *
-     * #### Example using registration token
-     *
-     * Configure your self-hosted runner, replacing `TOKEN` with the registration token provided by this endpoint.
-     *
-     * ```
-     * ./config.sh --url https://github.com/octo-org --token TOKEN
-     * ```
-     */
+    parameters: {
+      path: {
+        org: components["parameters"]["org"];
+      };
+    };
     responses: {
       /** @description Response */
       201: {
@@ -5436,22 +5518,27 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a remove token for an organization
+   * @description Returns a token that you can pass to the `config` script to remove a self-hosted runner from an organization. The token expires after one hour.
+   *
+   * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
+   *
+   * #### Example using remove token
+   *
+   * To remove your self-hosted runner from an organization, replace `TOKEN` with the remove token provided by this
+   * endpoint.
+   *
+   * ```
+   * ./config.sh remove --token TOKEN
+   * ```
+   */
   "actions/create-remove-token-for-org": {
-    /**
-     * Create a remove token for an organization
-     * @description Returns a token that you can pass to the `config` script to remove a self-hosted runner from an organization. The token expires after one hour.
-     *
-     * You must authenticate using an access token with the `admin:org` scope to use this endpoint.
-     *
-     * #### Example using remove token
-     *
-     * To remove your self-hosted runner from an organization, replace `TOKEN` with the remove token provided by this
-     * endpoint.
-     *
-     * ```
-     * ./config.sh remove --token TOKEN
-     * ```
-     */
+    parameters: {
+      path: {
+        org: components["parameters"]["org"];
+      };
+    };
     responses: {
       /** @description Response */
       201: {
@@ -5461,11 +5548,21 @@ export interface operations {
       };
     };
   };
+  /**
+   * List selected repositories for an organization secret
+   * @description Lists all repositories that have been selected when the `visibility` for repository access to a secret is set to `selected`. You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `secrets` organization permission to use this endpoint.
+   */
   "actions/list-selected-repos-for-org-secret": {
-    /**
-     * List selected repositories for an organization secret
-     * @description Lists all repositories that have been selected when the `visibility` for repository access to a secret is set to `selected`. You must authenticate using an access token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `secrets` organization permission to use this endpoint.
-     */
+    parameters: {
+      query: {
+        page?: components["parameters"]["page"];
+        per_page?: components["parameters"]["per-page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
+        secret_name: components["parameters"]["secret-name"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5478,8 +5575,17 @@ export interface operations {
       };
     };
   };
+  /** List public organization events */
   "activity/list-public-org-events": {
-    /** List public organization events */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5489,21 +5595,19 @@ export interface operations {
       };
     };
   };
+  /**
+   * List organization issues assigned to the authenticated user
+   * @description List issues in an organization assigned to the authenticated user.
+   *
+   * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
+   * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
+   * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
+   * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
+   */
   "issues/list-for-org": {
-    /**
-     * List organization issues assigned to the authenticated user
-     * @description List issues in an organization assigned to the authenticated user.
-     *
-     * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
-     * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
-     * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
-     * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
-     */
-    parameters?: {
-      /** @description Indicates which sorts of issues to return. `assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or `repos` means all issues you can see, regardless of participation or creation. */
-      /** @description Indicates the state of the issues to return. */
-      /** @description What to sort results by. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Indicates which sorts of issues to return. `assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or `repos` means all issues you can see, regardless of participation or creation. */
         filter?:
           | "assigned"
           | "created"
@@ -5511,8 +5615,18 @@ export interface operations {
           | "subscribed"
           | "repos"
           | "all";
+        /** @description Indicates the state of the issues to return. */
         state?: "open" | "closed" | "all";
+        labels?: components["parameters"]["labels"];
+        /** @description What to sort results by. */
         sort?: "created" | "updated" | "comments";
+        direction?: components["parameters"]["direction"];
+        since?: components["parameters"]["since"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
@@ -5528,16 +5642,14 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * List organization repositories
+   * @description Lists repositories for the specified organization.
+   */
   "repos/list-for-org": {
-    /**
-     * List organization repositories
-     * @description Lists repositories for the specified organization.
-     */
-    parameters?: {
-      /** @description Specifies the types of repositories you want returned. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, `type` can also be `internal`. However, the `internal` value is not yet supported when a GitHub App calls this API with an installation access token. */
-      /** @description The property to sort the results by. */
-      /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Specifies the types of repositories you want returned. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, `type` can also be `internal`. However, the `internal` value is not yet supported when a GitHub App calls this API with an installation access token. */
         type?:
           | "all"
           | "public"
@@ -5546,8 +5658,15 @@ export interface operations {
           | "sources"
           | "member"
           | "internal";
+        /** @description The property to sort the results by. */
         sort?: "created" | "updated" | "pushed" | "full_name";
+        /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
         direction?: "asc" | "desc";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
@@ -5562,18 +5681,23 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create an organization repository
+   * @description Creates a new repository in the specified organization. The authenticated user must be a member of the organization.
+   *
+   * **OAuth scope requirements**
+   *
+   * When using [OAuth](https://docs.github.com/enterprise-server@3.2/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
+   *
+   * *   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
+   * *   `repo` scope to create a private repository
+   */
   "repos/create-in-org": {
-    /**
-     * Create an organization repository
-     * @description Creates a new repository in the specified organization. The authenticated user must be a member of the organization.
-     *
-     * **OAuth scope requirements**
-     *
-     * When using [OAuth](https://docs.github.com/enterprise-server@3.2/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
-     *
-     * *   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
-     * *   `repo` scope to create a private repository
-     */
+    parameters: {
+      path: {
+        org: components["parameters"]["org"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -5702,13 +5826,23 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * List team repositories
+   * @description Lists a team's repositories visible to the authenticated user.
+   *
+   * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos`.
+   */
   "teams/list-repos-in-org": {
-    /**
-     * List team repositories
-     * @description Lists a team's repositories visible to the authenticated user.
-     *
-     * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos`.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
+        team_slug: components["parameters"]["team-slug"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5721,17 +5855,25 @@ export interface operations {
       };
     };
   };
+  /**
+   * Check team permissions for a repository
+   * @description Checks whether a team has `admin`, `push`, `maintain`, `triage`, or `pull` permission for a repository. Repositories inherited through a parent team will also be checked.
+   *
+   * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.2/rest/overview/media-types/) via the `application/vnd.github.v3.repository+json` accept header.
+   *
+   * If a team doesn't have permission for the repository, you will receive a `404 Not Found` response status.
+   *
+   * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos/{owner}/{repo}`.
+   */
   "teams/check-permissions-for-repo-in-org": {
-    /**
-     * Check team permissions for a repository
-     * @description Checks whether a team has `admin`, `push`, `maintain`, `triage`, or `pull` permission for a repository. Repositories inherited through a parent team will also be checked.
-     *
-     * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.2/rest/overview/media-types/) via the `application/vnd.github.v3.repository+json` accept header.
-     *
-     * If a team doesn't have permission for the repository, you will receive a `404 Not Found` response status.
-     *
-     * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}/repos/{owner}/{repo}`.
-     */
+    parameters: {
+      path: {
+        org: components["parameters"]["org"];
+        team_slug: components["parameters"]["team-slug"];
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Alternative response with repository permissions */
       200: {
@@ -5745,13 +5887,19 @@ export interface operations {
       404: never;
     };
   };
+  /**
+   * Get a repository
+   * @description When you pass the `scarlet-witch-preview` media type, requests to get a repository will also return the repository's code of conduct if it can be detected from the repository's code of conduct file.
+   *
+   * The `parent` and `source` objects are present when the repository is a fork. `parent` is the repository this repository was forked from, `source` is the ultimate source for the network.
+   */
   "repos/get": {
-    /**
-     * Get a repository
-     * @description When you pass the `scarlet-witch-preview` media type, requests to get a repository will also return the repository's code of conduct if it can be detected from the repository's code of conduct file.
-     *
-     * The `parent` and `source` objects are present when the repository is a fork. `parent` is the repository this repository was forked from, `source` is the ultimate source for the network.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5764,11 +5912,17 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * Update a repository
+   * @description **Note**: To edit a repository's topics, use the [Replace all repository topics](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#replace-all-repository-topics) endpoint.
+   */
   "repos/update": {
-    /**
-     * Update a repository
-     * @description **Note**: To edit a repository's topics, use the [Replace all repository topics](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#replace-all-repository-topics) endpoint.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -5929,11 +6083,18 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Get a job for a workflow run
+   * @description Gets a specific job in a workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
+   */
   "actions/get-job-for-workflow-run": {
-    /**
-     * Get a job for a workflow run
-     * @description Gets a specific job in a workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        job_id: components["parameters"]["job-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -5943,20 +6104,26 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a registration token for a repository
+   * @description Returns a token that you can pass to the `config` script. The token expires after one hour. You must authenticate
+   * using an access token with the `repo` scope to use this endpoint.
+   *
+   * #### Example using registration token
+   *
+   * Configure your self-hosted runner, replacing `TOKEN` with the registration token provided by this endpoint.
+   *
+   * ```
+   * ./config.sh --url https://github.com/octo-org/octo-repo-artifacts --token TOKEN
+   * ```
+   */
   "actions/create-registration-token-for-repo": {
-    /**
-     * Create a registration token for a repository
-     * @description Returns a token that you can pass to the `config` script. The token expires after one hour. You must authenticate
-     * using an access token with the `repo` scope to use this endpoint.
-     *
-     * #### Example using registration token
-     *
-     * Configure your self-hosted runner, replacing `TOKEN` with the registration token provided by this endpoint.
-     *
-     * ```
-     * ./config.sh --url https://github.com/octo-org/octo-repo-artifacts --token TOKEN
-     * ```
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       201: {
@@ -5966,20 +6133,26 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a remove token for a repository
+   * @description Returns a token that you can pass to remove a self-hosted runner from a repository. The token expires after one hour.
+   * You must authenticate using an access token with the `repo` scope to use this endpoint.
+   *
+   * #### Example using remove token
+   *
+   * To remove your self-hosted runner from a repository, replace TOKEN with the remove token provided by this endpoint.
+   *
+   * ```
+   * ./config.sh remove --token TOKEN
+   * ```
+   */
   "actions/create-remove-token-for-repo": {
-    /**
-     * Create a remove token for a repository
-     * @description Returns a token that you can pass to remove a self-hosted runner from a repository. The token expires after one hour.
-     * You must authenticate using an access token with the `repo` scope to use this endpoint.
-     *
-     * #### Example using remove token
-     *
-     * To remove your self-hosted runner from a repository, replace TOKEN with the remove token provided by this endpoint.
-     *
-     * ```
-     * ./config.sh remove --token TOKEN
-     * ```
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       201: {
@@ -5989,13 +6162,29 @@ export interface operations {
       };
     };
   };
+  /**
+   * List workflow runs for a repository
+   * @description Lists all workflow runs for a repository. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#parameters).
+   *
+   * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
+   */
   "actions/list-workflow-runs-for-repo": {
-    /**
-     * List workflow runs for a repository
-     * @description Lists all workflow runs for a repository. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#parameters).
-     *
-     * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
-     */
+    parameters: {
+      query: {
+        actor?: components["parameters"]["actor"];
+        branch?: components["parameters"]["workflow-run-branch"];
+        event?: components["parameters"]["event"];
+        status?: components["parameters"]["workflow-run-status"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+        created?: components["parameters"]["created"];
+        exclude_pull_requests?: components["parameters"]["exclude-pull-requests"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6011,11 +6200,21 @@ export interface operations {
       };
     };
   };
+  /**
+   * Get a workflow run
+   * @description Gets a specific workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
+   */
   "actions/get-workflow-run": {
-    /**
-     * Get a workflow run
-     * @description Gets a specific workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint.
-     */
+    parameters: {
+      query: {
+        exclude_pull_requests?: components["parameters"]["exclude-pull-requests"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        run_id: components["parameters"]["run-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6025,15 +6224,22 @@ export interface operations {
       };
     };
   };
+  /**
+   * List jobs for a workflow run
+   * @description Lists jobs for a workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#parameters).
+   */
   "actions/list-jobs-for-workflow-run": {
-    /**
-     * List jobs for a workflow run
-     * @description Lists jobs for a workflow run. Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope. GitHub Apps must have the `actions:read` permission to use this endpoint. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#parameters).
-     */
-    parameters?: {
-      /** @description Filters jobs by their `completed_at` timestamp. `latest` returns jobs from the most recent execution of the workflow run. `all` returns all jobs for a workflow run, including from old executions of the workflow run. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Filters jobs by their `completed_at` timestamp. `latest` returns jobs from the most recent execution of the workflow run. `all` returns all jobs for a workflow run, including from old executions of the workflow run. */
         filter?: "latest" | "all";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        run_id: components["parameters"]["run-id"];
       };
     };
     responses: {
@@ -6051,13 +6257,30 @@ export interface operations {
       };
     };
   };
+  /**
+   * List workflow runs for a workflow
+   * @description List all workflow runs for a workflow. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#parameters).
+   *
+   * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope.
+   */
   "actions/list-workflow-runs": {
-    /**
-     * List workflow runs for a workflow
-     * @description List all workflow runs for a workflow. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#parameters).
-     *
-     * Anyone with read access to the repository can use this endpoint. If the repository is private you must use an access token with the `repo` scope.
-     */
+    parameters: {
+      query: {
+        actor?: components["parameters"]["actor"];
+        branch?: components["parameters"]["workflow-run-branch"];
+        event?: components["parameters"]["event"];
+        status?: components["parameters"]["workflow-run-status"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+        created?: components["parameters"]["created"];
+        exclude_pull_requests?: components["parameters"]["exclude-pull-requests"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        workflow_id: components["parameters"]["workflow-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6073,13 +6296,19 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a check suite
+   * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
+   *
+   * By default, check suites are automatically created when you create a [check run](https://docs.github.com/enterprise-server@3.2/rest/reference/checks#check-runs). You only need to use this endpoint for manually creating check suites when you've disabled automatic creation using "[Update repository preferences for check suites](https://docs.github.com/enterprise-server@3.2/rest/reference/checks#update-repository-preferences-for-check-suites)". Your GitHub App must have the `checks:write` permission to create check suites.
+   */
   "checks/create-suite": {
-    /**
-     * Create a check suite
-     * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     *
-     * By default, check suites are automatically created when you create a [check run](https://docs.github.com/enterprise-server@3.2/rest/reference/checks#check-runs). You only need to use this endpoint for manually creating check suites when you've disabled automatic creation using "[Update repository preferences for check suites](https://docs.github.com/enterprise-server@3.2/rest/reference/checks#update-repository-preferences-for-check-suites)". Your GitHub App must have the `checks:write` permission to create check suites.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6103,11 +6332,17 @@ export interface operations {
       };
     };
   };
+  /**
+   * Update repository preferences for check suites
+   * @description Changes the default automatic flow when creating check suites. By default, a check suite is automatically created each time code is pushed to a repository. When you disable the automatic creation of check suites, you can manually [Create a check suite](https://docs.github.com/enterprise-server@3.2/rest/reference/checks#create-a-check-suite). You must have admin permissions in the repository to set preferences for check suites.
+   */
   "checks/set-suites-preferences": {
-    /**
-     * Update repository preferences for check suites
-     * @description Changes the default automatic flow when creating check suites. By default, a check suite is automatically created each time code is pushed to a repository. When you disable the automatic creation of check suites, you can manually [Create a check suite](https://docs.github.com/enterprise-server@3.2/rest/reference/checks#create-a-check-suite). You must have admin permissions in the repository to set preferences for check suites.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6133,13 +6368,20 @@ export interface operations {
       };
     };
   };
+  /**
+   * Get a check suite
+   * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
+   *
+   * Gets a single check suite using its `id`. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to get check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
+   */
   "checks/get-suite": {
-    /**
-     * Get a check suite
-     * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     *
-     * Gets a single check suite using its `id`. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to get check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        check_suite_id: components["parameters"]["check-suite-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6149,14 +6391,21 @@ export interface operations {
       };
     };
   };
+  /**
+   * Get a code scanning alert
+   * @description Gets a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
+   *
+   * **Deprecation notice**:
+   * The instances field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The same information can now be retrieved via a GET request to the URL specified by `instances_url`.
+   */
   "code-scanning/get-alert": {
-    /**
-     * Get a code scanning alert
-     * @description Gets a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
-     *
-     * **Deprecation notice**:
-     * The instances field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The same information can now be retrieved via a GET request to the URL specified by `instances_url`.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        alert_number: components["parameters"]["alert-number"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6169,11 +6418,18 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * Update a code scanning alert
+   * @description Updates the status of a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` write permission to use this endpoint.
+   */
   "code-scanning/update-alert": {
-    /**
-     * Update a code scanning alert
-     * @description Updates the status of a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` write permission to use this endpoint.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        alert_number: components["parameters"]["alert-number"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6194,32 +6450,40 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * List code scanning analyses for a repository
+   * @description Lists the details of all code scanning analyses for a repository,
+   * starting with the most recent.
+   * The response is paginated and you can use the `page` and `per_page` parameters
+   * to list the analyses you're interested in.
+   * By default 30 analyses are listed per page.
+   *
+   * The `rules_count` field in the response give the number of rules
+   * that were run in the analysis.
+   * For very old analyses this data is not available,
+   * and `0` is returned in this field.
+   *
+   * You must use an access token with the `security_events` scope to use this endpoint.
+   * GitHub Apps must have the `security_events` read permission to use this endpoint.
+   *
+   * **Deprecation notice**:
+   * The `tool_name` field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The tool name can now be found inside the `tool` field.
+   */
   "code-scanning/list-recent-analyses": {
-    /**
-     * List code scanning analyses for a repository
-     * @description Lists the details of all code scanning analyses for a repository,
-     * starting with the most recent.
-     * The response is paginated and you can use the `page` and `per_page` parameters
-     * to list the analyses you're interested in.
-     * By default 30 analyses are listed per page.
-     *
-     * The `rules_count` field in the response give the number of rules
-     * that were run in the analysis.
-     * For very old analyses this data is not available,
-     * and `0` is returned in this field.
-     *
-     * You must use an access token with the `security_events` scope to use this endpoint.
-     * GitHub Apps must have the `security_events` read permission to use this endpoint.
-     *
-     * **Deprecation notice**:
-     * The `tool_name` field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The tool name can now be found inside the `tool` field.
-     */
-    parameters?: {
-      /** @description The Git reference for the analyses you want to list. The `ref` for a branch can be formatted either as `refs/heads/<branch name>` or simply `<branch name>`. To reference a pull request use `refs/pull/<number>/merge`. */
-      /** @description Filter analyses belonging to the same SARIF upload. */
-      query?: {
+    parameters: {
+      query: {
+        tool_name?: components["parameters"]["tool-name"];
+        tool_guid?: components["parameters"]["tool-guid"];
+        page?: components["parameters"]["page"];
+        per_page?: components["parameters"]["per-page"];
+        /** @description The Git reference for the analyses you want to list. The `ref` for a branch can be formatted either as `refs/heads/<branch name>` or simply `<branch name>`. To reference a pull request use `refs/pull/<number>/merge`. */
         ref?: components["schemas"]["code-scanning-ref"];
+        /** @description Filter analyses belonging to the same SARIF upload. */
         sarif_id?: components["schemas"]["code-scanning-analysis-sarif-id"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
@@ -6234,34 +6498,36 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * Get a code scanning analysis for a repository
+   * @description Gets a specified code scanning analysis for a repository.
+   * You must use an access token with the `security_events` scope to use this endpoint.
+   * GitHub Apps must have the `security_events` read permission to use this endpoint.
+   *
+   * The default JSON response contains fields that describe the analysis.
+   * This includes the Git reference and commit SHA to which the analysis relates,
+   * the datetime of the analysis, the name of the code scanning tool,
+   * and the number of alerts.
+   *
+   * The `rules_count` field in the default response give the number of rules
+   * that were run in the analysis.
+   * For very old analyses this data is not available,
+   * and `0` is returned in this field.
+   *
+   * If you use the Accept header `application/sarif+json`,
+   * the response contains the analysis data that was uploaded.
+   * This is formatted as
+   * [SARIF version 2.1.0](https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/sarif-v2.1.0-cs01.html).
+   *
+   * **Deprecation notice**:
+   * The `tool_name` field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The tool name can now be found inside the `tool` field.
+   */
   "code-scanning/get-analysis": {
-    /**
-     * Get a code scanning analysis for a repository
-     * @description Gets a specified code scanning analysis for a repository.
-     * You must use an access token with the `security_events` scope to use this endpoint.
-     * GitHub Apps must have the `security_events` read permission to use this endpoint.
-     *
-     * The default JSON response contains fields that describe the analysis.
-     * This includes the Git reference and commit SHA to which the analysis relates,
-     * the datetime of the analysis, the name of the code scanning tool,
-     * and the number of alerts.
-     *
-     * The `rules_count` field in the default response give the number of rules
-     * that were run in the analysis.
-     * For very old analyses this data is not available,
-     * and `0` is returned in this field.
-     *
-     * If you use the Accept header `application/sarif+json`,
-     * the response contains the analysis data that was uploaded.
-     * This is formatted as
-     * [SARIF version 2.1.0](https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/sarif-v2.1.0-cs01.html).
-     *
-     * **Deprecation notice**:
-     * The `tool_name` field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The tool name can now be found inside the `tool` field.
-     */
     parameters: {
-      /** @description The ID of the analysis, as returned from the `GET /repos/{owner}/{repo}/code-scanning/analyses` operation. */
       path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        /** @description The ID of the analysis, as returned from the `GET /repos/{owner}/{repo}/code-scanning/analyses` operation. */
         analysis_id: number;
       };
     };
@@ -6280,29 +6546,36 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * Add a repository collaborator
+   * @description This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.2/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
+   *
+   * For more information on permission levels, see "[Repository permission levels for an organization](https://docs.github.com/enterprise-server@3.2/github/setting-up-and-managing-organizations-and-teams/repository-permission-levels-for-an-organization#permission-levels-for-repositories-owned-by-an-organization)". There are restrictions on which permissions can be granted to organization members when an organization base role is in place. In this case, the permission being given must be equal to or higher than the org base permission. Otherwise, the request will fail with:
+   *
+   * ```
+   * Cannot assign {member} permission of {role name}
+   * ```
+   *
+   * Note that, if you choose not to pass any parameters, you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see "[HTTP verbs](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#http-verbs)."
+   *
+   * The invitee will receive a notification that they have been invited to the repository, which they must accept or decline. They may do this via the notifications page, the email they receive, or by using the [repository invitations API endpoints](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#invitations).
+   *
+   * **Updating an existing collaborator's permission level**
+   *
+   * The endpoint can also be used to change the permissions of an existing collaborator without first removing and re-adding the collaborator. To change the permissions, use the same endpoint and pass a different `permission` parameter. The response will be a `204`, with no other indication that the permission level changed.
+   *
+   * **Rate limits**
+   *
+   * You are limited to sending 50 invitations to a repository per 24 hour period. Note there is no limit if you are inviting organization members to an organization repository.
+   */
   "repos/add-collaborator": {
-    /**
-     * Add a repository collaborator
-     * @description This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.2/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
-     *
-     * For more information on permission levels, see "[Repository permission levels for an organization](https://docs.github.com/enterprise-server@3.2/github/setting-up-and-managing-organizations-and-teams/repository-permission-levels-for-an-organization#permission-levels-for-repositories-owned-by-an-organization)". There are restrictions on which permissions can be granted to organization members when an organization base role is in place. In this case, the permission being given must be equal to or higher than the org base permission. Otherwise, the request will fail with:
-     *
-     * ```
-     * Cannot assign {member} permission of {role name}
-     * ```
-     *
-     * Note that, if you choose not to pass any parameters, you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see "[HTTP verbs](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#http-verbs)."
-     *
-     * The invitee will receive a notification that they have been invited to the repository, which they must accept or decline. They may do this via the notifications page, the email they receive, or by using the [repository invitations API endpoints](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#invitations).
-     *
-     * **Updating an existing collaborator's permission level**
-     *
-     * The endpoint can also be used to change the permissions of an existing collaborator without first removing and re-adding the collaborator. To change the permissions, use the same endpoint and pass a different `permission` parameter. The response will be a `204`, with no other indication that the permission level changed.
-     *
-     * **Rate limits**
-     *
-     * You are limited to sending 50 invitations to a repository per 24 hour period. Note there is no limit if you are inviting organization members to an organization repository.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        username: components["parameters"]["username"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -6332,11 +6605,18 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Create reaction for a commit comment
+   * @description Create a reaction to a [commit comment](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#comments). A response with an HTTP `200` status means that you already added the reaction type to this commit comment.
+   */
   "reactions/create-for-commit-comment": {
-    /**
-     * Create reaction for a commit comment
-     * @description Create a reaction to a [commit comment](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#comments). A response with an HTTP `200` status means that you already added the reaction type to this commit comment.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        comment_id: components["parameters"]["comment-id"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6373,11 +6653,22 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * List pull requests associated with a commit
+   * @description Lists the merged pull request that introduced the commit to the repository. If the commit is not present in the default branch, additionally returns open pull requests associated with the commit. The results may include open and closed pull requests. Additional preview headers may be required to see certain details for associated pull requests, such as whether a pull request is in a draft state. For more information about previews that might affect this endpoint, see the [List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests) endpoint.
+   */
   "repos/list-pull-requests-associated-with-commit": {
-    /**
-     * List pull requests associated with a commit
-     * @description Lists the merged pull request that introduced the commit to the repository. If the commit is not present in the default branch, additionally returns open pull requests associated with the commit. The results may include open and closed pull requests. Additional preview headers may be required to see certain details for associated pull requests, such as whether a pull request is in a draft state. For more information about previews that might affect this endpoint, see the [List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests) endpoint.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        commit_sha: components["parameters"]["commit-sha"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6390,23 +6681,28 @@ export interface operations {
       };
     };
   };
+  /**
+   * List check suites for a Git reference
+   * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
+   *
+   * Lists check suites for a commit `ref`. The `ref` can be a SHA, branch name, or a tag name. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to list check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
+   */
   "checks/list-suites-for-ref": {
-    /**
-     * List check suites for a Git reference
-     * @description **Note:** The Checks API only looks for pushes in the repository where the check suite or check run were created. Pushes to a branch in a forked repository are not detected and return an empty `pull_requests` array and a `null` value for `head_branch`.
-     *
-     * Lists check suites for a commit `ref`. The `ref` can be a SHA, branch name, or a tag name. GitHub Apps must have the `checks:read` permission on a private repository or pull access to a public repository to list check suites. OAuth Apps and authenticated users must have the `repo` scope to get check suites in a private repository.
-     */
     parameters: {
-      /**
-       * @description Filters check suites by GitHub App `id`.
-       * @example 1
-       */
-      query?: {
+      query: {
+        /**
+         * @description Filters check suites by GitHub App `id`.
+         * @example 1
+         */
         app_id?: number;
+        check_name?: components["parameters"]["check-name"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
-      /** @description ref parameter */
       path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        /** @description ref parameter */
         ref: string;
       };
     };
@@ -6425,21 +6721,27 @@ export interface operations {
       };
     };
   };
+  /**
+   * Get the combined status for a specific reference
+   * @description Users with pull access in a repository can access a combined view of commit statuses for a given ref. The ref can be a SHA, a branch name, or a tag name.
+   *
+   *
+   * Additionally, a combined `state` is returned. The `state` is one of:
+   *
+   * *   **failure** if any of the contexts report as `error` or `failure`
+   * *   **pending** if there are no statuses or a context is `pending`
+   * *   **success** if the latest status for all contexts is `success`
+   */
   "repos/get-combined-status-for-ref": {
-    /**
-     * Get the combined status for a specific reference
-     * @description Users with pull access in a repository can access a combined view of commit statuses for a given ref. The ref can be a SHA, a branch name, or a tag name.
-     *
-     *
-     * Additionally, a combined `state` is returned. The `state` is one of:
-     *
-     * *   **failure** if any of the contexts report as `error` or `failure`
-     * *   **pending** if there are no statuses or a context is `pending`
-     * *   **success** if the latest status for all contexts is `success`
-     */
     parameters: {
-      /** @description ref parameter */
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
       path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        /** @description ref parameter */
         ref: string;
       };
     };
@@ -6453,8 +6755,18 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /** List repository events */
   "activity/list-repo-events": {
-    /** List repository events */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6464,12 +6776,18 @@ export interface operations {
       };
     };
   };
+  /** List forks */
   "repos/list-forks": {
-    /** List forks */
-    parameters?: {
-      /** @description The sort order. `stargazers` will sort by star count. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description The sort order. `stargazers` will sort by star count. */
         sort?: "newest" | "oldest" | "stargazers" | "watchers";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
@@ -6485,13 +6803,19 @@ export interface operations {
       400: components["responses"]["bad_request"];
     };
   };
+  /**
+   * Create a fork
+   * @description Create a fork for the authenticated user.
+   *
+   * **Note**: Forking a Repository happens asynchronously. You may have to wait a short period of time before you can access the git objects. If this takes longer than 5 minutes, be sure to contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=dotcom-rest-api).
+   */
   "repos/create-fork": {
-    /**
-     * Create a fork
-     * @description Create a fork for the authenticated user.
-     *
-     * **Note**: Forking a Repository happens asynchronously. You may have to wait a short period of time before you can access the git objects. If this takes longer than 5 minutes, be sure to contact [GitHub Enterprise Server Support](https://support.github.com/contact?tags=dotcom-rest-api).
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -6513,11 +6837,21 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * List repository invitations
+   * @description When authenticating as a user with admin rights to a repository, this endpoint will list all currently open repository invitations.
+   */
   "repos/list-invitations": {
-    /**
-     * List repository invitations
-     * @description When authenticating as a user with admin rights to a repository, this endpoint will list all currently open repository invitations.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6530,8 +6864,15 @@ export interface operations {
       };
     };
   };
+  /** Update a repository invitation */
   "repos/update-invitation": {
-    /** Update a repository invitation */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        invitation_id: components["parameters"]["invitation-id"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -6552,30 +6893,39 @@ export interface operations {
       };
     };
   };
+  /**
+   * List repository issues
+   * @description List issues in a repository.
+   *
+   * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
+   * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
+   * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
+   * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
+   */
   "issues/list-for-repo": {
-    /**
-     * List repository issues
-     * @description List issues in a repository.
-     *
-     * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
-     * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
-     * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
-     * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
-     */
-    parameters?: {
-      /** @description If an `integer` is passed, it should refer to a milestone by its `number` field. If the string `*` is passed, issues with any milestone are accepted. If the string `none` is passed, issues without milestones are returned. */
-      /** @description Indicates the state of the issues to return. */
-      /** @description Can be the name of a user. Pass in `none` for issues with no assigned user, and `*` for issues assigned to any user. */
-      /** @description The user that created the issue. */
-      /** @description A user that's mentioned in the issue. */
-      /** @description What to sort results by. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description If an `integer` is passed, it should refer to a milestone by its `number` field. If the string `*` is passed, issues with any milestone are accepted. If the string `none` is passed, issues without milestones are returned. */
         milestone?: string;
+        /** @description Indicates the state of the issues to return. */
         state?: "open" | "closed" | "all";
+        /** @description Can be the name of a user. Pass in `none` for issues with no assigned user, and `*` for issues assigned to any user. */
         assignee?: string;
+        /** @description The user that created the issue. */
         creator?: string;
+        /** @description A user that's mentioned in the issue. */
         mentioned?: string;
+        labels?: components["parameters"]["labels"];
+        /** @description What to sort results by. */
         sort?: "created" | "updated" | "comments";
+        direction?: components["parameters"]["direction"];
+        since?: components["parameters"]["since"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
@@ -6593,13 +6943,19 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Create an issue
+   * @description Any user with pull access to a repository can create an issue. If [issues are disabled in the repository](https://docs.github.com/articles/disabling-issues/), the API returns a `410 Gone` status.
+   *
+   * This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.2/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
+   */
   "issues/create": {
-    /**
-     * Create an issue
-     * @description Any user with pull access to a repository can create an issue. If [issues are disabled in the repository](https://docs.github.com/articles/disabling-issues/), the API returns a `410 Gone` status.
-     *
-     * This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.2/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6645,8 +7001,18 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /** List issue events for a repository */
   "issues/list-events-for-repo": {
-    /** List issue events for a repository */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6660,10 +7026,12 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /** Get an issue event */
   "issues/get-event": {
-    /** Get an issue event */
     parameters: {
       path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
         event_id: number;
       };
     };
@@ -6679,21 +7047,28 @@ export interface operations {
       410: components["responses"]["gone"];
     };
   };
+  /**
+   * Get an issue
+   * @description The API returns a [`301 Moved Permanently` status](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#http-redirects-redirects) if the issue was
+   * [transferred](https://docs.github.com/articles/transferring-an-issue-to-another-repository/) to another repository. If
+   * the issue was transferred to or deleted from a repository where the authenticated user lacks read access, the API
+   * returns a `404 Not Found` status. If the issue was deleted from a repository where the authenticated user has read
+   * access, the API returns a `410 Gone` status. To receive webhook events for transferred and deleted issues, subscribe
+   * to the [`issues`](https://docs.github.com/enterprise-server@3.2/webhooks/event-payloads/#issues) webhook.
+   *
+   * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
+   * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
+   * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
+   * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
+   */
   "issues/get": {
-    /**
-     * Get an issue
-     * @description The API returns a [`301 Moved Permanently` status](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#http-redirects-redirects) if the issue was
-     * [transferred](https://docs.github.com/articles/transferring-an-issue-to-another-repository/) to another repository. If
-     * the issue was transferred to or deleted from a repository where the authenticated user lacks read access, the API
-     * returns a `404 Not Found` status. If the issue was deleted from a repository where the authenticated user has read
-     * access, the API returns a `410 Gone` status. To receive webhook events for transferred and deleted issues, subscribe
-     * to the [`issues`](https://docs.github.com/enterprise-server@3.2/webhooks/event-payloads/#issues) webhook.
-     *
-     * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
-     * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
-     * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
-     * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        issue_number: components["parameters"]["issue-number"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6707,11 +7082,18 @@ export interface operations {
       410: components["responses"]["gone"];
     };
   };
+  /**
+   * Update an issue
+   * @description Issue owners and users with push access can edit an issue.
+   */
   "issues/update": {
-    /**
-     * Update an issue
-     * @description Issue owners and users with push access can edit an issue.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        issue_number: components["parameters"]["issue-number"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -6765,11 +7147,18 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * Add assignees to an issue
+   * @description Adds up to 10 assignees to an issue. Users already assigned to an issue are not replaced.
+   */
   "issues/add-assignees": {
-    /**
-     * Add assignees to an issue
-     * @description Adds up to 10 assignees to an issue. Users already assigned to an issue are not replaced.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        issue_number: components["parameters"]["issue-number"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -6787,11 +7176,25 @@ export interface operations {
       };
     };
   };
+  /**
+   * List repository notifications for the authenticated user
+   * @description List all notifications for the current user.
+   */
   "activity/list-repo-notifications-for-authenticated-user": {
-    /**
-     * List repository notifications for the authenticated user
-     * @description List all notifications for the current user.
-     */
+    parameters: {
+      query: {
+        all?: components["parameters"]["all"];
+        participating?: components["parameters"]["participating"];
+        since?: components["parameters"]["since"];
+        before?: components["parameters"]["before"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6804,23 +7207,29 @@ export interface operations {
       };
     };
   };
+  /**
+   * List pull requests
+   * @description Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   */
   "pulls/list": {
-    /**
-     * List pull requests
-     * @description Draft pull requests are available in public repositories with GitHub Free and GitHub Free for organizations, GitHub Pro, and legacy per-repository billing plans, and in public and private repositories with GitHub Team and GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
-     */
-    parameters?: {
-      /** @description Either `open`, `closed`, or `all` to filter by state. */
-      /** @description Filter pulls by head user or head organization and branch name in the format of `user:ref-name` or `organization:ref-name`. For example: `github:new-script-format` or `octocat:test-branch`. */
-      /** @description Filter pulls by base branch name. Example: `gh-pages`. */
-      /** @description What to sort results by. `popularity` will sort by the number of comments. `long-running` will sort by date created and will limit the results to pull requests that have been open for more than a month and have had activity within the past month. */
-      /** @description The direction of the sort. Default: `desc` when sort is `created` or sort is not specified, otherwise `asc`. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Either `open`, `closed`, or `all` to filter by state. */
         state?: "open" | "closed" | "all";
+        /** @description Filter pulls by head user or head organization and branch name in the format of `user:ref-name` or `organization:ref-name`. For example: `github:new-script-format` or `octocat:test-branch`. */
         head?: string;
+        /** @description Filter pulls by base branch name. Example: `gh-pages`. */
         base?: string;
+        /** @description What to sort results by. `popularity` will sort by the number of comments. `long-running` will sort by date created and will limit the results to pull requests that have been open for more than a month and have had activity within the past month. */
         sort?: "created" | "updated" | "popularity" | "long-running";
+        /** @description The direction of the sort. Default: `desc` when sort is `created` or sort is not specified, otherwise `asc`. */
         direction?: "asc" | "desc";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
@@ -6837,11 +7246,18 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Request reviewers for a pull request
+   * @description This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.2/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
+   */
   "pulls/request-reviewers": {
-    /**
-     * Request reviewers for a pull request
-     * @description This endpoint triggers [notifications](https://docs.github.com/enterprise-server@3.2/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        pull_number: components["parameters"]["pull-number"];
+      };
+    };
     requestBody?: {
       content: {
         "application/json": {
@@ -6864,13 +7280,19 @@ export interface operations {
       422: never;
     };
   };
+  /**
+   * Create a release
+   * @description Users with push access to the repository can create a release.
+   *
+   * This endpoint triggers [notifications](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
+   */
   "repos/create-release": {
-    /**
-     * Create a release
-     * @description Users with push access to the repository can create a release.
-     *
-     * This endpoint triggers [notifications](https://docs.github.com/en/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. See "[Secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#secondary-rate-limits)" and "[Dealing with secondary rate limits](https://docs.github.com/enterprise-server@3.2/rest/guides/best-practices-for-integrators#dealing-with-secondary-rate-limits)" for details.
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6909,15 +7331,22 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * List reactions for a release
+   * @description List the reactions to a [release](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#releases).
+   */
   "reactions/list-for-release": {
-    /**
-     * List reactions for a release
-     * @description List the reactions to a [release](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#releases).
-     */
-    parameters?: {
-      /** @description Returns a single [reaction type](https://docs.github.com/enterprise-server@3.2/rest/reference/reactions#reaction-types). Omit this parameter to list all reactions to a release. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Returns a single [reaction type](https://docs.github.com/enterprise-server@3.2/rest/reference/reactions#reaction-types). Omit this parameter to list all reactions to a release. */
         content?: "+1" | "laugh" | "heart" | "hooray" | "rocket" | "eyes";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+        release_id: components["parameters"]["release-id"];
       };
     };
     responses: {
@@ -6934,8 +7363,18 @@ export interface operations {
       415: components["responses"]["preview_header_missing"];
     };
   };
+  /** Get all repository topics */
   "repos/get-all-topics": {
-    /** Get all repository topics */
+    parameters: {
+      query: {
+        page?: components["parameters"]["page"];
+        per_page?: components["parameters"]["per-page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -6947,8 +7386,14 @@ export interface operations {
       415: components["responses"]["preview_header_missing"];
     };
   };
+  /** Replace all repository topics */
   "repos/replace-all-topics": {
-    /** Replace all repository topics */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6969,11 +7414,17 @@ export interface operations {
       422: components["responses"]["validation_failed_simple"];
     };
   };
+  /**
+   * Transfer a repository
+   * @description A transfer request will need to be accepted by the new owner when transferring a personal repository to another user. The response will contain the original `owner`, and the transfer will continue asynchronously. For more details on the requirements to transfer personal and organization-owned repositories, see [about repository transfers](https://docs.github.com/articles/about-repository-transfers/).
+   */
   "repos/transfer": {
-    /**
-     * Transfer a repository
-     * @description A transfer request will need to be accepted by the new owner when transferring a personal repository to another user. The response will contain the original `owner`, and the transfer will continue asynchronously. For more details on the requirements to transfer personal and organization-owned repositories, see [about repository transfers](https://docs.github.com/articles/about-repository-transfers/).
-     */
+    parameters: {
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     requestBody: {
       content: {
         "application/json": {
@@ -6993,18 +7444,18 @@ export interface operations {
       };
     };
   };
+  /**
+   * Create a repository using a template
+   * @description Creates a new repository using a repository template. Use the `template_owner` and `template_repo` route parameters to specify the repository to use as the template. If the repository is not public, the authenticated user must own or be a member of an organization that owns the repository. To check if a repository is available to use as a template, get the repository's information using the [Get a repository](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#get-a-repository) endpoint and check that the `is_template` key is `true`.
+   *
+   * **OAuth scope requirements**
+   *
+   * When using [OAuth](https://docs.github.com/enterprise-server@3.2/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
+   *
+   * *   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
+   * *   `repo` scope to create a private repository
+   */
   "repos/create-using-template": {
-    /**
-     * Create a repository using a template
-     * @description Creates a new repository using a repository template. Use the `template_owner` and `template_repo` route parameters to specify the repository to use as the template. If the repository is not public, the authenticated user must own or be a member of an organization that owns the repository. To check if a repository is available to use as a template, get the repository's information using the [Get a repository](https://docs.github.com/enterprise-server@3.2/rest/reference/repos#get-a-repository) endpoint and check that the `is_template` key is `true`.
-     *
-     * **OAuth scope requirements**
-     *
-     * When using [OAuth](https://docs.github.com/enterprise-server@3.2/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
-     *
-     * *   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
-     * *   `repo` scope to create a private repository
-     */
     parameters: {
       path: {
         template_owner: string;
@@ -7046,18 +7497,19 @@ export interface operations {
       };
     };
   };
+  /**
+   * List public repositories
+   * @description Lists all public repositories in the order that they were created.
+   *
+   * Note:
+   * - For GitHub Enterprise Server, this endpoint will only list repositories available to all users on the enterprise.
+   * - Pagination is powered exclusively by the `since` parameter. Use the [Link header](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#link-header) to get the URL for the next page of repositories.
+   */
   "repos/list-public": {
-    /**
-     * List public repositories
-     * @description Lists all public repositories in the order that they were created.
-     *
-     * Note:
-     * - For GitHub Enterprise Server, this endpoint will only list repositories available to all users on the enterprise.
-     * - Pagination is powered exclusively by the `since` parameter. Use the [Link header](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#link-header) to get the URL for the next page of repositories.
-     */
-    parameters?: {
-      /** @description Specifies the types of repositories to return. This endpoint will only list repositories available to all users on the enterprise. */
-      query?: {
+    parameters: {
+      query: {
+        since?: components["parameters"]["since-repo"];
+        /** @description Specifies the types of repositories to return. This endpoint will only list repositories available to all users on the enterprise. */
         visibility?: "all" | "public";
       };
     };
@@ -7076,34 +7528,37 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Search code
+   * @description Searches for query terms inside of a file. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination).
+   *
+   * When searching for code, you can get text match metadata for the file **content** and file **path** fields when you pass the `text-match` media type. For more details about how to receive highlighted search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
+   *
+   * For example, if you want to find the definition of the `addClass` function inside [jQuery](https://github.com/jquery/jquery) repository, your query would look something like this:
+   *
+   * `q=addClass+in:file+language:js+repo:jquery/jquery`
+   *
+   * This query searches for the keyword `addClass` within a file's contents. The query limits the search to files where the language is JavaScript in the `jquery/jquery` repository.
+   *
+   * #### Considerations for code search
+   *
+   * Due to the complexity of searching code, there are a few restrictions on how searches are performed:
+   *
+   * *   Only the _default branch_ is considered. In most cases, this will be the `master` branch.
+   * *   Only files smaller than 384 KB are searchable.
+   * *   You must always include at least one search term when searching source code. For example, searching for [`language:go`](https://github.com/search?utf8=%E2%9C%93&q=language%3Ago&type=Code) is not valid, while [`amazing
+   * language:go`](https://github.com/search?utf8=%E2%9C%93&q=amazing+language%3Ago&type=Code) is.
+   */
   "search/code": {
-    /**
-     * Search code
-     * @description Searches for query terms inside of a file. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination).
-     *
-     * When searching for code, you can get text match metadata for the file **content** and file **path** fields when you pass the `text-match` media type. For more details about how to receive highlighted search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
-     *
-     * For example, if you want to find the definition of the `addClass` function inside [jQuery](https://github.com/jquery/jquery) repository, your query would look something like this:
-     *
-     * `q=addClass+in:file+language:js+repo:jquery/jquery`
-     *
-     * This query searches for the keyword `addClass` within a file's contents. The query limits the search to files where the language is JavaScript in the `jquery/jquery` repository.
-     *
-     * #### Considerations for code search
-     *
-     * Due to the complexity of searching code, there are a few restrictions on how searches are performed:
-     *
-     * *   Only the _default branch_ is considered. In most cases, this will be the `master` branch.
-     * *   Only files smaller than 384 KB are searchable.
-     * *   You must always include at least one search term when searching source code. For example, searching for [`language:go`](https://github.com/search?utf8=%E2%9C%93&q=language%3Ago&type=Code) is not valid, while [`amazing
-     * language:go`](https://github.com/search?utf8=%E2%9C%93&q=amazing+language%3Ago&type=Code) is.
-     */
     parameters: {
-      /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). See "[Searching code](https://docs.github.com/enterprise-server@3.2/search-github/searching-on-github/searching-code)" for a detailed list of qualifiers. */
-      /** @description Sorts the results of your query. Can only be `indexed`, which indicates how recently a file has been indexed by the GitHub Enterprise Server search infrastructure. Default: [best match](https://docs.github.com/enterprise-server@3.2/rest/reference/search#ranking-search-results) */
       query: {
+        /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). See "[Searching code](https://docs.github.com/enterprise-server@3.2/search-github/searching-on-github/searching-code)" for a detailed list of qualifiers. */
         q: string;
+        /** @description Sorts the results of your query. Can only be `indexed`, which indicates how recently a file has been indexed by the GitHub Enterprise Server search infrastructure. Default: [best match](https://docs.github.com/enterprise-server@3.2/rest/reference/search#ranking-search-results) */
         sort?: "indexed";
+        order?: components["parameters"]["order"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
     };
     responses: {
@@ -7123,24 +7578,27 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * Search commits
+   * @description Find commits via various criteria on the default branch (usually `master`). This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination).
+   *
+   * When searching for commits, you can get text match metadata for the **message** field when you provide the `text-match` media type. For more details about how to receive highlighted search results, see [Text match
+   * metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
+   *
+   * For example, if you want to find commits related to CSS in the [octocat/Spoon-Knife](https://github.com/octocat/Spoon-Knife) repository. Your query would look something like this:
+   *
+   * `q=repo:octocat/Spoon-Knife+css`
+   */
   "search/commits": {
-    /**
-     * Search commits
-     * @description Find commits via various criteria on the default branch (usually `master`). This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination).
-     *
-     * When searching for commits, you can get text match metadata for the **message** field when you provide the `text-match` media type. For more details about how to receive highlighted search results, see [Text match
-     * metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
-     *
-     * For example, if you want to find commits related to CSS in the [octocat/Spoon-Knife](https://github.com/octocat/Spoon-Knife) repository. Your query would look something like this:
-     *
-     * `q=repo:octocat/Spoon-Knife+css`
-     */
     parameters: {
-      /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). See "[Searching commits](https://docs.github.com/enterprise-server@3.2/search-github/searching-on-github/searching-commits)" for a detailed list of qualifiers. */
-      /** @description Sorts the results of your query by `author-date` or `committer-date`. Default: [best match](https://docs.github.com/enterprise-server@3.2/rest/reference/search#ranking-search-results) */
       query: {
+        /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). See "[Searching commits](https://docs.github.com/enterprise-server@3.2/search-github/searching-on-github/searching-commits)" for a detailed list of qualifiers. */
         q: string;
+        /** @description Sorts the results of your query by `author-date` or `committer-date`. Default: [best match](https://docs.github.com/enterprise-server@3.2/rest/reference/search#ranking-search-results) */
         sort?: "author-date" | "committer-date";
+        order?: components["parameters"]["order"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
     };
     responses: {
@@ -7157,27 +7615,27 @@ export interface operations {
       304: components["responses"]["not_modified"];
     };
   };
+  /**
+   * Search issues and pull requests
+   * @description Find issues by state and keyword. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination).
+   *
+   * When searching for issues, you can get text match metadata for the issue **title**, issue **body**, and issue **comment body** fields when you pass the `text-match` media type. For more details about how to receive highlighted
+   * search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
+   *
+   * For example, if you want to find the oldest unresolved Python bugs on Windows. Your query might look something like this.
+   *
+   * `q=windows+label:bug+language:python+state:open&sort=created&order=asc`
+   *
+   * This query searches for the keyword `windows`, within any open issue that is labeled as `bug`. The search runs across repositories whose primary language is Python. The results are sorted by creation date in ascending order, which means the oldest issues appear first in the search results.
+   *
+   * **Note:** For [user-to-server](https://docs.github.com/developers/apps/identifying-and-authorizing-users-for-github-apps#user-to-server-requests) GitHub App requests, you can't retrieve a combination of issues and pull requests in a single query. Requests that don't include the `is:issue` or `is:pull-request` qualifier will receive an HTTP `422 Unprocessable Entity` response. To get results for both issues and pull requests, you must send separate queries for issues and pull requests. For more information about the `is` qualifier, see "[Searching only issues or pull requests](https://docs.github.com/github/searching-for-information-on-github/searching-issues-and-pull-requests#search-only-issues-or-pull-requests)."
+   */
   "search/issues-and-pull-requests": {
-    /**
-     * Search issues and pull requests
-     * @description Find issues by state and keyword. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination).
-     *
-     * When searching for issues, you can get text match metadata for the issue **title**, issue **body**, and issue **comment body** fields when you pass the `text-match` media type. For more details about how to receive highlighted
-     * search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
-     *
-     * For example, if you want to find the oldest unresolved Python bugs on Windows. Your query might look something like this.
-     *
-     * `q=windows+label:bug+language:python+state:open&sort=created&order=asc`
-     *
-     * This query searches for the keyword `windows`, within any open issue that is labeled as `bug`. The search runs across repositories whose primary language is Python. The results are sorted by creation date in ascending order, which means the oldest issues appear first in the search results.
-     *
-     * **Note:** For [user-to-server](https://docs.github.com/developers/apps/identifying-and-authorizing-users-for-github-apps#user-to-server-requests) GitHub App requests, you can't retrieve a combination of issues and pull requests in a single query. Requests that don't include the `is:issue` or `is:pull-request` qualifier will receive an HTTP `422 Unprocessable Entity` response. To get results for both issues and pull requests, you must send separate queries for issues and pull requests. For more information about the `is` qualifier, see "[Searching only issues or pull requests](https://docs.github.com/github/searching-for-information-on-github/searching-issues-and-pull-requests#search-only-issues-or-pull-requests)."
-     */
     parameters: {
-      /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). See "[Searching issues and pull requests](https://docs.github.com/enterprise-server@3.2/search-github/searching-on-github/searching-issues-and-pull-requests)" for a detailed list of qualifiers. */
-      /** @description Sorts the results of your query by the number of `comments`, `reactions`, `reactions-+1`, `reactions--1`, `reactions-smile`, `reactions-thinking_face`, `reactions-heart`, `reactions-tada`, or `interactions`. You can also sort results by how recently the items were `created` or `updated`, Default: [best match](https://docs.github.com/enterprise-server@3.2/rest/reference/search#ranking-search-results) */
       query: {
+        /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). See "[Searching issues and pull requests](https://docs.github.com/enterprise-server@3.2/search-github/searching-on-github/searching-issues-and-pull-requests)" for a detailed list of qualifiers. */
         q: string;
+        /** @description Sorts the results of your query by the number of `comments`, `reactions`, `reactions-+1`, `reactions--1`, `reactions-smile`, `reactions-thinking_face`, `reactions-heart`, `reactions-tada`, or `interactions`. You can also sort results by how recently the items were `created` or `updated`, Default: [best match](https://docs.github.com/enterprise-server@3.2/rest/reference/search#ranking-search-results) */
         sort?:
           | "comments"
           | "reactions"
@@ -7190,6 +7648,9 @@ export interface operations {
           | "interactions"
           | "created"
           | "updated";
+        order?: components["parameters"]["order"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
     };
     responses: {
@@ -7209,23 +7670,25 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
+  /**
+   * Search topics
+   * @description Find topics via various criteria. Results are sorted by best match. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination). See "[Searching topics](https://docs.github.com/articles/searching-topics/)" for a detailed list of qualifiers.
+   *
+   * When searching for topics, you can get text match metadata for the topic's **short\_description**, **description**, **name**, or **display\_name** field when you pass the `text-match` media type. For more details about how to receive highlighted search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
+   *
+   * For example, if you want to search for topics related to Ruby that are featured on https://github.com/topics. Your query might look like this:
+   *
+   * `q=ruby+is:featured`
+   *
+   * This query searches for topics with the keyword `ruby` and limits the results to find only topics that are featured. The topics that are the best match for the query appear first in the search results.
+   */
   "search/topics": {
-    /**
-     * Search topics
-     * @description Find topics via various criteria. Results are sorted by best match. This method returns up to 100 results [per page](https://docs.github.com/enterprise-server@3.2/rest/overview/resources-in-the-rest-api#pagination). See "[Searching topics](https://docs.github.com/articles/searching-topics/)" for a detailed list of qualifiers.
-     *
-     * When searching for topics, you can get text match metadata for the topic's **short\_description**, **description**, **name**, or **display\_name** field when you pass the `text-match` media type. For more details about how to receive highlighted search results, see [Text match metadata](https://docs.github.com/enterprise-server@3.2/rest/reference/search#text-match-metadata).
-     *
-     * For example, if you want to search for topics related to Ruby that are featured on https://github.com/topics. Your query might look like this:
-     *
-     * `q=ruby+is:featured`
-     *
-     * This query searches for topics with the keyword `ruby` and limits the results to find only topics that are featured. The topics that are the best match for the query appear first in the search results.
-     */
     parameters: {
-      /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). */
       query: {
+        /** @description The query contains one or more search keywords and qualifiers. Qualifiers allow you to limit your search to specific areas of GitHub Enterprise Server. The REST API supports the same qualifiers as the web interface for GitHub Enterprise Server. To learn more about the format of the query, see [Constructing a search query](https://docs.github.com/enterprise-server@3.2/rest/reference/search#constructing-a-search-query). */
         q: string;
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
     };
     responses: {
@@ -7243,12 +7706,21 @@ export interface operations {
       415: components["responses"]["preview_header_missing"];
     };
   };
+  /**
+   * List team repositories (Legacy)
+   * @deprecated
+   * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [List team repositories](https://docs.github.com/enterprise-server@3.2/rest/reference/teams#list-team-repositories) endpoint.
+   */
   "teams/list-repos-legacy": {
-    /**
-     * List team repositories (Legacy)
-     * @deprecated
-     * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [List team repositories](https://docs.github.com/enterprise-server@3.2/rest/reference/teams#list-team-repositories) endpoint.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        team_id: components["parameters"]["team-id"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7262,16 +7734,23 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * Check team permissions for a repository (Legacy)
+   * @deprecated
+   * @description **Note**: Repositories inherited through a parent team will also be checked.
+   *
+   * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Check team permissions for a repository](https://docs.github.com/enterprise-server@3.2/rest/reference/teams#check-team-permissions-for-a-repository) endpoint.
+   *
+   * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.2/rest/overview/media-types/) via the `Accept` header:
+   */
   "teams/check-permissions-for-repo-legacy": {
-    /**
-     * Check team permissions for a repository (Legacy)
-     * @deprecated
-     * @description **Note**: Repositories inherited through a parent team will also be checked.
-     *
-     * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Check team permissions for a repository](https://docs.github.com/enterprise-server@3.2/rest/reference/teams#check-team-permissions-for-a-repository) endpoint.
-     *
-     * You can also get information about the specified repository, including what permissions the team grants on it, by passing the following custom [media type](https://docs.github.com/enterprise-server@3.2/rest/overview/media-types/) via the `Accept` header:
-     */
+    parameters: {
+      path: {
+        team_id: components["parameters"]["team-id"];
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
+      };
+    };
     responses: {
       /** @description Alternative response with extra repository information */
       200: {
@@ -7285,17 +7764,26 @@ export interface operations {
       404: never;
     };
   };
+  /**
+   * List repositories accessible to the user access token
+   * @description List repositories that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access for an installation.
+   *
+   * The authenticated user has explicit permission to access repositories they own, repositories where they are a collaborator, and repositories that they can access through an organization membership.
+   *
+   * You must use a [user-to-server OAuth access token](https://docs.github.com/enterprise-server@3.2/apps/building-github-apps/identifying-and-authorizing-users-for-github-apps/#identifying-users-on-your-site), created for a user who has authorized your GitHub App, to access this endpoint.
+   *
+   * The access the user has to each repository is included in the hash under the `permissions` key.
+   */
   "apps/list-installation-repos-for-authenticated-user": {
-    /**
-     * List repositories accessible to the user access token
-     * @description List repositories that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access for an installation.
-     *
-     * The authenticated user has explicit permission to access repositories they own, repositories where they are a collaborator, and repositories that they can access through an organization membership.
-     *
-     * You must use a [user-to-server OAuth access token](https://docs.github.com/enterprise-server@3.2/apps/building-github-apps/identifying-and-authorizing-users-for-github-apps/#identifying-users-on-your-site), created for a user who has authorized your GitHub App, to access this endpoint.
-     *
-     * The access the user has to each repository is included in the hash under the `permissions` key.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        installation_id: components["parameters"]["installation-id"];
+      };
+    };
     responses: {
       /** @description The access the user has to each repository is included in the hash under the `permissions` key. */
       200: {
@@ -7315,21 +7803,19 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * List user account issues assigned to the authenticated user
+   * @description List issues across owned and member repositories assigned to the authenticated user.
+   *
+   * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
+   * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
+   * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
+   * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
+   */
   "issues/list-for-authenticated-user": {
-    /**
-     * List user account issues assigned to the authenticated user
-     * @description List issues across owned and member repositories assigned to the authenticated user.
-     *
-     * **Note**: GitHub's REST API v3 considers every pull request an issue, but not every issue is a pull request. For this
-     * reason, "Issues" endpoints may return both issues and pull requests in the response. You can identify pull requests by
-     * the `pull_request` key. Be aware that the `id` of a pull request returned from "Issues" endpoints will be an _issue id_. To find out the pull
-     * request id, use the "[List pull requests](https://docs.github.com/enterprise-server@3.2/rest/reference/pulls#list-pull-requests)" endpoint.
-     */
-    parameters?: {
-      /** @description Indicates which sorts of issues to return. `assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or `repos` means all issues you can see, regardless of participation or creation. */
-      /** @description Indicates the state of the issues to return. */
-      /** @description What to sort results by. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Indicates which sorts of issues to return. `assigned` means issues assigned to you. `created` means issues created by you. `mentioned` means issues mentioning you. `subscribed` means issues you're subscribed to updates for. `all` or `repos` means all issues you can see, regardless of participation or creation. */
         filter?:
           | "assigned"
           | "created"
@@ -7337,8 +7823,15 @@ export interface operations {
           | "subscribed"
           | "repos"
           | "all";
+        /** @description Indicates the state of the issues to return. */
         state?: "open" | "closed" | "all";
+        labels?: components["parameters"]["labels"];
+        /** @description What to sort results by. */
         sort?: "created" | "updated" | "comments";
+        direction?: components["parameters"]["direction"];
+        since?: components["parameters"]["since"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
       };
     };
     responses: {
@@ -7355,11 +7848,11 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * Create a user project
+   * @description Creates a user project board. Returns a `410 Gone` status if the user does not have existing classic projects. If you do not have sufficient privileges to perform this action, a `401 Unauthorized` or `410 Gone` status is returned.
+   */
   "projects/create-for-authenticated-user": {
-    /**
-     * Create a user project
-     * @description Creates a user project board. Returns a `410 Gone` status if the user does not have existing classic projects. If you do not have sufficient privileges to perform this action, a `401 Unauthorized` or `410 Gone` status is returned.
-     */
     requestBody: {
       content: {
         "application/json": {
@@ -7390,30 +7883,34 @@ export interface operations {
       422: components["responses"]["validation_failed_simple"];
     };
   };
+  /**
+   * List repositories for the authenticated user
+   * @description Lists repositories that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access.
+   *
+   * The authenticated user has explicit permission to access repositories they own, repositories where they are a collaborator, and repositories that they can access through an organization membership.
+   */
   "repos/list-for-authenticated-user": {
-    /**
-     * List repositories for the authenticated user
-     * @description Lists repositories that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access.
-     *
-     * The authenticated user has explicit permission to access repositories they own, repositories where they are a collaborator, and repositories that they can access through an organization membership.
-     */
-    parameters?: {
-      /** @description Limit results to repositories with the specified visibility. */
-      /**
-       * @description Comma-separated list of values. Can include:
-       * \* `owner`: Repositories that are owned by the authenticated user.
-       * \* `collaborator`: Repositories that the user has been added to as a collaborator.
-       * \* `organization_member`: Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on.
-       */
-      /** @description Limit results to repositories of the specified type. Will cause a `422` error if used in the same request as **visibility** or **affiliation**. */
-      /** @description The property to sort the results by. */
-      /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Limit results to repositories with the specified visibility. */
         visibility?: "all" | "public" | "private";
+        /**
+         * @description Comma-separated list of values. Can include:
+         * \* `owner`: Repositories that are owned by the authenticated user.
+         * \* `collaborator`: Repositories that the user has been added to as a collaborator.
+         * \* `organization_member`: Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on.
+         */
         affiliation?: string;
+        /** @description Limit results to repositories of the specified type. Will cause a `422` error if used in the same request as **visibility** or **affiliation**. */
         type?: "all" | "owner" | "public" | "private" | "member";
+        /** @description The property to sort the results by. */
         sort?: "created" | "updated" | "pushed" | "full_name";
+        /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
         direction?: "asc" | "desc";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+        since?: components["parameters"]["since"];
+        before?: components["parameters"]["before"];
       };
     };
     responses: {
@@ -7429,18 +7926,18 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * Create a repository for the authenticated user
+   * @description Creates a new repository for the authenticated user.
+   *
+   * **OAuth scope requirements**
+   *
+   * When using [OAuth](https://docs.github.com/enterprise-server@3.2/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
+   *
+   * *   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
+   * *   `repo` scope to create a private repository.
+   */
   "repos/create-for-authenticated-user": {
-    /**
-     * Create a repository for the authenticated user
-     * @description Creates a new repository for the authenticated user.
-     *
-     * **OAuth scope requirements**
-     *
-     * When using [OAuth](https://docs.github.com/enterprise-server@3.2/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/), authorizations must include:
-     *
-     * *   `public_repo` scope or `repo` scope to create a public repository. Note: For GitHub AE, use `repo` scope to create an internal repository.
-     * *   `repo` scope to create a private repository.
-     */
     requestBody: {
       content: {
         "application/json": {
@@ -7585,11 +8082,17 @@ export interface operations {
       422: components["responses"]["validation_failed"];
     };
   };
+  /**
+   * List repository invitations for the authenticated user
+   * @description When authenticating as a user, this endpoint will list all currently open repository invitations for that user.
+   */
   "repos/list-invitations-for-authenticated-user": {
-    /**
-     * List repository invitations for the authenticated user
-     * @description When authenticating as a user, this endpoint will list all currently open repository invitations for that user.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7606,13 +8109,21 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /**
+   * List repositories starred by the authenticated user
+   * @description Lists repositories the authenticated user has starred.
+   *
+   * You can also find out _when_ stars were created by passing the following custom [media type](https://docs.github.com/enterprise-server@3.2/rest/overview/media-types/) via the `Accept` header: `application/vnd.github.star+json`.
+   */
   "activity/list-repos-starred-by-authenticated-user": {
-    /**
-     * List repositories starred by the authenticated user
-     * @description Lists repositories the authenticated user has starred.
-     *
-     * You can also find out _when_ stars were created by passing the following custom [media type](https://docs.github.com/enterprise-server@3.2/rest/overview/media-types/) via the `Accept` header: `application/vnd.github.star+json`.
-     */
+    parameters: {
+      query: {
+        sort?: components["parameters"]["sort"];
+        direction?: components["parameters"]["direction"];
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7629,11 +8140,17 @@ export interface operations {
       403: components["responses"]["forbidden"];
     };
   };
+  /**
+   * List repositories watched by the authenticated user
+   * @description Lists repositories the authenticated user is watching.
+   */
   "activity/list-watched-repos-for-authenticated-user": {
-    /**
-     * List repositories watched by the authenticated user
-     * @description Lists repositories the authenticated user is watching.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7649,11 +8166,20 @@ export interface operations {
       403: components["responses"]["forbidden"];
     };
   };
+  /**
+   * List events for the authenticated user
+   * @description If you are authenticated as the given user, you will see your private events. Otherwise, you'll only see public events.
+   */
   "activity/list-events-for-authenticated-user": {
-    /**
-     * List events for the authenticated user
-     * @description If you are authenticated as the given user, you will see your private events. Otherwise, you'll only see public events.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7663,11 +8189,21 @@ export interface operations {
       };
     };
   };
+  /**
+   * List organization events for the authenticated user
+   * @description This is the user's organization dashboard. You must be authenticated as the user to view this.
+   */
   "activity/list-org-events-for-authenticated-user": {
-    /**
-     * List organization events for the authenticated user
-     * @description This is the user's organization dashboard. You must be authenticated as the user to view this.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
+        org: components["parameters"]["org"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7677,8 +8213,17 @@ export interface operations {
       };
     };
   };
+  /** List public events for a user */
   "activity/list-public-events-for-user": {
-    /** List public events for a user */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7688,11 +8233,20 @@ export interface operations {
       };
     };
   };
+  /**
+   * List events received by the authenticated user
+   * @description These are events that you've received by watching repos and following users. If you are authenticated as the given user, you will see private events. Otherwise, you'll only see public events.
+   */
   "activity/list-received-events-for-user": {
-    /**
-     * List events received by the authenticated user
-     * @description These are events that you've received by watching repos and following users. If you are authenticated as the given user, you will see private events. Otherwise, you'll only see public events.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7702,8 +8256,17 @@ export interface operations {
       };
     };
   };
+  /** List public events received by a user */
   "activity/list-received-public-events-for-user": {
-    /** List public events received by a user */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
@@ -7713,19 +8276,24 @@ export interface operations {
       };
     };
   };
+  /**
+   * List repositories for a user
+   * @description Lists public repositories for the specified user. Note: For GitHub AE, this endpoint will list internal repositories for the specified user.
+   */
   "repos/list-for-user": {
-    /**
-     * List repositories for a user
-     * @description Lists public repositories for the specified user. Note: For GitHub AE, this endpoint will list internal repositories for the specified user.
-     */
-    parameters?: {
-      /** @description Limit results to repositories of the specified type. */
-      /** @description The property to sort the results by. */
-      /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
-      query?: {
+    parameters: {
+      query: {
+        /** @description Limit results to repositories of the specified type. */
         type?: "all" | "owner" | "member";
+        /** @description The property to sort the results by. */
         sort?: "created" | "updated" | "pushed" | "full_name";
+        /** @description The order to sort by. Default: `asc` when using `full_name`, otherwise `desc`. */
         direction?: "asc" | "desc";
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
       };
     };
     responses: {
@@ -7740,11 +8308,20 @@ export interface operations {
       };
     };
   };
+  /**
+   * List repositories watched by a user
+   * @description Lists repositories a user is watching.
+   */
   "activity/list-repos-watched-by-user": {
-    /**
-     * List repositories watched by a user
-     * @description Lists repositories a user is watching.
-     */
+    parameters: {
+      query: {
+        per_page?: components["parameters"]["per-page"];
+        page?: components["parameters"]["page"];
+      };
+      path: {
+        username: components["parameters"]["username"];
+      };
+    };
     responses: {
       /** @description Response */
       200: {
