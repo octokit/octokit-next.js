@@ -5,15 +5,20 @@
 
 export interface paths {
   "/admin/tokens": {
-    /** Lists personal access tokens for all users, including admin users. */
+    /**
+     * List personal access tokens
+     * @description Lists personal access tokens for all users, including admin users.
+     */
     get: operations["enterprise-admin/list-personal-access-tokens"];
   };
   "/admin/users/{username}/authorizations": {
+    /** Create an impersonation OAuth token */
     post: operations["enterprise-admin/create-impersonation-o-auth-token"];
   };
   "/app/installations": {
     /**
-     * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
+     * List installations for the authenticated app
+     * @description You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
      *
      * The permissions the installation has are included under the `permissions` key.
      */
@@ -21,7 +26,8 @@ export interface paths {
   };
   "/app/installations/{installation_id}": {
     /**
-     * Enables an authenticated GitHub App to find an installation's information using the installation id.
+     * Get an installation for the authenticated app
+     * @description Enables an authenticated GitHub App to find an installation's information using the installation id.
      *
      * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
      */
@@ -29,7 +35,8 @@ export interface paths {
   };
   "/app/installations/{installation_id}/access_tokens": {
     /**
-     * Creates an installation access token that enables a GitHub App to make authenticated API requests for the app's installation on an organization or individual account. Installation tokens expire one hour from the time you create them. Using an expired token produces a status code of `401 - Unauthorized`, and requires creating a new installation token. By default the installation token has access to all repositories that the installation can access. To restrict the access to specific repositories, you can provide the `repository_ids` when creating the token. When you omit `repository_ids`, the response does not contain the `repositories` key.
+     * Create an installation access token for an app
+     * @description Creates an installation access token that enables a GitHub App to make authenticated API requests for the app's installation on an organization or individual account. Installation tokens expire one hour from the time you create them. Using an expired token produces a status code of `401 - Unauthorized`, and requires creating a new installation token. By default the installation token has access to all repositories that the installation can access. To restrict the access to specific repositories, you can provide the `repository_ids` when creating the token. When you omit `repository_ids`, the response does not contain the `repositories` key.
      *
      * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
      */
@@ -37,7 +44,9 @@ export interface paths {
   };
   "/applications/{client_id}/grants/{access_token}": {
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+     * Revoke a grant for an application
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
      *
      * OAuth application owners can revoke a grant for their OAuth application and a specific user. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. You must also provide a valid token as `:access_token` and the grant for the token's owner will be deleted.
      *
@@ -46,40 +55,61 @@ export interface paths {
     delete: operations["apps/revoke-grant-for-application"];
   };
   "/applications/{client_id}/token": {
-    /** OAuth applications can use a special API method for checking OAuth token validity without exceeding the normal rate limits for failed login attempts. Authentication works differently with this particular endpoint. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) to use this endpoint, where the username is the OAuth application `client_id` and the password is its `client_secret`. Invalid tokens will return `404 NOT FOUND`. */
+    /**
+     * Check a token
+     * @description OAuth applications can use a special API method for checking OAuth token validity without exceeding the normal rate limits for failed login attempts. Authentication works differently with this particular endpoint. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) to use this endpoint, where the username is the OAuth application `client_id` and the password is its `client_secret`. Invalid tokens will return `404 NOT FOUND`.
+     */
     post: operations["apps/check-token"];
-    /** OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`. */
+    /**
+     * Reset a token
+     * @description OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
+     */
     patch: operations["apps/reset-token"];
   };
   "/applications/{client_id}/token/scoped": {
-    /** Use a non-scoped user-to-server OAuth access token to create a repository scoped and/or permission scoped user-to-server OAuth access token. You can specify which repositories the token can access and which permissions are granted to the token. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`. */
+    /**
+     * Create a scoped access token
+     * @description Use a non-scoped user-to-server OAuth access token to create a repository scoped and/or permission scoped user-to-server OAuth access token. You can specify which repositories the token can access and which permissions are granted to the token. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
+     */
     post: operations["apps/scope-token"];
   };
   "/applications/{client_id}/tokens/{access_token}": {
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+     * Check an authorization
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
      *
      * OAuth applications can use a special API method for checking OAuth token validity without exceeding the normal rate limits for failed login attempts. Authentication works differently with this particular endpoint. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
      */
     get: operations["apps/check-authorization"];
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+     * Reset an authorization
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
      *
      * OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
      */
     post: operations["apps/reset-authorization"];
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+     * Revoke an authorization for an application
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
      *
      * OAuth application owners can revoke a single token for an OAuth application. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password.
      */
     delete: operations["apps/revoke-authorization-for-application"];
   };
   "/authorizations": {
-    /** **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/). */
+    /**
+     * List your authorizations
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     */
     get: operations["oauth-authorizations/list-authorizations"];
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     * Create a new authorization
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
      *
      * **Warning:** Apps must use the [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow) to obtain OAuth tokens that work with GitHub Enterprise Server SAML organizations. OAuth tokens created using the Authorizations API will be unable to access GitHub Enterprise Server SAML organizations. For more information, see the [blog post](https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api).
      *
@@ -95,7 +125,9 @@ export interface paths {
   };
   "/authorizations/clients/{client_id}": {
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     * Get-or-create an authorization for a specific app
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
      *
      * **Warning:** Apps must use the [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow) to obtain OAuth tokens that work with GitHub Enterprise Server SAML organizations. OAuth tokens created using the Authorizations API will be unable to access GitHub Enterprise Server SAML organizations. For more information, see the [blog post](https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api).
      *
@@ -109,7 +141,9 @@ export interface paths {
   };
   "/authorizations/clients/{client_id}/{fingerprint}": {
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     * Get-or-create an authorization for a specific app and fingerprint
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
      *
      * **Warning:** Apps must use the [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow) to obtain OAuth tokens that work with GitHub Enterprise Server SAML organizations. OAuth tokens created using the Authorizations API will be unable to access GitHub Enterprise Server SAML organizations. For more information, see the [blog post](https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api).
      *
@@ -120,10 +154,16 @@ export interface paths {
     put: operations["oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint"];
   };
   "/authorizations/{authorization_id}": {
-    /** **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/). */
+    /**
+     * Get a single authorization
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     */
     get: operations["oauth-authorizations/get-authorization"];
     /**
-     * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+     * Update an existing authorization
+     * @deprecated
+     * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
      *
      * If you have two-factor authentication setup, Basic Authentication for this endpoint requires that you use a one-time password (OTP) and your username and password instead of tokens. For more information, see "[Working with two-factor authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#working-with-two-factor-authentication)."
      *
@@ -132,18 +172,23 @@ export interface paths {
     patch: operations["oauth-authorizations/update-authorization"];
   };
   "/enterprises/{enterprise}/audit-log": {
-    /** Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope. */
+    /**
+     * Get the audit log for an enterprise
+     * @description Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope.
+     */
     get: operations["enterprise-admin/get-audit-log"];
   };
   "/orgs/{org}": {
     /**
-     * To see many of the organization response values, you need to be an authenticated organization owner with the `admin:org` scope. When the value of `two_factor_requirement_enabled` is `true`, the organization requires all members, billing managers, and outside collaborators to enable [two-factor authentication](https://docs.github.com/articles/securing-your-account-with-two-factor-authentication-2fa/).
+     * Get an organization
+     * @description To see many of the organization response values, you need to be an authenticated organization owner with the `admin:org` scope. When the value of `two_factor_requirement_enabled` is `true`, the organization requires all members, billing managers, and outside collaborators to enable [two-factor authentication](https://docs.github.com/articles/securing-your-account-with-two-factor-authentication-2fa/).
      *
      * GitHub Apps with the `Organization plan` permission can use this endpoint to retrieve information about an organization's GitHub Enterprise Server plan. See "[Authenticating with GitHub Apps](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/)" for details. For an example response, see 'Response with GitHub Enterprise Server plan information' below."
      */
     get: operations["orgs/get"];
     /**
-     * **Parameter Deprecation Notice:** GitHub Enterprise Server will replace and discontinue `members_allowed_repository_creation_type` in favor of more granular permissions. The new input parameters are `members_can_create_public_repositories`, `members_can_create_private_repositories` for all organizations and `members_can_create_internal_repositories` for organizations associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. For more information, see the [blog post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes).
+     * Update an organization
+     * @description **Parameter Deprecation Notice:** GitHub Enterprise Server will replace and discontinue `members_allowed_repository_creation_type` in favor of more granular permissions. The new input parameters are `members_can_create_public_repositories`, `members_can_create_private_repositories` for all organizations and `members_can_create_internal_repositories` for organizations associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. For more information, see the [blog post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes).
      *
      * Enables an authenticated organization owner with the `admin:org` scope to update the organization's profile and member privileges.
      */
@@ -151,7 +196,8 @@ export interface paths {
   };
   "/orgs/{org}/actions/secrets/{secret_name}": {
     /**
-     * Creates or updates an organization secret with an encrypted value. Encrypt your secret using
+     * Create or update an organization secret
+     * @description Creates or updates an organization secret with an encrypted value. Encrypt your secret using
      * [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). You must authenticate using an access
      * token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `secrets` organization permission to
      * use this endpoint.
@@ -231,7 +277,8 @@ export interface paths {
   };
   "/orgs/{org}/audit-log": {
     /**
-     * Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-server@3.3/github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
+     * Get the audit log for an organization
+     * @description Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-server@3.3/github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
      *
      * To use this endpoint, you must be an organization owner, and you must use an access token with the `admin:org` scope. GitHub Apps must have the `organization_administration` read permission to use this endpoint.
      *
@@ -243,19 +290,24 @@ export interface paths {
   };
   "/orgs/{org}/installation": {
     /**
-     * Enables an authenticated GitHub App to find the organization's installation information.
+     * Get an organization installation for the authenticated app
+     * @description Enables an authenticated GitHub App to find the organization's installation information.
      *
      * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
      */
     get: operations["apps/get-org-installation"];
   };
   "/orgs/{org}/installations": {
-    /** Lists all GitHub Apps in an organization. The installation count includes all GitHub Apps installed on repositories in the organization. You must be an organization owner with `admin:read` scope to use this endpoint. */
+    /**
+     * List app installations for an organization
+     * @description Lists all GitHub Apps in an organization. The installation count includes all GitHub Apps installed on repositories in the organization. You must be an organization owner with `admin:read` scope to use this endpoint.
+     */
     get: operations["orgs/list-app-installations"];
   };
   "/orgs/{org}/teams": {
     /**
-     * To create a team, the authenticated user must be a member or owner of `{org}`. By default, organization members can create teams. Organization owners can limit team creation to organization owners. For more information, see "[Setting team creation permissions](https://docs.github.com/en/articles/setting-team-creation-permissions-in-your-organization)."
+     * Create a team
+     * @description To create a team, the authenticated user must be a member or owner of `{org}`. By default, organization members can create teams. Organization owners can limit team creation to organization owners. For more information, see "[Setting team creation permissions](https://docs.github.com/en/articles/setting-team-creation-permissions-in-your-organization)."
      *
      * When you create a new team, you automatically become a team maintainer without explicitly adding yourself to the optional array of `maintainers`. For more information, see "[About teams](https://docs.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-teams)".
      */
@@ -263,29 +315,37 @@ export interface paths {
   };
   "/orgs/{org}/teams/{team_slug}": {
     /**
-     * Gets a team using the team's `slug`. GitHub Enterprise Server generates the `slug` from the team `name`.
+     * Get a team by name
+     * @description Gets a team using the team's `slug`. GitHub Enterprise Server generates the `slug` from the team `name`.
      *
      * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}`.
      */
     get: operations["teams/get-by-name"];
     /**
-     * To edit a team, the authenticated user must either be an organization owner or a team maintainer.
+     * Update a team
+     * @description To edit a team, the authenticated user must either be an organization owner or a team maintainer.
      *
      * **Note:** You can also specify a team by `org_id` and `team_id` using the route `PATCH /organizations/{org_id}/team/{team_id}`.
      */
     patch: operations["teams/update-in-org"];
   };
   "/repos/{owner}/{repo}/branches": {
+    /** List branches */
     get: operations["repos/list-branches"];
   };
   "/repos/{owner}/{repo}/branches/{branch}": {
+    /** Get a branch */
     get: operations["repos/get-branch"];
   };
   "/repos/{owner}/{repo}/branches/{branch}/protection": {
-    /** Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
+    /**
+     * Get branch protection
+     * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     */
     get: operations["repos/get-branch-protection"];
     /**
-     * Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     * Update branch protection
+     * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
      * Protecting a branch requires admin or owner permissions to the repository.
      *
@@ -296,10 +356,14 @@ export interface paths {
     put: operations["repos/update-branch-protection"];
   };
   "/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews": {
-    /** Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
+    /**
+     * Get pull request review protection
+     * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     */
     get: operations["repos/get-pull-request-review-protection"];
     /**
-     * Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     * Update pull request review protection
+     * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
      * Updating pull request review enforcement requires admin or owner permissions to the repository and branch protection to be enabled.
      *
@@ -308,10 +372,14 @@ export interface paths {
     patch: operations["repos/update-pull-request-review-protection"];
   };
   "/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks": {
-    /** Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
+    /**
+     * Get status checks protection
+     * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     */
     get: operations["repos/get-status-checks-protection"];
     /**
-     * Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     * Update status check protection
+     * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
      * Updating required status checks requires admin or owner permissions to the repository and branch protection to be enabled.
      */
@@ -319,7 +387,8 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/branches/{branch}/rename": {
     /**
-     * Renames a branch in a repository.
+     * Rename a branch
+     * @description Renames a branch in a repository.
      *
      * **Note:** Although the API responds immediately, the branch rename process might take some extra time to complete in the background. You won't be able to push to the old branch name while the rename process is in progress. For more information, see "[Renaming a branch](https://docs.github.com/enterprise-server@3.3/github/administering-a-repository/renaming-a-branch)".
      *
@@ -339,7 +408,8 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/code-scanning/alerts": {
     /**
-     * Lists all open code scanning alerts for the default branch (usually `main`
+     * List code scanning alerts for a repository
+     * @description Lists all open code scanning alerts for the default branch (usually `main`
      * or `master`). You must use an access token with the `security_events` scope to use
      * this endpoint. GitHub Apps must have the `security_events` read permission to use
      * this endpoint.
@@ -353,22 +423,30 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}": {
     /**
-     * Gets a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
+     * Get a code scanning alert
+     * @description Gets a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
      *
      * **Deprecation notice**:
      * The instances field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The same information can now be retrieved via a GET request to the URL specified by `instances_url`.
      */
     get: operations["code-scanning/get-alert"];
-    /** Updates the status of a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` write permission to use this endpoint. */
+    /**
+     * Update a code scanning alert
+     * @description Updates the status of a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` write permission to use this endpoint.
+     */
     patch: operations["code-scanning/update-alert"];
   };
   "/repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}": {
-    /** Gets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see "[Get a code scanning analysis for a repository](/rest/reference/code-scanning#get-a-code-scanning-analysis-for-a-repository)." You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint. */
+    /**
+     * Get information about a SARIF upload
+     * @description Gets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see "[Get a code scanning analysis for a repository](/rest/reference/code-scanning#get-a-code-scanning-analysis-for-a-repository)." You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
+     */
     get: operations["code-scanning/get-sarif"];
   };
   "/repos/{owner}/{repo}/content_references/{content_reference_id}/attachments": {
     /**
-     * Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` and `repository` `full_name` of the content reference from the [`content_reference` event](https://docs.github.com/enterprise-server@3.3/webhooks/event-payloads/#content_reference) to create an attachment.
+     * Create a content attachment
+     * @description Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` and `repository` `full_name` of the content reference from the [`content_reference` event](https://docs.github.com/enterprise-server@3.3/webhooks/event-payloads/#content_reference) to create an attachment.
      *
      * The app must create a content attachment within six hours of the content reference URL being posted. See "[Using content attachments](https://docs.github.com/enterprise-server@3.3/apps/using-content-attachments/)" for details about content attachments.
      *
@@ -378,17 +456,24 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/installation": {
     /**
-     * Enables an authenticated GitHub App to find the repository's installation information. The installation's account type will be either an organization or a user account, depending which account the repository belongs to.
+     * Get a repository installation for the authenticated app
+     * @description Enables an authenticated GitHub App to find the repository's installation information. The installation's account type will be either an organization or a user account, depending which account the repository belongs to.
      *
      * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
      */
     get: operations["apps/get-repo-installation"];
   };
   "/teams/{team_id}": {
-    /** **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the [Get a team by name](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#get-a-team-by-name) endpoint. */
+    /**
+     * Get a team (Legacy)
+     * @deprecated
+     * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the [Get a team by name](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#get-a-team-by-name) endpoint.
+     */
     get: operations["teams/get-legacy"];
     /**
-     * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Update a team](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#update-a-team) endpoint.
+     * Update a team (Legacy)
+     * @deprecated
+     * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Update a team](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#update-a-team) endpoint.
      *
      * To edit a team, the authenticated user must either be an organization owner or a team maintainer.
      *
@@ -398,7 +483,8 @@ export interface paths {
   };
   "/user/installations": {
     /**
-     * Lists installations of your GitHub App that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access.
+     * List app installations accessible to the user access token
+     * @description Lists installations of your GitHub App that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access.
      *
      * You must use a [user-to-server OAuth access token](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/identifying-and-authorizing-users-for-github-apps/#identifying-users-on-your-site), created for a user who has authorized your GitHub App, to access this endpoint.
      *
@@ -409,12 +495,16 @@ export interface paths {
     get: operations["apps/list-installations-for-authenticated-user"];
   };
   "/user/teams": {
-    /** List all of the teams across all of the organizations to which the authenticated user belongs. This method requires `user`, `repo`, or `read:org` [scope](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/) when authenticating via [OAuth](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/). */
+    /**
+     * List teams for the authenticated user
+     * @description List all of the teams across all of the organizations to which the authenticated user belongs. This method requires `user`, `repo`, or `read:org` [scope](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/) when authenticating via [OAuth](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/).
+     */
     get: operations["teams/list-for-authenticated-user"];
   };
   "/users/{username}/installation": {
     /**
-     * Enables an authenticated GitHub App to find the user’s installation information.
+     * Get a user installation for the authenticated app
+     * @description Enables an authenticated GitHub App to find the user’s installation information.
      *
      * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
      */
@@ -422,7 +512,8 @@ export interface paths {
   };
   "/content_references/{content_reference_id}/attachments": {
     /**
-     * **Deprecated:** use `apps.createContentAttachmentForRepo()` (`POST /repos/{owner}/{repo}/content_references/{content_reference_id}/attachments`) instead. Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` of the content reference from the [`content_reference` event](https://docs.github.com/webhooks/event-payloads/#content_reference) to create an attachment.
+     * Create a content attachment
+     * @description **Deprecated:** use `apps.createContentAttachmentForRepo()` (`POST /repos/{owner}/{repo}/content_references/{content_reference_id}/attachments`) instead. Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` of the content reference from the [`content_reference` event](https://docs.github.com/webhooks/event-payloads/#content_reference) to create an attachment.
      *
      * The app must create a content attachment within six hours of the content reference URL being posted. See "[Using content attachments](https://docs.github.com/apps/using-content-attachments/)" for details about content attachments.
      *
@@ -432,13 +523,17 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/community/code_of_conduct": {
     /**
-     * Returns the contents of the repository's code of conduct file, if one is detected.
+     * Get the code of conduct for a repository
+     * @deprecated
+     * @description Returns the contents of the repository's code of conduct file, if one is detected.
      *
      * A code of conduct is detected if there is a file named `CODE_OF_CONDUCT` in the root directory of the repository. GitHub detects which code of conduct it is using fuzzy matching.
      */
     get: operations["codes-of-conduct/get-for-repo"];
   };
 }
+
+export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
@@ -485,8 +580,10 @@ export interface components {
        */
       id: number;
       account:
-        | (Partial<components["schemas"]["simple-user"]> &
-            Partial<components["schemas"]["enterprise"]>)
+        | (
+            | components["schemas"]["simple-user"]
+            | components["schemas"]["enterprise"]
+          )
         | null;
       /**
        * @description Describe whether all repositories have been selected or there's a selection involved
@@ -775,13 +872,15 @@ export interface components {
       actor_location?: {
         country_name?: string;
       };
-      data?: { [key: string]: unknown };
+      data?: {
+        [key: string]: unknown | undefined;
+      };
       org_id?: number;
       /** @description The username of the account being blocked. */
       blocked_user?: string;
       business?: string;
-      config?: { [key: string]: unknown }[];
-      config_was?: { [key: string]: unknown }[];
+      config?: Record<string, never>[];
+      config_was?: Record<string, never>[];
       content_type?: string;
       /** @description The time the audit log event was recorded, given as a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time). */
       created_at?: number;
@@ -789,8 +888,8 @@ export interface components {
       /** @description A unique identifier for an audit event. */
       _document_id?: string;
       emoji?: string;
-      events?: { [key: string]: unknown }[];
-      events_were?: { [key: string]: unknown }[];
+      events?: Record<string, never>[];
+      events_were?: Record<string, never>[];
       explanation?: string;
       fingerprint?: string;
       hook_id?: number;
@@ -973,7 +1072,7 @@ export interface components {
      * Empty Object
      * @description An object without any properties.
      */
-    "empty-object": { [key: string]: unknown };
+    "empty-object": Record<string, never>;
     /**
      * Full Team
      * @description Groups of organization members that gives permissions on specified repositories.
@@ -1278,7 +1377,10 @@ export interface components {
      * @enum {string|null}
      */
     "code-scanning-alert-dismissed-reason":
-      | (null | "false positive" | "won't fix" | "used in tests")
+      | ""
+      | "false positive"
+      | "won't fix"
+      | "used in tests"
       | null;
     "code-scanning-sarifs-status": {
       /**
@@ -2579,7 +2681,8 @@ export interface components {
         metadata?: string;
         contents?: string;
         deployments?: string;
-      } & { [key: string]: string };
+        [key: string]: string | undefined;
+      };
       /**
        * @description The list of events for the GitHub app
        * @example [
@@ -2612,32 +2715,32 @@ export interface components {
      */
     "code-scanning-ref": string;
     /** @description The security alert number. */
-    "alert-number": number;
+    readonly "alert-number": number;
     /**
      * Format: date-time
      * @description The time that the alert was created in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    "alert-created-at": string;
+    readonly "alert-created-at": string;
     /**
      * Format: uri
      * @description The REST API URL of the alert resource.
      */
-    "alert-url": string;
+    readonly "alert-url": string;
     /**
      * Format: uri
      * @description The GitHub URL of the alert resource.
      */
-    "alert-html-url": string;
+    readonly "alert-html-url": string;
     /**
      * Format: uri
      * @description The REST API URL for fetching the list of instances for an alert.
      */
-    "alert-instances-url": string;
+    readonly "alert-instances-url": string;
     /**
      * Format: date-time
      * @description The time that the alert was dismissed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    "code-scanning-alert-dismissed-at": string | null;
+    readonly "code-scanning-alert-dismissed-at": string | null;
     "code-scanning-alert-rule-summary": {
       /** @description A unique identifier for the rule used to detect the alert. */
       id?: string | null;
@@ -2647,7 +2750,7 @@ export interface components {
        * @description The severity of the alert.
        * @enum {string|null}
        */
-      severity?: ("none" | "note" | "warning" | "error") | null;
+      severity?: "none" | "note" | "warning" | "error" | null;
       /** @description A short description of the rule used to detect the alert. */
       description?: string;
     };
@@ -2695,7 +2798,10 @@ export interface components {
      * @enum {string|null}
      */
     "code-scanning-alert-classification":
-      | ("source" | "generated" | "test" | "library")
+      | "source"
+      | "generated"
+      | "test"
+      | "library"
       | null;
     "code-scanning-alert-rule": {
       /** @description A unique identifier for the rule used to detect the alert. */
@@ -2706,12 +2812,12 @@ export interface components {
        * @description The severity of the alert.
        * @enum {string|null}
        */
-      severity?: ("none" | "note" | "warning" | "error") | null;
+      severity?: "none" | "note" | "warning" | "error" | null;
       /**
        * @description The security severity of the alert.
        * @enum {string|null}
        */
-      security_severity_level?: ("low" | "medium" | "high" | "critical") | null;
+      security_severity_level?: "low" | "medium" | "high" | "critical" | null;
       /** @description A short description of the rule used to detect the alert. */
       description?: string;
       /** @description description of the rule used to detect the alert. */
@@ -2725,63 +2831,63 @@ export interface components {
     };
   };
   responses: {
-    /** Resource not found */
+    /** @description Resource not found */
     not_found: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Requires authentication */
+    /** @description Requires authentication */
     requires_authentication: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Forbidden */
+    /** @description Forbidden */
     forbidden: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Validation failed, or the endpoint has been spammed. */
+    /** @description Validation failed, or the endpoint has been spammed. */
     validation_failed: {
       content: {
         "application/json": components["schemas"]["validation-error"];
       };
     };
-    /** Not modified */
-    not_modified: unknown;
-    /** Gone */
+    /** @description Not modified */
+    not_modified: never;
+    /** @description Gone */
     gone: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Conflict */
+    /** @description Conflict */
     conflict: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Moved permanently */
+    /** @description Moved permanently */
     moved_permanently: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Validation failed, or the endpoint has been spammed. */
+    /** @description Validation failed, or the endpoint has been spammed. */
     validation_failed_simple: {
       content: {
         "application/json": components["schemas"]["validation-error-simple"];
       };
     };
-    /** Response if GitHub Advanced Security is not enabled for this repository */
+    /** @description Response if GitHub Advanced Security is not enabled for this repository */
     code_scanning_forbidden_read: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Service unavailable */
+    /** @description Service unavailable */
     service_unavailable: {
       content: {
         "application/json": {
@@ -2791,13 +2897,13 @@ export interface components {
         };
       };
     };
-    /** Response if the repository is archived or if GitHub Advanced Security is not enabled for this repository */
+    /** @description Response if the repository is archived or if GitHub Advanced Security is not enabled for this repository */
     code_scanning_forbidden_write: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Preview header missing */
+    /** @description Preview header missing */
     preview_header_missing: {
       content: {
         "application/json": {
@@ -2862,51 +2968,45 @@ export interface components {
     /** @description The unique identifier of the team. */
     "team-id": number;
   };
+  requestBodies: never;
   headers: {
-    link?: string;
+    /** @example <https://api.github.com/resource?page=2>; rel="next", <https://api.github.com/resource?page=5>; rel="last" */
+    link: string;
   };
+  pathItems: never;
 }
 
+export type external = Record<string, never>;
+
 export interface operations {
-  /** Lists personal access tokens for all users, including admin users. */
+  /**
+   * List personal access tokens
+   * @description Lists personal access tokens for all users, including admin users.
+   */
   "enterprise-admin/list-personal-access-tokens": {
     parameters: {
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": components["schemas"]["authorization"][];
         };
       };
     };
   };
+  /** Create an impersonation OAuth token */
   "enterprise-admin/create-impersonation-o-auth-token": {
     parameters: {
       path: {
-        /** The handle for the GitHub user account. */
         username: components["parameters"]["username"];
-      };
-    };
-    responses: {
-      /** Response when getting an existing impersonation OAuth token */
-      200: {
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      /** Response when creating a new impersonation OAuth token */
-      201: {
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
       };
     };
     requestBody: {
@@ -2917,28 +3017,42 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response when getting an existing impersonation OAuth token */
+      200: {
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      /** @description Response when creating a new impersonation OAuth token */
+      201: {
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+    };
   };
   /**
-   * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
+   * List installations for the authenticated app
+   * @description You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
    *
    * The permissions the installation has are included under the `permissions` key.
    */
   "apps/list-installations": {
     parameters: {
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
-        /** Only show notifications updated after the given time. This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`. */
         since?: components["parameters"]["since"];
         outdated?: string;
       };
     };
     responses: {
-      /** The permissions the installation has are included under the `permissions` key. */
+      /** @description The permissions the installation has are included under the `permissions` key. */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": components["schemas"]["installation"][];
         };
@@ -2946,19 +3060,19 @@ export interface operations {
     };
   };
   /**
-   * Enables an authenticated GitHub App to find an installation's information using the installation id.
+   * Get an installation for the authenticated app
+   * @description Enables an authenticated GitHub App to find an installation's information using the installation id.
    *
    * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
    */
   "apps/get-installation": {
     parameters: {
       path: {
-        /** The unique identifier of the installation. */
         installation_id: components["parameters"]["installation-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["installation"];
@@ -2968,30 +3082,18 @@ export interface operations {
     };
   };
   /**
-   * Creates an installation access token that enables a GitHub App to make authenticated API requests for the app's installation on an organization or individual account. Installation tokens expire one hour from the time you create them. Using an expired token produces a status code of `401 - Unauthorized`, and requires creating a new installation token. By default the installation token has access to all repositories that the installation can access. To restrict the access to specific repositories, you can provide the `repository_ids` when creating the token. When you omit `repository_ids`, the response does not contain the `repositories` key.
+   * Create an installation access token for an app
+   * @description Creates an installation access token that enables a GitHub App to make authenticated API requests for the app's installation on an organization or individual account. Installation tokens expire one hour from the time you create them. Using an expired token produces a status code of `401 - Unauthorized`, and requires creating a new installation token. By default the installation token has access to all repositories that the installation can access. To restrict the access to specific repositories, you can provide the `repository_ids` when creating the token. When you omit `repository_ids`, the response does not contain the `repositories` key.
    *
    * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
    */
   "apps/create-installation-access-token": {
     parameters: {
       path: {
-        /** The unique identifier of the installation. */
         installation_id: components["parameters"]["installation-id"];
       };
     };
-    responses: {
-      /** Response */
-      201: {
-        content: {
-          "application/json": components["schemas"]["installation-token"];
-        };
-      };
-      401: components["responses"]["requires_authentication"];
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
-      422: components["responses"]["validation_failed"];
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /** @description List of repository names that the token should have access to */
@@ -3007,9 +3109,23 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      201: {
+        content: {
+          "application/json": components["schemas"]["installation-token"];
+        };
+      };
+      401: components["responses"]["requires_authentication"];
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+   * Revoke a grant for an application
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
    *
    * OAuth application owners can revoke a grant for their OAuth application and a specific user. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. You must also provide a valid token as `:access_token` and the grant for the token's owner will be deleted.
    *
@@ -3018,33 +3134,24 @@ export interface operations {
   "apps/revoke-grant-for-application": {
     parameters: {
       path: {
-        /** The client ID of the GitHub app. */
         client_id: components["parameters"]["client-id"];
         access_token: components["parameters"]["access-token"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       204: never;
     };
   };
-  /** OAuth applications can use a special API method for checking OAuth token validity without exceeding the normal rate limits for failed login attempts. Authentication works differently with this particular endpoint. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) to use this endpoint, where the username is the OAuth application `client_id` and the password is its `client_secret`. Invalid tokens will return `404 NOT FOUND`. */
+  /**
+   * Check a token
+   * @description OAuth applications can use a special API method for checking OAuth token validity without exceeding the normal rate limits for failed login attempts. Authentication works differently with this particular endpoint. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) to use this endpoint, where the username is the OAuth application `client_id` and the password is its `client_secret`. Invalid tokens will return `404 NOT FOUND`.
+   */
   "apps/check-token": {
     parameters: {
       path: {
-        /** The client ID of the GitHub app. */
         client_id: components["parameters"]["client-id"];
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      404: components["responses"]["not_found"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -3054,23 +3161,26 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
-  /** OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`. */
+  /**
+   * Reset a token
+   * @description OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
+   */
   "apps/reset-token": {
     parameters: {
       path: {
-        /** The client ID of the GitHub app. */
         client_id: components["parameters"]["client-id"];
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -3080,26 +3190,25 @@ export interface operations {
         };
       };
     };
-  };
-  /** Use a non-scoped user-to-server OAuth access token to create a repository scoped and/or permission scoped user-to-server OAuth access token. You can specify which repositories the token can access and which permissions are granted to the token. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`. */
-  "apps/scope-token": {
-    parameters: {
-      path: {
-        /** The client ID of the GitHub app. */
-        client_id: components["parameters"]["client-id"];
-      };
-    };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["authorization"];
         };
       };
-      401: components["responses"]["requires_authentication"];
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
       422: components["responses"]["validation_failed"];
+    };
+  };
+  /**
+   * Create a scoped access token
+   * @description Use a non-scoped user-to-server OAuth access token to create a repository scoped and/or permission scoped user-to-server OAuth access token. You can specify which repositories the token can access and which permissions are granted to the token. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
+   */
+  "apps/scope-token": {
+    parameters: {
+      path: {
+        client_id: components["parameters"]["client-id"];
+      };
     };
     requestBody: {
       content: {
@@ -3132,22 +3241,35 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      401: components["responses"]["requires_authentication"];
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+   * Check an authorization
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
    *
    * OAuth applications can use a special API method for checking OAuth token validity without exceeding the normal rate limits for failed login attempts. Authentication works differently with this particular endpoint. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
    */
   "apps/check-authorization": {
     parameters: {
       path: {
-        /** The client ID of the GitHub app. */
         client_id: components["parameters"]["client-id"];
         access_token: components["parameters"]["access-token"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["nullable-authorization"];
@@ -3157,20 +3279,21 @@ export interface operations {
     };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+   * Reset an authorization
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
    *
    * OAuth applications can use this API method to reset a valid OAuth token without end-user involvement. Applications must save the "token" property in the response because changes take effect immediately. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password. Invalid tokens will return `404 NOT FOUND`.
    */
   "apps/reset-authorization": {
     parameters: {
       path: {
-        /** The client ID of the GitHub app. */
         client_id: components["parameters"]["client-id"];
         access_token: components["parameters"]["access-token"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["authorization"];
@@ -3179,39 +3302,44 @@ export interface operations {
     };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
+   * Revoke an authorization for an application
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue OAuth endpoints that contain `access_token` in the path parameter. We have introduced new endpoints that allow you to securely manage tokens for OAuth Apps by moving `access_token` to the request body. For more information, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-app-endpoint/).
    *
    * OAuth application owners can revoke a single token for an OAuth application. You must use [Basic Authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#basic-authentication) when accessing this endpoint, using the OAuth application's `client_id` and `client_secret` as the username and password.
    */
   "apps/revoke-authorization-for-application": {
     parameters: {
       path: {
-        /** The client ID of the GitHub app. */
         client_id: components["parameters"]["client-id"];
         access_token: components["parameters"]["access-token"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       204: never;
     };
   };
-  /** **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/). */
+  /**
+   * List your authorizations
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+   */
   "oauth-authorizations/list-authorizations": {
     parameters: {
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
-        /** The client ID of your GitHub app. */
+        /** @description The client ID of your GitHub app. */
         client_id?: string;
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": components["schemas"]["authorization"][];
         };
@@ -3223,7 +3351,9 @@ export interface operations {
     };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+   * Create a new authorization
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
    *
    * **Warning:** Apps must use the [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow) to obtain OAuth tokens that work with GitHub Enterprise Server SAML organizations. OAuth tokens created using the Authorizations API will be unable to access GitHub Enterprise Server SAML organizations. For more information, see the [blog post](https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api).
    *
@@ -3236,24 +3366,7 @@ export interface operations {
    * Organizations that enforce SAML SSO require personal access tokens to be allowed. Read more about allowing tokens in [the GitHub Help documentation](https://docs.github.com/articles/about-identity-and-access-management-with-saml-single-sign-on).
    */
   "oauth-authorizations/create-authorization": {
-    parameters: {};
-    responses: {
-      /** Response */
-      201: {
-        headers: {
-          Location?: string;
-        };
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      304: components["responses"]["not_modified"];
-      401: components["responses"]["requires_authentication"];
-      403: components["responses"]["forbidden"];
-      410: components["responses"]["gone"];
-      422: components["responses"]["validation_failed"];
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /**
@@ -3280,9 +3393,28 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      201: {
+        headers: {
+          /** @example https://api.github.com/authorizations/1 */
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      401: components["responses"]["requires_authentication"];
+      403: components["responses"]["forbidden"];
+      410: components["responses"]["gone"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+   * Get-or-create an authorization for a specific app
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
    *
    * **Warning:** Apps must use the [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow) to obtain OAuth tokens that work with GitHub Enterprise Server SAML organizations. OAuth tokens created using the Authorizations API will be unable to access GitHub Enterprise Server SAML organizations. For more information, see the [blog post](https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api).
    *
@@ -3295,33 +3427,8 @@ export interface operations {
   "oauth-authorizations/get-or-create-authorization-for-app": {
     parameters: {
       path: {
-        /** The client ID of the OAuth app. */
         client_id: components["parameters"]["oauth-client-id"];
       };
-    };
-    responses: {
-      /** if returning an existing token */
-      200: {
-        headers: {
-          Location?: string;
-        };
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      /** **Deprecation Notice:** GitHub will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/). */
-      201: {
-        headers: {
-          Location?: string;
-        };
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      304: components["responses"]["not_modified"];
-      401: components["responses"]["requires_authentication"];
-      403: components["responses"]["forbidden"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -3348,9 +3455,37 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description if returning an existing token */
+      200: {
+        headers: {
+          /** @example https://api.github.com/authorizations/1 */
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      /** @description **Deprecation Notice:** GitHub will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/). */
+      201: {
+        headers: {
+          /** @example https://api.github.com/authorizations/1 */
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      401: components["responses"]["requires_authentication"];
+      403: components["responses"]["forbidden"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+   * Get-or-create an authorization for a specific app and fingerprint
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
    *
    * **Warning:** Apps must use the [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow) to obtain OAuth tokens that work with GitHub Enterprise Server SAML organizations. OAuth tokens created using the Authorizations API will be unable to access GitHub Enterprise Server SAML organizations. For more information, see the [blog post](https://developer.github.com/changes/2019-11-05-deprecated-passwords-and-authorizations-api).
    *
@@ -3361,31 +3496,9 @@ export interface operations {
   "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint": {
     parameters: {
       path: {
-        /** The client ID of the OAuth app. */
         client_id: components["parameters"]["oauth-client-id"];
         fingerprint: string;
       };
-    };
-    responses: {
-      /** if returning an existing token */
-      200: {
-        headers: {
-          Location?: string;
-        };
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      /** Response if returning a new token */
-      201: {
-        headers: {
-          Location?: string;
-        };
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -3410,17 +3523,43 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description if returning an existing token */
+      200: {
+        headers: {
+          /** @example https://api.github.com/authorizations/1 */
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      /** @description Response if returning a new token */
+      201: {
+        headers: {
+          /** @example https://api.github.com/authorizations/1 */
+          Location?: string;
+        };
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      422: components["responses"]["validation_failed"];
+    };
   };
-  /** **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/). */
+  /**
+   * Get a single authorization
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/authorizing-oauth-apps/#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+   */
   "oauth-authorizations/get-authorization": {
     parameters: {
       path: {
-        /** The unique identifier of the authorization. */
         authorization_id: components["parameters"]["authorization-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["authorization"];
@@ -3432,7 +3571,9 @@ export interface operations {
     };
   };
   /**
-   * **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
+   * Update an existing authorization
+   * @deprecated
+   * @description **Deprecation Notice:** GitHub Enterprise Server will discontinue the [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations/), which is used by integrations to create personal access tokens and OAuth tokens, and you must now create these tokens using our [web application flow](https://docs.github.com/enterprise-server@3.3/developers/apps/authorizing-oauth-apps#web-application-flow). The [OAuth Authorizations API](https://docs.github.com/enterprise-server@3.3/rest/reference/oauth-authorizations) will be removed on November, 13, 2020. For more information, including scheduled brownouts, see the [blog post](https://developer.github.com/changes/2020-02-14-deprecating-oauth-auth-endpoint/).
    *
    * If you have two-factor authentication setup, Basic Authentication for this endpoint requires that you use a one-time password (OTP) and your username and password instead of tokens. For more information, see "[Working with two-factor authentication](https://docs.github.com/enterprise-server@3.3/rest/overview/other-authentication-methods#working-with-two-factor-authentication)."
    *
@@ -3441,20 +3582,10 @@ export interface operations {
   "oauth-authorizations/update-authorization": {
     parameters: {
       path: {
-        /** The unique identifier of the authorization. */
         authorization_id: components["parameters"]["authorization-id"];
       };
     };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["authorization"];
-        };
-      };
-      422: components["responses"]["validation_failed"];
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /**
@@ -3481,35 +3612,36 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["authorization"];
+        };
+      };
+      422: components["responses"]["validation_failed"];
+    };
   };
-  /** Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope. */
+  /**
+   * Get the audit log for an enterprise
+   * @description Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope.
+   */
   "enterprise-admin/get-audit-log": {
     parameters: {
-      path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
-        enterprise: components["parameters"]["enterprise"];
-      };
       query: {
-        /** A search phrase. For more information, see [Searching the audit log](https://docs.github.com/enterprise-server@3.3/github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization#searching-the-audit-log). */
         phrase?: components["parameters"]["audit-log-phrase"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-server@3.3/rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events after this cursor. */
         after?: components["parameters"]["audit-log-after"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-server@3.3/rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events before this cursor. */
         before?: components["parameters"]["audit-log-before"];
-        /**
-         * The order of audit log events. To list newest events first, specify `desc`. To list oldest events first, specify `asc`.
-         *
-         * The default is `desc`.
-         */
         order?: components["parameters"]["audit-log-order"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
+      };
+      path: {
+        enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["audit-log-event"][];
@@ -3518,19 +3650,19 @@ export interface operations {
     };
   };
   /**
-   * To see many of the organization response values, you need to be an authenticated organization owner with the `admin:org` scope. When the value of `two_factor_requirement_enabled` is `true`, the organization requires all members, billing managers, and outside collaborators to enable [two-factor authentication](https://docs.github.com/articles/securing-your-account-with-two-factor-authentication-2fa/).
+   * Get an organization
+   * @description To see many of the organization response values, you need to be an authenticated organization owner with the `admin:org` scope. When the value of `two_factor_requirement_enabled` is `true`, the organization requires all members, billing managers, and outside collaborators to enable [two-factor authentication](https://docs.github.com/articles/securing-your-account-with-two-factor-authentication-2fa/).
    *
    * GitHub Apps with the `Organization plan` permission can use this endpoint to retrieve information about an organization's GitHub Enterprise Server plan. See "[Authenticating with GitHub Apps](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/)" for details. For an example response, see 'Response with GitHub Enterprise Server plan information' below."
    */
   "orgs/get": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["organization-full"];
@@ -3540,35 +3672,18 @@ export interface operations {
     };
   };
   /**
-   * **Parameter Deprecation Notice:** GitHub Enterprise Server will replace and discontinue `members_allowed_repository_creation_type` in favor of more granular permissions. The new input parameters are `members_can_create_public_repositories`, `members_can_create_private_repositories` for all organizations and `members_can_create_internal_repositories` for organizations associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. For more information, see the [blog post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes).
+   * Update an organization
+   * @description **Parameter Deprecation Notice:** GitHub Enterprise Server will replace and discontinue `members_allowed_repository_creation_type` in favor of more granular permissions. The new input parameters are `members_can_create_public_repositories`, `members_can_create_private_repositories` for all organizations and `members_can_create_internal_repositories` for organizations associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. For more information, see the [blog post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes).
    *
    * Enables an authenticated organization owner with the `admin:org` scope to update the organization's profile and member privileges.
    */
   "orgs/update": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
     };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["organization-full"];
-        };
-      };
-      409: components["responses"]["conflict"];
-      /** Validation failed */
-      422: {
-        content: {
-          "application/json":
-            | components["schemas"]["validation-error"]
-            | components["schemas"]["validation-error-simple"];
-        };
-      };
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /** @description Billing email address. This address is not publicized. */
@@ -3622,9 +3737,27 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["organization-full"];
+        };
+      };
+      409: components["responses"]["conflict"];
+      /** @description Validation failed */
+      422: {
+        content: {
+          "application/json":
+            | components["schemas"]["validation-error"]
+            | components["schemas"]["validation-error-simple"];
+        };
+      };
+    };
   };
   /**
-   * Creates or updates an organization secret with an encrypted value. Encrypt your secret using
+   * Create or update an organization secret
+   * @description Creates or updates an organization secret with an encrypted value. Encrypt your secret using
    * [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). You must authenticate using an access
    * token with the `admin:org` scope to use this endpoint. GitHub Apps must have the `secrets` organization permission to
    * use this endpoint.
@@ -3703,21 +3836,9 @@ export interface operations {
   "actions/create-or-update-org-secret": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The name of the secret. */
         secret_name: components["parameters"]["secret-name"];
       };
-    };
-    responses: {
-      /** Response when creating a secret */
-      201: {
-        content: {
-          "application/json": components["schemas"]["empty-object"];
-        };
-      };
-      /** Response when updating a secret */
-      204: never;
     };
     requestBody: {
       content: {
@@ -3736,9 +3857,20 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response when creating a secret */
+      201: {
+        content: {
+          "application/json": components["schemas"]["empty-object"];
+        };
+      };
+      /** @description Response when updating a secret */
+      204: never;
+    };
   };
   /**
-   * Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-server@3.3/github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
+   * Get the audit log for an organization
+   * @description Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-server@3.3/github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
    *
    * To use this endpoint, you must be an organization owner, and you must use an access token with the `admin:org` scope. GitHub Apps must have the `organization_administration` read permission to use this endpoint.
    *
@@ -3748,31 +3880,20 @@ export interface operations {
    */
   "orgs/get-audit-log": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** A search phrase. For more information, see [Searching the audit log](https://docs.github.com/enterprise-server@3.3/github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization#searching-the-audit-log). */
         phrase?: components["parameters"]["audit-log-phrase"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-server@3.3/rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events after this cursor. */
         after?: components["parameters"]["audit-log-after"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-server@3.3/rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events before this cursor. */
         before?: components["parameters"]["audit-log-before"];
-        /**
-         * The order of audit log events. To list newest events first, specify `desc`. To list oldest events first, specify `asc`.
-         *
-         * The default is `desc`.
-         */
         order?: components["parameters"]["audit-log-order"];
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["audit-log-event"][];
@@ -3781,19 +3902,19 @@ export interface operations {
     };
   };
   /**
-   * Enables an authenticated GitHub App to find the organization's installation information.
+   * Get an organization installation for the authenticated app
+   * @description Enables an authenticated GitHub App to find the organization's installation information.
    *
    * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
    */
   "apps/get-org-installation": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["installation"];
@@ -3801,24 +3922,26 @@ export interface operations {
       };
     };
   };
-  /** Lists all GitHub Apps in an organization. The installation count includes all GitHub Apps installed on repositories in the organization. You must be an organization owner with `admin:read` scope to use this endpoint. */
+  /**
+   * List app installations for an organization
+   * @description Lists all GitHub Apps in an organization. The installation count includes all GitHub Apps installed on repositories in the organization. You must be an organization owner with `admin:read` scope to use this endpoint.
+   */
   "orgs/list-app-installations": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": {
             total_count: number;
@@ -3829,26 +3952,16 @@ export interface operations {
     };
   };
   /**
-   * To create a team, the authenticated user must be a member or owner of `{org}`. By default, organization members can create teams. Organization owners can limit team creation to organization owners. For more information, see "[Setting team creation permissions](https://docs.github.com/en/articles/setting-team-creation-permissions-in-your-organization)."
+   * Create a team
+   * @description To create a team, the authenticated user must be a member or owner of `{org}`. By default, organization members can create teams. Organization owners can limit team creation to organization owners. For more information, see "[Setting team creation permissions](https://docs.github.com/en/articles/setting-team-creation-permissions-in-your-organization)."
    *
    * When you create a new team, you automatically become a team maintainer without explicitly adding yourself to the optional array of `maintainers`. For more information, see "[About teams](https://docs.github.com/en/github/setting-up-and-managing-organizations-and-teams/about-teams)".
    */
   "teams/create": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
-    };
-    responses: {
-      /** Response */
-      201: {
-        content: {
-          "application/json": components["schemas"]["team-full"];
-        };
-      };
-      403: components["responses"]["forbidden"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -3886,63 +3999,54 @@ export interface operations {
         };
       };
     };
-  };
-  /**
-   * Gets a team using the team's `slug`. GitHub Enterprise Server generates the `slug` from the team `name`.
-   *
-   * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}`.
-   */
-  "teams/get-by-name": {
-    parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-        /** The slug of the team name. */
-        team_slug: components["parameters"]["team-slug"];
-      };
-    };
     responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["team-full"];
-        };
-      };
-      404: components["responses"]["not_found"];
-    };
-  };
-  /**
-   * To edit a team, the authenticated user must either be an organization owner or a team maintainer.
-   *
-   * **Note:** You can also specify a team by `org_id` and `team_id` using the route `PATCH /organizations/{org_id}/team/{team_id}`.
-   */
-  "teams/update-in-org": {
-    parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-        /** The slug of the team name. */
-        team_slug: components["parameters"]["team-slug"];
-      };
-    };
-    responses: {
-      /** Response when the updated information already exists */
-      200: {
-        content: {
-          "application/json": components["schemas"]["team-full"];
-        };
-      };
-      /** Response */
+      /** @description Response */
       201: {
         content: {
           "application/json": components["schemas"]["team-full"];
         };
       };
       403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
       422: components["responses"]["validation_failed"];
     };
-    requestBody: {
+  };
+  /**
+   * Get a team by name
+   * @description Gets a team using the team's `slug`. GitHub Enterprise Server generates the `slug` from the team `name`.
+   *
+   * **Note:** You can also specify a team by `org_id` and `team_id` using the route `GET /organizations/{org_id}/team/{team_id}`.
+   */
+  "teams/get-by-name": {
+    parameters: {
+      path: {
+        org: components["parameters"]["org"];
+        team_slug: components["parameters"]["team-slug"];
+      };
+    };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["team-full"];
+        };
+      };
+      404: components["responses"]["not_found"];
+    };
+  };
+  /**
+   * Update a team
+   * @description To edit a team, the authenticated user must either be an organization owner or a team maintainer.
+   *
+   * **Note:** You can also specify a team by `org_id` and `team_id` using the route `PATCH /organizations/{org_id}/team/{team_id}`.
+   */
+  "teams/update-in-org": {
+    parameters: {
+      path: {
+        org: components["parameters"]["org"];
+        team_slug: components["parameters"]["team-slug"];
+      };
+    };
+    requestBody?: {
       content: {
         "application/json": {
           /** @description The name of the team. */
@@ -3970,28 +4074,44 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response when the updated information already exists */
+      200: {
+        content: {
+          "application/json": components["schemas"]["team-full"];
+        };
+      };
+      /** @description Response */
+      201: {
+        content: {
+          "application/json": components["schemas"]["team-full"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
+  /** List branches */
   "repos/list-branches": {
     parameters: {
-      path: {
-        /** The account owner of the repository. The name is not case sensitive. */
-        owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
-        repo: components["parameters"]["repo"];
-      };
       query: {
-        /** Setting to `true` returns only protected branches. When set to `false`, only unprotected branches are returned. Omitting this parameter returns all branches. */
+        /** @description Setting to `true` returns only protected branches. When set to `false`, only unprotected branches are returned. Omitting this parameter returns all branches. */
         protected?: boolean;
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": components["schemas"]["short-branch"][];
         };
@@ -3999,19 +4119,17 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
+  /** Get a branch */
   "repos/get-branch": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["branch-with-protection"];
@@ -4021,20 +4139,20 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
-  /** Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
+  /**
+   * Get branch protection
+   * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   */
   "repos/get-branch-protection": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["branch-protection"];
@@ -4044,7 +4162,8 @@ export interface operations {
     };
   };
   /**
-   * Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   * Update branch protection
+   * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
    * Protecting a branch requires admin or owner permissions to the repository.
    *
@@ -4055,24 +4174,10 @@ export interface operations {
   "repos/update-branch-protection": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["protected-branch"];
-        };
-      };
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
-      422: components["responses"]["validation_failed_simple"];
     };
     requestBody: {
       content: {
@@ -4138,21 +4243,32 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["protected-branch"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed_simple"];
+    };
   };
-  /** Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
+  /**
+   * Get pull request review protection
+   * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   */
   "repos/get-pull-request-review-protection": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["protected-branch-pull-request-review"];
@@ -4161,7 +4277,8 @@ export interface operations {
     };
   };
   /**
-   * Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   * Update pull request review protection
+   * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
    * Updating pull request review enforcement requires admin or owner permissions to the repository and branch protection to be enabled.
    *
@@ -4170,24 +4287,12 @@ export interface operations {
   "repos/update-pull-request-review-protection": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
     };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["protected-branch-pull-request-review"];
-        };
-      };
-      422: components["responses"]["validation_failed"];
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /** @description Specify which users, teams, and apps can dismiss pull request reviews. Pass an empty `dismissal_restrictions` object to disable. User and team `dismissal_restrictions` are only available for organization-owned repositories. Omit this parameter for personal repositories. */
@@ -4208,21 +4313,30 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["protected-branch-pull-request-review"];
+        };
+      };
+      422: components["responses"]["validation_failed"];
+    };
   };
-  /** Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation. */
+  /**
+   * Get status checks protection
+   * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   */
   "repos/get-status-checks-protection": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["status-check-policy"];
@@ -4232,32 +4346,20 @@ export interface operations {
     };
   };
   /**
-   * Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   * Update status check protection
+   * @description Protected branches are available in public repositories with GitHub Free and GitHub Free for organizations, and in public and private repositories with GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
    * Updating required status checks requires admin or owner permissions to the repository and branch protection to be enabled.
    */
   "repos/update-status-check-protection": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
     };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["status-check-policy"];
-        };
-      };
-      404: components["responses"]["not_found"];
-      422: components["responses"]["validation_failed"];
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /** @description Require branches to be up to date before merging. */
@@ -4270,9 +4372,20 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["status-check-policy"];
+        };
+      };
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * Renames a branch in a repository.
+   * Rename a branch
+   * @description Renames a branch in a repository.
    *
    * **Note:** Although the API responds immediately, the branch rename process might take some extra time to complete in the background. You won't be able to push to the old branch name while the rename process is in progress. For more information, see "[Renaming a branch](https://docs.github.com/enterprise-server@3.3/github/administering-a-repository/renaming-a-branch)".
    *
@@ -4291,24 +4404,10 @@ export interface operations {
   "repos/rename-branch": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The name of the branch. */
         branch: components["parameters"]["branch"];
       };
-    };
-    responses: {
-      /** Response */
-      201: {
-        content: {
-          "application/json": components["schemas"]["branch-with-protection"];
-        };
-      };
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -4318,9 +4417,21 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      201: {
+        content: {
+          "application/json": components["schemas"]["branch-with-protection"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * Lists all open code scanning alerts for the default branch (usually `main`
+   * List code scanning alerts for a repository
+   * @description Lists all open code scanning alerts for the default branch (usually `main`
    * or `master`). You must use an access token with the `security_events` scope to use
    * this endpoint. GitHub Apps must have the `security_events` read permission to use
    * this endpoint.
@@ -4332,29 +4443,22 @@ export interface operations {
    */
   "code-scanning/list-alerts-for-repo": {
     parameters: {
-      path: {
-        /** The account owner of the repository. The name is not case sensitive. */
-        owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
-        repo: components["parameters"]["repo"];
-      };
       query: {
-        /** The name of a code scanning tool. Only results by this tool will be listed. You can specify the tool by using either `tool_name` or `tool_guid`, but not both. */
         tool_name?: components["parameters"]["tool-name"];
-        /** The GUID of a code scanning tool. Only results by this tool will be listed. Note that some code scanning tools may not include a GUID in their analysis data. You can specify the tool by using either `tool_guid` or `tool_name`, but not both. */
         tool_guid?: components["parameters"]["tool-guid"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** The Git reference for the results you want to list. The `ref` for a branch can be formatted either as `refs/heads/<branch name>` or simply `<branch name>`. To reference a pull request use `refs/pull/<number>/merge`. */
         ref?: components["parameters"]["git-ref"];
-        /** Set to `open`, `fixed`, or `dismissed` to list code scanning alerts in a specific state. */
+        /** @description Set to `open`, `fixed`, or `dismissed` to list code scanning alerts in a specific state. */
         state?: components["schemas"]["code-scanning-alert-state"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["code-scanning-alert-items"][];
@@ -4366,7 +4470,8 @@ export interface operations {
     };
   };
   /**
-   * Gets a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
+   * Get a code scanning alert
+   * @description Gets a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
    *
    * **Deprecation notice**:
    * The instances field is deprecated and will, in future, not be included in the response for this endpoint. The example response reflects this change. The same information can now be retrieved via a GET request to the URL specified by `instances_url`.
@@ -4374,16 +4479,13 @@ export interface operations {
   "code-scanning/get-alert": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The number that identifies an alert. You can find this at the end of the URL for a code scanning alert within GitHub, and in the `number` field in the response from the `GET /repos/{owner}/{repo}/code-scanning/alerts` operation. */
         alert_number: components["parameters"]["alert-number"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["code-scanning-alert"];
@@ -4394,28 +4496,17 @@ export interface operations {
       503: components["responses"]["service_unavailable"];
     };
   };
-  /** Updates the status of a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` write permission to use this endpoint. */
+  /**
+   * Update a code scanning alert
+   * @description Updates the status of a single code scanning alert. You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` write permission to use this endpoint.
+   */
   "code-scanning/update-alert": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The number that identifies an alert. You can find this at the end of the URL for a code scanning alert within GitHub, and in the `number` field in the response from the `GET /repos/{owner}/{repo}/code-scanning/alerts` operation. */
         alert_number: components["parameters"]["alert-number"];
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["code-scanning-alert"];
-        };
-      };
-      403: components["responses"]["code_scanning_forbidden_write"];
-      404: components["responses"]["not_found"];
-      503: components["responses"]["service_unavailable"];
     };
     requestBody: {
       content: {
@@ -4425,34 +4516,47 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["code-scanning-alert"];
+        };
+      };
+      403: components["responses"]["code_scanning_forbidden_write"];
+      404: components["responses"]["not_found"];
+      503: components["responses"]["service_unavailable"];
+    };
   };
-  /** Gets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see "[Get a code scanning analysis for a repository](/rest/reference/code-scanning#get-a-code-scanning-analysis-for-a-repository)." You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint. */
+  /**
+   * Get information about a SARIF upload
+   * @description Gets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see "[Get a code scanning analysis for a repository](/rest/reference/code-scanning#get-a-code-scanning-analysis-for-a-repository)." You must use an access token with the `security_events` scope to use this endpoint. GitHub Apps must have the `security_events` read permission to use this endpoint.
+   */
   "code-scanning/get-sarif": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
-        /** The SARIF ID obtained after uploading. */
+        /** @description The SARIF ID obtained after uploading. */
         sarif_id: string;
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["code-scanning-sarifs-status"];
         };
       };
       403: components["responses"]["code_scanning_forbidden_read"];
-      /** Not Found if the sarif id does not match any upload */
-      404: unknown;
+      /** @description Not Found if the sarif id does not match any upload */
+      404: never;
       503: components["responses"]["service_unavailable"];
     };
   };
   /**
-   * Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` and `repository` `full_name` of the content reference from the [`content_reference` event](https://docs.github.com/enterprise-server@3.3/webhooks/event-payloads/#content_reference) to create an attachment.
+   * Create a content attachment
+   * @description Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` and `repository` `full_name` of the content reference from the [`content_reference` event](https://docs.github.com/enterprise-server@3.3/webhooks/event-payloads/#content_reference) to create an attachment.
    *
    * The app must create a content attachment within six hours of the content reference URL being posted. See "[Using content attachments](https://docs.github.com/enterprise-server@3.3/apps/using-content-attachments/)" for details about content attachments.
    *
@@ -4461,27 +4565,13 @@ export interface operations {
   "apps/create-content-attachment-for-repo": {
     parameters: {
       path: {
-        /** The owner of the repository. Determined from the `repository` `full_name` of the `content_reference` event. */
+        /** @description The owner of the repository. Determined from the `repository` `full_name` of the `content_reference` event. */
         owner: string;
-        /** The name of the repository. Determined from the `repository` `full_name` of the `content_reference` event. */
+        /** @description The name of the repository. Determined from the `repository` `full_name` of the `content_reference` event. */
         repo: string;
-        /** The `id` of the `content_reference` event. */
+        /** @description The `id` of the `content_reference` event. */
         content_reference_id: number;
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["content-reference-attachment"];
-        };
-      };
-      304: components["responses"]["not_modified"];
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
-      410: components["responses"]["gone"];
-      415: components["responses"]["preview_header_missing"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -4499,23 +4589,36 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["content-reference-attachment"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      410: components["responses"]["gone"];
+      415: components["responses"]["preview_header_missing"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * Enables an authenticated GitHub App to find the repository's installation information. The installation's account type will be either an organization or a user account, depending which account the repository belongs to.
+   * Get a repository installation for the authenticated app
+   * @description Enables an authenticated GitHub App to find the repository's installation information. The installation's account type will be either an organization or a user account, depending which account the repository belongs to.
    *
    * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
    */
   "apps/get-repo-installation": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["installation"];
@@ -4525,16 +4628,19 @@ export interface operations {
       404: components["responses"]["not_found"];
     };
   };
-  /** **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the [Get a team by name](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#get-a-team-by-name) endpoint. */
+  /**
+   * Get a team (Legacy)
+   * @deprecated
+   * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the [Get a team by name](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#get-a-team-by-name) endpoint.
+   */
   "teams/get-legacy": {
     parameters: {
       path: {
-        /** The unique identifier of the team. */
         team_id: components["parameters"]["team-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["team-full"];
@@ -4544,7 +4650,9 @@ export interface operations {
     };
   };
   /**
-   * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Update a team](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#update-a-team) endpoint.
+   * Update a team (Legacy)
+   * @deprecated
+   * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [Update a team](https://docs.github.com/enterprise-server@3.3/rest/reference/teams#update-a-team) endpoint.
    *
    * To edit a team, the authenticated user must either be an organization owner or a team maintainer.
    *
@@ -4553,26 +4661,8 @@ export interface operations {
   "teams/update-legacy": {
     parameters: {
       path: {
-        /** The unique identifier of the team. */
         team_id: components["parameters"]["team-id"];
       };
-    };
-    responses: {
-      /** Response when the updated information already exists */
-      200: {
-        content: {
-          "application/json": components["schemas"]["team-full"];
-        };
-      };
-      /** Response */
-      201: {
-        content: {
-          "application/json": components["schemas"]["team-full"];
-        };
-      };
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -4602,9 +4692,27 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response when the updated information already exists */
+      200: {
+        content: {
+          "application/json": components["schemas"]["team-full"];
+        };
+      };
+      /** @description Response */
+      201: {
+        content: {
+          "application/json": components["schemas"]["team-full"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * Lists installations of your GitHub App that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access.
+   * List app installations accessible to the user access token
+   * @description Lists installations of your GitHub App that the authenticated user has explicit permission (`:read`, `:write`, or `:admin`) to access.
    *
    * You must use a [user-to-server OAuth access token](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/identifying-and-authorizing-users-for-github-apps/#identifying-users-on-your-site), created for a user who has authorized your GitHub App, to access this endpoint.
    *
@@ -4615,16 +4723,16 @@ export interface operations {
   "apps/list-installations-for-authenticated-user": {
     parameters: {
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
       };
     };
     responses: {
-      /** You can find the permissions for the installation under the `permissions` key. */
+      /** @description You can find the permissions for the installation under the `permissions` key. */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": {
             total_count: number;
@@ -4637,20 +4745,23 @@ export interface operations {
       403: components["responses"]["forbidden"];
     };
   };
-  /** List all of the teams across all of the organizations to which the authenticated user belongs. This method requires `user`, `repo`, or `read:org` [scope](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/) when authenticating via [OAuth](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/). */
+  /**
+   * List teams for the authenticated user
+   * @description List all of the teams across all of the organizations to which the authenticated user belongs. This method requires `user`, `repo`, or `read:org` [scope](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/understanding-scopes-for-oauth-apps/) when authenticating via [OAuth](https://docs.github.com/enterprise-server@3.3/apps/building-oauth-apps/).
+   */
   "teams/list-for-authenticated-user": {
     parameters: {
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": components["schemas"]["team-full"][];
         };
@@ -4661,19 +4772,19 @@ export interface operations {
     };
   };
   /**
-   * Enables an authenticated GitHub App to find the user’s installation information.
+   * Get a user installation for the authenticated app
+   * @description Enables an authenticated GitHub App to find the user’s installation information.
    *
    * You must use a [JWT](https://docs.github.com/enterprise-server@3.3/apps/building-github-apps/authenticating-with-github-apps/#authenticating-as-a-github-app) to access this endpoint.
    */
   "apps/get-user-installation": {
     parameters: {
       path: {
-        /** The handle for the GitHub user account. */
         username: components["parameters"]["username"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["installation"];
@@ -4682,7 +4793,8 @@ export interface operations {
     };
   };
   /**
-   * **Deprecated:** use `apps.createContentAttachmentForRepo()` (`POST /repos/{owner}/{repo}/content_references/{content_reference_id}/attachments`) instead. Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` of the content reference from the [`content_reference` event](https://docs.github.com/webhooks/event-payloads/#content_reference) to create an attachment.
+   * Create a content attachment
+   * @description **Deprecated:** use `apps.createContentAttachmentForRepo()` (`POST /repos/{owner}/{repo}/content_references/{content_reference_id}/attachments`) instead. Creates an attachment under a content reference URL in the body or comment of an issue or pull request. Use the `id` of the content reference from the [`content_reference` event](https://docs.github.com/webhooks/event-payloads/#content_reference) to create an attachment.
    *
    * The app must create a content attachment within six hours of the content reference URL being posted. See "[Using content attachments](https://docs.github.com/apps/using-content-attachments/)" for details about content attachments.
    *
@@ -4694,21 +4806,7 @@ export interface operations {
         content_reference_id: number;
       };
     };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["content-reference-attachment"];
-        };
-      };
-      304: components["responses"]["not_modified"];
-      403: components["responses"]["forbidden"];
-      404: components["responses"]["not_found"];
-      410: components["responses"]["gone"];
-      415: components["responses"]["preview_header_missing"];
-      422: components["responses"]["validation_failed"];
-    };
-    requestBody: {
+    requestBody?: {
       content: {
         "application/json": {
           /**
@@ -4724,23 +4822,37 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["content-reference-attachment"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      403: components["responses"]["forbidden"];
+      404: components["responses"]["not_found"];
+      410: components["responses"]["gone"];
+      415: components["responses"]["preview_header_missing"];
+      422: components["responses"]["validation_failed"];
+    };
   };
   /**
-   * Returns the contents of the repository's code of conduct file, if one is detected.
+   * Get the code of conduct for a repository
+   * @deprecated
+   * @description Returns the contents of the repository's code of conduct file, if one is detected.
    *
    * A code of conduct is detected if there is a file named `CODE_OF_CONDUCT` in the root directory of the repository. GitHub detects which code of conduct it is using fuzzy matching.
    */
   "codes-of-conduct/get-for-repo": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["code-of-conduct"];
@@ -4749,5 +4861,3 @@ export interface operations {
     };
   };
 }
-
-export interface external {}

@@ -3,22 +3,38 @@
  * Do not make direct changes to the file.
  */
 
+/** OneOf type helpers */
+type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+type XOR<T, U> = T | U extends object
+  ? (Without<T, U> & U) | (Without<U, T> & T)
+  : T | U;
+type OneOf<T extends any[]> = T extends [infer Only]
+  ? Only
+  : T extends [infer A, infer B, ...infer Rest]
+  ? OneOf<[XOR<A, B>, ...Rest]>
+  : never;
+
 export interface paths {
   "/enterprises/{enterprise}/actions/oidc/customization/issuer": {
     /**
-     * Sets the GitHub Actions OpenID Connect (OIDC) custom issuer policy for an enterprise.
+     * Set the GitHub Actions OIDC custom issuer policy for an enterprise
+     * @description Sets the GitHub Actions OpenID Connect (OIDC) custom issuer policy for an enterprise.
      * You must authenticate using an access token with the `admin:enterprise` scope to use this endpoint.
      * GitHub Apps must have the `enterprise_administration:write` permission to use this endpoint.
      */
     put: operations["actions/set-actions-oidc-custom-issuer-policy-for-enterprise"];
   };
   "/enterprises/{enterprise}/audit-log": {
-    /** Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope. */
+    /**
+     * Get the audit log for an enterprise
+     * @description Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope.
+     */
     get: operations["enterprise-admin/get-audit-log"];
   };
   "/enterprises/{enterprise}/consumed-licenses": {
     /**
-     * Lists the license consumption information for all users, including those from connected servers, associated with an enterprise.
+     * List enterprise consumed licenses
+     * @description Lists the license consumption information for all users, including those from connected servers, associated with an enterprise.
      * To use this endpoint, you must be an enterprise admin, and you must use an access
      * token with the `read:enterprise` scope.
      *
@@ -29,7 +45,8 @@ export interface paths {
   };
   "/enterprises/{enterprise}/license-sync-status": {
     /**
-     * Gets information about the status of a license sync job for an enterprise.
+     * Get a license sync status
+     * @description Gets information about the status of a license sync job for an enterprise.
      * To use this endpoint, you must be an enterprise admin, and you must use an access
      * token with the `read:enterprise` scope.
      */
@@ -37,7 +54,8 @@ export interface paths {
   };
   "/enterprises/{enterprise}/settings/billing/actions": {
     /**
-     * Gets the summary of the free and paid GitHub Actions minutes used.
+     * Get GitHub Actions billing for an enterprise
+     * @description Gets the summary of the free and paid GitHub Actions minutes used.
      *
      * Paid minutes only apply to workflows in private repositories that use GitHub-hosted runners. Minutes used is listed for each GitHub-hosted runner operating system. Any job re-runs are also included in the usage. The usage does not include the multiplier for macOS and Windows runners and is not rounded up to the nearest whole minute. For more information, see "[Managing billing for GitHub Actions](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-actions)".
      *
@@ -47,7 +65,8 @@ export interface paths {
   };
   "/enterprises/{enterprise}/settings/billing/packages": {
     /**
-     * Gets the free and paid storage used for GitHub Packages in gigabytes.
+     * Get GitHub Packages billing for an enterprise
+     * @description Gets the free and paid storage used for GitHub Packages in gigabytes.
      *
      * Paid minutes only apply to packages stored for private repositories. For more information, see "[Managing billing for GitHub Packages](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-packages)."
      *
@@ -57,7 +76,8 @@ export interface paths {
   };
   "/enterprises/{enterprise}/settings/billing/shared-storage": {
     /**
-     * Gets the estimated paid and estimated total storage used for GitHub Actions and GitHub Packages.
+     * Get shared storage billing for an enterprise
+     * @description Gets the estimated paid and estimated total storage used for GitHub Actions and GitHub Packages.
      *
      * Paid minutes only apply to packages stored for private repositories. For more information, see "[Managing billing for GitHub Packages](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-packages)."
      *
@@ -67,13 +87,15 @@ export interface paths {
   };
   "/orgs/{org}/actions/oidc/customization/sub": {
     /**
-     * Gets the customization template for an OpenID Connect (OIDC) subject claim.
+     * Get the customization template for an OIDC subject claim for an organization
+     * @description Gets the customization template for an OpenID Connect (OIDC) subject claim.
      * You must authenticate using an access token with the `read:org` scope to use this endpoint.
      * GitHub Apps must have the `organization_administration:write` permission to use this endpoint.
      */
     get: operations["oidc/get-oidc-custom-sub-template-for-org"];
     /**
-     * Creates or updates the customization template for an OpenID Connect (OIDC) subject claim.
+     * Set the customization template for an OIDC subject claim for an organization
+     * @description Creates or updates the customization template for an OpenID Connect (OIDC) subject claim.
      * You must authenticate using an access token with the `write:org` scope to use this endpoint.
      * GitHub Apps must have the `admin:org` permission to use this endpoint.
      */
@@ -81,7 +103,8 @@ export interface paths {
   };
   "/orgs/{org}/audit-log": {
     /**
-     * Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-cloud@latest//github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
+     * Get the audit log for an organization
+     * @description Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-cloud@latest//github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
      *
      * This endpoint is available for organizations on GitHub Enterprise Cloud. To use this endpoint, you must be an organization owner, and you must use an access token with the `admin:org` scope. GitHub Apps must have the `organization_administration` read permission to use this endpoint.
      *
@@ -93,7 +116,8 @@ export interface paths {
   };
   "/orgs/{org}/credential-authorizations": {
     /**
-     * Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
+     * List SAML SSO authorizations for an organization
+     * @description Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
      *
      * An authenticated organization owner with the `read:org` scope can list all credential authorizations for an organization that uses SAML single sign-on (SSO). The credentials are either personal access tokens or SSH keys that organization members have authorized for the organization. For more information, see [About authentication with SAML single sign-on](https://docs.github.com/en/articles/about-authentication-with-saml-single-sign-on).
      */
@@ -101,7 +125,8 @@ export interface paths {
   };
   "/orgs/{org}/credential-authorizations/{credential_id}": {
     /**
-     * Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
+     * Remove a SAML SSO authorization for an organization
+     * @description Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
      *
      * An authenticated organization owner with the `admin:org` scope can remove a credential authorization for an organization that uses SAML SSO. Once you remove someone's credential authorization, they will need to create a new personal access token or SSH key and authorize it for the organization they want to access.
      */
@@ -109,7 +134,8 @@ export interface paths {
   };
   "/orgs/{org}/external-group/{group_id}": {
     /**
-     * Displays information about the specific group's usage.  Provides a list of the group's external members as well as a list of teams that this group is connected to.
+     * Get an external group
+     * @description Displays information about the specific group's usage.  Provides a list of the group's external members as well as a list of teams that this group is connected to.
      *
      * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
      */
@@ -117,7 +143,8 @@ export interface paths {
   };
   "/orgs/{org}/external-groups": {
     /**
-     * Lists external groups available in an organization. You can query the groups using the `display_name` parameter, only groups with a `group_name` containing the text provided in the `display_name` parameter will be returned.  You can also limit your page results using the `per_page` parameter. GitHub Enterprise Cloud generates a url-encoded `page` token using a cursor value for where the next page begins. For more information on cursor pagination, see "[Offset and Cursor Pagination explained](https://dev.to/jackmarchant/offset-and-cursor-pagination-explained-b89)."
+     * List external groups in an organization
+     * @description Lists external groups available in an organization. You can query the groups using the `display_name` parameter, only groups with a `group_name` containing the text provided in the `display_name` parameter will be returned.  You can also limit your page results using the `per_page` parameter. GitHub Enterprise Cloud generates a url-encoded `page` token using a cursor value for where the next page begins. For more information on cursor pagination, see "[Offset and Cursor Pagination explained](https://dev.to/jackmarchant/offset-and-cursor-pagination-explained-b89)."
      *
      * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
      */
@@ -125,7 +152,8 @@ export interface paths {
   };
   "/orgs/{org}/team-sync/groups": {
     /**
-     * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     * List IdP groups for an organization
+     * @description Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
      * List IdP groups available in an organization. You can limit your page results using the `per_page` parameter. GitHub Enterprise Cloud generates a url-encoded `page` token using a cursor value for where the next page begins. For more information on cursor pagination, see "[Offset and Cursor Pagination explained](https://dev.to/jackmarchant/offset-and-cursor-pagination-explained-b89)."
      */
@@ -133,19 +161,22 @@ export interface paths {
   };
   "/orgs/{org}/teams/{team_slug}/external-groups": {
     /**
-     * Lists a connection between a team and an external group.
+     * List a connection between an external group and a team
+     * @description Lists a connection between a team and an external group.
      *
      * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
      */
     get: operations["teams/list-linked-external-idp-groups-to-team-for-org"];
     /**
-     * Deletes a connection between a team and an external group.
+     * Remove the connection between an external group and a team
+     * @description Deletes a connection between a team and an external group.
      *
      * You can manage team membership with your IdP using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      */
     delete: operations["teams/unlink-external-idp-group-from-team-for-org"];
     /**
-     * Creates a connection between a team and an external group.  Only one external group can be linked to a team.
+     * Update the connection between an external group and a team
+     * @description Creates a connection between a team and an external group.  Only one external group can be linked to a team.
      *
      * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
      */
@@ -153,7 +184,8 @@ export interface paths {
   };
   "/orgs/{org}/teams/{team_slug}/team-sync/group-mappings": {
     /**
-     * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     * List IdP groups for a team
+     * @description Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
      * List IdP groups connected to a team on GitHub Enterprise Cloud.
      *
@@ -161,7 +193,8 @@ export interface paths {
      */
     get: operations["teams/list-idp-groups-in-org"];
     /**
-     * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+     * Create or update IdP group connections
+     * @description Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
      * Creates, updates, or removes a connection between a team and an IdP group. When adding groups to a team, you must include all new and existing groups to avoid replacing existing groups with the new ones. Specifying an empty `groups` array will remove all connections for a team.
      *
@@ -171,13 +204,15 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/actions/oidc/customization/sub": {
     /**
-     * Gets the `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
+     * Get the opt-out flag of an OIDC subject claim customization for a repository
+     * @description Gets the `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
      * You must authenticate using an access token with the `repo` scope to use this
      * endpoint. GitHub Apps must have the `organization_administration:read` permission to use this endpoint.
      */
     get: operations["actions/get-custom-oidc-sub-claim-for-repo"];
     /**
-     * Sets the `opt-in` or `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
+     * Set the opt-in flag of an OIDC subject claim customization for a repository
+     * @description Sets the `opt-in` or `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
      * You must authenticate using an access token with the `repo` scope to use this
      * endpoint. GitHub Apps must have the `actions:write` permission to use this endpoint.
      */
@@ -185,7 +220,8 @@ export interface paths {
   };
   "/repos/{owner}/{repo}/code-scanning/alerts": {
     /**
-     * Lists code scanning alerts.
+     * List code scanning alerts for a repository
+     * @description Lists code scanning alerts.
      *
      * To use this endpoint, you must use an access token with the `security_events` scope or, for alerts from public repositories only, an access token with the `public_repo` scope.
      *
@@ -200,7 +236,8 @@ export interface paths {
   };
   "/scim/v2/organizations/{org}/Users": {
     /**
-     * Retrieves a paginated list of all provisioned organization members, including pending invitations. If you provide the `filter` parameter, the resources for all matching provisions members are returned.
+     * List SCIM provisioned identities
+     * @description Retrieves a paginated list of all provisioned organization members, including pending invitations. If you provide the `filter` parameter, the resources for all matching provisions members are returned.
      *
      * When a user with a SAML-provisioned external identity leaves (or is removed from) an organization, the account's metadata is immediately removed. However, the returned list of user accounts might not always match the organization or enterprise member list you see on GitHub Enterprise Cloud. This can happen in certain cases where an external identity associated with an organization will not match an organization member:
      *   - When a user with a SCIM-provisioned external identity is removed from an organization, the account's metadata is preserved to allow the user to re-join the organization in the future.
@@ -218,22 +255,29 @@ export interface paths {
      *    - If the user does not sign in (or does not create a new account when prompted), they are not added to the GitHub Enterprise Cloud organization, and the external identity `null` entry remains in place.
      */
     get: operations["scim/list-provisioned-identities"];
-    /** Provision organization membership for a user, and send an activation email to the email address. */
+    /**
+     * Provision and invite a SCIM user
+     * @description Provision organization membership for a user, and send an activation email to the email address.
+     */
     post: operations["scim/provision-and-invite-user"];
   };
   "/scim/v2/organizations/{org}/Users/{scim_user_id}": {
+    /** Get SCIM provisioning information for a user */
     get: operations["scim/get-provisioning-information-for-user"];
     /**
-     * Replaces an existing provisioned user's information. You must provide all the information required for the user as if you were provisioning them for the first time. Any existing user information that you don't provide will be removed. If you want to only update a specific attribute, use the [Update an attribute for a SCIM user](https://docs.github.com/enterprise-cloud@latest//rest/reference/scim#update-an-attribute-for-a-scim-user) endpoint instead.
+     * Update a provisioned organization membership
+     * @description Replaces an existing provisioned user's information. You must provide all the information required for the user as if you were provisioning them for the first time. Any existing user information that you don't provide will be removed. If you want to only update a specific attribute, use the [Update an attribute for a SCIM user](https://docs.github.com/enterprise-cloud@latest//rest/reference/scim#update-an-attribute-for-a-scim-user) endpoint instead.
      *
      * You must at least provide the required values for the user: `userName`, `name`, and `emails`.
      *
      * **Warning:** Setting `active: false` removes the user from the organization, deletes the external identity, and deletes the associated `{scim_user_id}`.
      */
     put: operations["scim/set-information-for-provisioned-user"];
+    /** Delete a SCIM user from an organization */
     delete: operations["scim/delete-user-from-org"];
     /**
-     * Allows you to change a provisioned user's individual attributes. To change a user's values, you must provide a specific `Operations` JSON format that contains at least one of the `add`, `remove`, or `replace` operations. For examples and more information on the SCIM operations format, see the [SCIM specification](https://tools.ietf.org/html/rfc7644#section-3.5.2).
+     * Update an attribute for a SCIM user
+     * @description Allows you to change a provisioned user's individual attributes. To change a user's values, you must provide a specific `Operations` JSON format that contains at least one of the `add`, `remove`, or `replace` operations. For examples and more information on the SCIM operations format, see the [SCIM specification](https://tools.ietf.org/html/rfc7644#section-3.5.2).
      *
      * **Note:** Complicated SCIM `path` selectors that include filters are not supported. For example, a `path` selector defined as `"path": "emails[type eq \"work\"]"` will not work.
      *
@@ -254,7 +298,9 @@ export interface paths {
   };
   "/teams/{team_id}/team-sync/group-mappings": {
     /**
-     * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`List IdP groups for a team`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#list-idp-groups-for-a-team) endpoint.
+     * List IdP groups for a team (Legacy)
+     * @deprecated
+     * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`List IdP groups for a team`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#list-idp-groups-for-a-team) endpoint.
      *
      * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
@@ -262,7 +308,9 @@ export interface paths {
      */
     get: operations["teams/list-idp-groups-for-legacy"];
     /**
-     * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`Create or update IdP group connections`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#create-or-update-idp-group-connections) endpoint.
+     * Create or update IdP group connections (Legacy)
+     * @deprecated
+     * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`Create or update IdP group connections`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#create-or-update-idp-group-connections) endpoint.
      *
      * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
      *
@@ -271,6 +319,8 @@ export interface paths {
     patch: operations["teams/create-or-update-idp-group-connections-legacy"];
   };
 }
+
+export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
@@ -295,13 +345,15 @@ export interface components {
       actor_location?: {
         country_name?: string;
       };
-      data?: { [key: string]: unknown };
+      data?: {
+        [key: string]: unknown | undefined;
+      };
       org_id?: number;
       /** @description The username of the account being blocked. */
       blocked_user?: string;
       business?: string;
-      config?: { [key: string]: unknown }[];
-      config_was?: { [key: string]: unknown }[];
+      config?: Record<string, never>[];
+      config_was?: Record<string, never>[];
       content_type?: string;
       /** @description The time the audit log event was recorded, given as a [Unix timestamp](http://en.wikipedia.org/wiki/Unix_time). */
       created_at?: number;
@@ -309,8 +361,8 @@ export interface components {
       /** @description A unique identifier for an audit event. */
       _document_id?: string;
       emoji?: string;
-      events?: { [key: string]: unknown }[];
-      events_were?: { [key: string]: unknown }[];
+      events?: Record<string, never>[];
+      events_were?: Record<string, never>[];
       explanation?: string;
       fingerprint?: string;
       hook_id?: number;
@@ -447,7 +499,7 @@ export interface components {
      * Empty Object
      * @description An object without any properties.
      */
-    "empty-object": { [key: string]: unknown };
+    "empty-object": Record<string, never>;
     /**
      * Credential Authorization
      * @description Credential Authorization
@@ -827,7 +879,7 @@ export interface components {
         /** @enum {string} */
         op: "add" | "remove" | "replace";
         path?: string;
-        value?: string | { [key: string]: unknown } | unknown[];
+        value?: string | Record<string, never> | Record<string, never>[];
       }[];
       /** @description associated groups */
       groups?: {
@@ -876,37 +928,37 @@ export interface components {
      */
     "code-scanning-ref": string;
     /** @description The security alert number. */
-    "alert-number": number;
+    readonly "alert-number": number;
     /**
      * Format: date-time
      * @description The time that the alert was created in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    "alert-created-at": string;
+    readonly "alert-created-at": string;
     /**
      * Format: date-time
      * @description The time that the alert was last updated in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    "alert-updated-at": string;
+    readonly "alert-updated-at": string;
     /**
      * Format: uri
      * @description The REST API URL of the alert resource.
      */
-    "alert-url": string;
+    readonly "alert-url": string;
     /**
      * Format: uri
      * @description The GitHub URL of the alert resource.
      */
-    "alert-html-url": string;
+    readonly "alert-html-url": string;
     /**
      * Format: uri
      * @description The REST API URL for fetching the list of instances for an alert.
      */
-    "alert-instances-url": string;
+    readonly "alert-instances-url": string;
     /**
      * Format: date-time
      * @description The time that the alert was no longer detected and was considered fixed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    "code-scanning-alert-fixed-at": string | null;
+    readonly "code-scanning-alert-fixed-at": string | null;
     /**
      * Simple User
      * @description Simple User
@@ -980,13 +1032,16 @@ export interface components {
      * Format: date-time
      * @description The time that the alert was dismissed in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
      */
-    "code-scanning-alert-dismissed-at": string | null;
+    readonly "code-scanning-alert-dismissed-at": string | null;
     /**
      * @description **Required when the state is dismissed.** The reason for dismissing or closing the alert.
      * @enum {string|null}
      */
     "code-scanning-alert-dismissed-reason":
-      | (null | "false positive" | "won't fix" | "used in tests")
+      | ""
+      | "false positive"
+      | "won't fix"
+      | "used in tests"
       | null;
     /** @description The dismissal comment associated with the dismissal of the alert. */
     "code-scanning-alert-dismissed-comment": string | null;
@@ -1001,7 +1056,7 @@ export interface components {
        * @description The severity of the alert.
        * @enum {string|null}
        */
-      severity?: ("none" | "note" | "warning" | "error") | null;
+      severity?: "none" | "note" | "warning" | "error" | null;
       /** @description A short description of the rule used to detect the alert. */
       description?: string;
     };
@@ -1049,7 +1104,10 @@ export interface components {
      * @enum {string|null}
      */
     "code-scanning-alert-classification":
-      | ("source" | "generated" | "test" | "library")
+      | "source"
+      | "generated"
+      | "test"
+      | "library"
       | null;
     /**
      * Validation Error
@@ -1069,40 +1127,40 @@ export interface components {
     };
   };
   responses: {
-    /** Forbidden */
+    /** @description Forbidden */
     forbidden: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Resource not found */
+    /** @description Resource not found */
     not_found: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Bad Request */
+    /** @description Bad Request */
     bad_request: {
       content: {
         "application/json": components["schemas"]["basic-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Validation failed, or the endpoint has been spammed. */
+    /** @description Validation failed, or the endpoint has been spammed. */
     validation_failed_simple: {
       content: {
         "application/json": components["schemas"]["validation-error-simple"];
       };
     };
-    /** Not modified */
-    not_modified: unknown;
-    /** Response if GitHub Advanced Security is not enabled for this repository */
+    /** @description Not modified */
+    not_modified: never;
+    /** @description Response if GitHub Advanced Security is not enabled for this repository */
     code_scanning_forbidden_read: {
       content: {
         "application/json": components["schemas"]["basic-error"];
       };
     };
-    /** Service unavailable */
+    /** @description Service unavailable */
     service_unavailable: {
       content: {
         "application/json": {
@@ -1112,49 +1170,49 @@ export interface components {
         };
       };
     };
-    /** Bad Request */
+    /** @description Bad Request */
     scim_bad_request: {
       content: {
         "application/json": components["schemas"]["scim-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Forbidden */
+    /** @description Forbidden */
     scim_forbidden: {
       content: {
         "application/json": components["schemas"]["scim-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Resource not found */
+    /** @description Resource not found */
     scim_not_found: {
       content: {
         "application/json": components["schemas"]["scim-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Too Many Requests */
+    /** @description Too Many Requests */
     scim_too_many_requests: {
       content: {
         "application/json": components["schemas"]["scim-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Conflict */
+    /** @description Conflict */
     scim_conflict: {
       content: {
         "application/json": components["schemas"]["scim-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Internal Error */
+    /** @description Internal Error */
     scim_internal_error: {
       content: {
         "application/json": components["schemas"]["scim-error"];
         "application/scim+json": components["schemas"]["scim-error"];
       };
     };
-    /** Validation failed, or the endpoint has been spammed. */
+    /** @description Validation failed, or the endpoint has been spammed. */
     validation_failed: {
       content: {
         "application/json": components["schemas"]["validation-error"];
@@ -1213,72 +1271,60 @@ export interface components {
     /** @description The unique identifier of the team. */
     "team-id": number;
   };
+  requestBodies: never;
   headers: {
-    link?: string;
+    /** @example <https://api.github.com/resource?page=2>; rel="next", <https://api.github.com/resource?page=5>; rel="last" */
+    link: string;
   };
+  pathItems: never;
 }
+
+export type external = Record<string, never>;
 
 export interface operations {
   /**
-   * Sets the GitHub Actions OpenID Connect (OIDC) custom issuer policy for an enterprise.
+   * Set the GitHub Actions OIDC custom issuer policy for an enterprise
+   * @description Sets the GitHub Actions OpenID Connect (OIDC) custom issuer policy for an enterprise.
    * You must authenticate using an access token with the `admin:enterprise` scope to use this endpoint.
    * GitHub Apps must have the `enterprise_administration:write` permission to use this endpoint.
    */
   "actions/set-actions-oidc-custom-issuer-policy-for-enterprise": {
     parameters: {
       path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
         enterprise: components["parameters"]["enterprise"];
       };
-    };
-    responses: {
-      /** Response */
-      204: never;
     };
     requestBody: {
       content: {
         "application/json": components["schemas"]["actions-oidc-custom-issuer-policy-for-enterprise"];
       };
     };
+    responses: {
+      /** @description Response */
+      204: never;
+    };
   };
-  /** Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope. */
+  /**
+   * Get the audit log for an enterprise
+   * @description Gets the audit log for an enterprise. To use this endpoint, you must be an enterprise admin, and you must use an access token with the `admin:enterprise` scope.
+   */
   "enterprise-admin/get-audit-log": {
     parameters: {
-      path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
-        enterprise: components["parameters"]["enterprise"];
-      };
       query: {
-        /** A search phrase. For more information, see [Searching the audit log](https://docs.github.com/enterprise-cloud@latest//github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization#searching-the-audit-log). */
         phrase?: components["parameters"]["audit-log-phrase"];
-        /**
-         * The event types to include:
-         *
-         * - `web` - returns web (non-Git) events.
-         * - `git` - returns Git events.
-         * - `all` - returns both web and Git events.
-         *
-         * The default is `web`.
-         */
         include?: components["parameters"]["audit-log-include"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-cloud@latest//rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events after this cursor. */
         after?: components["parameters"]["audit-log-after"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-cloud@latest//rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events before this cursor. */
         before?: components["parameters"]["audit-log-before"];
-        /**
-         * The order of audit log events. To list newest events first, specify `desc`. To list oldest events first, specify `asc`.
-         *
-         * The default is `desc`.
-         */
         order?: components["parameters"]["audit-log-order"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
+      };
+      path: {
+        enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["audit-log-event"][];
@@ -1287,7 +1333,8 @@ export interface operations {
     };
   };
   /**
-   * Lists the license consumption information for all users, including those from connected servers, associated with an enterprise.
+   * List enterprise consumed licenses
+   * @description Lists the license consumption information for all users, including those from connected servers, associated with an enterprise.
    * To use this endpoint, you must be an enterprise admin, and you must use an access
    * token with the `read:enterprise` scope.
    *
@@ -1296,21 +1343,20 @@ export interface operations {
    */
   "enterprise-admin/get-consumed-licenses": {
     parameters: {
-      path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
-        enterprise: components["parameters"]["enterprise"];
-      };
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
+      };
+      path: {
+        enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** Consumed Licenses Response */
+      /** @description Consumed Licenses Response */
       200: {
-        headers: {};
+        headers: {
+          Link: components["headers"]["link"];
+        };
         content: {
           "application/json": components["schemas"]["get-consumed-licenses"];
         };
@@ -1318,19 +1364,19 @@ export interface operations {
     };
   };
   /**
-   * Gets information about the status of a license sync job for an enterprise.
+   * Get a license sync status
+   * @description Gets information about the status of a license sync job for an enterprise.
    * To use this endpoint, you must be an enterprise admin, and you must use an access
    * token with the `read:enterprise` scope.
    */
   "enterprise-admin/get-license-sync-status": {
     parameters: {
       path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
         enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** License Sync Status Response */
+      /** @description License Sync Status Response */
       200: {
         content: {
           "application/json": components["schemas"]["get-license-sync-status"];
@@ -1339,7 +1385,8 @@ export interface operations {
     };
   };
   /**
-   * Gets the summary of the free and paid GitHub Actions minutes used.
+   * Get GitHub Actions billing for an enterprise
+   * @description Gets the summary of the free and paid GitHub Actions minutes used.
    *
    * Paid minutes only apply to workflows in private repositories that use GitHub-hosted runners. Minutes used is listed for each GitHub-hosted runner operating system. Any job re-runs are also included in the usage. The usage does not include the multiplier for macOS and Windows runners and is not rounded up to the nearest whole minute. For more information, see "[Managing billing for GitHub Actions](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-actions)".
    *
@@ -1348,12 +1395,11 @@ export interface operations {
   "billing/get-github-actions-billing-ghe": {
     parameters: {
       path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
         enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["actions-billing-usage"];
@@ -1362,7 +1408,8 @@ export interface operations {
     };
   };
   /**
-   * Gets the free and paid storage used for GitHub Packages in gigabytes.
+   * Get GitHub Packages billing for an enterprise
+   * @description Gets the free and paid storage used for GitHub Packages in gigabytes.
    *
    * Paid minutes only apply to packages stored for private repositories. For more information, see "[Managing billing for GitHub Packages](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-packages)."
    *
@@ -1371,12 +1418,11 @@ export interface operations {
   "billing/get-github-packages-billing-ghe": {
     parameters: {
       path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
         enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["packages-billing-usage"];
@@ -1385,7 +1431,8 @@ export interface operations {
     };
   };
   /**
-   * Gets the estimated paid and estimated total storage used for GitHub Actions and GitHub Packages.
+   * Get shared storage billing for an enterprise
+   * @description Gets the estimated paid and estimated total storage used for GitHub Actions and GitHub Packages.
    *
    * Paid minutes only apply to packages stored for private repositories. For more information, see "[Managing billing for GitHub Packages](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-packages)."
    *
@@ -1394,12 +1441,11 @@ export interface operations {
   "billing/get-shared-storage-billing-ghe": {
     parameters: {
       path: {
-        /** The slug version of the enterprise name. You can also substitute this value with the enterprise id. */
         enterprise: components["parameters"]["enterprise"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["combined-billing-usage"];
@@ -1408,19 +1454,19 @@ export interface operations {
     };
   };
   /**
-   * Gets the customization template for an OpenID Connect (OIDC) subject claim.
+   * Get the customization template for an OIDC subject claim for an organization
+   * @description Gets the customization template for an OpenID Connect (OIDC) subject claim.
    * You must authenticate using an access token with the `read:org` scope to use this endpoint.
    * GitHub Apps must have the `organization_administration:write` permission to use this endpoint.
    */
   "oidc/get-oidc-custom-sub-template-for-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** A JSON serialized template for OIDC subject claim customization */
+      /** @description A JSON serialized template for OIDC subject claim customization */
       200: {
         content: {
           "application/json": components["schemas"]["oidc-custom-sub"];
@@ -1429,19 +1475,24 @@ export interface operations {
     };
   };
   /**
-   * Creates or updates the customization template for an OpenID Connect (OIDC) subject claim.
+   * Set the customization template for an OIDC subject claim for an organization
+   * @description Creates or updates the customization template for an OpenID Connect (OIDC) subject claim.
    * You must authenticate using an access token with the `write:org` scope to use this endpoint.
    * GitHub Apps must have the `admin:org` permission to use this endpoint.
    */
   "oidc/update-oidc-custom-sub-template-for-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
     };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["oidc-custom-sub"];
+      };
+    };
     responses: {
-      /** Empty response */
+      /** @description Empty response */
       201: {
         content: {
           "application/json": components["schemas"]["empty-object"];
@@ -1450,14 +1501,10 @@ export interface operations {
       403: components["responses"]["forbidden"];
       404: components["responses"]["not_found"];
     };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["oidc-custom-sub"];
-      };
-    };
   };
   /**
-   * Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-cloud@latest//github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
+   * Get the audit log for an organization
+   * @description Gets the audit log for an organization. For more information, see "[Reviewing the audit log for your organization](https://docs.github.com/enterprise-cloud@latest//github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization)."
    *
    * This endpoint is available for organizations on GitHub Enterprise Cloud. To use this endpoint, you must be an organization owner, and you must use an access token with the `admin:org` scope. GitHub Apps must have the `organization_administration` read permission to use this endpoint.
    *
@@ -1467,39 +1514,20 @@ export interface operations {
    */
   "orgs/get-audit-log": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** A search phrase. For more information, see [Searching the audit log](https://docs.github.com/enterprise-cloud@latest//github/setting-up-and-managing-organizations-and-teams/reviewing-the-audit-log-for-your-organization#searching-the-audit-log). */
         phrase?: components["parameters"]["audit-log-phrase"];
-        /**
-         * The event types to include:
-         *
-         * - `web` - returns web (non-Git) events.
-         * - `git` - returns Git events.
-         * - `all` - returns both web and Git events.
-         *
-         * The default is `web`.
-         */
         include?: components["parameters"]["audit-log-include"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-cloud@latest//rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events after this cursor. */
         after?: components["parameters"]["audit-log-after"];
-        /** A cursor, as given in the [Link header](https://docs.github.com/enterprise-cloud@latest//rest/overview/resources-in-the-rest-api#link-header). If specified, the query only searches for events before this cursor. */
         before?: components["parameters"]["audit-log-before"];
-        /**
-         * The order of audit log events. To list newest events first, specify `desc`. To list oldest events first, specify `asc`.
-         *
-         * The default is `desc`.
-         */
         order?: components["parameters"]["audit-log-order"];
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["audit-log-event"][];
@@ -1508,27 +1536,26 @@ export interface operations {
     };
   };
   /**
-   * Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
+   * List SAML SSO authorizations for an organization
+   * @description Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
    *
    * An authenticated organization owner with the `read:org` scope can list all credential authorizations for an organization that uses SAML single sign-on (SSO). The credentials are either personal access tokens or SSH keys that organization members have authorized for the organization. For more information, see [About authentication with SAML single sign-on](https://docs.github.com/en/articles/about-authentication-with-saml-single-sign-on).
    */
   "orgs/list-saml-sso-authorizations": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page token */
+        /** @description Page token */
         page?: number;
-        /** Limits the list of credentials authorizations for an organization to a specific login */
+        /** @description Limits the list of credentials authorizations for an organization to a specific login */
         login?: string;
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["credential-authorization"][];
@@ -1537,40 +1564,39 @@ export interface operations {
     };
   };
   /**
-   * Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
+   * Remove a SAML SSO authorization for an organization
+   * @description Listing and deleting credential authorizations is available to organizations with GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products).
    *
    * An authenticated organization owner with the `admin:org` scope can remove a credential authorization for an organization that uses SAML SSO. Once you remove someone's credential authorization, they will need to create a new personal access token or SSH key and authorize it for the organization they want to access.
    */
   "orgs/remove-saml-sso-authorization": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
         credential_id: number;
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       204: never;
       404: components["responses"]["not_found"];
     };
   };
   /**
-   * Displays information about the specific group's usage.  Provides a list of the group's external members as well as a list of teams that this group is connected to.
+   * Get an external group
+   * @description Displays information about the specific group's usage.  Provides a list of the group's external members as well as a list of teams that this group is connected to.
    *
    * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
    */
   "teams/external-idp-group-info-for-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The unique identifier of the group. */
         group_id: components["parameters"]["group-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["external-group"];
@@ -1579,29 +1605,29 @@ export interface operations {
     };
   };
   /**
-   * Lists external groups available in an organization. You can query the groups using the `display_name` parameter, only groups with a `group_name` containing the text provided in the `display_name` parameter will be returned.  You can also limit your page results using the `per_page` parameter. GitHub Enterprise Cloud generates a url-encoded `page` token using a cursor value for where the next page begins. For more information on cursor pagination, see "[Offset and Cursor Pagination explained](https://dev.to/jackmarchant/offset-and-cursor-pagination-explained-b89)."
+   * List external groups in an organization
+   * @description Lists external groups available in an organization. You can query the groups using the `display_name` parameter, only groups with a `group_name` containing the text provided in the `display_name` parameter will be returned.  You can also limit your page results using the `per_page` parameter. GitHub Enterprise Cloud generates a url-encoded `page` token using a cursor value for where the next page begins. For more information on cursor pagination, see "[Offset and Cursor Pagination explained](https://dev.to/jackmarchant/offset-and-cursor-pagination-explained-b89)."
    *
    * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
    */
   "teams/list-external-idp-groups-for-org": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page token */
+        /** @description Page token */
         page?: number;
-        /** Limits the list to groups containing the text in the group name */
+        /** @description Limits the list to groups containing the text in the group name */
         display_name?: string;
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         headers: {
+          /** @example <https://api.github.com/resource?per_page=2&page=url-encoded-next-page-token>; rel="next" */
           Link?: string;
         };
         content: {
@@ -1611,27 +1637,27 @@ export interface operations {
     };
   };
   /**
-   * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   * List IdP groups for an organization
+   * @description Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
    * List IdP groups available in an organization. You can limit your page results using the `per_page` parameter. GitHub Enterprise Cloud generates a url-encoded `page` token using a cursor value for where the next page begins. For more information on cursor pagination, see "[Offset and Cursor Pagination explained](https://dev.to/jackmarchant/offset-and-cursor-pagination-explained-b89)."
    */
   "teams/list-idp-groups-for-org": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** Page token */
+        /** @description Page token */
         page?: string;
+      };
+      path: {
+        org: components["parameters"]["org"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         headers: {
+          /** @example <https://api.github.com/resource?per_page=2&page=url-encoded-next-page-token>; rel="next" */
           Link?: string;
         };
         content: {
@@ -1641,21 +1667,20 @@ export interface operations {
     };
   };
   /**
-   * Lists a connection between a team and an external group.
+   * List a connection between an external group and a team
+   * @description Lists a connection between a team and an external group.
    *
    * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
    */
   "teams/list-linked-external-idp-groups-to-team-for-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The slug of the team name. */
         team_slug: components["parameters"]["team-slug"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["external-groups"];
@@ -1664,44 +1689,34 @@ export interface operations {
     };
   };
   /**
-   * Deletes a connection between a team and an external group.
+   * Remove the connection between an external group and a team
+   * @description Deletes a connection between a team and an external group.
    *
    * You can manage team membership with your IdP using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    */
   "teams/unlink-external-idp-group-from-team-for-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The slug of the team name. */
         team_slug: components["parameters"]["team-slug"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       204: never;
     };
   };
   /**
-   * Creates a connection between a team and an external group.  Only one external group can be linked to a team.
+   * Update the connection between an external group and a team
+   * @description Creates a connection between a team and an external group.  Only one external group can be linked to a team.
    *
    * You can manage team membership with your identity provider using Enterprise Managed Users for GitHub Enterprise Cloud. For more information, see "[GitHub's products](https://docs.github.com/enterprise-cloud@latest//github/getting-started-with-github/githubs-products)" in the GitHub Help documentation.
    */
   "teams/link-external-idp-group-to-team-for-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The slug of the team name. */
         team_slug: components["parameters"]["team-slug"];
-      };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["external-group"];
-        };
       };
     };
     requestBody: {
@@ -1715,9 +1730,18 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["external-group"];
+        };
+      };
+    };
   };
   /**
-   * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   * List IdP groups for a team
+   * @description Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
    * List IdP groups connected to a team on GitHub Enterprise Cloud.
    *
@@ -1726,14 +1750,12 @@ export interface operations {
   "teams/list-idp-groups-in-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The slug of the team name. */
         team_slug: components["parameters"]["team-slug"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["group-mapping"];
@@ -1742,7 +1764,8 @@ export interface operations {
     };
   };
   /**
-   * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
+   * Create or update IdP group connections
+   * @description Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
    * Creates, updates, or removes a connection between a team and an IdP group. When adding groups to a team, you must include all new and existing groups to avoid replacing existing groups with the new ones. Specifying an empty `groups` array will remove all connections for a team.
    *
@@ -1751,18 +1774,8 @@ export interface operations {
   "teams/create-or-update-idp-group-connections-in-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The slug of the team name. */
         team_slug: components["parameters"]["team-slug"];
-      };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["group-mapping"];
-        };
       };
     };
     requestBody: {
@@ -1780,23 +1793,30 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["group-mapping"];
+        };
+      };
+    };
   };
   /**
-   * Gets the `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
+   * Get the opt-out flag of an OIDC subject claim customization for a repository
+   * @description Gets the `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
    * You must authenticate using an access token with the `repo` scope to use this
    * endpoint. GitHub Apps must have the `organization_administration:read` permission to use this endpoint.
    */
   "actions/get-custom-oidc-sub-claim-for-repo": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
       };
     };
     responses: {
-      /** Status response */
+      /** @description Status response */
       200: {
         content: {
           "application/json": components["schemas"]["opt-out-oidc-custom-sub"];
@@ -1807,21 +1827,25 @@ export interface operations {
     };
   };
   /**
-   * Sets the `opt-in` or `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
+   * Set the opt-in flag of an OIDC subject claim customization for a repository
+   * @description Sets the `opt-in` or `opt-out` flag of a GitHub Actions OpenID Connect (OIDC) subject claim customization for a repository.
    * You must authenticate using an access token with the `repo` scope to use this
    * endpoint. GitHub Apps must have the `actions:write` permission to use this endpoint.
    */
   "actions/set-custom-oidc-sub-claim-for-repo": {
     parameters: {
       path: {
-        /** The account owner of the repository. The name is not case sensitive. */
         owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
         repo: components["parameters"]["repo"];
       };
     };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["opt-out-oidc-custom-sub"];
+      };
+    };
     responses: {
-      /** Empty response */
+      /** @description Empty response */
       201: {
         content: {
           "application/json": components["schemas"]["empty-object"];
@@ -1831,14 +1855,10 @@ export interface operations {
       404: components["responses"]["not_found"];
       422: components["responses"]["validation_failed_simple"];
     };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["opt-out-oidc-custom-sub"];
-      };
-    };
   };
   /**
-   * Lists code scanning alerts.
+   * List code scanning alerts for a repository
+   * @description Lists code scanning alerts.
    *
    * To use this endpoint, you must use an access token with the `security_events` scope or, for alerts from public repositories only, an access token with the `public_repo` scope.
    *
@@ -1851,33 +1871,25 @@ export interface operations {
    */
   "code-scanning/list-alerts-for-repo": {
     parameters: {
-      path: {
-        /** The account owner of the repository. The name is not case sensitive. */
-        owner: components["parameters"]["owner"];
-        /** The name of the repository. The name is not case sensitive. */
-        repo: components["parameters"]["repo"];
-      };
       query: {
-        /** The name of a code scanning tool. Only results by this tool will be listed. You can specify the tool by using either `tool_name` or `tool_guid`, but not both. */
         tool_name?: components["parameters"]["tool-name"];
-        /** The GUID of a code scanning tool. Only results by this tool will be listed. Note that some code scanning tools may not include a GUID in their analysis data. You can specify the tool by using either `tool_guid` or `tool_name`, but not both. */
         tool_guid?: components["parameters"]["tool-guid"];
-        /** Page number of the results to fetch. */
         page?: components["parameters"]["page"];
-        /** The number of results per page (max 100). */
         per_page?: components["parameters"]["per-page"];
-        /** The Git reference for the results you want to list. The `ref` for a branch can be formatted either as `refs/heads/<branch name>` or simply `<branch name>`. To reference a pull request use `refs/pull/<number>/merge`. */
         ref?: components["parameters"]["git-ref"];
-        /** The direction to sort the results by. */
         direction?: components["parameters"]["direction"];
-        /** The property by which to sort the results. */
+        /** @description The property by which to sort the results. */
         sort?: "created" | "updated";
-        /** If specified, only code scanning alerts with this state will be returned. */
+        /** @description If specified, only code scanning alerts with this state will be returned. */
         state?: components["schemas"]["code-scanning-alert-state"];
+      };
+      path: {
+        owner: components["parameters"]["owner"];
+        repo: components["parameters"]["repo"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["code-scanning-alert-items"][];
@@ -1890,7 +1902,8 @@ export interface operations {
     };
   };
   /**
-   * Retrieves a paginated list of all provisioned organization members, including pending invitations. If you provide the `filter` parameter, the resources for all matching provisions members are returned.
+   * List SCIM provisioned identities
+   * @description Retrieves a paginated list of all provisioned organization members, including pending invitations. If you provide the `filter` parameter, the resources for all matching provisions members are returned.
    *
    * When a user with a SAML-provisioned external identity leaves (or is removed from) an organization, the account's metadata is immediately removed. However, the returned list of user accounts might not always match the organization or enterprise member list you see on GitHub Enterprise Cloud. This can happen in certain cases where an external identity associated with an organization will not match an organization member:
    *   - When a user with a SCIM-provisioned external identity is removed from an organization, the account's metadata is preserved to allow the user to re-join the organization in the future.
@@ -1909,17 +1922,13 @@ export interface operations {
    */
   "scim/list-provisioned-identities": {
     parameters: {
-      path: {
-        /** The organization name. The name is not case sensitive. */
-        org: components["parameters"]["org"];
-      };
       query: {
-        /** Used for pagination: the index of the first result to return. */
+        /** @description Used for pagination: the index of the first result to return. */
         startIndex?: number;
-        /** Used for pagination: the number of results to return. */
+        /** @description Used for pagination: the number of results to return. */
         count?: number;
         /**
-         * Filters results using the equals query parameter operator (`eq`). You can filter results that are equal to `id`, `userName`, `emails`, and `external_id`. For example, to search for an identity with the `userName` Octocat, you would use this query:
+         * @description Filters results using the equals query parameter operator (`eq`). You can filter results that are equal to `id`, `userName`, `emails`, and `external_id`. For example, to search for an identity with the `userName` Octocat, you would use this query:
          *
          * `?filter=userName%20eq%20\"Octocat\"`.
          *
@@ -1929,9 +1938,12 @@ export interface operations {
          */
         filter?: string;
       };
+      path: {
+        org: components["parameters"]["org"];
+      };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/scim+json": components["schemas"]["scim-user-list"];
@@ -1944,16 +1956,67 @@ export interface operations {
       429: components["responses"]["scim_too_many_requests"];
     };
   };
-  /** Provision organization membership for a user, and send an activation email to the email address. */
+  /**
+   * Provision and invite a SCIM user
+   * @description Provision organization membership for a user, and send an activation email to the email address.
+   */
   "scim/provision-and-invite-user": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
       };
     };
+    requestBody: {
+      content: {
+        "application/json": {
+          /**
+           * @description Configured by the admin. Could be an email, login, or username
+           * @example someone@example.com
+           */
+          userName: string;
+          /**
+           * @description The name of the user, suitable for display to end-users
+           * @example Jon Doe
+           */
+          displayName?: string;
+          /**
+           * @example {
+           *   "givenName": "Jane",
+           *   "familyName": "User"
+           * }
+           */
+          name: {
+            givenName: string;
+            familyName: string;
+            formatted?: string;
+          };
+          /**
+           * @description user emails
+           * @example [
+           *   {
+           *     "value": "someone@example.com",
+           *     "primary": true
+           *   },
+           *   {
+           *     "value": "another@example.com",
+           *     "primary": false
+           *   }
+           * ]
+           */
+          emails: {
+            value: string;
+            primary?: boolean;
+            type?: string;
+          }[];
+          schemas?: string[];
+          externalId?: string;
+          groups?: string[];
+          active?: boolean;
+        };
+      };
+    };
     responses: {
-      /** Response */
+      /** @description Response */
       201: {
         content: {
           "application/scim+json": components["schemas"]["scim-user"];
@@ -1966,67 +2029,17 @@ export interface operations {
       409: components["responses"]["scim_conflict"];
       500: components["responses"]["scim_internal_error"];
     };
-    requestBody: {
-      content: {
-        "application/json": {
-          /**
-           * @description Configured by the admin. Could be an email, login, or username
-           * @example someone@example.com
-           */
-          userName: string;
-          /**
-           * @description The name of the user, suitable for display to end-users
-           * @example Jon Doe
-           */
-          displayName?: string;
-          /**
-           * @example {
-           *   "givenName": "Jane",
-           *   "familyName": "User"
-           * }
-           */
-          name: {
-            givenName: string;
-            familyName: string;
-            formatted?: string;
-          };
-          /**
-           * @description user emails
-           * @example [
-           *   {
-           *     "value": "someone@example.com",
-           *     "primary": true
-           *   },
-           *   {
-           *     "value": "another@example.com",
-           *     "primary": false
-           *   }
-           * ]
-           */
-          emails: {
-            value: string;
-            primary?: boolean;
-            type?: string;
-          }[];
-          schemas?: string[];
-          externalId?: string;
-          groups?: string[];
-          active?: boolean;
-        };
-      };
-    };
   };
+  /** Get SCIM provisioning information for a user */
   "scim/get-provisioning-information-for-user": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The unique identifier of the SCIM user. */
         scim_user_id: components["parameters"]["scim-user-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/scim+json": components["schemas"]["scim-user"];
@@ -2038,7 +2051,8 @@ export interface operations {
     };
   };
   /**
-   * Replaces an existing provisioned user's information. You must provide all the information required for the user as if you were provisioning them for the first time. Any existing user information that you don't provide will be removed. If you want to only update a specific attribute, use the [Update an attribute for a SCIM user](https://docs.github.com/enterprise-cloud@latest//rest/reference/scim#update-an-attribute-for-a-scim-user) endpoint instead.
+   * Update a provisioned organization membership
+   * @description Replaces an existing provisioned user's information. You must provide all the information required for the user as if you were provisioning them for the first time. Any existing user information that you don't provide will be removed. If you want to only update a specific attribute, use the [Update an attribute for a SCIM user](https://docs.github.com/enterprise-cloud@latest//rest/reference/scim#update-an-attribute-for-a-scim-user) endpoint instead.
    *
    * You must at least provide the required values for the user: `userName`, `name`, and `emails`.
    *
@@ -2047,22 +2061,9 @@ export interface operations {
   "scim/set-information-for-provisioned-user": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The unique identifier of the SCIM user. */
         scim_user_id: components["parameters"]["scim-user-id"];
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/scim+json": components["schemas"]["scim-user"];
-        };
-      };
-      304: components["responses"]["not_modified"];
-      403: components["responses"]["scim_forbidden"];
-      404: components["responses"]["scim_not_found"];
     };
     requestBody: {
       content: {
@@ -2113,18 +2114,28 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/scim+json": components["schemas"]["scim-user"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      403: components["responses"]["scim_forbidden"];
+      404: components["responses"]["scim_not_found"];
+    };
   };
+  /** Delete a SCIM user from an organization */
   "scim/delete-user-from-org": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The unique identifier of the SCIM user. */
         scim_user_id: components["parameters"]["scim-user-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       204: never;
       304: components["responses"]["not_modified"];
       403: components["responses"]["scim_forbidden"];
@@ -2132,7 +2143,8 @@ export interface operations {
     };
   };
   /**
-   * Allows you to change a provisioned user's individual attributes. To change a user's values, you must provide a specific `Operations` JSON format that contains at least one of the `add`, `remove`, or `replace` operations. For examples and more information on the SCIM operations format, see the [SCIM specification](https://tools.ietf.org/html/rfc7644#section-3.5.2).
+   * Update an attribute for a SCIM user
+   * @description Allows you to change a provisioned user's individual attributes. To change a user's values, you must provide a specific `Operations` JSON format that contains at least one of the `add`, `remove`, or `replace` operations. For examples and more information on the SCIM operations format, see the [SCIM specification](https://tools.ietf.org/html/rfc7644#section-3.5.2).
    *
    * **Note:** Complicated SCIM `path` selectors that include filters are not supported. For example, a `path` selector defined as `"path": "emails[type eq \"work\"]"` will not work.
    *
@@ -2152,28 +2164,8 @@ export interface operations {
   "scim/update-attribute-for-user": {
     parameters: {
       path: {
-        /** The organization name. The name is not case sensitive. */
         org: components["parameters"]["org"];
-        /** The unique identifier of the SCIM user. */
         scim_user_id: components["parameters"]["scim-user-id"];
-      };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/scim+json": components["schemas"]["scim-user"];
-        };
-      };
-      304: components["responses"]["not_modified"];
-      400: components["responses"]["scim_bad_request"];
-      403: components["responses"]["scim_forbidden"];
-      404: components["responses"]["scim_not_found"];
-      /** Response */
-      429: {
-        content: {
-          "application/json": components["schemas"]["basic-error"];
-        };
       };
     };
     requestBody: {
@@ -2195,26 +2187,49 @@ export interface operations {
             /** @enum {string} */
             op: "add" | "remove" | "replace";
             path?: string;
-            value?:
-              | {
+            value?: OneOf<
+              [
+                {
                   active?: boolean | null;
                   userName?: string | null;
                   externalId?: string | null;
                   givenName?: string | null;
                   familyName?: string | null;
-                }
-              | {
+                },
+                {
                   value?: string;
                   primary?: boolean;
-                }[]
-              | string;
+                }[],
+                string
+              ]
+            >;
           }[];
+        };
+      };
+    };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/scim+json": components["schemas"]["scim-user"];
+        };
+      };
+      304: components["responses"]["not_modified"];
+      400: components["responses"]["scim_bad_request"];
+      403: components["responses"]["scim_forbidden"];
+      404: components["responses"]["scim_not_found"];
+      /** @description Response */
+      429: {
+        content: {
+          "application/json": components["schemas"]["basic-error"];
         };
       };
     };
   };
   /**
-   * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`List IdP groups for a team`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#list-idp-groups-for-a-team) endpoint.
+   * List IdP groups for a team (Legacy)
+   * @deprecated
+   * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`List IdP groups for a team`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#list-idp-groups-for-a-team) endpoint.
    *
    * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
@@ -2223,12 +2238,11 @@ export interface operations {
   "teams/list-idp-groups-for-legacy": {
     parameters: {
       path: {
-        /** The unique identifier of the team. */
         team_id: components["parameters"]["team-id"];
       };
     };
     responses: {
-      /** Response */
+      /** @description Response */
       200: {
         content: {
           "application/json": components["schemas"]["group-mapping"];
@@ -2239,7 +2253,9 @@ export interface operations {
     };
   };
   /**
-   * **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`Create or update IdP group connections`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#create-or-update-idp-group-connections) endpoint.
+   * Create or update IdP group connections (Legacy)
+   * @deprecated
+   * @description **Deprecation Notice:** This endpoint route is deprecated and will be removed from the Teams API. We recommend migrating your existing code to use the new [`Create or update IdP group connections`](https://docs.github.com/enterprise-cloud@latest//rest/reference/teams#create-or-update-idp-group-connections) endpoint.
    *
    * Team synchronization is available for organizations using GitHub Enterprise Cloud. For more information, see [GitHub's products](https://docs.github.com/github/getting-started-with-github/githubs-products) in the GitHub Help documentation.
    *
@@ -2248,19 +2264,8 @@ export interface operations {
   "teams/create-or-update-idp-group-connections-legacy": {
     parameters: {
       path: {
-        /** The unique identifier of the team. */
         team_id: components["parameters"]["team-id"];
       };
-    };
-    responses: {
-      /** Response */
-      200: {
-        content: {
-          "application/json": components["schemas"]["group-mapping"];
-        };
-      };
-      403: components["responses"]["forbidden"];
-      422: components["responses"]["validation_failed"];
     };
     requestBody: {
       content: {
@@ -2285,7 +2290,15 @@ export interface operations {
         };
       };
     };
+    responses: {
+      /** @description Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["group-mapping"];
+        };
+      };
+      403: components["responses"]["forbidden"];
+      422: components["responses"]["validation_failed"];
+    };
   };
 }
-
-export interface external {}

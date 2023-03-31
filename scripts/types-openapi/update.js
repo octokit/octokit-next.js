@@ -88,7 +88,7 @@ type Repository = components["schemas"]["full-repository"]
 
     await writeFile(
       `packages/${packageName}/index.d.ts`,
-      await openapiTS(`cache/types-openapi/${sourceFilename}`)
+      prettier.format(await openapiTS(`cache/types-openapi/${sourceFilename}`), { parser: "typescript" })
     );
     console.log(`packages/${packageName}/index.d.ts written`);
   }
