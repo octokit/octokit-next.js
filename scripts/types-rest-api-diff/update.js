@@ -3,7 +3,7 @@ import { readdir, mkdir, rm, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 import Handlebars from "handlebars";
-import prettier from "prettier";
+import * as prettier from "prettier";
 import sortKeys from "sort-keys";
 
 if (!process.env.OCTOKIT_OPENAPI_VERSION) {
@@ -120,7 +120,7 @@ async function run() {
 🚫⚠️ This package is part of an experimental Octokit SDK for testing purpose only - DO NOT USE
 
 [learn more](https://github.com/octokit/octokit-next.js)
-        
+
 `,
         { parser: "markdown" }
       )
@@ -274,8 +274,8 @@ const ghesOnlyResponse = await octokit.request("GET /admins/users", {
   },
 });
 \`\`\`
-        
-        
+
+
 `,
         { parser: "markdown" }
       )
@@ -323,7 +323,7 @@ declare module "@octokit-next/types" {
       };
     }
   }
-}       
+}
 `,
         { parser: "typescript" }
       )
