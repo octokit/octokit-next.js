@@ -1,6 +1,6 @@
 import { readdir, mkdir, rm, writeFile } from "node:fs/promises";
 
-import prettier from "prettier";
+import * as prettier from "prettier";
 import openapiTS from "openapi-typescript";
 
 if (!process.env.OCTOKIT_OPENAPI_VERSION) {
@@ -68,7 +68,7 @@ async function run() {
 
 > Generated TypeScript definitions based on GitHub's OpenAPI spec for api.github.com
 
-This package is continously updated based on [GitHub's OpenAPI specification](https://github.com/github/rest-api-description/) 
+This package is continously updated based on [GitHub's OpenAPI specification](https://github.com/github/rest-api-description/)
 
 ## Usage
 

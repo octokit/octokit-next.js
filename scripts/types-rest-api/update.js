@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 import Handlebars from "handlebars";
-import prettier from "prettier";
+import * as prettier from "prettier";
 import sortKeys from "sort-keys";
 
 const ENDPOINTS = JSON.parse(
