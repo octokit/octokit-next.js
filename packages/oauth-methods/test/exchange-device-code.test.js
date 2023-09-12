@@ -123,6 +123,8 @@ test("authorization_pending error", async (t) => {
     });
     t.fail("should not resolve");
   } catch (error) {
+    // remove request.request as it includes `.fetch` and is a detail we don't care for in our snapshots
+    delete error.request.request;
     t.snapshot(error);
   }
 });
