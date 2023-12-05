@@ -269,7 +269,7 @@
     ]
   },
   "devDependencies": {
-    "ava": "^5.0.0",
+    "ava": "^6.0.0",
     "c8": "^8.0.0",
     "fetch-mock": "npm:@gr2m/fetch-mock@9.11.0-pull-request-644.1",
     "github-openapi-graphql-query": "^4.0.0",
