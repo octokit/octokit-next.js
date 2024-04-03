@@ -33,6 +33,7 @@ const packageDefaults = {
   type: "module",
   publishConfig: {
     access: "public",
+    provenance: true,
   },
   version: "0.0.0-development",
   types: "index.d.ts",

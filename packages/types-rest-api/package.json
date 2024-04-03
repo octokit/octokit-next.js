@@ -2,7 +2,8 @@
   "name": "@octokit-next/types-rest-api",
   "version": "0.0.0-development",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "type": "module",
   "description": "Types for github.com REST API requests and responses",

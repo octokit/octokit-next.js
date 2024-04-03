@@ -2,7 +2,8 @@
   "name": "@octokit-next/request",
   "version": "0.0.0-development",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "type": "module",
   "description": "Simplified version of `@octokit/request` to experiment with ESM and types",

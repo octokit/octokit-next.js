@@ -7,7 +7,8 @@
     "directory": "packages/types-openapi-ghec-diff-to-api.github.com"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "version": "0.0.0-development",
   "types": "index.d.ts",
