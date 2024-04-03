@@ -7,7 +7,8 @@
     "directory": "packages/types-openapi-ghes-3.3-diff-to-ghes-3.4"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "version": "0.0.0-development",
   "types": "index.d.ts",

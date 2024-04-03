@@ -2,7 +2,8 @@
   "name": "@octokit-next/endpoint",
   "version": "0.0.0-development",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "type": "module",
   "description": "Turns REST API endpoints into generic request options",
