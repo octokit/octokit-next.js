@@ -20,10 +20,8 @@ jobs:
         with:
           node-version: lts/*
           cache: npm
-      - run: >-
-          npm install -D semantic-release
-          semantic-release-plugin-update-version-in-files
-      - run: npx semantic-release --debug
+      - run: npm install --frozen-lockfile
+      - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.OCTOKITBOT_NPM_TOKEN }}
