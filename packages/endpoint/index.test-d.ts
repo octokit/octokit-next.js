@@ -51,8 +51,8 @@ export function readmeExample() {
   expectType<"GET">(requestOptions.method);
   expectType<string>(requestOptions.url);
   expectNotType<"/endpoint-test/{id}">(requestOptions.url);
-  expectType<string>(requestOptions.headers["accept"]);
-  expectType<string>(requestOptions.headers["user-agent"]);
+  expectType<string>(requestOptions.headers["accept"] as string);
+  expectType<string>(requestOptions.headers["user-agent"] as string);
   expectType<string | undefined>(requestOptions.headers["authorization"]);
 
   // @ts-expect-error - `.data` is not set for a GET operation
@@ -70,8 +70,8 @@ export function ghesExample() {
 
   expectType<"POST">(requestOptions.method);
   expectType<string>(requestOptions.url);
-  expectType<string>(requestOptions.headers["accept"]);
-  expectType<string>(requestOptions.headers["user-agent"]);
+  expectType<string>(requestOptions.headers["accept"] as string);
+  expectType<string>(requestOptions.headers["user-agent"] as string);
   expectType<string | undefined>(requestOptions.headers["authorization"]);
 
   expectType<{
@@ -90,8 +90,8 @@ export function objectExample() {
   expectType<"GET">(requestOptions.method);
   expectType<string>(requestOptions.url);
   expectNotType<"/endpoint-test/{id}">(requestOptions.url);
-  expectType<string>(requestOptions.headers["accept"]);
-  expectType<string>(requestOptions.headers["user-agent"]);
+  expectType<string>(requestOptions.headers["accept"] as string);
+  expectType<string>(requestOptions.headers["user-agent"] as string);
   expectType<string | undefined>(requestOptions.headers["authorization"]);
 
   // @ts-expect-error - `.data` is not set for a GET operation
