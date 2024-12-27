@@ -5,7 +5,7 @@ import { request } from "@octokit-next/request";
 import { createDeviceCode } from "../index.js";
 
 test("README example", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/device/code",
     {
       device_code: "devicecode123",
@@ -36,7 +36,7 @@ test("README example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -45,7 +45,7 @@ test("README example", async (t) => {
 });
 
 test("GitHub App example", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/device/code",
     {
       device_code: "devicecode123",
@@ -74,7 +74,7 @@ test("GitHub App example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });

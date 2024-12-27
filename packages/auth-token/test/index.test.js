@@ -165,7 +165,7 @@ test('auth.hook(request, "GET /user")', async (t) => {
       "user-agent": "test",
     },
     request: {
-      fetch: fetchMock.sandbox().getOnce(matchGetUser, { id: 123 }),
+      fetch: fetchMock.createInstance().getOnce(matchGetUser, { id: 123 }).fetchHandler,
     },
   });
 
@@ -196,7 +196,7 @@ test("auth.hook() with JWT", async (t) => {
       "user-agent": "test",
     },
     request: {
-      fetch: fetchMock.sandbox().getOnce(matchGetUser, { id: 123 }),
+      fetch: fetchMock.createInstance().getOnce(matchGetUser, { id: 123 }).fetchHandler,
     },
   });
 

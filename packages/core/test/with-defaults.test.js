@@ -27,7 +27,7 @@ test("Octokit.withDefaults is a function", (t) => {
 });
 
 test("Octokit.withDefaults({ baseUr l})", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://github.acme-inc.test/api/v3/",
     { ok: true },
     {
@@ -41,7 +41,7 @@ test("Octokit.withDefaults({ baseUr l})", async (t) => {
   const OctokitWithDefaults = Octokit.withDefaults({
     baseUrl: "https://github.acme-inc.test/api/v3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -49,11 +49,11 @@ test("Octokit.withDefaults({ baseUr l})", async (t) => {
 
   await octokit.request("GET /");
 
-  t.is(mock.done(), true);
+  t.is(mock.callHistory.done(), true);
 });
 
 test("Octokit.withDefaults({ userAgent })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -67,7 +67,7 @@ test("Octokit.withDefaults({ userAgent })", async (t) => {
   const OctokitWithDefaults = Octokit.withDefaults({
     userAgent: "my-app/1.2.3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -75,11 +75,11 @@ test("Octokit.withDefaults({ userAgent })", async (t) => {
 
   await octokit.request("GET /");
 
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("Octokit.withDefaults({ userAgent }) with userAgent Constructor Option", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -93,7 +93,7 @@ test("Octokit.withDefaults({ userAgent }) with userAgent Constructor Option", as
   const OctokitWithDefaults = Octokit.withDefaults({
     userAgent: "my-octokit.js/1.2.3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -103,11 +103,11 @@ test("Octokit.withDefaults({ userAgent }) with userAgent Constructor Option", as
 
   await octokit.request("GET /");
 
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("Octokit.withDefaults({ timeZone })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -122,14 +122,14 @@ test("Octokit.withDefaults({ timeZone })", async (t) => {
   const OctokitWithDefaults = Octokit.withDefaults({
     timeZone: "Europe/Amsterdam",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
   const octokit = new OctokitWithDefaults();
 
   await octokit.request("GET /");
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("Octokit.withDefaults({ authStrategy })", async (t) => {
@@ -144,7 +144,7 @@ test("Octokit.withDefaults({ authStrategy })", async (t) => {
 });
 
 test("Octokit.withDefaults().withDefaults()", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://github.acme-inc.test/api/v3/",
     { ok: true },
     {
@@ -158,7 +158,7 @@ test("Octokit.withDefaults().withDefaults()", async (t) => {
   const OctokitWithDefaults = Octokit.withDefaults({
     baseUrl: "https://github.acme-inc.test/api/v3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).withDefaults({
     userAgent: "my-app/1.2.3",
@@ -168,11 +168,11 @@ test("Octokit.withDefaults().withDefaults()", async (t) => {
 
   await octokit.request("GET /");
 
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("Octokit.withPlugins().withDefaults()", (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://github.acme-inc.test/api/v3/",
     { ok: true },
     {
@@ -192,7 +192,7 @@ test("Octokit.withPlugins().withDefaults()", (t) => {
   ]).withDefaults({
     baseUrl: "https://github.acme-inc.test/api/v3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 

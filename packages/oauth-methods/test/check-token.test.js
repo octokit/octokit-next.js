@@ -5,7 +5,7 @@ import { request } from "@octokit-next/request";
 import { checkToken } from "../index.js";
 
 test("README example", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://api.github.com/applications/1234567890abcdef1234/token",
     {
       scopes: ["repo"],
@@ -34,7 +34,7 @@ test("README example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -44,7 +44,7 @@ test("README example", async (t) => {
 });
 
 test("GitHub Example", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://api.github.com/applications/lv1.1234567890abcdef/token",
     {
       expires_at: "2021-10-06T17:26:27Z",
@@ -74,7 +74,7 @@ test("GitHub Example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });

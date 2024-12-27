@@ -54,7 +54,7 @@ test("graphql() README simple query example", (t) => {
         authorization: `token secret123`,
       },
       request: {
-        fetch: fetchMock.sandbox().post(
+        fetch: fetchMock.createInstance().post(
           "https://api.github.com/graphql",
           { data: mockData },
           {
@@ -64,7 +64,7 @@ test("graphql() README simple query example", (t) => {
               "user-agent": userAgent,
             },
           }
-        ),
+        ).fetchHandler,
       },
     }
   ).then((result) => {
@@ -93,7 +93,7 @@ test("graphql() Variables", (t) => {
     repo: "graphql.js",
     request: {
       fetch: fetchMock
-        .sandbox()
+        .createInstance()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
           t.deepEqual(body.query, query);
@@ -103,7 +103,7 @@ test("graphql() Variables", (t) => {
           });
 
           return { data: {} };
-        }),
+        }).fetchHandler,
     },
   });
 });
@@ -130,7 +130,7 @@ test("graphql() Pass headers together with variables as 2nd argument", (t) => {
     repo: "graphql.js",
     request: {
       fetch: fetchMock
-        .sandbox()
+        .createInstance()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
           t.deepEqual(body.query, query);
@@ -142,7 +142,7 @@ test("graphql() Pass headers together with variables as 2nd argument", (t) => {
           t.deepEqual(options.headers["x-custom"], "value");
 
           return { data: {} };
-        }),
+        }).fetchHandler,
     },
   };
 
@@ -171,7 +171,7 @@ test("graphql() Pass query together with headers and variables", (t) => {
     repo: "graphql.js",
     request: {
       fetch: fetchMock
-        .sandbox()
+        .createInstance()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
           t.deepEqual(body.query, query);
@@ -181,7 +181,7 @@ test("graphql() Pass query together with headers and variables", (t) => {
           });
 
           return { data: {} };
-        }),
+        }).fetchHandler,
     },
   };
 
@@ -197,14 +197,14 @@ test("graphql() Don’t send empty variables object", (t) => {
     },
     request: {
       fetch: fetchMock
-        .sandbox()
+        .createInstance()
         .post("https://api.github.com/graphql", (url, options) => {
           const body = JSON.parse(options.body);
           t.deepEqual(body.query, query);
           t.deepEqual(body.variables, undefined);
 
           return { data: {} };
-        }),
+        }).fetchHandler,
     },
   });
 });
@@ -221,12 +221,12 @@ test("graphql() MediaType previews are added to header", (t) => {
     mediaType: { previews: ["antiope", "testpkg"] },
     request: {
       fetch: fetchMock
-        .sandbox()
+        .createInstance()
         .post("https://api.github.com/graphql", (url, options) => {
           t.regex(options.headers.accept, /antiope-preview/);
           t.regex(options.headers.accept, /testpkg-preview/);
           return { data: {} };
-        }),
+        }).fetchHandler,
     },
   });
 });

@@ -18,7 +18,7 @@ test("request.request() is a function", (t) => {
 
 test("request.request() README example", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock("https://api.github.com/orgs/octokit/repos?type=private", [], {
       headers: {
         accept: "application/vnd.github.v3+json",
@@ -34,7 +34,7 @@ test("request.request() README example", (t) => {
     org: "octokit",
     type: "private",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then((response) => {
     t.deepEqual(response.data, []);
@@ -43,7 +43,7 @@ test("request.request() README example", (t) => {
 
 test("request.request() README example alternative", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock("https://api.github.com/orgs/octokit/repos?type=private", []);
 
   return request({
@@ -55,7 +55,7 @@ test("request.request() README example alternative", (t) => {
     org: "octokit",
     type: "private",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then((response) => {
     t.deepEqual(response.data, []);
@@ -64,7 +64,7 @@ test("request.request() README example alternative", (t) => {
 
 // TODO: until we migrate @octokit/auth-app to ESM, I'll just use a dummy auth strategy instead
 test("request.request() README authentication example", async (t) => {
-  const mock = fetchMock.sandbox().mock(
+  const mock = fetchMock.createInstance().mock(
     "https://api.github.com/test",
     { ok: true },
     {
@@ -89,12 +89,12 @@ test("request.request() README authentication example", async (t) => {
 
   const requestWithAuth = request.defaults({
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
       hook: myAuthHookDummy,
     },
   });
   await requestWithAuth("GET /test");
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 // test("request.request() README authentication example", async (t) => {
@@ -134,7 +134,7 @@ test("request.request() README authentication example", async (t) => {
 //   const BEARER =
 //     "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOi0zMCwiZXhwIjo1NzAsImlzcyI6MX0.q3foRa78U3WegM5PrWLEh5N0bH1SD62OqW66ZYzArp95JBNiCbo8KAlGtiRENCIfBZT9ibDUWy82cI4g3F09mdTq3bD1xLavIfmTksIQCz5EymTWR5v6gL14LSmQdWY9lSqkgUG0XCFljWUglEP39H4yeHbFgdjvAYg3ifDS12z9oQz2ACdSpvxPiTuCC804HkPVw8Qoy0OSXvCkFU70l7VXCVUxnuhHnk8-oCGcKUspmeP6UdDnXk-Aus-eGwDfJbU2WritxxaXw6B4a3flTPojkYLSkPBr6Pi0H2-mBsW_Nvs0aLPVLKobQd4gqTkosX3967DoAG8luUMhrnxe8Q";
 //   const mock = fetchMock
-//     .sandbox()
+//     .createInstance()
 //     .postOnce("https://api.github.com/app/installations/123/access_tokens", {
 //       token: "secret123",
 //       expires_at: "1970-01-01T01:00:00.000Z",
@@ -175,7 +175,7 @@ test("request.request() README authentication example", async (t) => {
 //       previews: ["machine-man"],
 //     },
 //     request: {
-//       fetch: mock,
+//       fetch: mock.fetchHandler,
 //       hook: auth.hook,
 //     },
 //   });
@@ -185,13 +185,13 @@ test("request.request() README authentication example", async (t) => {
 //     repo: "hello-world",
 //     title: "Hello from the engine room",
 //   });
-//   t.assert(mock.done())
+//   t.assert(mock.callHistory.done())
 //   clock.reset();
 // });
 
 test("request.request() Request with body", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock("https://api.github.com/repos/octocat/hello-world/issues", 201, {
       headers: {
         "content-type": "application/json; charset=utf-8",
@@ -210,7 +210,7 @@ test("request.request() Request with body", async (t) => {
     milestone: 1,
     labels: ["bug"],
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -219,7 +219,7 @@ test("request.request() Request with body", async (t) => {
 
 test("request.request() Put without request body", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock("https://api.github.com/user/starred/octocat/hello-world", 204, {
       body: undefined,
     });
@@ -231,7 +231,7 @@ test("request.request() Put without request body", async (t) => {
     owner: "octocat",
     repo: "hello-world",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -240,7 +240,7 @@ test("request.request() Put without request body", async (t) => {
 
 test("request.request() HEAD requests (octokit/rest.js#841)", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .head("https://api.github.com/repos/whatwg/html/pulls/1", {
       status: 200,
       headers: {
@@ -261,7 +261,7 @@ test("request.request() HEAD requests (octokit/rest.js#841)", async (t) => {
     repo: "html",
     number: 1,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   };
 
@@ -285,7 +285,7 @@ test("request.request() HEAD requests (octokit/rest.js#841)", async (t) => {
 // TODO: 🤔 unclear how to mock fetch redirect properly
 test.skip("Binary response with redirect", () => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get(
       "https://codeload.github.com/octokit-fixture-org/get-archive/legacy.tar.gz/master",
       {
@@ -307,7 +307,7 @@ test.skip("Binary response with redirect", () => {
     archive_format: "tarball",
     ref: "master",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then((response) => {
     t.deepEqual(response.data.length, 172);
@@ -315,7 +315,7 @@ test.skip("Binary response with redirect", () => {
 });
 
 test("request.request() 304 etag", (t) => {
-  const mock = fetchMock.sandbox().get((url, { headers }) => {
+  const mock = fetchMock.createInstance().get((url, { headers }) => {
     return (
       url === "https://api.github.com/orgs/myorg" &&
       headers["if-none-match"] === "etag"
@@ -326,7 +326,7 @@ test("request.request() 304 etag", (t) => {
     org: "myorg",
     headers: { "If-None-Match": "etag" },
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   })
     .then(() => {
@@ -339,7 +339,7 @@ test("request.request() 304 etag", (t) => {
 });
 
 test("request.request() 304 last-modified", (t) => {
-  const mock = fetchMock.sandbox().get((url, { headers }) => {
+  const mock = fetchMock.createInstance().get((url, { headers }) => {
     return (
       url === "https://api.github.com/orgs/myorg" &&
       headers["if-modified-since"] === "Sun Dec 24 2017 22:00:00 GMT-0600 (CST)"
@@ -352,7 +352,7 @@ test("request.request() 304 last-modified", (t) => {
       "If-Modified-Since": "Sun Dec 24 2017 22:00:00 GMT-0600 (CST)",
     },
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   })
     .then((response) => {
@@ -364,12 +364,12 @@ test("request.request() 304 last-modified", (t) => {
 });
 
 test("request.request() Not found", (t) => {
-  const mock = fetchMock.sandbox().get("path:/orgs/nope", 404);
+  const mock = fetchMock.createInstance().get("path:/orgs/nope", 404);
 
   return request("GET /orgs/{org}", {
     org: "nope",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   })
     .then(() => {
@@ -385,7 +385,7 @@ test("request.request() Not found", (t) => {
 
 test("request.request() non-JSON response", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get("path:/repos/octokit-fixture-org/hello-world/contents/README.md", {
       status: 200,
       body: "# hello-world",
@@ -403,7 +403,7 @@ test("request.request() non-JSON response", (t) => {
     repo: "hello-world",
     path: "README.md",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then((response) => {
     t.deepEqual(response.data, "# hello-world");
@@ -424,7 +424,7 @@ test("request.request() Request error", (t) => {
 
 test("request.request() custom user-agent", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get(
       (url, { headers }) => headers["user-agent"] === "funky boom boom pow",
       200
@@ -436,7 +436,7 @@ test("request.request() custom user-agent", async (t) => {
         "user-agent": "funky boom boom pow",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     })
   );
@@ -455,7 +455,7 @@ test("request.request() passes node-fetch options to fetch only", (t) => {
     },
     request: {
       timeout: 100,
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).catch((error) => {
     if (error.message === "ok") {
@@ -468,7 +468,7 @@ test("request.request() passes node-fetch options to fetch only", (t) => {
 
 test("request.request() 422 error with details", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .post("https://api.github.com/repos/octocat/hello-world/labels", {
       status: 422,
       headers: {
@@ -493,7 +493,7 @@ test("request.request() 422 error with details", (t) => {
     name: "foo",
     color: "invalid",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).catch((error) => {
     t.deepEqual(error.status, 422);
@@ -509,7 +509,7 @@ test("request.request() 422 error with details", (t) => {
 });
 
 test("request.request() redacts credentials from error.request.headers.authorization", (t) => {
-  const mock = fetchMock.sandbox().get("https://api.github.com/", {
+  const mock = fetchMock.createInstance().get("https://api.github.com/", {
     status: 500,
   });
 
@@ -518,7 +518,7 @@ test("request.request() redacts credentials from error.request.headers.authoriza
       authorization: "token secret123",
     },
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).catch((error) => {
     t.deepEqual(error.request.headers.authorization, "token [REDACTED]");
@@ -527,7 +527,7 @@ test("request.request() redacts credentials from error.request.headers.authoriza
 
 test("request.request() redacts credentials from error.request.url", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get("https://api.github.com/?client_id=123&client_secret=secret123", {
       status: 500,
     });
@@ -536,7 +536,7 @@ test("request.request() redacts credentials from error.request.url", (t) => {
     client_id: "123",
     client_secret: "secret123",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).catch((error) => {
     t.deepEqual(
@@ -546,11 +546,11 @@ test("request.request() redacts credentials from error.request.url", (t) => {
   });
 });
 test("request.request() Just URL", (t) => {
-  const mock = fetchMock.sandbox().get("path:/", 200);
+  const mock = fetchMock.createInstance().get("path:/", 200);
 
   return request("/", {
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then(({ status }) => {
     t.deepEqual(status, 200);
@@ -597,7 +597,7 @@ test("request.request() options.request.fetch", (t) => {
 });
 
 test("request.request() options.request.hook", (t) => {
-  const mock = fetchMock.sandbox().mock(
+  const mock = fetchMock.createInstance().mock(
     "https://api.github.com/foo",
     { ok: true },
     {
@@ -628,7 +628,7 @@ test("request.request() options.request.hook", (t) => {
       },
       method: "GET",
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
         hook: hook,
       },
       url: "/",
@@ -639,14 +639,14 @@ test("request.request() options.request.hook", (t) => {
         "x-foo": "bar",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     });
   };
 
   return request("/", {
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
       hook,
     },
   }).then((result) => {
@@ -656,7 +656,7 @@ test("request.request() options.request.hook", (t) => {
 
 test("request.request() options.mediaType.format", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock("https://api.github.com/repos/octokit/request.js/issues/1", "ok", {
       headers: {
         accept: "application/vnd.github.v3.raw+json",
@@ -676,7 +676,7 @@ test("request.request() options.mediaType.format", (t) => {
     repo: "request.js",
     number: 1,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then((response) => {
     t.deepEqual(response.data, "ok");
@@ -685,7 +685,7 @@ test("request.request() options.mediaType.format", (t) => {
 
 test("request.request() options.mediaType.previews", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock("https://api.github.com/repos/octokit/request.js/issues/1", "ok", {
       headers: {
         accept:
@@ -706,7 +706,7 @@ test("request.request() options.mediaType.previews", (t) => {
     repo: "request.js",
     number: 1,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).then((response) => {
     t.deepEqual(response.data, "ok");
@@ -714,7 +714,7 @@ test("request.request() options.mediaType.previews", (t) => {
 });
 
 test("request.request() octokit/octokit.js#1497", (t) => {
-  const mock = fetchMock.sandbox().mock(
+  const mock = fetchMock.createInstance().mock(
     "https://request-errors-test.com/repos/gr2m/sandbox/branches/gr2m-patch-1/protection",
     {
       status: 400,
@@ -756,7 +756,7 @@ test("request.request() octokit/octokit.js#1497", (t) => {
     },
     restrictions: { users: [], teams: [] },
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   })
     .then(() => {
@@ -771,7 +771,7 @@ test("request.request() octokit/octokit.js#1497", (t) => {
 });
 
 test("request.request() logs deprecation warning if `deprecation` header is present", (t) => {
-  const mock = fetchMock.sandbox().mock(
+  const mock = fetchMock.createInstance().mock(
     "https://api.github.com/teams/123",
     {
       body: {
@@ -799,7 +799,7 @@ test("request.request() logs deprecation warning if `deprecation` header is pres
       authorization: "token 0000000000000000000000000000000000000001",
     },
     team_id: 123,
-    request: { fetch: mock, log: { warn } },
+    request: { fetch: mock.fetchHandler, log: { warn } },
   }).then((response) => {
     t.deepEqual(response.data, { id: 123 });
     t.deepEqual(warn.calledOnce, true);
@@ -812,7 +812,7 @@ test("request.request() logs deprecation warning if `deprecation` header is pres
 });
 
 test("request.request() deprecation header without deprecation link", (t) => {
-  const mock = fetchMock.sandbox().mock(
+  const mock = fetchMock.createInstance().mock(
     "https://api.github.com/teams/123",
     {
       body: {
@@ -839,7 +839,7 @@ test("request.request() deprecation header without deprecation link", (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     },
     team_id: 123,
-    request: { fetch: mock, log: { warn } },
+    request: { fetch: mock.fetchHandler, log: { warn } },
   }).then((response) => {
     t.deepEqual(response.data, { id: 123 });
     t.deepEqual(warn.calledOnce, true);
@@ -853,7 +853,7 @@ test("request.request() deprecation header without deprecation link", (t) => {
 
 test("request.request() 404 not found", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get("https://api.github.com/repos/octocat/unknown", {
       status: 404,
       headers: {},
@@ -866,7 +866,7 @@ test("request.request() 404 not found", (t) => {
 
   return request("GET /repos/octocat/unknown", {
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   }).catch((error) => {
     t.deepEqual(error.status, 404);
@@ -902,7 +902,7 @@ test("request.request() Request timeout", (t) => {
   return request("GET /", {
     request: {
       timeout: 100,
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   })
     .then((response) => {
@@ -918,7 +918,7 @@ test("request.request() validate request with readstream data", async (t) => {
   const currentFilePath = url.fileURLToPath(import.meta.url);
   const size = fs.statSync(currentFilePath).size;
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .post(
       "https://api.github.com/repos/octokit-fixture-org/release-assets/releases/v1.0.0/assets",
       {
@@ -933,7 +933,7 @@ test("request.request() validate request with readstream data", async (t) => {
       repo: "release-assets",
       release_id: "v1.0.0",
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
       headers: {
         "content-type": "text/json",
@@ -950,12 +950,12 @@ test("request.request() validate request with readstream data", async (t) => {
     mock.lastOptions()?.body instanceof stream.Readable,
     "mock.lastOptions()?.body, stream.Readable"
   );
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("request.request() validate request with data set to Buffer type", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .post(
       "https://api.github.com/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0",
       {
@@ -968,7 +968,7 @@ test("request.request() validate request with data set to Buffer type", (t) => {
     repo: "release-assets",
     tag: "v1.0.0",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
     headers: {
       "content-type": "text/plain",
@@ -979,13 +979,13 @@ test("request.request() validate request with data set to Buffer type", (t) => {
   }).then((response) => {
     t.deepEqual(response.status, 200);
     t.deepEqual(mock.lastOptions()?.body, Buffer.from("Hello, world!\n"));
-    t.assert(mock.done());
+    t.assert(mock.callHistory.done());
   });
 });
 
 test("request.request() validate request with data set to ArrayBuffer type", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .post(
       "https://api.github.com/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0",
       {
@@ -998,7 +998,7 @@ test("request.request() validate request with data set to ArrayBuffer type", (t)
     repo: "release-assets",
     tag: "v1.0.0",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
     headers: {
       "content-type": "text/plain",
@@ -1012,7 +1012,7 @@ test("request.request() validate request with data set to ArrayBuffer type", (t)
       mock.lastOptions()?.body,
       stringToArrayBuffer("Hello, world!\n")
     );
-    t.assert(mock.done());
+    t.assert(mock.callHistory.done());
   });
 });
 
@@ -1037,7 +1037,7 @@ test("request.request() bubbles up AbortError if the request is aborted", (t) =>
     signal = new AbortSignal();
   }
   const abortController = new AbortController();
-  const mock = fetchMock.sandbox().post(
+  const mock = fetchMock.createInstance().post(
     "https://api.github.com/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0",
     new Promise(() => {
       abortController.abort();
@@ -1049,7 +1049,7 @@ test("request.request() bubbles up AbortError if the request is aborted", (t) =>
     repo: "release-assets",
     tag: "v1.0.0",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
       signal: abortController.signal,
     },
     headers: {

@@ -20,7 +20,7 @@ test("octokit.graphql() README usage example", async (t) => {
     },
   };
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .postOnce("https://api.github.com/graphql", (url, request) => {
       const body = JSON.parse(request.body.toString());
       t.deepEqual(body.query, query);
@@ -33,7 +33,7 @@ test("octokit.graphql() README usage example", async (t) => {
   const octokit = new Octokit({
     auth: `secret123`,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -59,7 +59,7 @@ test("octokit.graphql() GitHub Enterprise Server usage (with option.baseUrl)", a
     },
   };
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .postOnce("https://github.acme-inc.com/api/graphql", (url, request) => {
       const body = JSON.parse(request.body.toString());
       t.deepEqual(body.query, query);
@@ -73,7 +73,7 @@ test("octokit.graphql() GitHub Enterprise Server usage (with option.baseUrl)", a
     auth: `secret123`,
     baseUrl: "https://github.acme-inc.com/api/v3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -92,7 +92,7 @@ test("octokit.graphql() GitHub Enterprise Server usage (with option.baseUrl)", a
 
 test("octokit.graphql() custom headers: octokit.graphql({ query, headers })", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .postOnce("https://api.github.com/graphql", (url, request) => {
       t.is(request.headers["x-custom"], "value");
 
@@ -104,7 +104,7 @@ test("octokit.graphql() custom headers: octokit.graphql({ query, headers })", as
   const octokit = new Octokit({
     auth: `secret123`,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -120,7 +120,7 @@ test("octokit.graphql() custom headers: octokit.graphql({ query, headers })", as
 
 test("octokit.graphql() custom headers: octokit.graphql(query, { headers })", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .postOnce("https://api.github.com/graphql", (url, request) => {
       t.is(request.headers["x-custom"], "value");
 
@@ -135,7 +135,7 @@ test("octokit.graphql() custom headers: octokit.graphql(query, { headers })", as
   const octokit = new Octokit({
     auth: `secret123`,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 

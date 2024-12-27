@@ -5,7 +5,7 @@ import { request } from "@octokit-next/request";
 import { deleteAuthorization } from "../index.js";
 
 test("README example", async (t) => {
-  const mock = fetchMock.sandbox().deleteOnce(
+  const mock = fetchMock.createInstance().deleteOnce(
     "https://api.github.com/applications/1234567890abcdef1234/grant",
     {
       status: 204,
@@ -34,7 +34,7 @@ test("README example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -43,7 +43,7 @@ test("README example", async (t) => {
 });
 
 test("GitHub App", async (t) => {
-  const mock = fetchMock.sandbox().deleteOnce(
+  const mock = fetchMock.createInstance().deleteOnce(
     "https://api.github.com/applications/lv1.1234567890abcdef/grant",
     {
       scopes: [],
@@ -73,7 +73,7 @@ test("GitHub App", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });

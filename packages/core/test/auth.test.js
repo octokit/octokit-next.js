@@ -24,7 +24,7 @@ const createTestAuth = (strategyOptions) =>
   });
 
 test("new Octokit({ auth: 'secret123' })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -39,7 +39,7 @@ test("new Octokit({ auth: 'secret123' })", async (t) => {
   const octokit = new Octokit({
     auth: "secret123",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -47,7 +47,7 @@ test("new Octokit({ auth: 'secret123' })", async (t) => {
 });
 
 test("new Octokit({ auth: 'token secret123' })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -62,7 +62,7 @@ test("new Octokit({ auth: 'token secret123' })", async (t) => {
   const octokit = new Octokit({
     auth: "token secret123",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -70,7 +70,7 @@ test("new Octokit({ auth: 'token secret123' })", async (t) => {
 });
 
 test("new Octokit({ auth: 'Token secret123' })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -85,7 +85,7 @@ test("new Octokit({ auth: 'Token secret123' })", async (t) => {
   const octokit = new Octokit({
     auth: "Token secret123",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -95,7 +95,7 @@ test("new Octokit({ auth: 'Token secret123' })", async (t) => {
 const BEARER_TOKEN =
   "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1NTM4MTkzMTIsImV4cCI6MTU1MzgxOTM3MiwiaXNzIjoxfQ.etiSZ4LFQZ8tiMGJVqKDoGn8hxMCgwL4iLvU5xBUqbAPr4pbk_jJZmMQjuxTlOnRxq4e7NouTizGCdfohRMb3R1mpLzGPzOH9_jqSA_BWYxolsRP_WDSjuNcw6nSxrPRueMVRBKFHrqcTOZJej0djRB5pI61hDZJ_-DGtiOIFexlK3iuVKaqBkvJS5-TbTekGuipJ652g06gXuz-l8i0nHiFJldcuIruwn28hTUrjgtPbjHdSBVn_QQLKc2Fhij8OrhcGqp_D_fvb_KovVmf1X6yWiwXV5VXqWARS-JGD9JTAr2495ZlLV_E4WPxdDpz1jl6XS9HUhMuwBpaCOuipw";
 test("new Octokit({ auth: BEARER_TOKEN })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -110,7 +110,7 @@ test("new Octokit({ auth: BEARER_TOKEN })", async (t) => {
   const octokit = new Octokit({
     auth: BEARER_TOKEN,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -136,7 +136,7 @@ test("octokit.auth() with options.auth = secret", async (t) => {
 });
 
 test("auth = createTestAuth()", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -150,7 +150,7 @@ test("auth = createTestAuth()", async (t) => {
   const MyOctokit = Octokit.withDefaults({
     authStrategy: createTestAuth,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -162,14 +162,14 @@ test("auth = createTestAuth()", async (t) => {
 
   await octokit.request("GET /");
 
-  t.is(mock.done(), true);
+  t.is(mock.callHistory.done(), true);
 });
 
 // TODO: enable once `createAppAuth` is ESM-ified.
 
 // test("auth = createAppAuth()", async (t) => {
 //   const mock = fetchMock
-//     .sandbox()
+//     .createInstance()
 //     .postOnce("https://api.github.com/app/installations/123/access_tokens", {
 //       token: "secret123",
 //       expires_at: "1970-01-01T01:00:00.000Z",
@@ -208,7 +208,7 @@ test("auth = createTestAuth()", async (t) => {
 //       installationId: 123,
 //     },
 //     request: {
-//       fetch: mock,
+//       fetch: mock.fetchHandler,
 //     },
 //   });
 
@@ -221,12 +221,12 @@ test("auth = createTestAuth()", async (t) => {
 //     },
 //   });
 
-//   t.is(mock.done(), true);
+//   t.is(mock.callHistory.done(), true);
 // });
 
 // test("createAppAuth with GraphQL + GHES (probot/probot#1386)", async (t) => {
 //   const mock = fetchMock
-//     .sandbox()
+//     .createInstance()
 //     .postOnce(
 //       "https://fake.github-enterprise.com/api/v3/app/installations/123/access_tokens",
 //       {
@@ -257,7 +257,7 @@ test("auth = createTestAuth()", async (t) => {
 //     },
 //     baseUrl: "https://fake.github-enterprise.com/api/v3",
 //     request: {
-//       fetch: mock,
+//       fetch: mock.fetchHandler,
 //     },
 //   });
 
@@ -267,7 +267,7 @@ test("auth = createTestAuth()", async (t) => {
 //       }
 //     }`);
 
-//   t.is(mock.done(), true);
+//   t.is(mock.callHistory.done(), true);
 // });
 
 test("should pass through the logger (#1277)", async (t) => {

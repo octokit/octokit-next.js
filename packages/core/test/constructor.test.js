@@ -5,7 +5,7 @@ import { getUserAgent } from "universal-user-agent";
 import { Octokit } from "../index.js";
 
 test("new Octokit({ previews })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -23,7 +23,7 @@ test("new Octokit({ previews })", async (t) => {
       "symmetra",
     ],
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -31,7 +31,7 @@ test("new Octokit({ previews })", async (t) => {
 });
 
 test("new Octokit({ timeZone })", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -45,7 +45,7 @@ test("new Octokit({ timeZone })", async (t) => {
   const octokit = new Octokit({
     timeZone: "Europe/Amsterdam",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 

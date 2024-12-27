@@ -30,8 +30,8 @@ test("Invalid query", (t) => {
     },
     request: {
       fetch: fetchMock
-        .sandbox()
-        .post("https://api.github.com/graphql", mockResponse),
+        .createInstance()
+        .post("https://api.github.com/graphql", mockResponse).fetchHandler,
     },
   })
     .then((result) => {
@@ -77,8 +77,8 @@ test("Should be able check if an error is instance of a GraphQL response error",
     },
     request: {
       fetch: fetchMock
-        .sandbox()
-        .post("https://api.github.com/graphql", mockResponse),
+        .createInstance()
+        .post("https://api.github.com/graphql", mockResponse).fetchHandler,
     },
   })
     .then(() => {
@@ -138,12 +138,12 @@ test("Should throw an error for a partial response accompanied by errors", (t) =
       authorization: `token secret123`,
     },
     request: {
-      fetch: fetchMock.sandbox().post("https://api.github.com/graphql", {
+      fetch: fetchMock.createInstance().post("https://api.github.com/graphql", {
         body: mockResponse,
         headers: {
           "x-github-request-id": "C5E6:259A:1351B40:2E88B87:5F1F9C41",
         },
-      }),
+      }).fetchHandler,
     },
   })
     .then((result) => {
@@ -181,7 +181,7 @@ test("Should throw for server error", (t) => {
       authorization: `token secret123`,
     },
     request: {
-      fetch: fetchMock.sandbox().post("https://api.github.com/graphql", 500),
+      fetch: fetchMock.createInstance().post("https://api.github.com/graphql", 500).fetchHandler,
     },
   })
     .then((result) => {

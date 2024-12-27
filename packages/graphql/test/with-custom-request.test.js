@@ -56,7 +56,7 @@ test("withCustomRequest() README example", (t) => {
         authorization: `token secret123`,
       },
       request: {
-        fetch: fetchMock.sandbox().post(
+        fetch: fetchMock.createInstance().post(
           "https://api.github.com/graphql",
           { data: mockData },
           {
@@ -66,7 +66,7 @@ test("withCustomRequest() README example", (t) => {
               "user-agent": "test",
             },
           }
-        ),
+        ).fetchHandler,
       },
     }
   ).then((result) => {
