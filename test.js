@@ -16,11 +16,11 @@ test("myOctokit.request is a function", (t) => {
 });
 
 test("octokit.request('GET /')", async (t) => {
-  const mock = fetchMock.sandbox().get("https://api.github.com", { ok: true });
+  const mock = fetchMock.createInstance().get("https://api.github.com", { ok: true });
 
   const octokit = new Octokit({
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
   const response = await octokit.request("GET /");
@@ -30,12 +30,12 @@ test("octokit.request('GET /')", async (t) => {
 
 test("octokit.request('GET /unknown')", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get("https://api.github.com/unknown", { status: 404 });
 
   const octokit = new Octokit({
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -50,11 +50,11 @@ test("octokit.request('GET /unknown')", async (t) => {
 });
 
 test("request('GET /')", async (t) => {
-  const mock = fetchMock.sandbox().get("https://api.github.com/", { ok: true });
+  const mock = fetchMock.createInstance().get("https://api.github.com/", { ok: true });
 
   const response = await request("GET /", {
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
   t.deepEqual(response.status, 200);

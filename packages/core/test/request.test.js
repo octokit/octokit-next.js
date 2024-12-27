@@ -16,7 +16,7 @@ test("octokit.request() is a function", async (t) => {
 });
 
 test("GET /", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -29,34 +29,34 @@ test("GET /", async (t) => {
 
   const octokit = new Octokit({
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
   await octokit.request("GET /");
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("custom baseUrl", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .getOnce("https://github.acme-inc.com/api/v3/orgs/octokit", { id: 123 });
 
   const octokit = new Octokit({
     baseUrl: "https://github.acme-inc.com/api/v3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
   await octokit.request("GET /orgs/{org}", {
     org: "octokit",
   });
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("custom user agent", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -70,16 +70,16 @@ test("custom user agent", async (t) => {
   const octokit = new Octokit({
     userAgent: "myApp/1.2.3",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
   await octokit.request("GET /");
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("custom time zone", async (t) => {
-  const mock = fetchMock.sandbox().getOnce(
+  const mock = fetchMock.createInstance().getOnce(
     "https://api.github.com/",
     { ok: true },
     {
@@ -94,17 +94,17 @@ test("custom time zone", async (t) => {
   const octokit = new Octokit({
     timeZone: "Europe/Amsterdam",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
   await octokit.request("GET /");
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test("previews", async (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .getOnce(
       "https://api.github.com/",
       {},
@@ -132,7 +132,7 @@ test("previews", async (t) => {
   const octokit = new Octokit({
     previews: ["foo", "bar-preview"],
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -143,7 +143,7 @@ test("previews", async (t) => {
       format: "raw",
     },
   });
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });
 
 test('octokit.request.endpoint("GET /")', (t) => {
@@ -154,7 +154,7 @@ test('octokit.request.endpoint("GET /")', (t) => {
 });
 
 test("sends null values (octokit/rest.js#765)", async (t) => {
-  const mock = fetchMock.sandbox().patchOnce(
+  const mock = fetchMock.createInstance().patchOnce(
     "https://api.github.com/repos/epmatsw/example-repo/issues/1",
     {},
     {
@@ -167,7 +167,7 @@ test("sends null values (octokit/rest.js#765)", async (t) => {
   const octokit = new Octokit({
     auth: "secret123",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
   await octokit.request("PATCH /repos/{owner}/{repo}/issues/{issue_number}", {
@@ -176,5 +176,5 @@ test("sends null values (octokit/rest.js#765)", async (t) => {
     milestone: null,
     issue_number: 1,
   });
-  t.assert(mock.done());
+  t.assert(mock.callHistory.done());
 });

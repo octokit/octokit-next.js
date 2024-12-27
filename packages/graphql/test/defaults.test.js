@@ -41,7 +41,7 @@ test("graphql.defaults() README example", (t) => {
       authorization: `token secret123`,
     },
     request: {
-      fetch: fetchMock.sandbox().post(
+      fetch: fetchMock.createInstance().post(
         "https://api.github.com/graphql",
         { data: mockData },
         {
@@ -49,7 +49,7 @@ test("graphql.defaults() README example", (t) => {
             authorization: "token secret123",
           },
         }
-      ),
+      ).fetchHandler,
     },
   });
   return authenticatedGraphql(`{
@@ -97,7 +97,7 @@ test("graphql.defaults() repeated defaults", (t) => {
       authorization: `token secret123`,
     },
     request: {
-      fetch: fetchMock.sandbox().post(
+      fetch: fetchMock.createInstance().post(
         "https://github.acme-inc.com/api/graphql",
         { data: mockData },
         {
@@ -105,7 +105,7 @@ test("graphql.defaults() repeated defaults", (t) => {
             authorization: "token secret123",
           },
         }
-      ),
+      ).fetchHandler,
     },
   });
   const acmeGraphql = authenticatedGraphql.defaults({
@@ -133,7 +133,7 @@ test("graphql.defaults() handle baseUrl set with /api/v3 suffix", async (t) => {
       authorization: `token secret123`,
     },
     request: {
-      fetch: fetchMock.sandbox().post(
+      fetch: fetchMock.createInstance().post(
         "https://github.acme-inc.com/api/graphql",
         { data: { ok: true } },
         {
@@ -141,7 +141,7 @@ test("graphql.defaults() handle baseUrl set with /api/v3 suffix", async (t) => {
             authorization: "token secret123",
           },
         }
-      ),
+      ).fetchHandler,
     },
   });
 
@@ -184,7 +184,7 @@ test("graphql.defaults() set defaults on .endpoint", (t) => {
       authorization: `token secret123`,
     },
     request: {
-      fetch: fetchMock.sandbox().post(
+      fetch: fetchMock.createInstance().post(
         "https://github.acme-inc.com/api/graphql",
         { data: mockData },
         {
@@ -192,7 +192,7 @@ test("graphql.defaults() set defaults on .endpoint", (t) => {
             authorization: "token secret123",
           },
         }
-      ),
+      ).fetchHandler,
     },
   });
 

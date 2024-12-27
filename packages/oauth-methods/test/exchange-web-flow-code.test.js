@@ -5,7 +5,7 @@ import { request } from "@octokit-next/request";
 import { exchangeWebFlowCode } from "../index.js";
 
 test("README example", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -36,7 +36,7 @@ test("README example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -46,7 +46,7 @@ test("README example", async (t) => {
 });
 
 test("with scopes", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -77,7 +77,7 @@ test("with scopes", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -87,7 +87,7 @@ test("with scopes", async (t) => {
 });
 
 test("All options for OAuth Apps", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://ghe.acme-inc.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -121,7 +121,7 @@ test("All options for OAuth Apps", async (t) => {
       },
       baseUrl: "https://ghe.acme-inc.com/api/v3",
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -131,7 +131,7 @@ test("All options for OAuth Apps", async (t) => {
 });
 
 test("All options for GitHub Apps", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://ghe.acme-inc.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -165,7 +165,7 @@ test("All options for GitHub Apps", async (t) => {
       },
       baseUrl: "https://ghe.acme-inc.com/api/v3",
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -175,7 +175,7 @@ test("All options for GitHub Apps", async (t) => {
 });
 
 test("Refresh token", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://ghe.acme-inc.com/login/oauth/access_token",
     {
       body: {
@@ -215,7 +215,7 @@ test("Refresh token", async (t) => {
       },
       baseUrl: "https://ghe.acme-inc.com/api/v3",
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });

@@ -12,7 +12,7 @@ test("request.defaults() is a function", (t) => {
 
 test("request.defaults() README example", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .mock(
       "https://github-enterprise.acme-inc.com/api/v3/orgs/my-project/repos?per_page=100",
       [],
@@ -34,7 +34,7 @@ test("request.defaults() README example", (t) => {
     org: "my-project",
     per_page: 100,
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
 
@@ -45,7 +45,7 @@ test("request.defaults() README example", (t) => {
 
 test("request.defaults() repeated defaults", (t) => {
   const mock = fetchMock
-    .sandbox()
+    .createInstance()
     .get(
       "https://github-enterprise.acme-inc.com/api/v3/orgs/my-project/repos",
       [],
@@ -70,7 +70,7 @@ test("request.defaults() repeated defaults", (t) => {
     },
     org: "my-project",
     request: {
-      fetch: mock,
+      fetch: mock.fetchHandler,
     },
   });
   const myProjectRequestWithAuth = myProjectRequest.defaults({

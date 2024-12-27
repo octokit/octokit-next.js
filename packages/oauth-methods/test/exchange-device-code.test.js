@@ -5,7 +5,7 @@ import { request } from "@octokit-next/request";
 import { exchangeDeviceCode } from "../index.js";
 
 test("README example", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -35,7 +35,7 @@ test("README example", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -45,7 +45,7 @@ test("README example", async (t) => {
 });
 
 test("with scopes", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -76,7 +76,7 @@ test("with scopes", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -86,7 +86,7 @@ test("with scopes", async (t) => {
 });
 
 test("authorization_pending error", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       error: "authorization_pending",
@@ -117,7 +117,7 @@ test("authorization_pending error", async (t) => {
           "user-agent": "test",
         },
         request: {
-          fetch: mock,
+          fetch: mock.fetchHandler,
         },
       }),
     });
@@ -130,7 +130,7 @@ test("authorization_pending error", async (t) => {
 });
 
 test("OAuth App with ClientSecret", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -161,7 +161,7 @@ test("OAuth App with ClientSecret", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -171,7 +171,7 @@ test("OAuth App with ClientSecret", async (t) => {
 });
 
 test("GitHub App", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -201,7 +201,7 @@ test("GitHub App", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -211,7 +211,7 @@ test("GitHub App", async (t) => {
 });
 
 test("GitHub App with clientSecret", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       access_token: "secret123",
@@ -242,7 +242,7 @@ test("GitHub App with clientSecret", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
@@ -252,7 +252,7 @@ test("GitHub App with clientSecret", async (t) => {
 });
 
 test("Refresh token", async (t) => {
-  const mock = fetchMock.sandbox().postOnce(
+  const mock = fetchMock.createInstance().postOnce(
     "https://github.com/login/oauth/access_token",
     {
       body: {
@@ -290,7 +290,7 @@ test("Refresh token", async (t) => {
         "user-agent": "test",
       },
       request: {
-        fetch: mock,
+        fetch: mock.fetchHandler,
       },
     }),
   });
