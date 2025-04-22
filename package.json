@@ -272,7 +272,7 @@
     "ava": "^6.0.0",
     "c8": "^10.0.0",
     "fetch-mock": "^10.0.0",
-    "github-openapi-graphql-query": "^4.0.0",
+    "github-openapi-graphql-query": "^5.0.0",
     "handlebars": "^4.7.7",
     "open-cli": "^8.0.0",
     "openapi-typescript": "^6.2.1",
