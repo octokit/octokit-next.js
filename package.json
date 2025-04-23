@@ -277,7 +277,7 @@
     "open-cli": "^8.0.0",
     "openapi-typescript": "^6.2.1",
     "prettier": "^3.0.0",
-    "sinon": "^19.0.0",
+    "sinon": "^20.0.0",
     "sort-keys": "^5.0.0",
     "tsd": "^0.32.0",
     "type-fest": "^4.0.0",
