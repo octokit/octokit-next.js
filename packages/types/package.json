@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit-next/request-error": "^0.0.0-development",
-    "before-after-hook": "^3.0.2",
+    "before-after-hook": "^4.0.0",
     "type-fest": "^4.0.0"
   }
 }
