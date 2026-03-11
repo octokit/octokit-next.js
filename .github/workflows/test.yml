@@ -25,5 +25,5 @@ jobs:
       - uses: denoland/setup-deno@v1
         with:
           # TODO: currently fails with deno 1.33.3
-          deno-version: v1.32.5
+          deno-version: 2.7.5
       - run: deno test --unstable --no-check tests/deno/
