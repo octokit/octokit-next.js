@@ -30,7 +30,7 @@
   "dependencies": {
     "@octokit-next/types": "0.0.0-development",
     "is-plain-obj": "^4.0.0",
-    "type-fest": "^4.0.0",
+    "type-fest": "^5.0.0",
     "universal-user-agent": "^7.0.0"
   }
 }
