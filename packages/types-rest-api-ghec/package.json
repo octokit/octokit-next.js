@@ -5,7 +5,7 @@
     "@octokit-next/types-openapi-ghec": "0.0.0-development",
     "@octokit-next/types-openapi-ghec-diff-to-api.github.com": "0.0.0-development",
     "@octokit-next/types-rest-api": "0.0.0-development",
-    "type-fest": "^4.0.0"
+    "type-fest": "^5.0.0"
   },
   "description": "Generated TypeScript definitions based on GitHub's OpenAPI spec for GHEC",
   "exports": "./index.js",
