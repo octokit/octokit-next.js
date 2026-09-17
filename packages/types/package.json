@@ -17,6 +17,6 @@
   "dependencies": {
     "@octokit-next/request-error": "^0.0.0-development",
     "before-after-hook": "^3.0.2",
-    "type-fest": "^4.0.0"
+    "type-fest": "^5.0.0"
   }
 }
